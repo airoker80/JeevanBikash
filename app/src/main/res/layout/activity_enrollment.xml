@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.harati.jeevanbikas.Enrollment.EnrollmentActivity"
+    android:background="#295b7f">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/pattern">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:orientation="horizontal"
+                    android:background="#00000000">
+
+                    <ImageView
+                        android:id="@+id/enrollment_back"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:src="@drawable/ic_keyboard_arrow_left"/>
+
+                    <TextView
+                        android:layout_weight=".4"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="New Enrollment"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_16sdp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/_28sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Name"
+                                    android:textColor="@color/enrollColor"
+                                    android:textSize="@dimen/_12sdp" />
+
+                                <EditText
+                                    android:textColor="@color/white"
+                                    android:id="@+id/enrollment_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_32sdp"
+                                    android:backgroundTint="@color/enrollColor" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Age"
+                                    android:textColor="@color/enrollColor"
+                                    android:textSize="@dimen/_12sdp" />
+
+                                <EditText
+                                    android:textColor="@color/white"
+                                    android:id="@+id/enrollment_age"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_32sdp"
+                                    android:backgroundTint="@color/enrollColor" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2">
+
+                                <ImageView
+                                    android:id="@+id/enrollment_choose_img"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="@dimen/_8sdp"
+                                    android:src="@drawable/ic_android_black" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Sex"
+                            android:textColor="@color/enrollColor"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <RadioGroup
+                            android:id="@+id/enrollment_rg"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/enrollment_male_rb"
+                                android:scaleX=".75"
+                                android:scaleY=".75"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/white"
+                                android:text="Male"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_12sdp" />
+
+                            <RadioButton
+                                android:id="@+id/enrollment_female_rb"
+                                android:scaleX=".75"
+                                android:scaleY=".75"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/white"
+                                android:text="Female"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_12sdp" />
+                        </RadioGroup>
+
+                        <TextView
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Father's Name"
+                            android:textColor="@color/enrollColor" />
+
+                        <EditText
+                            android:textColor="@color/white"
+                            android:id="@+id/enrollment_father_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_32sdp"
+                            android:backgroundTint="@color/enrollColor" />
+
+                        <TextView
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Spouse's name"
+                            android:textColor="@color/enrollColor" />
+
+                        <EditText
+                            android:textColor="@color/white"
+                            android:id="@+id/enrollment_spouse_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_32sdp"
+                            android:backgroundTint="@color/enrollColor" />
+
+                        <TextView
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Grandfather's Name"
+                            android:textColor="@color/enrollColor" />
+
+                        <EditText
+                            android:textColor="@color/white"
+                            android:id="@+id/enrollment_grandfather_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_32sdp"
+                            android:backgroundTint="@color/enrollColor" />
+
+                        <TextView
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Address"
+                            android:textColor="@color/enrollColor" />
+
+                        <EditText
+                            android:textColor="@color/white"
+                            android:id="@+id/enrollment_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_32sdp"
+                            android:backgroundTint="@color/enrollColor" />
+
+                        <TextView
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Mobile Number"
+                            android:textColor="@color/enrollColor" />
+
+                        <EditText
+                            android:textColor="@color/white"
+                            android:id="@+id/enrollment_mobile_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_32sdp"
+                            android:backgroundTint="@color/enrollColor" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:clickable="true"
+                        android:background="#f9b847"
+                        android:layout_weight="9"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:id="@+id/enrollment_tick"
+                                android:padding="@dimen/_8sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ic_check_white"/>
+                        </FrameLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>
