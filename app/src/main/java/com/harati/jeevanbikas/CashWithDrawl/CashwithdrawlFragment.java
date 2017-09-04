@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,12 @@ import android.widget.ImageView;
 
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
+import com.harati.jeevanbikas.Helper.HelperListModelClass;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,6 +30,7 @@ public class CashwithdrawlFragment extends Fragment {
     ImageView submit;
     EditText withdrawlAmount,agentPin ,withdrawlRemark;
     String withdrawlAmountTxt,agentPinTxt ,withdrawlRemarkTxt;
+    List<HelperListModelClass> helperListModelClassList =new ArrayList<HelperListModelClass>();
     public CashwithdrawlFragment() {
     }
 
@@ -36,6 +43,8 @@ public class CashwithdrawlFragment extends Fragment {
         agentPin=(EditText)view.findViewById(R.id.agentPin);
         withdrawlRemark=(EditText)view.findViewById(R.id.withdrawlRemark);
         submit.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
                 withdrawlAmountTxt=withdrawlAmount.getText().toString();
@@ -44,8 +53,24 @@ public class CashwithdrawlFragment extends Fragment {
                 if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|withdrawlRemarkTxt.equals("")){
                     getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
                 }else {
-                    Intent intent= new Intent(getContext(), DialogActivity.class);
-                    getActivity().startActivity(intent);
+
+/*                    VolleyRequestHandler volleyRequestHandler = new VolleyRequestHandler();
+                    helperListModelClassList.add(new HelperListModelClass("withdrawlAmount",""));
+                    helperListModelClassList.add(new HelperListModelClass("agentPin",""));
+                    helperListModelClassList.add(new HelperListModelClass("withdrawlRemark",""));
+
+                    String response="";
+                    try {
+                         response = volleyRequestHandler.makePostRequest("url",helperListModelClassList);
+                        Log.d("respones",response);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }*/
+
+
+                        Intent intent= new Intent(getContext(), DialogActivity.class);
+                        getActivity().startActivity(intent);
+
                 }
             }
         });

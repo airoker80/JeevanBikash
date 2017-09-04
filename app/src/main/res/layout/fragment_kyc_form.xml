@@ -286,7 +286,7 @@
                                 <ImageView
                                     android:layout_width="@dimen/_60sdp"
                                     android:layout_height="@dimen/_90sdp"
-                                    android:src="@drawable/ic_file" />
+                                    android:src="@drawable/ic_new_file" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -310,11 +310,12 @@
                                 <ImageView
                                     android:layout_width="@dimen/_60sdp"
                                     android:layout_height="@dimen/_90sdp"
-                                    android:src="@drawable/ic_file" />
+                                    android:src="@drawable/ic_new_file" />
 
                                 <TextView
+                                    android:layout_marginTop="@dimen/_4sdp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_marginLeft="8dp"
                                     android:paddingTop="@dimen/_8sdp"
                                     android:text="Upload Photo of Citizen Certificate"
@@ -328,7 +329,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_12sdp"
-                            android:text="Tole"
+                            android:text="Citizenship number"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
@@ -342,7 +343,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Tole"
+                            android:text="Issued Date"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
@@ -369,14 +370,14 @@
                                 <ImageView
                                     android:layout_width="@dimen/_60sdp"
                                     android:layout_height="@dimen/_90sdp"
-                                    android:src="@drawable/ic_file" />
+                                    android:src="@drawable/ic_new_file" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="8dp"
                                     android:layout_marginTop="@dimen/_4sdp"
-                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingTop="@dimen/_10sdp"
                                     android:text="Upload Photo of Citizenship Certificate"
                                     android:textColor="@color/enrollColor"
                                     android:textSize="12sp" />
@@ -393,13 +394,14 @@
                                 <ImageView
                                     android:layout_width="@dimen/_60sdp"
                                     android:layout_height="@dimen/_90sdp"
-                                    android:src="@drawable/ic_file" />
+                                    android:src="@drawable/ic_new_file" />
 
                                 <TextView
+                                    android:layout_marginTop="@dimen/_4sdp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_marginLeft="8dp"
-                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingTop="@dimen/_10sdp"
                                     android:text="Upload Photo of Citizen Certificate"
                                     android:textColor="@color/enrollColor"
                                     android:textSize="12sp" />
@@ -411,7 +413,7 @@
                             android:layout_marginBottom="@dimen/_40sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="32dp"
+                            android:layout_marginTop="@dimen/_4sdp"
                             android:orientation="horizontal">
 
                             <LinearLayout
@@ -424,14 +426,14 @@
                                 <ImageView
                                     android:layout_width="@dimen/_60sdp"
                                     android:layout_height="@dimen/_90sdp"
-                                    android:src="@drawable/ic_file" />
+                                    android:src="@drawable/ic_new_file" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="8dp"
                                     android:layout_marginTop="@dimen/_4sdp"
-                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingTop="@dimen/_10sdp"
                                     android:text="Upload Photo of Citizenship Certificate"
                                     android:textColor="@color/enrollColor"
                                     android:textSize="12sp" />
@@ -448,13 +450,14 @@
                                 <ImageView
                                     android:layout_width="@dimen/_60sdp"
                                     android:layout_height="@dimen/_90sdp"
-                                    android:src="@drawable/ic_file" />
+                                    android:src="@drawable/ic_new_file" />
 
                                 <TextView
+                                    android:layout_marginTop="@dimen/_4sdp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_marginLeft="8dp"
-                                    android:paddingTop="@dimen/_8sdp"
+                                    android:paddingTop="@dimen/_10sdp"
                                     android:text="Upload Photo of Citizen Certificate"
                                     android:textColor="@color/enrollColor"
                                     android:textSize="12sp" />

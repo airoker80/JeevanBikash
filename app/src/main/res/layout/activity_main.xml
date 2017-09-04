@@ -50,6 +50,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/_60sdp"
                     android:id="@+id/app_icon"
                     android:layout_width="@dimen/_50sdp"

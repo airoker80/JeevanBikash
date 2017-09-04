@@ -31,7 +31,7 @@ public class VolleyRequestHandler {
     String jsonRespose;
 
 
-    private String makePostRequest(String URL, final List<HelperListModelClass> helperListModelClasses) {
+    public String makePostRequest(String URL, final List<HelperListModelClass> helperListModelClasses) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
