@@ -7,4 +7,8 @@
     <color name="enrollColor">#969696</color>
     <color name="colorGreen">#6FC639</color>
     <color name="transparent">#00000000</color>
+
+    <color name="textPrimary">#f5f5f5</color>
+    <color name="textPrimaryDark">#95aab4</color>
+    <color name="errorText">#ff7878</color>
 </resources>
