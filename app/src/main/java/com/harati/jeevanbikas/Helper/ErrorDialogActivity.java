@@ -17,10 +17,15 @@ public class ErrorDialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.error_dialog_layout);
-        Intent intent = getIntent();
-        String msg = intent.getExtras().getString("msg");
         msgDetail=(TextView)findViewById(R.id.msgDetail);
-        msgDetail.setText(msg);
+        try {
+            Intent intent = getIntent();
+            String msg = intent.getExtras().getString("msg");
+            msgDetail.setText(msg);
+    }catch (Exception e){
+        e.printStackTrace();
+    }
+
         ok= (Button)findViewById(R.id.ok);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override

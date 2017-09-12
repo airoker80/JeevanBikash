@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/topPanel"
     android:orientation="vertical"
+    android:background="@color/transparent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
@@ -19,9 +20,9 @@
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
             android:backgroundTint="@color/white"
             android:hint="Enter Member code/Mobile Number"
             android:imeOptions="actionDone"
@@ -30,25 +31,25 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_12sdp" />
 
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/input"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/_16sdp"
             android:text="@string/detialsMsg"
             android:textAlignment="center"
             android:textColor="#95AFBE"
-            android:textSize="12sp" />
+            android:textSize="@dimen/_10sdp" />
     </RelativeLayout>
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/_30sdp"
         android:clickable="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"

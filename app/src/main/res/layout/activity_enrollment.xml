@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:text="New Enrollment"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_16sdp"/>
+                    android:textSize="@dimen/_15sdp"/>
             </LinearLayout>
 
             <ScrollView
@@ -88,6 +88,7 @@
                                         android:textSize="@dimen/_12sdp" />
 
                                     <EditText
+                                        android:textSize="@dimen/_10sdp"
                                         android:id="@+id/enrollment_name"
                                         android:layout_width="match_parent"
                                         android:layout_height="@dimen/_32sdp"
@@ -102,6 +103,7 @@
                                         android:textSize="@dimen/_12sdp" />
 
                                     <EditText
+                                        android:textSize="@dimen/_10sdp"
                                         android:id="@+id/enrollment_age"
                                         android:layout_width="match_parent"
                                         android:layout_height="@dimen/_32sdp"
@@ -142,25 +144,23 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:buttonTint="@color/white"
-                                    android:scaleX=".75"
-                                    android:scaleY=".75"
                                     android:text="Male"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp" />
 
                                 <RadioButton
+                                    android:layout_marginLeft="@dimen/_30sdp"
                                     android:id="@+id/enrollment_female_rb"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:buttonTint="@color/white"
-                                    android:scaleX=".75"
-                                    android:scaleY=".75"
                                     android:text="Female"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp" />
                             </RadioGroup>
 
                             <TextView
+                                android:layout_marginTop="@dimen/_10sdp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Father's Name"
@@ -168,6 +168,7 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <EditText
+                                android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_father_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_32sdp"
@@ -182,6 +183,7 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <EditText
+                                android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_spouse_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_32sdp"
@@ -196,6 +198,7 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <EditText
+                                android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_grandfather_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_32sdp"
@@ -210,6 +213,7 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <EditText
+                                android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_address"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_32sdp"
@@ -224,6 +228,7 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <EditText
+                                android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_mobile_number"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_32sdp"
@@ -240,7 +245,7 @@
 
                             <EditText
                                 android:layout_width="match_parent"
-
+                                android:textSize="@dimen/_10sdp"
                                 android:layout_height="@dimen/_32sdp"
                                 android:backgroundTint="@color/enrollColor"
                                 android:textColor="@color/white" />
@@ -272,7 +277,7 @@
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="Upload Photo of Citizenship Certificate"
                                         android:textColor="@color/enrollColor"
-                                        android:textSize="12sp" />
+                                        android:textSize="@dimen/_10sdp" />
 
                                 </LinearLayout>
 
@@ -296,7 +301,7 @@
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="Upload Photo of Citizen Certificate"
                                         android:textColor="@color/enrollColor"
-                                        android:textSize="12sp" />
+                                        android:textSize="@dimen/_10sdp" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -325,7 +330,7 @@
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="Upload your thumbprint"
                                         android:textColor="@color/enrollColor"
-                                        android:textSize="12sp" />
+                                        android:textSize="@dimen/_10sdp" />
 
                                 </LinearLayout>
 
@@ -377,7 +382,7 @@
                     <ImageView
                         android:id="@+id/enrollment_tick"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/_30sdp"
                         android:padding="@dimen/_8sdp"
                         android:src="@drawable/ic_check_white" />
                 </FrameLayout>

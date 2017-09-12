@@ -3,6 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,7 +18,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/_21sdp"
         android:background="@drawable/dailog_round">
         <LinearLayout
             android:id="@+id/contian"
@@ -33,23 +34,23 @@
                 android:id="@+id/msg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:text="Error"
                 android:textAlignment="center"
                 android:textColor="#6B6B6B"
-                android:textSize="18sp" />
+                android:textSize="@dimen/_15sdp" />
 
             <TextView
                 android:id="@+id/msgDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/msg"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:text="Please fill up the form correctly.
 some field have empty value"
                 android:textAlignment="center"
                 android:textColor="#6B6B6B"
-                android:textSize="15sp" />
+                android:textSize="@dimen/_13sdp" />
 
 
         </LinearLayout>
@@ -59,20 +60,22 @@ some field have empty value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/contian"
-            android:layout_marginBottom="24dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginBottom="@dimen/_18sdp"
+            android:layout_marginLeft="@dimen/_14sdp"
+            android:layout_marginRight="@dimen/_14sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:padding="@dimen/_9sdp"
             android:background="@drawable/error_button_baground"
             android:text="OK"
+            android:textSize="@dimen/_13sdp"
             android:textColor="@color/white" />
 
 
     </RelativeLayout>
     <ImageView
         android:id="@+id/sign"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
         android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/error_nav_circle"

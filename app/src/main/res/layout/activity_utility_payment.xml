@@ -43,7 +43,7 @@
                         android:padding="8dp"
                         android:text="Utility Payment"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_15sdp" />
 
                     <Spinner
                         android:id="@+id/spinner"

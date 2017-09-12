@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/topPanel"
     android:orientation="vertical"
+    android:background="@color/transparent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView
@@ -21,10 +22,10 @@
                 android:id="@+id/topPanel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:orientation="horizontal"
-                android:padding="4dp"
+                android:padding="@dimen/_4sdp"
                 android:weightSum="2">
 
                 <LinearLayout
@@ -37,11 +38,11 @@
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:text="Sushan Shrestha"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -54,22 +55,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:paddingBottom="8dp"
-                            android:paddingTop="8dp"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
                             android:text="Member Id"
                             android:textColor="#95AFBE"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/_10sdp" />
 
                         <TextView
                             android:id="@+id/memberIdnnumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:paddingBottom="8dp"
-                            android:paddingTop="8dp"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
                             android:text="3343434"
                             android:textColor="@color/white"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -82,22 +83,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:paddingBottom="8dp"
-                            android:paddingTop="8dp"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
                             android:text="Branch"
                             android:textColor="#95AFBE"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/_10sdp" />
 
                         <TextView
                             android:id="@+id/branchName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:paddingBottom="8dp"
-                            android:paddingTop="8dp"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
                             android:text="Member Id"
                             android:textColor="@color/white"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -110,22 +111,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:paddingBottom="8dp"
-                            android:paddingTop="8dp"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
                             android:text="Account No"
                             android:textColor="#95AFBE"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/_10sdp" />
 
                         <TextView
                             android:id="@+id/accNoDetails"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:paddingBottom="8dp"
+                            android:paddingBottom="@dimen/_8sdp"
                             android:paddingTop="8dp"
                             android:text="3343434454"
                             android:textColor="@color/white"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -137,13 +138,13 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:padding="4dp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:padding="@dimen/_4sdp"
                         android:background="@drawable/image_baground">
                         <ImageView
                             android:layout_alignParentRight="true"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_100sdp"
                             android:src="@drawable/defaultprofile" />
                     </LinearLayout>
 
@@ -154,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/topPanel"
-                android:layout_marginLeft="32dp"
+                android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginRight="32dp"
                 android:orientation="vertical"
                 android:padding="4dp"
@@ -165,9 +166,10 @@
                     android:layout_height="wrap_content"
                     android:text="Withdrawl Amount"
                     android:textColor="#95AFBE"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <EditText
+                    android:textSize="@dimen/_10sdp"
                     android:id="@+id/withdrawlAmount"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"
@@ -181,10 +183,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:text="Agent Transaction Pin"
                     android:textColor="#95AFBE"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -192,6 +194,7 @@
                     app:passwordToggleEnabled="true">
 
                     <EditText
+                        android:textSize="@dimen/_10sdp"
                         android:id="@+id/agentPin"
                         android:backgroundTint="@color/white"
                         android:textColor="@color/white"
@@ -207,9 +210,10 @@
                     android:layout_marginTop="4dp"
                     android:text="Remarks"
                     android:textColor="#95AFBE"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:textSize="@dimen/_10sdp"
                     android:id="@+id/withdrawlRemark"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"
@@ -224,7 +228,7 @@
     <ImageView
         android:id="@+id/submit"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
         android:background="#F9B847"

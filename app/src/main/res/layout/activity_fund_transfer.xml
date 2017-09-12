@@ -44,7 +44,7 @@
                         android:padding="8dp"
                         android:text="Fund Transfer"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_16sdp" />
+                        android:textSize="@dimen/_15sdp" />
 
                     <Spinner
                         android:id="@+id/spinner"

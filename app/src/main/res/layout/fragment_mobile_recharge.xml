@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.harati.jeevanbikas.RechargeTopup.MobileRechargeFragment"
-    android:background="@color/colorPrimary">
+    android:background="@color/transparent">
 
     <!-- TODO: Update blank fragment layout -->
 

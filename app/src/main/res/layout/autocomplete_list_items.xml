@@ -12,8 +12,8 @@
         >
         <ImageView
             android:id="@+id/userImg"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_30sdp"
             android:src="@drawable/ic_profile"
 
             />
@@ -26,7 +26,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:text="0000000000"
             android:textColor="#3b2e2e"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_10sdp" />
         <TextView
             android:id="@+id/accNo"
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:text="0000000000"
             android:textColor="#3b2e2e"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_10sdp" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"

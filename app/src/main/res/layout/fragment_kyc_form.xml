@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.harati.jeevanbikas.KycPackage.KycFormFragment"
-    android:background="#295b7f">
+    android:background="@color/transparent">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -87,9 +87,9 @@
                                 <ImageView
                                     android:id="@+id/enrollment_choose_img"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="@dimen/_70sdp"
                                     android:layout_margin="@dimen/_8sdp"
-                                    android:src="@drawable/ic_android_black" />
+                                    android:src="@drawable/defaultprofile" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -112,25 +112,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:buttonTint="@color/white"
-                                android:scaleX=".75"
-                                android:scaleY=".75"
+
                                 android:text="Male"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_12sdp" />
 
                             <RadioButton
+                                android:layout_marginLeft="@dimen/_30sdp"
                                 android:id="@+id/enrollment_female_rb"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:buttonTint="@color/white"
-                                android:scaleX=".75"
-                                android:scaleY=".75"
                                 android:text="Female"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_12sdp" />
                         </RadioGroup>
 
                         <TextView
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Father's Name"
@@ -279,7 +278,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
+                                android:layout_margin="@dimen/_4sdp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
@@ -296,14 +295,14 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:text="Upload Photo of Citizenship Certificate"
                                     android:textColor="@color/enrollColor"
-                                    android:textSize="12sp" />
+                                    android:textSize="@dimen/_10sdp" />
 
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
+                                android:layout_margin="@dimen/_4sdp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
@@ -320,7 +319,7 @@
                                     android:paddingTop="@dimen/_8sdp"
                                     android:text="Upload Photo of Citizen Certificate"
                                     android:textColor="@color/enrollColor"
-                                    android:textSize="12sp" />
+                                    android:textSize="@dimen/_10sdp" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -363,7 +362,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
+                                android:layout_margin="@dimen/_4sdp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
@@ -380,14 +379,14 @@
                                     android:paddingTop="@dimen/_10sdp"
                                     android:text="Upload Photo of Citizenship Certificate"
                                     android:textColor="@color/enrollColor"
-                                    android:textSize="12sp" />
+                                    android:textSize="@dimen/_10sdp" />
 
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
+                                android:layout_margin="@dimen/_4sdp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
@@ -404,7 +403,7 @@
                                     android:paddingTop="@dimen/_10sdp"
                                     android:text="Upload Photo of Citizen Certificate"
                                     android:textColor="@color/enrollColor"
-                                    android:textSize="12sp" />
+                                    android:textSize="@dimen/_10sdp" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -419,7 +418,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
+                                android:layout_margin="@dimen/_4sdp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
@@ -436,14 +435,14 @@
                                     android:paddingTop="@dimen/_10sdp"
                                     android:text="Upload Photo of Citizenship Certificate"
                                     android:textColor="@color/enrollColor"
-                                    android:textSize="12sp" />
+                                    android:textSize="@dimen/_10sdp" />
 
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
+                                android:layout_margin="@dimen/_4sdp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
@@ -460,7 +459,7 @@
                                     android:paddingTop="@dimen/_10sdp"
                                     android:text="Upload Photo of Citizen Certificate"
                                     android:textColor="@color/enrollColor"
-                                    android:textSize="12sp" />
+                                    android:textSize="@dimen/_10sdp" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -488,7 +487,7 @@
                 <ImageView
                     android:id="@+id/enrollment_tick"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/_30sdp"
                     android:padding="@dimen/_8sdp"
                     android:src="@drawable/ic_check_white" />
             </FrameLayout>

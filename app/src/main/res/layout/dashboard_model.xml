@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_width="@dimen/_100sdp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_60sdp"
         android:orientation="vertical">
 
 
@@ -24,21 +24,20 @@
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/dashboard_icon_id"
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
                     android:src="@mipmap/ic_launcher"/>
 
             </RelativeLayout>
             <TextView
                 android:layout_below="@+id/adad"
-                android:paddingTop="@dimen/_4sdp"
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="adad"
+                android:text="Balance \n Inquiry"
                 android:id="@+id/dashboard_text_id"
                 android:textAlignment="center"
-                android:textSize="@dimen/_10sdp"/>
+                android:textSize="@dimen/_8sdp"/>
         </RelativeLayout>
 
     </LinearLayout>

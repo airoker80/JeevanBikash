@@ -53,21 +53,19 @@
                     android:visibility="gone"
                     android:layout_marginLeft="@dimen/_60sdp"
                     android:id="@+id/app_icon"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_applogo" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/_11sdp"
+                    android:text="Dashboard"
+                    android:textColor="@color/white"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/_14sdp"
-                    android:layout_marginLeft="@dimen/_6sdp"
-                    android:layout_toRightOf="@+id/app_icon"
-                    android:text="JEEVAN BIKAS SAMAJ"
-                    android:textColor="@color/white" />
+                    android:layout_centerHorizontal="true" />
             </RelativeLayout>
         </LinearLayout>
 

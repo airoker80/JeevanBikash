@@ -45,7 +45,7 @@
         <item name="tabIndicatorColor">@color/white</item>
     </style>
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.AppCompat.Button">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">@dimen/_10sdp</item>
         <!--<item name="android:textColor">?android:textColorSecondary</item>-->
         <item name="textAllCaps">true</item>
     </style>

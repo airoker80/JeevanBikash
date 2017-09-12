@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="Loan Demand"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16sdp"/>
+            android:textSize="@dimen/_15sdp"/>
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/laod_gone_rl"

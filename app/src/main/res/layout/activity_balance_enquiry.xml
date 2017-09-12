@@ -46,9 +46,11 @@
                         android:padding="8dp"
                         android:text="Balanace Enquiry"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_16sdp" />
+                        android:textSize="@dimen/_15sdp" />
 
                     <Spinner
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:id="@+id/spinner"
                         style="@style/SpinnerStyle"
                         android:layout_width="wrap_content"

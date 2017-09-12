@@ -5,13 +5,15 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/topPanel"
     android:orientation="vertical"
+    android:background="@color/transparent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView
+        android:layout_above="@+id/submit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="80dp"
+        android:paddingBottom="60dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -21,11 +23,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="8dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_8sdp"
             android:orientation="vertical"
-            android:padding="4dp">
+            android:padding="@dimen/_4sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,7 +45,7 @@
                     android:paddingTop="8dp"
                     android:text="Name"
                     android:textColor="#95AFBE"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/nameDetails"
@@ -54,7 +56,7 @@
                     android:paddingTop="8dp"
                     android:text="Sushan Shrestha"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
             <LinearLayout
@@ -72,7 +74,7 @@
                     android:paddingTop="8dp"
                     android:text="Member Id"
                     android:textColor="#95AFBE"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/memberIdnnumber"
@@ -83,7 +85,7 @@
                     android:paddingTop="8dp"
                     android:text="3343434"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
             <LinearLayout
@@ -101,7 +103,7 @@
                     android:paddingTop="8dp"
                     android:text="Branch"
                     android:textColor="#95AFBE"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/branchName"
@@ -112,7 +114,7 @@
                     android:paddingTop="8dp"
                     android:text="Member Id"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
 
@@ -122,26 +124,27 @@
                 android:layout_marginTop="8dp"
                 android:text="Loan Type"
                 android:textColor="#95AFBE"
-                android:textSize="12sp" />
+                android:textSize="@dimen/_10sdp" />
 
             <Spinner
                 android:layout_marginTop="8dp"
                 android:id="@+id/spinner"
                 style="@style/SpinnerStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_20sdp"
                 android:backgroundTint="@color/white"
                 android:entries="@array/loantype"></Spinner>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:text="Loan Amount"
                 android:textColor="#95AFBE"
-                android:textSize="12sp" />
+                android:textSize="@dimen/_10sdp" />
 
             <EditText
+                android:textSize="@dimen/_10sdp"
                 android:id="@+id/loanAmt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,16 +163,16 @@
                    android:layout_height="wrap_content"
                    android:orientation="horizontal"
                    android:layout_weight="1"
-                   android:layout_margin="4dp">
+                   android:layout_margin="@dimen/_4sdp">
                    <ImageView
-                       android:layout_width="70dp"
-                       android:layout_height="70dp"
-                       android:src="@drawable/defaultprofile"/>
+                       android:layout_width="@dimen/_50sdp"
+                       android:layout_height="@dimen/_50sdp"
+                       android:src="@drawable/ic_new_file"/>
                    <TextView
                        android:layout_marginLeft="8dp"
                        android:textColor="@color/white"
                        android:layout_width="wrap_content"
-                       android:textSize="12sp"
+                       android:textSize="@dimen/_10sdp"
                        android:layout_height="wrap_content"
                        android:text="Upload Photo of Filled up Loan Demand Form"/>
 
@@ -179,17 +182,17 @@
                    android:layout_height="wrap_content"
                    android:orientation="horizontal"
                    android:layout_weight="1"
-                   android:layout_margin="4dp">
+                   android:layout_margin="@dimen/_4sdp">
 
                    <ImageView
-                       android:layout_width="70dp"
-                       android:layout_height="70dp"
-                       android:src="@drawable/defaultprofile"/>
+                       android:layout_width="@dimen/_50sdp"
+                       android:layout_height="@dimen/_50sdp"
+                       android:src="@drawable/ic_new_file"/>
                    <TextView
                        android:layout_marginLeft="8dp"
                        android:textColor="@color/white"
                        android:layout_width="wrap_content"
-                       android:textSize="12sp"
+                       android:textSize="@dimen/_10sdp"
                        android:layout_height="wrap_content"
                        android:text="Upload Photo of Filled up Loan Demand Form"/>
 
@@ -205,7 +208,7 @@
     <ImageView
         android:id="@+id/submit"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
         android:background="#F9B847"

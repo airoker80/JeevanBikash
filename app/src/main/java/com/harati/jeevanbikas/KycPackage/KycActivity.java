@@ -26,7 +26,7 @@ public class KycActivity extends AppCompatActivity {
         image = (ImageView) findViewById(R.id.topup_back);
         spinner = (Spinner) findViewById(R.id.spinner);
         title = (TextView) findViewById(R.id.title);
-        title.setText("Cash Deposit");
+//        title.setText("Cash Deposit");
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
                 R.array.language, R.layout.text_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
