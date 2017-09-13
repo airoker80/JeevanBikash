@@ -127,11 +127,11 @@
                 android:textSize="@dimen/_10sdp" />
 
             <Spinner
-                android:layout_marginTop="8dp"
                 android:id="@+id/spinner"
                 style="@style/SpinnerStyle"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="@color/white"
                 android:entries="@array/loantype"></Spinner>
 
@@ -205,15 +205,33 @@
 
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/submit"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:background="#F9B847"
-        android:clickable="true"
-        app:srcCompat="@drawable/ic_check" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:clickable="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:background="#F9B847"
+            app:srcCompat="@drawable/ic_check" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/crossIV"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:clickable="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:background="#c93e3b"
+            app:srcCompat="@drawable/ic_error" />
+
+    </LinearLayout>
 </RelativeLayout>
 
 

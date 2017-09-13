@@ -50,7 +50,8 @@ public class LoanFragment extends Fragment {
                 if (input.getText().toString().equals("")){
                     input.setError("Please Enter the Phone Number");
                 }else {
-                    Fragment fragment= new FingerPrintLoanFragment();
+                    Fragment fragment= new DemandDetailsFragment();
+//                    Fragment fragment= new FingerPrintLoanFragment();
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);
                     transaction.replace(R.id.contentFrame, fragment);

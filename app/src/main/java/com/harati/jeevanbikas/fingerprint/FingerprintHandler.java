@@ -70,15 +70,15 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     }
 
 
-    public void update(String e, Boolean success){
+    public void update(String e, Boolean success) {
 //        TextView textView = (TextView) ((Activity)context).findViewById(R.id.errorText);
 //        textView.setText(e);
-        if(success){
+        if (success) {
 //            textView.setTextColor(ContextCompat.getColor(context,R.color.colorPrimaryDark));
-            Log.d("success","--->"+e+"<---");
+            Log.d("success", "--->" + e + "<---");
             showDialog();
-        }else {
-            Log.d("failed","--->"+e+"<---");
+        } else {
+            Log.d("failed", "--->" + e + "<---");
             showErrorDialog();
         }
     }
@@ -100,7 +100,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 //
 //
 //        alertDialog.show();
-        Intent intent= new Intent(context, DialogActivity.class);
+        Intent intent = new Intent(context, DialogActivity.class);
         context.startActivity(intent);
 
     }
@@ -122,8 +122,8 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 //
 //
 //        alertDialog.show();
-        Intent intent= new Intent(context, ErrorDialogActivity.class);
-        intent.putExtra("msg","Finger Authentication Failed");
+        Intent intent = new Intent(context, ErrorDialogActivity.class);
+        intent.putExtra("msg", "Finger Authentication Failed");
         context.startActivity(intent);
 
     }

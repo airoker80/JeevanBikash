@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
+import com.harati.jeevanbikas.LoanDemand.DemandDetailsFragment;
 import com.harati.jeevanbikas.R;
 
 import java.util.ArrayList;
@@ -50,7 +51,8 @@ public class DepositFragment extends Fragment {
                 if (input.getText().toString().equals("")){
                     input.setError("Please Enter the Phone Number");
                 }else {
-                    Fragment fragment = new FingerPrintAuthDepositFragment();
+                    Fragment fragment = new DepositDetailsFragment();
+//                    Fragment fragment = new FingerPrintAuthDepositFragment();
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);
                     transaction.replace(R.id.contentFrame, fragment);

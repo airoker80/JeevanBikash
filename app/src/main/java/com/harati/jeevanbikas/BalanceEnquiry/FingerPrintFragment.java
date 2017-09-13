@@ -58,9 +58,11 @@ public class FingerPrintFragment extends Fragment {
 
     private KeyStore keyStore;
     // Variable used for storing the key in the Android Keystore container
-    private static final String KEY_NAME = "androidHive";
+    private static final String KEY_NAME = "Bikash";
     private Cipher cipher;
     private TextView textView;
+
+
     public FingerPrintFragment() {
     }
 
@@ -74,7 +76,7 @@ public class FingerPrintFragment extends Fragment {
         KeyguardManager keyguardManager = (KeyguardManager) getActivity().getSystemService(KEYGUARD_SERVICE);
         FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(FINGERPRINT_SERVICE);
 
-        if(!fingerprintManager.isHardwareDetected()){
+        if (!fingerprintManager.isHardwareDetected()) {
             /**
              * An error message will be displayed if the device does not contain the fingerprint hardware.
              * However if you plan to implement a default authentication method,
@@ -84,22 +86,22 @@ public class FingerPrintFragment extends Fragment {
              * startActivity(intent);
              */
             textView.setText("Your Device does not have a Fingerprint Sensor");
-        }else {
+        } else {
             // Checks whether fingerprint permission is set on manifest
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
 //                textView.setText("Fingerprint authentication permission not enabled");
                 Toast.makeText(getContext(), "Fingerprint authentication permission not enabled", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 // Check whether at least one fingerprint is registered
                 if (!fingerprintManager.hasEnrolledFingerprints()) {
 //                    textView.setText("Register at least one fingerprint in Settings");
                     Toast.makeText(getContext(), "Register at least one fingerprint in Settings", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     // Checks whether lock screen security is enabled or not
                     if (!keyguardManager.isKeyguardSecure()) {
 //                        textView.setText("Lock screen security not enabled in Settings");
                         Toast.makeText(getContext(), "Lock screen security not enabled in Settings", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         generateKey();
 
 
@@ -189,6 +191,7 @@ public class FingerPrintFragment extends Fragment {
             throw new RuntimeException("Failed to init Cipher", e);
         }
     }
+
     public void showMessage() {
         View v = null;
 
