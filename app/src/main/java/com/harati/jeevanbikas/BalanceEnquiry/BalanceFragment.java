@@ -16,7 +16,11 @@ import android.widget.ImageView;
 
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
+import com.harati.jeevanbikas.Helper.HelperListModelClass;
+import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
+import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +34,7 @@ public class BalanceFragment extends Fragment {
     List<AutoCompleteModel> autoCompleteModelList = new ArrayList<AutoCompleteModel>();
     AutoCompleteTextView input;
     ImageView imageView;
-
+    List<HelperListModelClass> helperListModelClasses=new ArrayList<HelperListModelClass>();
     public BalanceFragment() {
     }
 
@@ -62,5 +66,12 @@ public class BalanceFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void enquiryBalance(){
+        VolleyRequestHandler volleyRequestHandler = new VolleyRequestHandler(getContext());
+        helperListModelClasses.add(new HelperListModelClass("mobile",input.getText().toString()));
+        String response = volleyRequestHandler.makePostRequest(JeevanBikashConfig.BASE_URL+"/agentbanking/api/v1/member/search?device=SerialNo",helperListModelClasses);
+
     }
 }

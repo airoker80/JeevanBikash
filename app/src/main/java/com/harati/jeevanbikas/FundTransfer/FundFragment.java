@@ -53,7 +53,8 @@ public class FundFragment extends Fragment {
                 }else {
                     Bundle args = new Bundle();
                     args.putString("goto","info");
-                    Fragment fragment= new FundFingerCheckFragment();
+                    Fragment fragment= new FundDetailsFragment();
+//                    Fragment fragment= new FundFingerCheckFragment();
                     fragment.setArguments(args);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);

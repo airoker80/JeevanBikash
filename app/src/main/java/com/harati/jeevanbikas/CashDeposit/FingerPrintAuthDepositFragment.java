@@ -31,7 +31,7 @@ public class FingerPrintAuthDepositFragment extends Fragment {
         fingerPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment= new CashDepositFormFragment();
+                Fragment fragment= new AgentPinDetailsFragment();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.addToBackStack(null);
                 transaction.replace(R.id.contentFrame, fragment);

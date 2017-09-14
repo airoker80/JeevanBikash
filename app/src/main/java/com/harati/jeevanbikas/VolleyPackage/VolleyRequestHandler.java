@@ -1,6 +1,7 @@
 package com.harati.jeevanbikas.VolleyPackage;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,9 +26,12 @@ import java.util.Map;
  */
 
 public class VolleyRequestHandler {
-//    List<HelperListModelClass> helperListModelClasses = new ArrayList<HelperListModelClass>();
-    AutoCompleteModel completeModel;
     Context context;
+
+    public VolleyRequestHandler(Context context) {
+        this.context = context;
+    }
+
     String jsonRespose;
 
 
@@ -44,7 +48,7 @@ public class VolleyRequestHandler {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
+                        jsonRespose=error.toString();
                     }
                 }
         )
@@ -59,10 +63,6 @@ public class VolleyRequestHandler {
                     String value = helperListModelClasses.get(0).getValue();
                     map.put(key,value);
                 }
-
-                //   map.put(KEY_USERNAME, Config.username);
-                // map.put(key_route, route);
-
                 return map;
 
             }
