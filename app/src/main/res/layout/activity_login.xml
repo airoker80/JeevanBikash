@@ -14,11 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_toLeftOf="@+id/text"
+            android:layout_marginTop="@dimen/_30sdp"
             android:src="@drawable/ic_applogo"/>
         <TextView
             android:textColor="@color/white"
@@ -77,4 +78,18 @@
         android:layout_gravity="center"
         android:textAllCaps="false"
         android:background="@drawable/border_button_baground"/>
+
+    <TextView
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:layout_marginLeft="@dimen/_32sdp"
+        android:layout_marginRight="@dimen/_32sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:id="@+id/reset_pin"
+        android:clickable="true"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="reset Pin"/>
 </LinearLayout>

@@ -45,6 +45,7 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
                 Fragment fragment = new FingerPrintAuthDepositFragment();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFrame, fragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
                 break;
             case R.id.demand_cross:

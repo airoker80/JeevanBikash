@@ -48,6 +48,7 @@ public class FundDetailsFragment extends Fragment implements View.OnClickListene
                 fragment.setArguments(args);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFrame, fragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
                 break;
             case R.id.fund_cross:

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.harati.jeevanbikas.AgentDashboard.AgentDashboardActivity;
 import com.harati.jeevanbikas.BalanceEnquiry.BalanceEnquiryActivity;
 import com.harati.jeevanbikas.CashDeposit.CashDepositActivity;
 import com.harati.jeevanbikas.CashWithDrawl.CashWithDrawlActivity;
@@ -80,6 +81,9 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
                 }
                 if (dashBoardModel.getDashboard_icon_name().equals("Customization \n & Setting")){
                         context.startActivity(new Intent(context,KycActivity.class));
+                }
+                if (dashBoardModel.getDashboard_icon_name().equals("Agent \n Dashboard")){
+                        context.startActivity(new Intent(context,AgentDashboardActivity.class));
                 }
             }
         });

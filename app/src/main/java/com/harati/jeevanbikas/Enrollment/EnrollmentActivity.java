@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
+import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
 public class EnrollmentActivity extends AppCompatActivity implements View.OnClickListener {
@@ -19,7 +20,7 @@ public class EnrollmentActivity extends AppCompatActivity implements View.OnClic
     EditText enrollment_name, enrollment_age, enrollment_father_name, enrollment_spouse_name, enrollment_grandfather_name, enrollment_address, enrollment_mobile_number;
     RadioGroup enrollment_rg;
     RadioButton enrollment_male_rb, enrollment_female_rb;
-    ImageView enrollment_back, enrollment_choose_img, enrollment_tick;
+    ImageView enrollment_back, enrollment_choose_img, enrollment_tick,enrollment_cross;
     String checked_string="";
 
     @Override
@@ -42,9 +43,11 @@ public class EnrollmentActivity extends AppCompatActivity implements View.OnClic
         enrollment_back = (ImageView) findViewById(R.id.enrollment_back);
         enrollment_choose_img = (ImageView) findViewById(R.id.enrollment_choose_img);
         enrollment_tick = (ImageView) findViewById(R.id.enrollment_tick);
+        enrollment_cross = (ImageView) findViewById(R.id.enrollment_cross);
 
         enrollment_tick.setOnClickListener(this);
         enrollment_choose_img.setOnClickListener(this);
+        enrollment_cross.setOnClickListener(this);
         enrollment_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,6 +79,9 @@ public class EnrollmentActivity extends AppCompatActivity implements View.OnClic
                 checkAllField();
                 break;
             case R.id.enrollment_choose_img:
+                break;
+            case R.id.enrollment_cross:
+                startActivity(new Intent(EnrollmentActivity.this, MainActivity.class));
                 break;
         }
     }

@@ -44,11 +44,6 @@ public class BalanceEnquiryActivity extends AppCompatActivity {
     public void onbackPressed() {
         super.onBackPressed();
     }
-    @Override
-    public void onBackPressed() {
-//        super.onBackPressed();
-        startActivity(new Intent(BalanceEnquiryActivity.this, MainActivity.class));
-    }
 
     public void setPage(String name) {
         Fragment fragment = null;
@@ -62,6 +57,7 @@ public class BalanceEnquiryActivity extends AppCompatActivity {
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.contentFrame, fragment);
+//        transaction.addToBackStack(null);
         transaction.commit();
     }
 

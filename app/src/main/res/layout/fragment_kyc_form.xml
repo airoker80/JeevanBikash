@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.harati.jeevanbikas.KycPackage.KycFormFragment"
     android:background="@color/transparent">
 
@@ -485,42 +484,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentBottom="true">
-                    <ImageView
-                        android:layout_weight="1"
-                        android:id="@+id/enrollment_tick"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
-                        android:clickable="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_gravity="center"
-                        android:background="#F9B847"
-                        app:srcCompat="@drawable/ic_check" />
-                    <ImageView
-                        android:layout_weight="1"
-                        android:id="@+id/crossIV"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
-                        android:clickable="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_gravity="center"
-                        android:background="#c93e3b"
-                        app:srcCompat="@drawable/ic_error" />
-
-                </LinearLayout>
-
-<!--
                 <ImageView
                     android:id="@+id/enrollment_tick"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:padding="@dimen/_8sdp"
                     android:src="@drawable/ic_check_white" />
--->
             </FrameLayout>
         </LinearLayout>
 

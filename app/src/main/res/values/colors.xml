@@ -11,4 +11,5 @@
     <color name="textPrimary">#f5f5f5</color>
     <color name="textPrimaryDark">#95aab4</color>
     <color name="errorText">#ff7878</color>
+    <color name="pinbackground">#3b465a</color>
 </resources>

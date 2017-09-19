@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -50,7 +51,12 @@
         <activity
             android:name=".Helper.ErrorDialogActivity"
             android:theme="@style/dailog" />
-        <activity android:name=".KycPackage.KycActivity"></activity>
+        <activity android:name=".KycPackage.KycActivity" />
+        <activity android:name=".ResetPin.ResetPin" />
+        <activity android:name=".ResetPassword.ResetPassword" />
+        <activity android:name=".AgentDashboard.AgentDashboardActivity" />
+        <activity android:name=".ResetPassword.InitialResetPassword" />
+        <activity android:name=".ResetPin.InitialResetPinActivity"></activity>
     </application>
 
 </manifest>

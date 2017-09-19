@@ -62,7 +62,7 @@
             app:srcCompat="@drawable/ic_check" />
         <ImageView
             android:layout_weight="1"
-            android:id="@+id/crossIV"
+            android:id="@+id/deposit_cross"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:clickable="true"

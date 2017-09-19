@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_mobile_topup, "Mobile Recharge \n & Topup"));
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_bill, "Bill \n Payment"));
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_utility, "Utility \n Payment"));
-        dashBoardModels.add(new DashBoardModel(R.drawable.ic_profile, "My \n Profile"));
+        dashBoardModels.add(new DashBoardModel(R.drawable.ic_profile, "Agent \n Dashboard"));
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_setting, "Customization \n & Setting"));
         dashboard_icon_list.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
         DashboardRecyclerViewAdapter dashboardRecyclerViewAdapter = new DashboardRecyclerViewAdapter(MainActivity.this, dashBoardModels);

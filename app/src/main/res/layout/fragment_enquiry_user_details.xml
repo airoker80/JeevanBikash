@@ -31,7 +31,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/name"
+                    android:id="@+id/enquiryUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_13sdp"
@@ -138,6 +138,7 @@
                     android:padding="@dimen/_4sdp"
                     android:background="@drawable/image_baground">
                     <ImageView
+                        android:id="@+id/enquiryUserPhoto"
                         android:layout_alignParentRight="true"
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="@dimen/_100sdp"
