@@ -5,12 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.harati.jeevanbikas.Adapter.DashboardRecyclerViewAdapter;
+import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
 import com.harati.jeevanbikas.R;
 
@@ -23,19 +26,32 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView dashboard_icon_list;
     public static RelativeLayout main_gone_rl;
     public static Typeface centuryGothic;
+    ImageView app_icon;
 //    public Typeface centuryGothic=Typeface.createFromAsset(getAssets(), "fonts/epimodem.ttf");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final SessionHandler sessionHandler = new SessionHandler(MainActivity.this);
         setContentView(R.layout.activity_main);
         main_gone_rl = (RelativeLayout) findViewById(R.id.main_gone_rl);
         spinner = (Spinner) findViewById(R.id.spinner);
         TextView dashboardTitile = (TextView) findViewById(R.id.dashboardTitile);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
-                R.array.language, R.layout.text_layout);
+        R.array.language, R.layout.text_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        app_icon=(ImageView)findViewById(R.id.app_icon);
+
+        app_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionHandler.logoutUser();
+            }
+        });
+
+//        sessionHandler.getInfo();
 
         centuryGothic=Typeface.createFromAsset(MainActivity.this.getAssets(), "cg.ttf");
         dashboardTitile.setTypeface(centuryGothic);
