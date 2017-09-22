@@ -23,13 +23,13 @@ import org.json.JSONObject;
  */
 public class EnquiryUserDetails extends Fragment implements View.OnClickListener {
     ImageView enquiry_submit, enquiry_cross, enquiryUserPhoto;
-    TextView memberIdnnumber, branchName, accNoDetails,enquiryUserName;
+    TextView memberIdnnumber, branchName, accNoDetails,enquiryUserName,memberId,branch ,accNo;
     String bundleRespone;
 
     public EnquiryUserDetails() {
         // Required empty public constructor
     }
-
+//.setTypeface(MainActivity.centuryGothic);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,10 +46,25 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         enquiry_cross.setOnClickListener(this);
 
 
+        memberId = (TextView) view.findViewById(R.id.memberId);
+        branch = (TextView) view.findViewById(R.id.branch);
+        accNo = (TextView) view.findViewById(R.id.accNo);
+//        enquiryUserName = (TextView) view.findViewById(R.id.enquiryUserName);
+
         memberIdnnumber = (TextView) view.findViewById(R.id.memberIdnnumber);
         branchName = (TextView) view.findViewById(R.id.branchName);
         accNoDetails = (TextView) view.findViewById(R.id.accNoDetails);
         enquiryUserName = (TextView) view.findViewById(R.id.enquiryUserName);
+
+        memberId.setTypeface(MainActivity.centuryGothic);
+        branch.setTypeface(MainActivity.centuryGothic);
+        accNo.setTypeface(MainActivity.centuryGothic);
+        memberIdnnumber.setTypeface(MainActivity.centuryGothic);
+        branchName.setTypeface(MainActivity.centuryGothic);
+        accNoDetails.setTypeface(MainActivity.centuryGothic);
+        enquiryUserName.setTypeface(MainActivity.centuryGothic);
+
+
 
 
         return view;

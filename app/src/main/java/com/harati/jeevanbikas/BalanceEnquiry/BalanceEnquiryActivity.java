@@ -26,7 +26,10 @@ public class BalanceEnquiryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance_enquiry);
         spinner = (Spinner) findViewById(R.id.spinner);
+
         title = (TextView) findViewById(R.id.title);
+
+        title.setTypeface(MainActivity.centuryGothic);
         image = (ImageView) findViewById(R.id.image);
         title.setText("Balance Enquiry");
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,

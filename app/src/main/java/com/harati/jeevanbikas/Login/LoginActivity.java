@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
-import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
-import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.ResetPin.ResetPin;
-import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
+import com.harati.jeevanbikas.Volley.RequestListener;
+import com.harati.jeevanbikas.Volley.VolleyRequestHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,18 +47,30 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                jeevanLogin();
+//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                jeevanLogin();
+
             }
         });
     }
 
     private void jeevanLogin(){
-        VolleyRequestHandler volleyRequestHandler = new VolleyRequestHandler(LoginActivity.this);
-        helperListModelClasses.add(new HelperListModelClass("username",jb_username.getText().toString()));
-        helperListModelClasses.add(new HelperListModelClass("password",jb_password.getText().toString()));
-        String response = volleyRequestHandler.makePostRequest(JeevanBikashConfig.BASE_URL,helperListModelClasses);
 
-        Log.d("response-","--->"+response+"<---");
+        final JSONObject jsonObject= new JSONObject();
+        try {
+            jsonObject.put("username", "A0020001");
+            jsonObject.put("password", "Aft@12345");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        VolleyRequestHandler handler= new VolleyRequestHandler(getApplicationContext());
+        handler.makePostRequest("login?serialno=12345", jsonObject, new RequestListener() {
+            @Override
+            public void onSuccess(String response) {
+                Log.d("response-----", response);
+            }
+        });
+
     }
 }

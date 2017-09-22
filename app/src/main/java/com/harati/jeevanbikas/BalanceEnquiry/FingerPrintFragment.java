@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harati.jeevanbikas.Helper.DialogActivity;
+import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.fingerprint.FingerprintHandler;
 
@@ -60,7 +61,7 @@ public class FingerPrintFragment extends Fragment {
     // Variable used for storing the key in the Android Keystore container
     private static final String KEY_NAME = "Bikash";
     private Cipher cipher;
-    private TextView textView;
+    private TextView textView,text;
 
 
     public FingerPrintFragment() {
@@ -73,6 +74,8 @@ public class FingerPrintFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fingerprint, container, false);
         fingerPrint = (ImageView) view.findViewById(R.id.fingerPrint);
+        text = (TextView) view.findViewById(R.id.text);
+        text.setTypeface(MainActivity.centuryGothic);
         KeyguardManager keyguardManager = (KeyguardManager) getActivity().getSystemService(KEYGUARD_SERVICE);
         FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(FINGERPRINT_SERVICE);
 

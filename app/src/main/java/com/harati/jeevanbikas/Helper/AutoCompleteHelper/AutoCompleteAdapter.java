@@ -12,6 +12,7 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
 import java.util.ArrayList;
@@ -45,7 +46,9 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutoCompleteModel> {
 
 //        userImg.setImageResource(autoCompleteModel.getImageId());
         userNo.setText(autoCompleteModel.getPhoneNumber());
+        userNo.setTypeface(MainActivity.centuryGothic);
         accNo.setText(autoCompleteModel.getName());
+        accNo.setTypeface(MainActivity.centuryGothic);
 //        return super.getView(position, convertView, parent);
         return  convertView;
     }

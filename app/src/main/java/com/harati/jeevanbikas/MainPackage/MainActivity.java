@@ -1,5 +1,6 @@
 package com.harati.jeevanbikas.MainPackage;
 
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.harati.jeevanbikas.Adapter.DashboardRecyclerViewAdapter;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
@@ -20,18 +22,23 @@ public class MainActivity extends AppCompatActivity {
     List<DashBoardModel> dashBoardModels = new ArrayList<DashBoardModel>();
     RecyclerView dashboard_icon_list;
     public static RelativeLayout main_gone_rl;
+    public static Typeface centuryGothic;
+//    public Typeface centuryGothic=Typeface.createFromAsset(getAssets(), "fonts/epimodem.ttf");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         main_gone_rl = (RelativeLayout) findViewById(R.id.main_gone_rl);
         spinner = (Spinner) findViewById(R.id.spinner);
+        TextView dashboardTitile = (TextView) findViewById(R.id.dashboardTitile);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
                 R.array.language, R.layout.text_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        centuryGothic=Typeface.createFromAsset(MainActivity.this.getAssets(), "cg.ttf");
+        dashboardTitile.setTypeface(centuryGothic);
         dashboard_icon_list = (RecyclerView) findViewById(R.id.dashboard_icon_list);
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_balance_enquiry, "Balance \n Inquiry"));
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_cash_withdrawl, "Cash \n Withdrawal"));

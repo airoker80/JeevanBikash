@@ -4,6 +4,7 @@ package com.harati.jeevanbikas.BalanceEnquiry;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
@@ -37,6 +39,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
     AutoCompleteTextView input;
     ImageView imageView,enquiry_cross;
     List<HelperListModelClass> helperListModelClasses=new ArrayList<HelperListModelClass>();
+    TextView text;
     public BalanceFragment() {
     }
 
@@ -48,18 +51,21 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
         enquiry_cross = (ImageView) view.findViewById(R.id.enquiry_cross);
         input = (AutoCompleteTextView) view.findViewById(R.id.input);
 
+        text = (TextView) view.findViewById(R.id.text);
+        text.setTypeface(MainActivity.centuryGothic);
         autoCompleteModelList.add(new AutoCompleteModel("Sameer", "9843697320", R.drawable.ic_username));
         autoCompleteModelList.add(new AutoCompleteModel("arjun", "9844400099", R.drawable.ic_username));
         autoCompleteModelList.add(new AutoCompleteModel("Binaya", "9841012346", R.drawable.ic_username));
         input.setDropDownBackgroundResource(R.drawable.shape_transparent);
         AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(getContext(), autoCompleteModelList);
         input.setAdapter(autoCompleteAdapter);
+        input.setTypeface(MainActivity.centuryGothic);
         imageView.setOnClickListener(this);
         enquiry_cross.setOnClickListener(this);
         return view;
     }
 
-    private void enquiryBalance(){
+    /*private void enquiryBalance(){
         VolleyRequestHandler volleyRequestHandler = new VolleyRequestHandler(getContext());
         helperListModelClasses.add(new HelperListModelClass("mobile",input.getText().toString()));
         String response = volleyRequestHandler.makePostRequest(JeevanBikashConfig.BASE_URL+"/agentbanking/api/v1/member/search?device=SerialNo",helperListModelClasses);
@@ -72,7 +78,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
         transaction.addToBackStack(null);
         transaction.replace(R.id.contentFrame, fragment);
         transaction.commit();
-    }
+    }*/
 
     @Override
     public void onClick(View v) {

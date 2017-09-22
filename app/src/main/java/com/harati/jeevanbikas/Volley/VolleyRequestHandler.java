@@ -1,4 +1,4 @@
-package com.harati.jeevanbikas.VolleyPackage;
+package com.harati.jeevanbikas.Volley;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,7 +15,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
-import com.harati.jeevanbikas.VolleyPackage.RequestListener;
 
 import org.json.JSONObject;
 
