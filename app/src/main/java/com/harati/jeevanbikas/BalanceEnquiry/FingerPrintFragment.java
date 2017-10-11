@@ -47,7 +47,6 @@ import javax.crypto.SecretKey;
 
 import static android.content.Context.FINGERPRINT_SERVICE;
 import static android.content.Context.KEYGUARD_SERVICE;
-import static com.harati.jeevanbikas.R.id.textView;
 
 
 /**

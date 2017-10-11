@@ -50,28 +50,30 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <TextView
+                                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Name"
                                     android:textColor="@color/enrollColor"
                                     android:textSize="@dimen/_12sdp" />
 
-                                <EditText
+                                <com.harati.jeevanbikas.Helper.CGEditText
+                                    android:textSize="@dimen/_10sdp"
                                     android:id="@+id/enrollment_name"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_32sdp"
                                     android:backgroundTint="@color/enrollColor"
                                     android:textColor="@color/white" />
 
-                                <TextView
+                                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Age"
                                     android:textColor="@color/enrollColor"
                                     android:textSize="@dimen/_12sdp" />
 
-                                <EditText
+                                <com.harati.jeevanbikas.Helper.CGEditText
+                                    android:textSize="@dimen/_10sdp"
                                     android:id="@+id/enrollment_age"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_32sdp"
@@ -93,8 +95,8 @@
                             </LinearLayout>
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/textView"
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                            android:id="@+id/com.harati.jeevanbikas.Helper.CenturyGothicTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Sex"
@@ -128,7 +130,7 @@
                                 android:textSize="@dimen/_12sdp" />
                         </RadioGroup>
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -136,135 +138,141 @@
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
+                            android:textSize="@dimen/_10sdp"
                             android:id="@+id/enrollment_father_name"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Spouse's name"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
+                            android:textSize="@dimen/_10sdp"
                             android:id="@+id/enrollment_spouse_name"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Grandfather's Name"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
+                            android:textSize="@dimen/_10sdp"
                             android:id="@+id/enrollment_grandfather_name"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Address"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
+                            android:textSize="@dimen/_10sdp"
                             android:id="@+id/enrollment_address"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Mobile Number"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
+                            android:textSize="@dimen/_10sdp"
                             android:id="@+id/enrollment_mobile_number"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Country"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
+                            android:textSize="@dimen/_10sdp"
                             android:id="@+id/kyc_country"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Zone"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
                             android:layout_width="match_parent"
-
+                            android:textSize="@dimen/_10sdp"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="District"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
                             android:layout_width="match_parent"
-
+                            android:textSize="@dimen/_10sdp"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="VDC/Municipality"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
                             android:layout_width="match_parent"
-
+                            android:textSize="@dimen/_10sdp"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Tole"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
                             android:layout_width="match_parent"
-
+                            android:textSize="@dimen/_10sdp"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
@@ -287,7 +295,7 @@
                                     android:layout_height="@dimen/_90sdp"
                                     android:src="@drawable/ic_new_file" />
 
-                                <TextView
+                                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="8dp"
@@ -311,7 +319,7 @@
                                     android:layout_height="@dimen/_90sdp"
                                     android:src="@drawable/ic_new_file" />
 
-                                <TextView
+                                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                                     android:layout_marginTop="@dimen/_4sdp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
@@ -324,7 +332,7 @@
                             </LinearLayout>
                         </LinearLayout>
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_12sdp"
@@ -332,23 +340,23 @@
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
+                            android:textSize="@dimen/_10sdp"
                             android:layout_width="match_parent"
-
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
 
-                        <TextView
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Issued Date"
                             android:textColor="@color/enrollColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <EditText
+                        <com.harati.jeevanbikas.Helper.CGEditText
                             android:layout_width="match_parent"
-
+                            android:textSize="@dimen/_10sdp"
                             android:layout_height="@dimen/_32sdp"
                             android:backgroundTint="@color/enrollColor"
                             android:textColor="@color/white" />
@@ -371,7 +379,7 @@
                                     android:layout_height="@dimen/_90sdp"
                                     android:src="@drawable/ic_new_file" />
 
-                                <TextView
+                                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="8dp"
@@ -395,7 +403,7 @@
                                     android:layout_height="@dimen/_90sdp"
                                     android:src="@drawable/ic_new_file" />
 
-                                <TextView
+                                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                                     android:layout_marginTop="@dimen/_4sdp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
@@ -427,7 +435,7 @@
                                     android:layout_height="@dimen/_90sdp"
                                     android:src="@drawable/ic_new_file" />
 
-                                <TextView
+                                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="8dp"
@@ -451,7 +459,7 @@
                                     android:layout_height="@dimen/_90sdp"
                                     android:src="@drawable/ic_new_file" />
 
-                                <TextView
+                                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                                     android:layout_marginTop="@dimen/_4sdp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"

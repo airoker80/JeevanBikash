@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
+import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class CashFragment extends Fragment {
     List<AutoCompleteModel> autoCompleteModelList = new ArrayList<AutoCompleteModel>();
     AutoCompleteTextView input;
      ImageView imageView;
+    TextView cash_wd_txt;
     public CashFragment() {
     }
 
@@ -37,6 +40,7 @@ public class CashFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_fund, container, false);
         imageView = (ImageView)view.findViewById(R.id.imageView);
         input = (AutoCompleteTextView) view.findViewById(R.id.input);
+        cash_wd_txt = (TextView) view.findViewById(R.id.cash_wd_txt);
 
         autoCompleteModelList.add(new AutoCompleteModel("Sameer","9843697320",R.drawable.ic_username));
         autoCompleteModelList.add(new AutoCompleteModel("arjun","9844400099",R.drawable.ic_username));
@@ -45,6 +49,8 @@ public class CashFragment extends Fragment {
         AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(getContext(),autoCompleteModelList);
         input.setAdapter(autoCompleteAdapter);
 
+        cash_wd_txt.setTypeface(MainActivity.centuryGothic);
+        input.setTypeface(MainActivity.centuryGothic);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

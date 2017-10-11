@@ -18,6 +18,7 @@ import com.harati.jeevanbikas.Enrollment.EnrollmentActivity;
 import com.harati.jeevanbikas.FundTransfer.FundTransferActivity;
 import com.harati.jeevanbikas.KycPackage.KycActivity;
 import com.harati.jeevanbikas.LoanDemand.LoanDemandActivity;
+import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.RechargeTopup.RechargeTopup;
@@ -50,6 +51,7 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
     public void onBindViewHolder(ViewHolder holder, int position) {
         final DashBoardModel dashBoardModel = dashBoardModelList.get(position);
         holder.dashboard_text_id.setText(dashBoardModel.getDashboard_icon_name());
+        holder.dashboard_text_id.setTypeface(MainActivity.centuryGothic);
         holder.dashboard_icon_id.setImageResource(dashBoardModel.getDashboard_icon_id());
         final AppCompatActivity activity=(AppCompatActivity) context;
         holder.itemView.setOnClickListener(new View.OnClickListener() {

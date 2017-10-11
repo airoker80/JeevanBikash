@@ -166,6 +166,7 @@
             app:srcCompat="@drawable/ic_check" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/enquiry_cross"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"

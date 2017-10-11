@@ -43,8 +43,8 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
         int getVid = v.getId();
         switch (getVid){
             case R.id.initial_password_reset:
-//                startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
-                sendOtpRequest();
+                startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
+//                sendOtpRequest();
                 break;
         }
     }
@@ -63,6 +63,11 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
             @Override
             public void onSuccess(String response) {
                 Log.d("response-----", response);
+            }
+
+            @Override
+            public void onFailure(String response) {
+
             }
         });
 

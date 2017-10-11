@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
+import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
 
@@ -30,6 +32,8 @@ public class CashwithdrawlFragment extends Fragment {
     ImageView submit;
     EditText withdrawlAmount,agentPin ,withdrawlRemark;
     String withdrawlAmountTxt,agentPinTxt ,withdrawlRemarkTxt;
+
+    TextView memberId,branch ,accNo,withdrawlTxt,at_pin ,remarks_txt;
     List<HelperListModelClass> helperListModelClassList =new ArrayList<HelperListModelClass>();
     public CashwithdrawlFragment() {
     }
@@ -42,6 +46,24 @@ public class CashwithdrawlFragment extends Fragment {
         withdrawlAmount=(EditText)view.findViewById(R.id.withdrawlAmount);
         agentPin=(EditText)view.findViewById(R.id.agentPin);
         withdrawlRemark=(EditText)view.findViewById(R.id.withdrawlRemark);
+
+
+        memberId=(TextView) view.findViewById(R.id.memberId);
+        branch=(TextView) view.findViewById(R.id.branch);
+        accNo=(TextView) view.findViewById(R.id.accNo);
+        withdrawlTxt=(TextView) view.findViewById(R.id.withdrawlTxt);
+        at_pin=(TextView) view.findViewById(R.id.at_pin);
+        remarks_txt=(TextView) view.findViewById(R.id.remarks_txt);
+
+
+        memberId.setTypeface(MainActivity.centuryGothic);
+        branch.setTypeface(MainActivity.centuryGothic);
+        accNo.setTypeface(MainActivity.centuryGothic);
+        withdrawlTxt.setTypeface(MainActivity.centuryGothic);
+        at_pin.setTypeface(MainActivity.centuryGothic);
+        remarks_txt.setTypeface(MainActivity.centuryGothic);
+
+
         submit.setOnClickListener(new View.OnClickListener() {
 
 

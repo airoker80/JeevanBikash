@@ -44,6 +44,7 @@ public class VolleyRequestHandler {
         } , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                requestListener.onFailure(String.valueOf(error));
                 Log.d("error", "asdasdasdas");
                 if (error instanceof TimeoutError) {
                     Toast.makeText(context, "Time Out Error", Toast.LENGTH_SHORT).show();

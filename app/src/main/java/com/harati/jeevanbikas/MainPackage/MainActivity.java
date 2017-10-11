@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.harati.jeevanbikas.Adapter.DashboardRecyclerViewAdapter;
+import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
 import com.harati.jeevanbikas.R;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public static RelativeLayout main_gone_rl;
     public static Typeface centuryGothic;
     ImageView app_icon;
+    CenturyGothicTextView logoutTxt;
 //    public Typeface centuryGothic=Typeface.createFromAsset(getAssets(), "fonts/epimodem.ttf");
 
     @Override
@@ -43,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         app_icon=(ImageView)findViewById(R.id.app_icon);
+        logoutTxt=(CenturyGothicTextView)findViewById(R.id.logoutTxt);
 
-        app_icon.setOnClickListener(new View.OnClickListener() {
+        logoutTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sessionHandler.logoutUser();

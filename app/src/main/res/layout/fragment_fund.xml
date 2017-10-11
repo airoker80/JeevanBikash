@@ -16,7 +16,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <AutoCompleteTextView
+        <com.harati.jeevanbikas.Helper.AutoCompleteHelper.CustomACTextView
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,8 +33,8 @@
             android:textColorHint="@color/white"
             android:textSize="@dimen/_12sdp" />
 
-        <TextView
-            android:id="@+id/text"
+        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+            android:id="@+id/cash_wd_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/input"
@@ -61,6 +61,7 @@
             android:background="#F9B847"
             app:srcCompat="@drawable/ic_check" />
         <ImageView
+            android:visibility="gone"
             android:layout_weight="1"
             android:id="@+id/deposit_cross"
             android:layout_width="match_parent"
