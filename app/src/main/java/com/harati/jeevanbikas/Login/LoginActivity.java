@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         VolleyRequestHandler handler = new VolleyRequestHandler(getApplicationContext());
-        handler.makePostRequest("login?serialno=12345", jsonObject, new RequestListener() {
+        handler.makePostRequest("login?serialno=12348", jsonObject, new RequestListener() {
             @Override
             public void onSuccess(String response) {
                 Log.d("response-----", response);
@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                     String balance = loginResponse.getString("balance");
                     String passwordChangeReqd = loginResponse.getString("passwordChangeReqd");
                     String pinChangeReqd = loginResponse.getString("pinChangeReqd");
+                    String agentPin = "12348";
 
                     boolean passBol = false, pinBol = false;
                     if (passwordChangeReqd.equals("true")) {
@@ -102,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                         pinBol = false;
                     }
 
-                    sessionHandler.saveLoginInformation(code, name, branch, passBol, pinBol);
+                    sessionHandler.saveLoginInformation(code, name, branch, passBol, pinBol,token,agentPin);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -112,13 +113,14 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String response) {
-                View view = new View(LoginActivity.this);
+             /*   View view = new View(LoginActivity.this);
                 Snackbar snackbar = Snackbar
                         .make(view, "Invalid Username or Password", Snackbar.LENGTH_LONG);
                 snackbar.show();
                 View snackbarview = snackbar.getView();
                 TextView textView = (TextView) snackbarview.findViewById(android.support.design.R.id.snackbar_text);
-                textView.setTextColor(Color.RED);
+                textView.setTextColor(Color.RED);*/
+             Log.e("error",response);
             }
         });
 

@@ -12,11 +12,16 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.harati.jeevanbikas.Adapter.DashboardRecyclerViewAdapter;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.Volley.RequestListener;
+import com.harati.jeevanbikas.Volley.VolleyRequestHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +34,13 @@ public class MainActivity extends AppCompatActivity {
     public static Typeface centuryGothic;
     ImageView app_icon;
     CenturyGothicTextView logoutTxt;
+    SessionHandler sessionHandler;
 //    public Typeface centuryGothic=Typeface.createFromAsset(getAssets(), "fonts/epimodem.ttf");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final SessionHandler sessionHandler = new SessionHandler(MainActivity.this);
+         sessionHandler = new SessionHandler(MainActivity.this);
         setContentView(R.layout.activity_main);
         main_gone_rl = (RelativeLayout) findViewById(R.id.main_gone_rl);
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -50,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
         logoutTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sessionHandler.logoutUser();
+                logoutInWeb();
+//                sessionHandler.logoutUser();
             }
         });
 
@@ -73,5 +80,20 @@ public class MainActivity extends AppCompatActivity {
         dashboard_icon_list.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
         DashboardRecyclerViewAdapter dashboardRecyclerViewAdapter = new DashboardRecyclerViewAdapter(MainActivity.this, dashBoardModels);
         dashboard_icon_list.setAdapter(dashboardRecyclerViewAdapter);
+    }
+
+    public void logoutInWeb(){
+        VolleyRequestHandler volleyRequestHandler = new VolleyRequestHandler(MainActivity.this);
+        volleyRequestHandler.makeLogoutRequest("logout?serialno=12348", new RequestListener() {
+            @Override
+            public void onSuccess(String response) {
+                sessionHandler.logoutUser();
+            }
+
+            @Override
+            public void onFailure(String response) {
+                sessionHandler.logoutUser();
+            }
+        });
     }
 }

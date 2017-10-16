@@ -24,6 +24,8 @@ public class SessionHandler {
     private static final String BRANCH_OFFICE ="branch_office";
     private static final String PASSWORD_CHANGE_RQD ="password_change_rqd";
     private static final String PIN_CHANGE_RQD ="pin_change_rqd";
+    private static final String AGENT_TOKEN ="agent_token";
+    private static final String AGENT_PIN ="agent_pin";
 
 
     public SessionHandler(Context context) {
@@ -32,13 +34,17 @@ public class SessionHandler {
         editor = pref.edit();
     }
 
-    public void saveLoginInformation(String agentCode, String username, String branchoffice,boolean passwordChangeReqd,boolean pinChangeReqd){
+    public void saveLoginInformation(String agentCode, String username,
+                                     String branchoffice,boolean passwordChangeReqd,
+                                     boolean pinChangeReqd,String token,String agentPin){
         editor.putBoolean(IS_USER_LOGIN, true);
         editor.putBoolean(PASSWORD_CHANGE_RQD, passwordChangeReqd);
         editor.putBoolean(PIN_CHANGE_RQD, pinChangeReqd);
         editor.putString(AGENT_CODE, agentCode);
         editor.putString(USERNAME,username);
         editor.putString(BRANCH_OFFICE,branchoffice);
+        editor.putString(AGENT_TOKEN,token);
+        editor.putString(AGENT_PIN,agentPin);
         editor.commit();
     }
 
@@ -53,6 +59,9 @@ public class SessionHandler {
 
     public String getAgentCode(){
         return  pref.getString(AGENT_CODE,"");
+    }
+    public String getAgentToken(){
+        return  pref.getString(AGENT_TOKEN,"");
     }
     public String getBranchOffice(){
         return  pref.getString(BRANCH_OFFICE,"");
