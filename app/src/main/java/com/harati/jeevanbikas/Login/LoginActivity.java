@@ -16,6 +16,9 @@ import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.ResetPin.ResetPin;
+import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
+import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
 import com.harati.jeevanbikas.Volley.RequestListener;
 import com.harati.jeevanbikas.Volley.VolleyRequestHandler;
 
@@ -25,8 +28,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class LoginActivity extends AppCompatActivity {
+    ApiInterface apiInterface;
+
     SessionHandler sessionHandler;
     TextView reset_pin;
     EditText jb_username, jb_password;
@@ -40,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = (Button) findViewById(R.id.loginBtn);
         jb_username = (EditText) findViewById(R.id.jb_username);
         jb_password = (EditText) findViewById(R.id.jb_password);
-
+        apiInterface = RetrofitClient.getApiService();
         sessionHandler = new SessionHandler(LoginActivity.this);
         if (sessionHandler.isUserLoggedIn()) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -57,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                jeevanLogin();
-
+//                jeevanLogin();
+            loginWithRetrofit();
             }
         });
     }
@@ -125,4 +135,62 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+    void loginWithRetrofit(){
+        final JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", jb_username.getText().toString());
+            jsonObject.put("password", jb_password.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+        Call<LoginModel> call = apiInterface.authenticate(body);
+        call.enqueue(new Callback<LoginModel>() {
+            @Override
+            public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                if (response.isSuccessful()){
+                    try {
+                        Log.d("response success","------"+response.raw().toString());
+                        Log.d("response success","------"+response.body().getToken());
+                        LoginModel loginModel = response.body();
+                        String token = loginModel.getToken();
+                        String code = loginModel.getCode();
+                        String name = loginModel.getName();
+                        String branch = loginModel.getBranch();
+//                        String balance = loginModel.getBalance().toString();
+                        String passwordChangeReqd = loginModel.getPasswordChangeReqd().toString();
+                        String pinChangeReqd = loginModel.getPasswordChangeReqd().toString();
+                        String agentPin = "12348";
+
+                        boolean passBol = false, pinBol = false;
+                        if (passwordChangeReqd.equals("true")) {
+                            passBol = true;
+                        } else {
+                            passBol = false;
+                        }
+
+                        if (pinChangeReqd.equals("true")) {
+                            pinBol = true;
+                        } else {
+                            pinBol = false;
+                        }
+
+                        sessionHandler.saveLoginInformation(code, name, branch, passBol, pinBol,token,agentPin);
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginModel> call, Throwable t) {
+                Log.d("response failure","------"+t.toString());
+
+            }
+        });
+    }
+
 }

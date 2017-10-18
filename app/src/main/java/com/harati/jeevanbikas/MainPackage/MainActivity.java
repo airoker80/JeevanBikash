@@ -5,26 +5,38 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.harati.jeevanbikas.Adapter.DashboardRecyclerViewAdapter;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
+import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Volley.RequestListener;
 import com.harati.jeevanbikas.Volley.VolleyRequestHandler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     Spinner spinner;
@@ -56,8 +68,9 @@ public class MainActivity extends AppCompatActivity {
         logoutTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logoutInWeb();
+//                logoutInWeb();
 //                sessionHandler.logoutUser();
+                logout();
             }
         });
 
@@ -95,5 +108,70 @@ public class MainActivity extends AppCompatActivity {
                 sessionHandler.logoutUser();
             }
         });
+        sessionHandler.logoutUser();
+    }
+
+    void logout(){
+        final RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+
+        final StringRequest request = new StringRequest(Request.Method.GET, JeevanBikashConfig.REQUEST_URL+"logout?serialno=12346", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+//                Log.e("sendobj",sendObj.toString());
+                sessionHandler.logoutUser();
+
+            }
+        } , new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Log.e("sendobj",sendObj.toString());
+                sessionHandler.logoutUser();
+                Log.d("error", "asdasdasdas");
+                if (error instanceof TimeoutError) {
+                    Toast.makeText(MainActivity.this, "Time Out Error", Toast.LENGTH_SHORT).show();
+                }
+                if (error instanceof NoConnectionError) {
+                    Toast.makeText(MainActivity.this, "No Connection", Toast.LENGTH_SHORT).show();
+                }
+                if (error instanceof AuthFailureError) {
+                    Toast.makeText(MainActivity.this, "Wrong Credentials", Toast.LENGTH_SHORT).show();
+                }
+                if (error instanceof com.android.volley.NetworkError) {
+                    Toast.makeText(MainActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                }
+                if (error instanceof com.android.volley.ServerError) {
+                    Toast.makeText(MainActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                }
+                if (error instanceof com.android.volley.ParseError) {
+                    Toast.makeText(MainActivity.this, "JSON Parse Error", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+//                headers.put("Content-Type", "application/json");
+//                Log.d("token-----", "---" +session_token);
+                headers.put("Content-Type","application/json");
+//                headers.put("X-Authorization","eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBMDA1MDAwMSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTUwNzcyNDc0MDU1MiwiZXhwIjoxNTA4MzI5NTQwfQ.IHfG2LjPt2oo2Cu1pwhzYJ4TsqRpYkC8BXx0Ldz5-_oYxwMClDcba-r3gO4Fgy9WmV5Kbb5-25UfPSy2i5sRzg");
+
+                    headers.put("X-Authorization",sessionHandler.getAgentToken());
+                    headers.put("Authorization", "Basic dXNlcjpqQiQjYUJAMjA1NA==");
+
+                Log.d("header-----", "---" +headers.toString());
+                return headers;
+            }
+
+            @Override
+            public String getBodyContentType() {
+
+                return "application/json";
+//                return "application/x-www-form-urlencoded";
+            }
+
+        };
+        requestQueue.add(request);
+
     }
 }

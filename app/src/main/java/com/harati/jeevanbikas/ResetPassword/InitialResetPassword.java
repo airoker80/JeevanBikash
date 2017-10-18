@@ -1,6 +1,8 @@
 package com.harati.jeevanbikas.ResetPassword;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,24 +12,39 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
+import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
 import com.harati.jeevanbikas.Volley.RequestListener;
 import com.harati.jeevanbikas.Volley.VolleyRequestHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class InitialResetPassword extends AppCompatActivity implements View.OnClickListener {
+    ApiInterface apiInterface;
     Spinner spinner;
     Button initial_password_reset;
     EditText agent_mobile_id;
@@ -38,6 +55,7 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_initial_reset_password);
         initial_password_reset=(Button)findViewById(R.id.initial_password_reset);
         initial_password_reset.setOnClickListener(this);
+        apiInterface = RetrofitClient.getApiService();
 
         sessionHandler = new SessionHandler(InitialResetPassword.this);
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -48,13 +66,17 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
         spinner.setAdapter(adapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
         int getVid = v.getId();
         switch (getVid){
             case R.id.initial_password_reset:
 //                startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
-                sendOtpRequest();
+//                sendOtpRequest();
+
+//                sendSakarRequest();
+                sendRetrofitReq();
            /*     try {
                     sendOkHttp();
                 } catch (IOException e) {
@@ -64,17 +86,21 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void sendOtpRequest(){
         JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
         try{
             Log.e("agentCode","ac"+sessionHandler.getAgentCode());
             jsonObject.put("agentCode",sessionHandler.getAgentCode());
             jsonObject.put("mobile","9813297782");
+
+            jsonArray.put(jsonObject);
         }catch (Exception e){
             e.printStackTrace();
         }
         VolleyRequestHandler handler= new VolleyRequestHandler(getApplicationContext());
-        handler.makePostRequest("requestotp?serialno=12348", jsonObject, new RequestListener() {
+       /* handler.makePostRequest("requestotp?serialno=12348", jsonObject, new RequestListener() {
             @Override
             public void onSuccess(String response) {
                 Log.d("response-----", response);
@@ -82,14 +108,29 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onFailure(String response) {
-
+                Log.d("response-----", response);
             }
-        });
+        });*/
 
+        try {
+            handler.makeArrayRequest("requestotp?serialno=12348", jsonArray, new RequestListener() {
+                @Override
+                public void onSuccess(String response) {
+
+                }
+
+                @Override
+                public void onFailure(String response) {
+
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    void sendOkHttp() throws IOException {
-/*        OkHttpClient client = new OkHttpClient();
+    /*void sendOkHttp() throws IOException {
+*//*        OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(mediaType, "{\"agentCode\":\"A0050001\",\"mobile\":\"9813297782\"}");
@@ -108,8 +149,8 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
             Log.e("response",response.toString());
         }catch (Exception e){
             e.printStackTrace();
-        }*/
-/*        String json = "";
+        }*//*
+*//*        String json = "";
         post(json, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -120,9 +161,9 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
             public void onResponse(Call call, Response response) throws IOException {
                 Log.e("callresponse",response.toString());
             }
-        });*/
+        });*//*
 
-    }
+    }*/
   /*  OkHttpClient client = new OkHttpClient();
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     Call post( String json, Callback callback) {
@@ -140,4 +181,93 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
         call.enqueue(callback);
         return call;
     }*/
+
+
+  void sendSakarRequest(){
+      final RequestQueue requestQueue = Volley.newRequestQueue(InitialResetPassword.this);
+      final JSONObject jsonObject = new JSONObject();
+      JSONArray jsonArray = new JSONArray();
+      try{
+          Log.e("agentCode","ac"+sessionHandler.getAgentCode());
+          jsonObject.put("agentCode",sessionHandler.getAgentCode());
+          jsonObject.put("mobile","9813297782");
+
+          jsonArray.put(jsonObject);
+      }catch (Exception e){
+          e.printStackTrace();
+      }
+      String REQUESTURL = JeevanBikashConfig.REQUEST_URL + "requestotp?serialno=12348";
+      StringRequest req = new StringRequest(Request.Method.POST, REQUESTURL,
+              new Response.Listener<String>() {
+                  @Override
+                  public void onResponse(String responseObject) {
+
+
+                  }
+              }, new Response.ErrorListener() {
+          @Override
+          public void onErrorResponse(VolleyError error) {
+
+          }
+      }) {
+          @Override
+          public byte[] getBody() throws AuthFailureError {
+              return jsonObject.toString().getBytes();
+          }
+
+          @Override
+          public Map<String, String> getHeaders() throws AuthFailureError {
+                 HashMap<String, String> headers = new HashMap<String, String>();
+              headers.put("X-Authorization", sessionHandler.getAgentToken());
+              headers.put("Content-Type", "application/json");
+              headers.put("Authorization", "Basic dXNlcjpqQiQjYUJAMjA1NA==");
+              return headers;
+          }
+      };
+      requestQueue.add(req);
+  }
+
+  void sendRetrofitReq(){
+      final JSONObject jsonObject = new JSONObject();
+//      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
+      JSONArray jsonArray = new JSONArray();
+      try{
+          Log.e("agentCode","ac"+sessionHandler.getAgentCode());
+          jsonObject.put("agentCode",sessionHandler.getAgentCode());
+          jsonObject.put("mobile","9813297782");
+
+          jsonArray.put(jsonObject);
+      }catch (Exception e){
+          e.printStackTrace();
+      }
+      RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+//      retrofit2.Call<String> call = apiInterface.sendRetrofitOtprequest(body,"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBMDA1MDAwMSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTUwODIyMjcyODMzOSwiZXhwIjoxNTA4ODI3NTI4fQ.lAqF1g6Oil2fC8FRfK_ktR2J4oiNZDVsqmLStY855ZQxvH6whWkRI7nkxmeOzXJM912yMXaWgv_Sk4kzJgoRFA");
+      retrofit2.Call<String> call = apiInterface.sendRetrofitOtprequest(body,
+              sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
+              "application/json");
+      call.enqueue(new retrofit2.Callback<String>() {
+          @Override
+          public void onResponse(retrofit2.Call<String> call, retrofit2.Response<String> response) {
+              startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
+              Log.d("response success", "------" + response.body().toString());
+              try {
+                  Log.d("response success", "------" + response.raw().toString());
+                  if (response.isSuccessful()){
+                      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
+
+                  }
+              }catch (Exception e){
+                e.printStackTrace();
+              }
+              if (response.isSuccessful()){
+                  Log.d("response success", "------" + response.raw().toString());
+              }
+          }
+
+          @Override
+          public void onFailure(retrofit2.Call<String> call, Throwable t) {
+              startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
+          }
+      });
+  }
 }
