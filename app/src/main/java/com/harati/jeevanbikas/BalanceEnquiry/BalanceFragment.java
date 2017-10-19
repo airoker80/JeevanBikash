@@ -9,6 +9,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,25 @@ import android.widget.TextView;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
+import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
+import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -35,9 +47,11 @@ import java.util.List;
  */
 
 public class BalanceFragment extends Fragment implements View.OnClickListener {
+    ApiInterface apiInterface ;
     List<AutoCompleteModel> autoCompleteModelList = new ArrayList<AutoCompleteModel>();
     AutoCompleteTextView input;
     ImageView imageView,enquiry_cross;
+    SessionHandler sessionHandler;
     List<HelperListModelClass> helperListModelClasses=new ArrayList<HelperListModelClass>();
     TextView text;
     public BalanceFragment() {
@@ -46,7 +60,9 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        sessionHandler = new SessionHandler(getContext());
         View view = inflater.inflate(R.layout.fragment_balance, container, false);
+        apiInterface = RetrofitClient.getApiService();
         imageView = (ImageView) view.findViewById(R.id.imageView);
         enquiry_cross = (ImageView) view.findViewById(R.id.enquiry_cross);
         input = (AutoCompleteTextView) view.findViewById(R.id.input);
@@ -91,6 +107,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
                 if (input.getText().toString().equals("")) {
                     input.setError("Please Enter the Phone Number");
                 } else {
+                    /*sendBalanceEnquiryRequest();*/
                     Fragment fragment = new EnquiryUserDetails();
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);
@@ -101,5 +118,35 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
 
         }
 
+    }
+
+    public  void  sendBalanceEnquiryRequest(){
+        final JSONObject jsonObject = new JSONObject();
+//      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
+        JSONArray jsonArray = new JSONArray();
+        try{
+            Log.e("agentCode","ac"+sessionHandler.getAgentCode());
+            jsonObject.put("membercode","M0670001");
+            jsonObject.put("finger","1234");
+
+            jsonArray.put(jsonObject);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+        retrofit2.Call<String> call = apiInterface.sendBalanceRequest(body,
+                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json");
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -15,14 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
-    //private static final String ROOT_URL = "http://192.168.1.163:8080/pms/api/v1/";
-    // private static final String BASE_URL = "http://202.51.74.134:8080/pms/";
-//    private static final String BASE_URL = "http://128.199.160.33/";
-//    private static final String BASE_URL = "http://128.199.160.33/";
-     private static final String BASE_URL = "http://103.1.94.77:9005/agentbank/";
-//     private static final String BASE_URL = "http://192.168.1.41:8080/pms/";
-//     private static final String BASE_URL = "http://192.168.1.138:8080/pms/";
-    private static final String APP_URL = "api/v1/agent/";
+    private static final String BASE_URL = "http://103.1.94.77:9005/agentbank/";
+    private static final String APP_URL = "api/v1/";
     private static final String ROOT_URL = BASE_URL + APP_URL;
 
     /**

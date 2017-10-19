@@ -16,12 +16,22 @@ import android.widget.TextView;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
+import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
+import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -29,6 +39,10 @@ import java.util.List;
  */
 
 public class CashwithdrawlFragment extends Fragment {
+
+    ApiInterface apiInterface;
+    SessionHandler sessionHandler ;
+
     ImageView submit;
     EditText withdrawlAmount,agentPin ,withdrawlRemark;
     String withdrawlAmountTxt,agentPinTxt ,withdrawlRemarkTxt;
@@ -41,6 +55,10 @@ public class CashwithdrawlFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
+        apiInterface= RetrofitClient.getApiService();
+        sessionHandler = new SessionHandler(getContext());
+
         View view= inflater.inflate(R.layout.fragment_cashwithdrawl, container, false);
         submit = (ImageView)view.findViewById(R.id.submit);
         withdrawlAmount=(EditText)view.findViewById(R.id.withdrawlAmount);
@@ -90,6 +108,7 @@ public class CashwithdrawlFragment extends Fragment {
                     }*/
 
 
+                    /*sendWithdrawequest()*/
                         Intent intent= new Intent(getContext(), DialogActivity.class);
                         getActivity().startActivity(intent);
 
@@ -97,5 +116,35 @@ public class CashwithdrawlFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void sendWithdrawequest(){
+        final JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("membercode","M0670001");
+            jsonObject.put("finger","1234");
+            jsonObject.put("amount","1234");
+            jsonObject.put("agentpin","1234");
+            jsonObject.put("remark","testing");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+
+        retrofit2.Call<String> call = apiInterface.sendWithdrawRequest(body,
+                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json");
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
     }
 }
