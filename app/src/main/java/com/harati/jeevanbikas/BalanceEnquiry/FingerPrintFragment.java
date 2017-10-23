@@ -18,6 +18,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harati.jeevanbikas.Helper.DialogActivity;
+import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
+import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.fingerprint.FingerprintHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -45,6 +52,11 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import static android.content.Context.FINGERPRINT_SERVICE;
 import static android.content.Context.KEYGUARD_SERVICE;
 
@@ -55,12 +67,14 @@ import static android.content.Context.KEYGUARD_SERVICE;
 
 public class FingerPrintFragment extends Fragment {
     ImageView fingerPrint;
-
+    SessionHandler sessionHandler;
     private KeyStore keyStore;
+    ApiInterface apiInterface;
     // Variable used for storing the key in the Android Keystore container
     private static final String KEY_NAME = "Bikash";
     private Cipher cipher;
     private TextView textView,text;
+    Bundle bundle;
 
 
     public FingerPrintFragment() {
@@ -73,6 +87,9 @@ public class FingerPrintFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fingerprint, container, false);
         fingerPrint = (ImageView) view.findViewById(R.id.fingerPrint);
+        bundle = getArguments();
+        apiInterface = RetrofitClient.getApiService();
+        sessionHandler = new SessionHandler(getContext());
         text = (TextView) view.findViewById(R.id.text);
         text.setTypeface(MainActivity.centuryGothic);
         KeyguardManager keyguardManager = (KeyguardManager) getActivity().getSystemService(KEYGUARD_SERVICE);
@@ -121,12 +138,15 @@ public class FingerPrintFragment extends Fragment {
             @Override
             public void onClick(View view) {
 //                showMessage();
-                Snackbar snackbar = Snackbar
+
+                sendBalanceEnquiryRequest();
+
+/*                Snackbar snackbar = Snackbar
                         .make(view, "Please Place your right finger in the sensor", Snackbar.LENGTH_LONG);
                 snackbar.show();
                 View snackbarview = snackbar.getView();
                 TextView textView = (TextView) snackbarview.findViewById(android.support.design.R.id.snackbar_text);
-                textView.setTextColor(Color.RED);
+                textView.setTextColor(Color.RED);*/
             }
 
 
@@ -194,8 +214,35 @@ public class FingerPrintFragment extends Fragment {
         }
     }
 
-    public void showMessage() {
-        View v = null;
 
+
+    public  void  sendBalanceEnquiryRequest(){
+        final JSONObject jsonObject = new JSONObject();
+//      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
+        JSONArray jsonArray = new JSONArray();
+        try{
+            Log.e("agentCode","ac"+sessionHandler.getAgentCode());
+            jsonObject.put("membercode",bundle.get("memberId"));
+            jsonObject.put("finger","1234");
+
+            jsonArray.put(jsonObject);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+        retrofit2.Call<String> call = apiInterface.sendBalanceRequest(body,
+                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json");
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                startActivity(new Intent(getContext(),MainActivity.class));
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                startActivity(new Intent(getContext(),MainActivity.class));
+            }
+        });
     }
 }

@@ -12,14 +12,24 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.harati.jeevanbikas.BalanceEnquiry.EnquiryUserDetails;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
+import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
+import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -27,6 +37,10 @@ import java.util.List;
  */
 
 public class CashFragment extends Fragment {
+
+    ApiInterface apiInterface;
+    SessionHandler sessionHandler ;
+
     List<AutoCompleteModel> autoCompleteModelList = new ArrayList<AutoCompleteModel>();
     AutoCompleteTextView input;
      ImageView imageView;
@@ -38,6 +52,11 @@ public class CashFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_fund, container, false);
+
+        apiInterface= RetrofitClient.getApiService();
+        sessionHandler = new SessionHandler(getContext());
+
+
         imageView = (ImageView)view.findViewById(R.id.imageView);
         input = (AutoCompleteTextView) view.findViewById(R.id.input);
         cash_wd_txt = (TextView) view.findViewById(R.id.cash_wd_txt);
@@ -57,14 +76,49 @@ public class CashFragment extends Fragment {
                 if (input.getText().toString().equals("")){
                     input.setError("Please Enter the Phone Number");
                 }else {
-                    Fragment fragment= new FingerPrintAuthFragment();
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragment);
-                    transaction.commit();
+                    getMemberList(input.getText().toString());
+//                    Fragment fragment= new FingerPrintAuthFragment();
+//                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                    transaction.addToBackStack(null);
+//                    transaction.replace(R.id.contentFrame, fragment);
+//                    transaction.commit();
                 }
             }
         });
         return view;
+    }
+
+    private void getMemberList(String mobile_no){
+//        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+        retrofit2.Call<SearchModel> call = apiInterface.sendMemberSearchRequest(mobile_no,sessionHandler.getAgentToken(),
+                "Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json");
+        call.enqueue(new Callback<SearchModel>() {
+            @Override
+            public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
+//                Log.d("DADAD0","ADA");
+                if (response.isSuccessful()){
+                    Fragment fragment = new FingerPrintAuthFragment();
+                    Bundle args = new Bundle();
+                    args.putString("code",response.body().getCode());
+                    args.putString("name",response.body().getName());
+                    args.putString("office",response.body().getOffice());
+//                    args.putString("office",response.body().getCode());
+                    args.putString("photo",response.body().getOffice());
+                    fragment.setArguments(args);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragment);
+                    transaction.commit();
+                }else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchModel> call, Throwable t) {
+                Toast.makeText(getContext(), "Connection Problem", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

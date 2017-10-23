@@ -17,6 +17,7 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <AutoCompleteTextView
+            android:text="M0670001"
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +27,6 @@
             android:backgroundTint="@color/white"
             android:hint="Enter Member code/Mobile Number"
             android:imeOptions="actionDone"
-            android:inputType="number"
             android:completionThreshold="1"
             android:textAlignment="center"
             android:textColor="@color/white"

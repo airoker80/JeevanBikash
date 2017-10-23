@@ -49,7 +49,7 @@ public class AgentClientTransferFragment extends Fragment {
         agent_client_tick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*sendDepositRequest()*/
+                sendDepositRequest();
                 startActivity(new Intent(getContext(), DialogActivity.class));
             }
         });

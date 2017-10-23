@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public class EnquiryUserDetails extends Fragment implements View.OnClickListener {
     ImageView enquiry_submit, enquiry_cross, enquiryUserPhoto;
     TextView memberIdnnumber, branchName, accNoDetails,enquiryUserName,memberId,branch ,accNo;
-    String bundleRespone;
+    String code,name,office ,photo;
 
     public EnquiryUserDetails() {
         // Required empty public constructor
@@ -38,7 +38,12 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_enquiry_user_details, container, false);
 
         Bundle bundle = getArguments();
-//        bundleRespone = bundle.getString("response");
+
+        code = bundle.getString("code");
+        name = bundle.getString("name");
+        office = bundle.getString("office");
+        photo = bundle.getString("photo");
+
         enquiry_submit = (ImageView) view.findViewById(R.id.enquiry_submit);
         enquiryUserPhoto = (ImageView) view.findViewById(R.id.enquiryUserPhoto);
         enquiry_cross = (ImageView) view.findViewById(R.id.enquiry_cross);
@@ -64,7 +69,16 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         accNoDetails.setTypeface(MainActivity.centuryGothic);
         enquiryUserName.setTypeface(MainActivity.centuryGothic);
 
+        enquiryUserName.setText(name);
+        memberIdnnumber.setText(code);
+        branchName.setText(office);
+        accNoDetails.setText(name);
 
+        try {
+            Picasso.with(getContext()).load(photo).into(enquiryUserPhoto);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
         return view;
@@ -76,6 +90,9 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         switch (vId) {
             case R.id.enquiry_submit:
                 Fragment fragment = new FingerPrintFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("memberId",code);
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFrame, fragment);
                 transaction.addToBackStack(null);
@@ -87,25 +104,5 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         }
     }
 
-    private void setResponse() {
-        try {
-            JSONObject jsonObject = new JSONObject(bundleRespone);
-            String name = jsonObject.getString("name");
-            String code = jsonObject.getString("code");
-            String branch = jsonObject.getString("branch");
 
-            String photoUrl = jsonObject.getString("photo");
-
-            branchName.setText(branch);
-            accNoDetails.setText(code);
-            enquiryUserName.setText(name);
-
-            Picasso.with(getContext())
-                    .load(photoUrl)
-                    .centerCrop()
-                    .into(enquiryUserPhoto);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

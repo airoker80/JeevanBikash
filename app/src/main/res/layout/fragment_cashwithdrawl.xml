@@ -107,6 +107,7 @@
                         android:orientation="horizontal">
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                            android:visibility="invisible"
                             android:id="@+id/accNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -118,6 +119,7 @@
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                            android:visibility="invisible"
                             android:id="@+id/accNoDetails"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -142,6 +144,7 @@
                         android:padding="@dimen/_4sdp"
                         android:background="@drawable/image_baground">
                         <ImageView
+                            android:id="@+id/imgUser"
                             android:layout_alignParentRight="true"
                             android:layout_width="@dimen/_100sdp"
                             android:layout_height="@dimen/_100sdp"

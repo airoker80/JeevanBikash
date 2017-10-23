@@ -18,6 +18,7 @@
 
         <com.harati.jeevanbikas.Helper.AutoCompleteHelper.CustomACTextView
             android:id="@+id/input"
+            android:text="M0670001"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_16sdp"

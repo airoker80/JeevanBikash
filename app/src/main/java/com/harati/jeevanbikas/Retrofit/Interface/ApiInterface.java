@@ -4,6 +4,8 @@ package com.harati.jeevanbikas.Retrofit.Interface;
 
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.OTPmodel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -59,9 +61,18 @@ public interface ApiInterface {
                                     @Header("Content-Type") String contentType);
 
     @POST("member/withdraw?serialno=12346")
-    Call<String> sendWithdrawRequest(@Body RequestBody body,
-                                    @Header("X-Authorization") String xAuth,
-                                    @Header("Authorization") String Authorization,
-                                    @Header("Content-Type") String contentType);
+    Call<WithDrawlResponse> sendWithdrawRequest(@Body RequestBody body,
+                                                @Header("X-Authorization") String xAuth,
+                                                @Header("Authorization") String Authorization,
+                                                @Header("Content-Type") String contentType);
+
+//    @GET("member/search?serialno=12346&mobileno=M0670001")
+    @GET("member/search?serialno=12346")
+    Call<SearchModel> sendMemberSearchRequest(@Query("mobileno") String mobileno,
+                                              @Header("X-Authorization") String xAuth,
+                                              @Header("Authorization") String Authorization,
+                                              @Header("Content-Type") String contentType);
+
+
 
 }

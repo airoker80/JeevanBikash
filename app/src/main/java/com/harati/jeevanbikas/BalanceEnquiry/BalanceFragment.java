@@ -9,6 +9,8 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
@@ -28,6 +31,7 @@ import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
 import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
 
 import org.json.JSONArray;
@@ -74,7 +78,27 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
         autoCompleteModelList.add(new AutoCompleteModel("Binaya", "9841012346", R.drawable.ic_username));
         input.setDropDownBackgroundResource(R.drawable.shape_transparent);
         AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(getContext(), autoCompleteModelList);
-        input.setAdapter(autoCompleteAdapter);
+        /*input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                final StringBuilder sb = new StringBuilder(s.length()+1);
+                sb.append(s);
+                Log.d("Changed Text=","---"+sb.toString());
+                getMemberList();
+//                Log.d("Changed Text=","---"+sb.toString());
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });*/
+//        input.setAdapter(autoCompleteAdapter);
         input.setTypeface(MainActivity.centuryGothic);
         imageView.setOnClickListener(this);
         enquiry_cross.setOnClickListener(this);
@@ -104,15 +128,19 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getContext(), MainActivity.class));
                 break;
             case R.id.imageView:
+                String mobileNo = input.getText().toString();
                 if (input.getText().toString().equals("")) {
                     input.setError("Please Enter the Phone Number");
                 } else {
-                    /*sendBalanceEnquiryRequest();*/
-                    Fragment fragment = new EnquiryUserDetails();
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragment);
-                    transaction.commit();
+//                    sendBalanceEnquiryRequest();
+
+                    getMemberList(mobileNo);
+
+//                    Fragment fragment = new EnquiryUserDetails();
+//                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                    transaction.addToBackStack(null);
+//                    transaction.replace(R.id.contentFrame, fragment);
+//                    transaction.commit();
                 }
                 break;
 
@@ -146,6 +174,39 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
 
+            }
+        });
+    }
+    private void getMemberList(String mobile_no){
+//        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+        retrofit2.Call<SearchModel> call = apiInterface.sendMemberSearchRequest(mobile_no,sessionHandler.getAgentToken(),
+                "Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json");
+        call.enqueue(new Callback<SearchModel>() {
+            @Override
+            public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
+//                Log.d("DADAD0","ADA");
+                if (response.isSuccessful()){
+                    Fragment fragment = new EnquiryUserDetails();
+                    Bundle args = new Bundle();
+                    args.putString("code",response.body().getCode());
+                    args.putString("name",response.body().getName());
+                    args.putString("office",response.body().getOffice());
+//                    args.putString("office",response.body().getCode());
+                    args.putString("photo",response.body().getOffice());
+                    fragment.setArguments(args);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragment);
+                    transaction.commit();
+                }else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchModel> call, Throwable t) {
+                Toast.makeText(getContext(), "Connection Problem", Toast.LENGTH_SHORT).show();
             }
         });
     }

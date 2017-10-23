@@ -21,7 +21,9 @@ import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
 import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -43,11 +45,15 @@ public class CashwithdrawlFragment extends Fragment {
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
 
+    String code,name,office ,photo;
+
+
     ImageView submit;
     EditText withdrawlAmount,agentPin ,withdrawlRemark;
     String withdrawlAmountTxt,agentPinTxt ,withdrawlRemarkTxt;
+    ImageView imgUser;
 
-    TextView memberId,branch ,accNo,withdrawlTxt,at_pin ,remarks_txt;
+    TextView memberId,branch ,accNo,withdrawlTxt,at_pin ,remarks_txt,memberIdnnumber,branchName,nameTxt;
     List<HelperListModelClass> helperListModelClassList =new ArrayList<HelperListModelClass>();
     public CashwithdrawlFragment() {
     }
@@ -55,7 +61,11 @@ public class CashwithdrawlFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
+        Bundle bundle = getArguments();
+        code = bundle.getString("code");
+        name = bundle.getString("name");
+        office = bundle.getString("office");
+        photo = bundle.getString("photo");
         apiInterface= RetrofitClient.getApiService();
         sessionHandler = new SessionHandler(getContext());
 
@@ -64,6 +74,7 @@ public class CashwithdrawlFragment extends Fragment {
         withdrawlAmount=(EditText)view.findViewById(R.id.withdrawlAmount);
         agentPin=(EditText)view.findViewById(R.id.agentPin);
         withdrawlRemark=(EditText)view.findViewById(R.id.withdrawlRemark);
+        imgUser=(ImageView) view.findViewById(R.id.imgUser);
 
 
         memberId=(TextView) view.findViewById(R.id.memberId);
@@ -74,12 +85,23 @@ public class CashwithdrawlFragment extends Fragment {
         remarks_txt=(TextView) view.findViewById(R.id.remarks_txt);
 
 
+        branchName=(TextView) view.findViewById(R.id.branchName);
+        nameTxt=(TextView) view.findViewById(R.id.name);
+        memberIdnnumber=(TextView) view.findViewById(R.id.memberIdnnumber);
+
+
         memberId.setTypeface(MainActivity.centuryGothic);
         branch.setTypeface(MainActivity.centuryGothic);
         accNo.setTypeface(MainActivity.centuryGothic);
         withdrawlTxt.setTypeface(MainActivity.centuryGothic);
         at_pin.setTypeface(MainActivity.centuryGothic);
         remarks_txt.setTypeface(MainActivity.centuryGothic);
+
+        memberIdnnumber.setText(code);
+        branchName.setText(office);
+        nameTxt.setText(name);
+
+        Picasso.with(getContext()).load(photo).into(imgUser);
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -108,9 +130,9 @@ public class CashwithdrawlFragment extends Fragment {
                     }*/
 
 
-                    /*sendWithdrawequest()*/
-                        Intent intent= new Intent(getContext(), DialogActivity.class);
-                        getActivity().startActivity(intent);
+                        sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
+/*                        Intent intent= new Intent(getContext(), DialogActivity.class);
+                        getActivity().startActivity(intent);*/
 
                 }
             }
@@ -118,31 +140,36 @@ public class CashwithdrawlFragment extends Fragment {
         return view;
     }
 
-    private void sendWithdrawequest(){
+    private void sendWithdrawequest(String wa,String ap,String wr){
         final JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.put("membercode","M0670001");
+            jsonObject.put("membercode",code);
             jsonObject.put("finger","1234");
-            jsonObject.put("amount","1234");
-            jsonObject.put("agentpin","1234");
-            jsonObject.put("remark","testing");
+            jsonObject.put("amount",wa);
+            jsonObject.put("agentpin",ap);
+            jsonObject.put("remark",wr);
         }catch (Exception e){
             e.printStackTrace();
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
 
-        retrofit2.Call<String> call = apiInterface.sendWithdrawRequest(body,
+        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(body,
                 sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json");
 
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<WithDrawlResponse>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
+            public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
+                if (response.isSuccessful()){
+                    String message = response.body().getMessage();
+                    Intent intent = new Intent(getContext(),DialogActivity.class);
+                    intent.putExtra("msg",message);
+                    startActivity(intent);
+                }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<WithDrawlResponse> call, Throwable t) {
 
             }
         });
