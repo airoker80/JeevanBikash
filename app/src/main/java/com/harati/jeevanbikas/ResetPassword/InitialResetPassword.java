@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -26,6 +27,7 @@ import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.OTPmodel;
 import com.harati.jeevanbikas.Volley.RequestListener;
 import com.harati.jeevanbikas.Volley.VolleyRequestHandler;
 
@@ -242,32 +244,30 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
       }
       RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
 //      retrofit2.Call<String> call = apiInterface.sendRetrofitOtprequest(body,"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBMDA1MDAwMSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTUwODIyMjcyODMzOSwiZXhwIjoxNTA4ODI3NTI4fQ.lAqF1g6Oil2fC8FRfK_ktR2J4oiNZDVsqmLStY855ZQxvH6whWkRI7nkxmeOzXJM912yMXaWgv_Sk4kzJgoRFA");
-      retrofit2.Call<String> call = apiInterface.sendRetrofitOtprequest(body,
+      retrofit2.Call<OTPmodel> call = apiInterface.sendRetrofitOtprequest(body,
               sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
               "application/json");
-      call.enqueue(new retrofit2.Callback<String>() {
+      call.enqueue(new retrofit2.Callback<OTPmodel>() {
           @Override
-          public void onResponse(retrofit2.Call<String> call, retrofit2.Response<String> response) {
-              startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
-              Log.d("response success", "------" + response.body().toString());
-              try {
-                  Log.d("response success", "------" + response.raw().toString());
-                  if (response.isSuccessful()){
-                      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
-
-                  }
-              }catch (Exception e){
-                e.printStackTrace();
-              }
+          public void onResponse(retrofit2.Call<OTPmodel> call, retrofit2.Response<OTPmodel> response) {
               if (response.isSuccessful()){
-                  Log.d("response success", "------" + response.raw().toString());
+                  startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
+                  Toast.makeText(InitialResetPassword.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+              }else {
+                  try {
+                      Toast.makeText(InitialResetPassword.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                  }catch (Exception e){
+                      e.printStackTrace();
+                  }
               }
           }
 
           @Override
-          public void onFailure(retrofit2.Call<String> call, Throwable t) {
-              startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
+          public void onFailure(retrofit2.Call<OTPmodel> call, Throwable t) {
+
           }
       });
+
+
   }
 }

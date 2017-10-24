@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/topPanel"
     android:orientation="vertical"
-    android:background="@color/transparent"
+    android:background="@color/colorPrimary"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView
@@ -227,6 +227,22 @@
                     android:imeOptions="actionDone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <com.alimuzaffar.lib.pin.PinEntryEditText
+                    android:visibility="gone"
+                    android:text="1234"
+                    android:id="@+id/txt_pin_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:textIsSelectable="false"
+                    android:textSize="20sp">
+
+                </com.alimuzaffar.lib.pin.PinEntryEditText>
+
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

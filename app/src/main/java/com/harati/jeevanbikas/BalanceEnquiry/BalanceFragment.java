@@ -147,38 +147,11 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
         }
 
     }
-
-    public  void  sendBalanceEnquiryRequest(){
-        final JSONObject jsonObject = new JSONObject();
-//      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
-        JSONArray jsonArray = new JSONArray();
-        try{
-            Log.e("agentCode","ac"+sessionHandler.getAgentCode());
-            jsonObject.put("membercode","M0670001");
-            jsonObject.put("finger","1234");
-
-            jsonArray.put(jsonObject);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-        retrofit2.Call<String> call = apiInterface.sendBalanceRequest(body,
-                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json");
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-    }
     private void getMemberList(String mobile_no){
 //        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+
+
+
         retrofit2.Call<SearchModel> call = apiInterface.sendMemberSearchRequest(mobile_no,sessionHandler.getAgentToken(),
                 "Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json");

@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.harati.jeevanbikas.BalanceEnquiry.FingerPrintFragment;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
@@ -20,9 +23,11 @@ import com.squareup.picasso.Picasso;
  * A simple {@link Fragment} subclass.
  */
 public class DepositDetailsFragment extends Fragment implements View.OnClickListener{
+    EditText agent_pin,clientMobile;
     ImageView demand_tick,demand_cross,depositUserPhoto;
     String code,name,office ,photo;
     TextView memberIdnnumber, branchName, accNoDetails,enquiryUserName,memberId,branch ,accNo,nameTxt;
+    PinEntryEditText txt_pin_entry;
     public DepositDetailsFragment() {
         // Required empty public constructor
     }
@@ -34,7 +39,6 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
         // Inflate the layout for this fragment
 
         Bundle bundle = getArguments();
-
         code = bundle.getString("code");
         name = bundle.getString("name");
         office = bundle.getString("office");
@@ -45,6 +49,11 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
 
         nameTxt = (TextView) view.findViewById(R.id.name);
+
+//        agent_pin = (EditText) view.findViewById(R.id.agent_pin);
+        clientMobile = (EditText) view.findViewById(R.id.clientMobile);
+        txt_pin_entry = (PinEntryEditText) view.findViewById(R.id.txt_pin_entry);
+
         memberIdnnumber = (TextView) view.findViewById(R.id.memberIdnnumber);
         branchName = (TextView) view.findViewById(R.id.branchName);
         accNoDetails = (TextView) view.findViewById(R.id.accNoDetails);
@@ -73,6 +82,14 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
         switch (vId){
             case R.id.demand_tick:
                 Fragment fragment = new FingerPrintAuthDepositFragment();
+                Bundle args = new Bundle();
+                args.putString("code",code);
+                args.putString("name",name);
+                args.putString("office",office);
+                args.putString("photo",photo);
+//                args.putString("clientPin",txt_pin_entry.getText().toString());
+                args.putString("clientMobile",clientMobile.getText().toString());
+                fragment.setArguments(args);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFrame, fragment);
                 transaction.addToBackStack(null);

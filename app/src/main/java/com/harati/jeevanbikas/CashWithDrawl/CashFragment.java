@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.harati.jeevanbikas.BalanceEnquiry.EnquiryUserDetails;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
@@ -23,6 +27,7 @@ import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,8 +101,9 @@ public class CashFragment extends Fragment {
         call.enqueue(new Callback<SearchModel>() {
             @Override
             public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
-//                Log.d("DADAD0","ADA");
+                Log.d("DADAD0","response");
                 if (response.isSuccessful()){
+                    Log.d("DADAD0","succes");
                     Fragment fragment = new FingerPrintAuthFragment();
                     Bundle args = new Bundle();
                     args.putString("code",response.body().getCode());
@@ -111,7 +117,15 @@ public class CashFragment extends Fragment {
                     transaction.replace(R.id.contentFrame, fragment);
                     transaction.commit();
                 }else {
-
+                    try {
+                        /*Gson gson = null;
+                        SuccesResponseModel successModel = gson.fromJson(response.errorBody().string(),SuccesResponseModel.class);*/
+                        JsonParser parser = new JsonParser();
+                        JsonObject data = parser.parse(String.valueOf(response)).getAsJsonObject();
+                        Log.d("DADAD0","succes===>"+data.toString());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -120,5 +134,8 @@ public class CashFragment extends Fragment {
                 Toast.makeText(getContext(), "Connection Problem", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        
     }
 }

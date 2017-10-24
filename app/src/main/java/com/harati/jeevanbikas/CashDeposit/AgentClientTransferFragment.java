@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.harati.jeevanbikas.Helper.CGEditText;
+import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.R;
@@ -30,9 +32,9 @@ import retrofit2.Response;
 public class AgentClientTransferFragment extends Fragment {
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
-
+    CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt;
     ImageView agent_client_tick;
-
+    Bundle bundle;
     public AgentClientTransferFragment() {
         // Required empty public constructor
     }
@@ -42,9 +44,20 @@ public class AgentClientTransferFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        bundle =getArguments();
         apiInterface= RetrofitClient.getApiService();
         sessionHandler = new SessionHandler(getContext());
         View view= inflater.inflate(R.layout.fragment_agent_client_transfer, container, false);
+
+        name=(CenturyGothicTextView)view.findViewById(R.id.name);
+        memberIdnnumber=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumber);
+        branchName=(CenturyGothicTextView)view.findViewById(R.id.branchName);
+        shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
+
+        name.setText(bundle.getString("name"));
+        memberIdnnumber.setText(bundle.getString("code"));
+        branchName.setText(bundle.getString("office"));
+        shownDepositAmt.setText(bundle.getString("deposoitAmt"));
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         agent_client_tick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,12 +71,13 @@ public class AgentClientTransferFragment extends Fragment {
 
     private void sendDepositRequest(){
         final JSONObject jsonObject = new JSONObject();
+        sessionHandler.showProgressDialog("Sending Request..");
         try{
-            jsonObject.put("membercode","M0670001");
+            jsonObject.put("membercode",bundle.getString("code"));
             jsonObject.put("finger","1234");
-            jsonObject.put("amount","1234");
-            jsonObject.put("agentpin","1234");
-            jsonObject.put("remark","testing");
+            jsonObject.put("amount",bundle.getString("deposoitAmt"));
+            jsonObject.put("agentpin",bundle.getString("agentPin"));
+            jsonObject.put("remark",bundle.getString("deposoitRemarks"));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -75,11 +89,13 @@ public class AgentClientTransferFragment extends Fragment {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-
+                sessionHandler.hideProgressDialog();
+                startActivity(new Intent(getContext(), DialogActivity.class));
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+                sessionHandler.hideProgressDialog();
 
             }
         });

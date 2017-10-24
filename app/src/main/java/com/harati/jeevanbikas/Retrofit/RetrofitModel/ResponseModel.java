@@ -1,18 +1,11 @@
 package com.harati.jeevanbikas.Retrofit.RetrofitModel;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 /**
- * Created by Sameer on 10/17/2017.
+ * Created by Sameer on 10/24/2017.
  */
 
-public class OTPmodel {
-    @SerializedName("status")
-    @Expose
+public class ResponseModel {
     private String status;
-    @SerializedName("message")
-    @Expose
     private String message;
 
     public String getStatus() {

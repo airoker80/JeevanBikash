@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg"
-    tools:context="com.harati.newjeevanbikas.Login.LoginActivity">
+    tools:context="com.harati.jeevanbikas.Login.LoginActivity">
 
     <RelativeLayout
         android:layout_marginTop="24dp"
@@ -51,7 +51,7 @@
     <EditText
         android:id="@+id/jb_password"
         android:layout_marginTop="@dimen/_15sdp"
-        android:text="Aft@12345"
+        android:text="Aft@12346"
         android:textSize="@dimen/_14sdp"
         android:drawablePadding="@dimen/_8sdp"
         android:drawableLeft="@drawable/ic_padlock"

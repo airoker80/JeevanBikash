@@ -27,11 +27,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harati.jeevanbikas.Helper.DialogActivity;
+import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
 import com.harati.jeevanbikas.fingerprint.FingerprintHandler;
 
 import org.json.JSONArray;
@@ -230,18 +232,28 @@ public class FingerPrintFragment extends Fragment {
             e.printStackTrace();
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-        retrofit2.Call<String> call = apiInterface.sendBalanceRequest(body,
+        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendBalanceRequest(body,
                 sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json");
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<SuccesResponseModel>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                startActivity(new Intent(getContext(),MainActivity.class));
+            public void onResponse(Call<SuccesResponseModel> call, Response<SuccesResponseModel> response) {
+                if (response.isSuccessful()){
+                    if (response.body().getStatus().equals("Success")){
+                        Intent intent = new Intent(getContext(),DialogActivity.class);
+                        intent.putExtra("msg",response.body().getMessage());
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
+                        intent.putExtra("msg",response.body().getMessage());
+                        startActivity(intent);
+                    }
+                }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                startActivity(new Intent(getContext(),MainActivity.class));
+            public void onFailure(Call<SuccesResponseModel> call, Throwable t) {
+                Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }

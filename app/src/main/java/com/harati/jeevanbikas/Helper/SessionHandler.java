@@ -1,8 +1,12 @@
 package com.harati.jeevanbikas.Helper;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 
 import com.harati.jeevanbikas.Login.LoginActivity;
@@ -12,6 +16,7 @@ import com.harati.jeevanbikas.Login.LoginActivity;
  */
 
 public class SessionHandler {
+    ProgressDialog progress ;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Context _context;
@@ -76,5 +81,29 @@ public class SessionHandler {
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         _context.startActivity(i);
+    }
+    public void showProgressDialog(String message) {
+
+        Log.i("","showProgressDialog");
+        progress = new ProgressDialog(_context);
+        if(!progress.isShowing()){
+            SpannableString titleMsg= new SpannableString("Processing");
+            titleMsg.setSpan(new ForegroundColorSpan(Color.BLACK),0,titleMsg.length(),0);
+            progress.setTitle(titleMsg);
+            progress.setMessage(message);
+            progress.setCancelable(false);
+            progress.setIndeterminate(true);
+            progress.show();
+        }
+    }
+
+    public void hideProgressDialog() {
+        Log.i("","hideProgressDialog");
+        if(progress !=null){
+            if(progress.isShowing()){
+                progress.dismiss();
+            }
+        }
+
     }
 }

@@ -5,6 +5,7 @@ package com.harati.jeevanbikas.Retrofit.Interface;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.OTPmodel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
 
 import okhttp3.RequestBody;
@@ -31,12 +32,12 @@ public interface ApiInterface {
 
 //    @Headers("{Authorization:Basic dXNlcjpqQiQjYUJAMjA1NA== ,Content-Type:application/json}")
     @POST("agent/requestotp?serialno=12346")
-    Call<String> sendRetrofitOtprequest(@Body RequestBody body,
+    Call<OTPmodel> sendRetrofitOtprequest(@Body RequestBody body,
                                         @Header("X-Authorization") String xAuth,
                                         @Header("Authorization") String Authorization,
                                         @Header("Content-Type") String contentType);
     @GET("agent/logout?serialno=12346")
-    Call<String> sendLogoutRequest(@Header("X-Authorization") String xAuth,
+    Call<SuccesResponseModel> sendLogoutRequest(@Header("X-Authorization") String xAuth,
                                    @Header("Authorization") String Authorization,
                                    @Header("Content-Type") String contentType);
 //    Call<String> sendRetrofitOtprequest(@Body RequestBody body, @Header("X-Authorization") String xAuth);
@@ -49,10 +50,10 @@ public interface ApiInterface {
 
 
     @POST("member/balance?serialno=12346")
-    Call<String> sendBalanceRequest(@Body RequestBody body,
-                                    @Header("X-Authorization") String xAuth,
-                                    @Header("Authorization") String Authorization,
-                                    @Header("Content-Type") String contentType);
+    Call<SuccesResponseModel> sendBalanceRequest(@Body RequestBody body,
+                                                 @Header("X-Authorization") String xAuth,
+                                                 @Header("Authorization") String Authorization,
+                                                 @Header("Content-Type") String contentType);
 
     @POST("member/deposit?serialno=12346")
     Call<String> sendDepositRequest(@Body RequestBody body,

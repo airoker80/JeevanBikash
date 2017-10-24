@@ -1,6 +1,9 @@
 package com.harati.jeevanbikas.MainPackage;
 
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,12 +27,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.harati.jeevanbikas.Adapter.DashboardRecyclerViewAdapter;
+import com.harati.jeevanbikas.CashDeposit.DepositDetailsFragment;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
+import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
 import com.harati.jeevanbikas.Volley.RequestListener;
 import com.harati.jeevanbikas.Volley.VolleyRequestHandler;
 
@@ -38,7 +46,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+
 public class MainActivity extends AppCompatActivity {
+    ApiInterface apiInterface;
     Spinner spinner;
     List<DashBoardModel> dashBoardModels = new ArrayList<DashBoardModel>();
     RecyclerView dashboard_icon_list;
@@ -53,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          sessionHandler = new SessionHandler(MainActivity.this);
+        apiInterface= RetrofitClient.getApiService();
         setContentView(R.layout.activity_main);
         main_gone_rl = (RelativeLayout) findViewById(R.id.main_gone_rl);
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -95,83 +108,28 @@ public class MainActivity extends AppCompatActivity {
         dashboard_icon_list.setAdapter(dashboardRecyclerViewAdapter);
     }
 
-    public void logoutInWeb(){
-        VolleyRequestHandler volleyRequestHandler = new VolleyRequestHandler(MainActivity.this);
-        volleyRequestHandler.makeLogoutRequest("logout?serialno=12348", new RequestListener() {
-            @Override
-            public void onSuccess(String response) {
-                sessionHandler.logoutUser();
-            }
-
-            @Override
-            public void onFailure(String response) {
-                sessionHandler.logoutUser();
-            }
-        });
-        sessionHandler.logoutUser();
-    }
-
     void logout(){
-        final RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-
-        final StringRequest request = new StringRequest(Request.Method.GET, JeevanBikashConfig.REQUEST_URL+"logout?serialno=12346", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-//                Log.e("sendobj",sendObj.toString());
-                sessionHandler.logoutUser();
-
-            }
-        } , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-//                Log.e("sendobj",sendObj.toString());
-                sessionHandler.logoutUser();
-                Log.d("error", "asdasdasdas");
-                if (error instanceof TimeoutError) {
-                    Toast.makeText(MainActivity.this, "Time Out Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof NoConnectionError) {
-                    Toast.makeText(MainActivity.this, "No Connection", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof AuthFailureError) {
-                    Toast.makeText(MainActivity.this, "Wrong Credentials", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.NetworkError) {
-                    Toast.makeText(MainActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.ServerError) {
-                    Toast.makeText(MainActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.ParseError) {
-                    Toast.makeText(MainActivity.this, "JSON Parse Error", Toast.LENGTH_SHORT).show();
+        sessionHandler.showProgressDialog("Logging Out..");
+        sessionHandler.logoutUser();
+//        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+            retrofit2.Call<SuccesResponseModel> call = apiInterface.sendLogoutRequest(sessionHandler.getAgentToken(),
+                    "Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                    "application/json");
+            call.enqueue(new Callback<SuccesResponseModel>() {
+                @Override
+                public void onResponse(Call<SuccesResponseModel> call, retrofit2.Response<SuccesResponseModel> response) {
+                    sessionHandler.hideProgressDialog();
+                    if (response.isSuccessful()){
+                        sessionHandler.logoutUser();
+                    }
                 }
 
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<>();
-//                headers.put("Content-Type", "application/json");
-//                Log.d("token-----", "---" +session_token);
-                headers.put("Content-Type","application/json");
-//                headers.put("X-Authorization","eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBMDA1MDAwMSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTUwNzcyNDc0MDU1MiwiZXhwIjoxNTA4MzI5NTQwfQ.IHfG2LjPt2oo2Cu1pwhzYJ4TsqRpYkC8BXx0Ldz5-_oYxwMClDcba-r3gO4Fgy9WmV5Kbb5-25UfPSy2i5sRzg");
+                @Override
+                public void onFailure(Call<SuccesResponseModel> call, Throwable t) {
+                    sessionHandler.hideProgressDialog();
+                    sessionHandler.logoutUser();
+                }
+            });
+        }
 
-                    headers.put("X-Authorization",sessionHandler.getAgentToken());
-                    headers.put("Authorization", "Basic dXNlcjpqQiQjYUJAMjA1NA==");
-
-                Log.d("header-----", "---" +headers.toString());
-                return headers;
-            }
-
-            @Override
-            public String getBodyContentType() {
-
-                return "application/json";
-//                return "application/x-www-form-urlencoded";
-            }
-
-        };
-        requestQueue.add(request);
-
-    }
 }

@@ -4,10 +4,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by Sameer on 10/17/2017.
+ * Created by Sameer on 10/24/2017.
  */
 
-public class OTPmodel {
+public class SuccesResponseModel {
     @SerializedName("status")
     @Expose
     private String status;
