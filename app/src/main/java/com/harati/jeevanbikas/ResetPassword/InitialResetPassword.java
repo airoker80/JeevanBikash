@@ -230,6 +230,7 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
   }
 
   void sendRetrofitReq(){
+      sessionHandler.showProgressDialog("Sending Request ....");
       final JSONObject jsonObject = new JSONObject();
 //      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
       JSONArray jsonArray = new JSONArray();
@@ -250,6 +251,7 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
       call.enqueue(new retrofit2.Callback<OTPmodel>() {
           @Override
           public void onResponse(retrofit2.Call<OTPmodel> call, retrofit2.Response<OTPmodel> response) {
+              sessionHandler.hideProgressDialog();
               if (response.isSuccessful()){
                   startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
                   Toast.makeText(InitialResetPassword.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -264,7 +266,7 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
 
           @Override
           public void onFailure(retrofit2.Call<OTPmodel> call, Throwable t) {
-
+            sessionHandler.hideProgressDialog();
           }
       });
 

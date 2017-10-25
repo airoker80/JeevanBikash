@@ -19,7 +19,7 @@ import com.harati.jeevanbikas.R;
  */
 public class FundDetailsFragment extends Fragment implements View.OnClickListener {
     ImageView fund_tick,fund_cross;
-
+    Bundle bundle;
     public FundDetailsFragment() {
         // Required empty public constructor
     }
@@ -30,6 +30,7 @@ public class FundDetailsFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_fund_details, container, false);
+        bundle = getArguments();
         fund_tick=(ImageView)view.findViewById(R.id.fund_tick);
         fund_cross=(ImageView)view.findViewById(R.id.fund_cross);
         fund_tick.setOnClickListener(this);
@@ -43,9 +44,7 @@ public class FundDetailsFragment extends Fragment implements View.OnClickListene
         switch (vId){
             case R.id.fund_tick:
                 Fragment fragment = new FundFingerCheckFragment();
-                Bundle args = new Bundle();
-                args.putString("goto","info");
-                fragment.setArguments(args);
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFrame, fragment);
                 transaction.addToBackStack(null);

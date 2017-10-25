@@ -138,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void loginWithRetrofit(){
+        sessionHandler.showProgressDialog("Sending Request ...");
         final JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("username", jb_username.getText().toString());
@@ -150,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                sessionHandler.hideProgressDialog();
                 if (response.isSuccessful()){
                     try {
                         Log.d("response success","------"+response.raw().toString());
@@ -188,6 +190,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
+                sessionHandler.hideProgressDialog();
                 Log.d("response failure","------"+t.toString());
 
             }

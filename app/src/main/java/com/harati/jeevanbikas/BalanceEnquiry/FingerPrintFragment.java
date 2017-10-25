@@ -219,6 +219,7 @@ public class FingerPrintFragment extends Fragment {
 
 
     public  void  sendBalanceEnquiryRequest(){
+        sessionHandler.showProgressDialog("Sending Request ....");
         final JSONObject jsonObject = new JSONObject();
 //      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
         JSONArray jsonArray = new JSONArray();
@@ -238,6 +239,7 @@ public class FingerPrintFragment extends Fragment {
         call.enqueue(new Callback<SuccesResponseModel>() {
             @Override
             public void onResponse(Call<SuccesResponseModel> call, Response<SuccesResponseModel> response) {
+                sessionHandler.hideProgressDialog();
                 if (response.isSuccessful()){
                     if (response.body().getStatus().equals("Success")){
                         Intent intent = new Intent(getContext(),DialogActivity.class);
@@ -253,6 +255,7 @@ public class FingerPrintFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SuccesResponseModel> call, Throwable t) {
+                sessionHandler.hideProgressDialog();
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
         });

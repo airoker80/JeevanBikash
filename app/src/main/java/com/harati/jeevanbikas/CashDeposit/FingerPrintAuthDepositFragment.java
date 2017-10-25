@@ -78,6 +78,7 @@ public class FingerPrintAuthDepositFragment extends Fragment {
     }
 
     private void getMemberList(String mobile_no){
+        sessionHandler.showProgressDialog("Sending Request ....");
 //        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
         retrofit2.Call<SearchModel> call = apiInterface.sendMemberSearchRequest(mobile_no,sessionHandler.getAgentToken(),
                 "Basic dXNlcjpqQiQjYUJAMjA1NA==",
@@ -85,6 +86,7 @@ public class FingerPrintAuthDepositFragment extends Fragment {
         call.enqueue(new Callback<SearchModel>() {
             @Override
             public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
+                sessionHandler.hideProgressDialog();
 //                Log.d("DADAD0","ADA");
                 if (response.isSuccessful()){
                     clientCode=response.body().getCode();
@@ -99,6 +101,7 @@ public class FingerPrintAuthDepositFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SearchModel> call, Throwable t) {
+                sessionHandler.hideProgressDialog();
                 Toast.makeText(getContext(), "Connection Problem", Toast.LENGTH_SHORT).show();
             }
         });

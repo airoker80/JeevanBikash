@@ -141,6 +141,7 @@ public class CashwithdrawlFragment extends Fragment {
     }
 
     private void sendWithdrawequest(String wa,String ap,String wr){
+        sessionHandler.showProgressDialog("Sending Request .... ");
         final JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("membercode",code);
@@ -160,6 +161,7 @@ public class CashwithdrawlFragment extends Fragment {
         call.enqueue(new Callback<WithDrawlResponse>() {
             @Override
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
+                sessionHandler.hideProgressDialog();
                 if (response.isSuccessful()){
                     String message = response.body().getMessage();
                     Intent intent = new Intent(getContext(),DialogActivity.class);
@@ -170,7 +172,7 @@ public class CashwithdrawlFragment extends Fragment {
 
             @Override
             public void onFailure(Call<WithDrawlResponse> call, Throwable t) {
-
+                sessionHandler.hideProgressDialog();
             }
         });
     }

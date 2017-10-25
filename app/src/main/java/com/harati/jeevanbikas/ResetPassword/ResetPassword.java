@@ -50,6 +50,7 @@ public class ResetPassword extends AppCompatActivity {
     }
 
     void sendReestReq(){
+        sessionHandler.showProgressDialog("Sending Request ....");
         final JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         try{
@@ -73,12 +74,13 @@ public class ResetPassword extends AppCompatActivity {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
+                sessionHandler.hideProgressDialog();
 
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
+            sessionHandler.hideProgressDialog();
             }
         });
     }

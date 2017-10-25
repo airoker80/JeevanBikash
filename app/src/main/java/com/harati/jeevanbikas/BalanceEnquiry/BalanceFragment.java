@@ -151,13 +151,14 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
 //        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
 
 
-
+        sessionHandler.showProgressDialog("Sending Request ...");
         retrofit2.Call<SearchModel> call = apiInterface.sendMemberSearchRequest(mobile_no,sessionHandler.getAgentToken(),
                 "Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json");
         call.enqueue(new Callback<SearchModel>() {
             @Override
             public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
+                sessionHandler.hideProgressDialog();
 //                Log.d("DADAD0","ADA");
                 if (response.isSuccessful()){
                     Fragment fragment = new EnquiryUserDetails();
@@ -179,6 +180,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<SearchModel> call, Throwable t) {
+                sessionHandler.hideProgressDialog();
                 Toast.makeText(getContext(), "Connection Problem", Toast.LENGTH_SHORT).show();
             }
         });

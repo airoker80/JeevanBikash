@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/topPanel"
     android:orientation="vertical"
-    android:background="@color/transparent"
+    android:background="@color/colorPrimary"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView
@@ -168,6 +168,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:text="M0672475"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/BenificiaryaccNo"
                     android:backgroundTint="@color/white"
@@ -186,6 +187,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:text="M0672475"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/confirmAccNo"
                     android:backgroundTint="@color/white"
@@ -205,7 +207,7 @@
 
                 <EditText
                     android:textSize="@dimen/_10sdp"
-                    android:id="@+id/deposoitAmt"
+                    android:id="@+id/transferAmt"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"
                     android:inputType="text"

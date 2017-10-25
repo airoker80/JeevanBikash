@@ -6,6 +6,7 @@ import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.OTPmodel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.TransferModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
 
 import okhttp3.RequestBody;
@@ -56,10 +57,15 @@ public interface ApiInterface {
                                                  @Header("Content-Type") String contentType);
 
     @POST("member/deposit?serialno=12346")
-    Call<String> sendDepositRequest(@Body RequestBody body,
+    Call<TransferModel> sendDepositRequest(@Body RequestBody body,
                                     @Header("X-Authorization") String xAuth,
                                     @Header("Authorization") String Authorization,
                                     @Header("Content-Type") String contentType);
+    @POST("member/fundtransfer?serialno=12346")
+    Call<TransferModel> sendFundTransferRequest(@Body RequestBody body,
+                                                @Header("X-Authorization") String xAuth,
+                                                @Header("Authorization") String Authorization,
+                                                @Header("Content-Type") String contentType);
 
     @POST("member/withdraw?serialno=12346")
     Call<WithDrawlResponse> sendWithdrawRequest(@Body RequestBody body,

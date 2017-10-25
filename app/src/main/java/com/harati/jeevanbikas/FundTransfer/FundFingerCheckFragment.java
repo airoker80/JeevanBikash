@@ -18,6 +18,7 @@ import com.harati.jeevanbikas.R;
  * A simple {@link Fragment} subclass.
  */
 public class FundFingerCheckFragment extends Fragment {
+    Bundle bundle;
 
     ImageView fingerPrint;
     public FundFingerCheckFragment() {
@@ -29,7 +30,7 @@ public class FundFingerCheckFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        bundle =getArguments();
         View view= inflater.inflate(R.layout.fragment_fund_finger_check, container, false);
         fingerPrint = (ImageView) view.findViewById(R.id.fingerPrint);
         final String value = getArguments().getString("goto");
@@ -38,6 +39,7 @@ public class FundFingerCheckFragment extends Fragment {
             public void onClick(View view) {
                 if (value.equals("info")){
                     Fragment fragment= new FundInfoFragment();
+                    fragment.setArguments(bundle);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);
                     transaction.replace(R.id.contentFrame, fragment);

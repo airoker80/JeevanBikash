@@ -13,10 +13,12 @@ import android.widget.ImageView;
 import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.DialogActivity;
+import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.TransferModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -63,13 +65,14 @@ public class AgentClientTransferFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 sendDepositRequest();
-                startActivity(new Intent(getContext(), DialogActivity.class));
+//                startActivity(new Intent(getContext(), DialogActivity.class));
             }
         });
         return  view;
     }
 
     private void sendDepositRequest(){
+        sessionHandler.showProgressDialog("Sending Request");
         final JSONObject jsonObject = new JSONObject();
         sessionHandler.showProgressDialog("Sending Request..");
         try{
@@ -83,20 +86,30 @@ public class AgentClientTransferFragment extends Fragment {
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
 
-        retrofit2.Call<String> call = apiInterface.sendDepositRequest(body,
+        retrofit2.Call<TransferModel> call = apiInterface.sendDepositRequest(body,
                 sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json");
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<TransferModel>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<TransferModel> call, Response<TransferModel> response) {
                 sessionHandler.hideProgressDialog();
-                startActivity(new Intent(getContext(), DialogActivity.class));
+                if (response.isSuccessful()){
+                    Intent intent = new Intent( getContext(),DialogActivity.class);
+                    intent.putExtra("msg",response.body().getMessage());
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent( getContext(),ErrorDialogActivity.class);
+                    intent.putExtra("msg","Some Field may be Wrong");
+                    startActivity(intent);
+                }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<TransferModel> call, Throwable t) {
                 sessionHandler.hideProgressDialog();
-
+                Intent intent = new Intent( getContext(),ErrorDialogActivity.class);
+                intent.putExtra("msg","connection Error");
+                startActivity(intent);
             }
         });
 
