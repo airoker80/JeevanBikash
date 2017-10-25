@@ -19,6 +19,7 @@ import com.harati.jeevanbikas.R;
  */
 public class DemandDetailsFragment extends Fragment implements View.OnClickListener {
     ImageView demand_tick,demand_cross;
+    Bundle bundle;
     private View.OnClickListener mClickListener;
 
     public DemandDetailsFragment() {
@@ -30,6 +31,9 @@ public class DemandDetailsFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        bundle = getArguments();
+
         View view =  inflater.inflate(R.layout.fragment_demand_details, container, false);
         demand_tick=(ImageView)view.findViewById(R.id.demand_tick);
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
@@ -44,6 +48,7 @@ public class DemandDetailsFragment extends Fragment implements View.OnClickListe
         switch (vId){
             case R.id.demand_tick:
                 Fragment fragment = new FingerPrintLoanFragment();
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFrame, fragment);
                 transaction.addToBackStack(null);

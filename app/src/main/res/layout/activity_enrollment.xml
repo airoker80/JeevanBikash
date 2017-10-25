@@ -244,6 +244,7 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <com.harati.jeevanbikas.Helper.CGEditText
+                                android:id="@+id/enrollment_czn"
                                 android:layout_width="match_parent"
                                 android:textSize="@dimen/_10sdp"
                                 android:layout_height="@dimen/_32sdp"

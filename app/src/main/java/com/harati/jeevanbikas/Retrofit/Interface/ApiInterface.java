@@ -2,12 +2,15 @@ package com.harati.jeevanbikas.Retrofit.Interface;
 
 
 
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoanDetailsModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.OTPmodel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.TransferModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
+
+import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -34,6 +37,12 @@ public interface ApiInterface {
 //    @Headers("{Authorization:Basic dXNlcjpqQiQjYUJAMjA1NA== ,Content-Type:application/json}")
     @POST("agent/requestotp?serialno=12346")
     Call<OTPmodel> sendRetrofitOtprequest(@Body RequestBody body,
+                                        @Header("X-Authorization") String xAuth,
+                                        @Header("Authorization") String Authorization,
+                                        @Header("Content-Type") String contentType);
+
+    @POST("member/enroll?serialno=12346")
+    Call<SuccesResponseModel> sendEnrollmentRequest(@Body RequestBody body,
                                         @Header("X-Authorization") String xAuth,
                                         @Header("Authorization") String Authorization,
                                         @Header("Content-Type") String contentType);
@@ -66,6 +75,11 @@ public interface ApiInterface {
                                                 @Header("X-Authorization") String xAuth,
                                                 @Header("Authorization") String Authorization,
                                                 @Header("Content-Type") String contentType);
+    @POST("member/loandemand?serialno=12346")
+    Call<SuccesResponseModel> sendPostLoanDemand(@Body RequestBody body,
+                                                @Header("X-Authorization") String xAuth,
+                                                @Header("Authorization") String Authorization,
+                                                @Header("Content-Type") String contentType);
 
     @POST("member/withdraw?serialno=12346")
     Call<WithDrawlResponse> sendWithdrawRequest(@Body RequestBody body,
@@ -82,4 +96,14 @@ public interface ApiInterface {
 
 
 
+    @GET("caste?serialno=12346")
+    Call<SearchModel> getCasteList(@Query("mobileno") String mobileno,
+                                              @Header("X-Authorization") String xAuth,
+                                              @Header("Authorization") String Authorization,
+                                              @Header("Content-Type") String contentType);
+
+    @GET("loantype?serialno=12346")
+    Call<List<LoanDetailsModel>> getLoanTypeList(@Header("X-Authorization") String xAuth,
+                                                 @Header("Authorization") String Authorization,
+                                                 @Header("Content-Type") String contentType);
 }
