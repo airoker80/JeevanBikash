@@ -37,21 +37,18 @@ public class FingerPrintAuthFragment extends Fragment {
         office = bundle.getString("office");
         photo = bundle.getString("photo");
         Log.d("bundel",bundle.toString());
-        fingerPrint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fragment= new CashwithdrawlFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("code",code);
-                bundle.putString("name",name);
-                bundle.putString("office",office);
-                bundle.putString("photo",photo);
-                fragment.setArguments(bundle);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.addToBackStack(null);
-                transaction.replace(R.id.contentFrame, fragment);
-                transaction.commit();
-            }
+        fingerPrint.setOnClickListener(view1 -> {
+            Fragment fragment= new CashwithdrawlFragment();
+            Bundle bundle1 = new Bundle();
+            bundle1.putString("code",code);
+            bundle1.putString("name",name);
+            bundle1.putString("office",office);
+            bundle1.putString("photo",photo);
+            fragment.setArguments(bundle1);
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.addToBackStack(null);
+            transaction.replace(R.id.contentFrame, fragment);
+            transaction.commit();
         });
         return view;
     }

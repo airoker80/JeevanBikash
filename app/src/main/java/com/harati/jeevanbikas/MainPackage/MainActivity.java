@@ -78,14 +78,7 @@ public class MainActivity extends AppCompatActivity {
         app_icon=(ImageView)findViewById(R.id.app_icon);
         logoutTxt=(CenturyGothicTextView)findViewById(R.id.logoutTxt);
 
-        logoutTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                logoutInWeb();
-//                sessionHandler.logoutUser();
-                logout();
-            }
-        });
+        logoutTxt.setOnClickListener(v -> logout());
 
 //        sessionHandler.getInfo();
 
@@ -102,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_bill, "Bill \n Payment"));
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_utility, "Utility \n Payment"));
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_profile, "Agent \n Dashboard"));
-        dashBoardModels.add(new DashBoardModel(R.drawable.ic_setting, "Customization \n & Setting"));
+        dashBoardModels.add(new DashBoardModel(R.drawable.ic_passage_of_time, "Activity \n Log"));
+//        dashBoardModels.add(new DashBoardModel(R.drawable.ic_setting, "Customization \n & Setting"));
         dashboard_icon_list.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
         DashboardRecyclerViewAdapter dashboardRecyclerViewAdapter = new DashboardRecyclerViewAdapter(MainActivity.this, dashBoardModels);
         dashboard_icon_list.setAdapter(dashboardRecyclerViewAdapter);
@@ -110,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     void logout(){
         sessionHandler.showProgressDialog("Logging Out..");
-        sessionHandler.logoutUser();
+//        sessionHandler.logoutUser();
 //        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
             retrofit2.Call<SuccesResponseModel> call = apiInterface.sendLogoutRequest(sessionHandler.getAgentToken(),
                     "Basic dXNlcjpqQiQjYUJAMjA1NA==",
@@ -120,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<SuccesResponseModel> call, retrofit2.Response<SuccesResponseModel> response) {
                     sessionHandler.hideProgressDialog();
                     if (response.isSuccessful()){
+                        sessionHandler.logoutUser();
+                    }else {
                         sessionHandler.logoutUser();
                     }
                 }

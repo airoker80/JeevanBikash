@@ -107,13 +107,10 @@ public class PinCodeEditText extends android.support.v7.widget.AppCompatEditText
                     }
                 });
         //When tapped, move cursor to end of the text
-        super.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setSelection(getText().length());
-                if (mClickListener != null) {
-                    mClickListener.onClick(v);
-                }
+        super.setOnClickListener(v -> {
+            setSelection(getText().length());
+            if (mClickListener != null) {
+                mClickListener.onClick(v);
             }
         });
     }

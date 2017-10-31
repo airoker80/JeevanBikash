@@ -35,7 +35,7 @@
                     android:orientation="vertical">
 
                     <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                        android:id="@+id/name"
+                        android:id="@+id/fundtransfername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/_16sdp"
@@ -62,7 +62,7 @@
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/memberIdnnumber"
+                            android:id="@+id/fundMemberCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -90,7 +90,7 @@
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/branchName"
+                            android:id="@+id/fundBranchName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -102,6 +102,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">

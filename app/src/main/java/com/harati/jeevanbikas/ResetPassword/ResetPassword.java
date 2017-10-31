@@ -41,12 +41,7 @@ public class ResetPassword extends AppCompatActivity {
                 R.array.language, R.layout.text_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        resetPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendReestReq();
-            }
-        });
+        resetPass.setOnClickListener(v -> sendReestReq());
     }
 
     void sendReestReq(){

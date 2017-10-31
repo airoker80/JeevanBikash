@@ -30,7 +30,7 @@
                     android:orientation="vertical">
 
                     <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                        android:id="@+id/name"
+                        android:id="@+id/depdetailsName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/_13sdp"
@@ -57,7 +57,7 @@
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/memberIdnnumber"
+                            android:id="@+id/depositCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -85,7 +85,7 @@
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/branchName"
+                            android:id="@+id/depositBranch"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -97,6 +97,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -216,6 +217,8 @@
                 android:text="Deposit Amount"
                 android:textColor="@color/white"/>
             <com.harati.jeevanbikas.Helper.CGEditText
+                android:backgroundTint="@color/white"
+                android:layout_margin="@dimen/_10sdp"
                 android:id="@+id/deposoitAmt"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:textSize="@dimen/_10sdp"
@@ -233,6 +236,8 @@
                 android:text="Remarks"
                 android:textColor="@color/white"/>
             <com.harati.jeevanbikas.Helper.CGEditText
+                android:backgroundTint="@color/white"
+                android:layout_margin="@dimen/_10sdp"
                 android:id="@+id/deposoitRemarks"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:textSize="@dimen/_10sdp"

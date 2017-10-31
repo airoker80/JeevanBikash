@@ -52,47 +52,41 @@ public class VolleyRequestHandler {
         }
         final RequestQueue requestQueue = Volley.newRequestQueue(context);
         mRequestStartTime = System.currentTimeMillis();
-        final StringRequest request = new StringRequest(Request.Method.POST, JeevanBikashConfig.REQUEST_URL+URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                long totalRequestTime = System.currentTimeMillis() - mRequestStartTime;
-                Log.e("url",JeevanBikashConfig.REQUEST_URL+URL);
-                Log.e("sendobj",sendObj.toString());
-                Log.e("time","taken"+String.valueOf(totalRequestTime));
-                requestListener.onSuccess(response);
+        final StringRequest request = new StringRequest(Request.Method.POST, JeevanBikashConfig.REQUEST_URL+URL, response -> {
+            long totalRequestTime = System.currentTimeMillis() - mRequestStartTime;
+            Log.e("url",JeevanBikashConfig.REQUEST_URL+URL);
+            Log.e("sendobj",sendObj.toString());
+            Log.e("time","taken"+String.valueOf(totalRequestTime));
+            requestListener.onSuccess(response);
 
 
+        }, error -> {
+            long totalRequestTime = System.currentTimeMillis() - mRequestStartTime;
+            Log.e("time","taken"+String.valueOf(totalRequestTime));
+            Log.e("url",JeevanBikashConfig.REQUEST_URL+URL);
+            Log.e("sendobj",sendObj.toString());
+
+            requestListener.onFailure(String.valueOf(error));
+            Log.d("error", "asdasdasdas");
+            if (error instanceof TimeoutError) {
+                Toast.makeText(context, "Time Out Error", Toast.LENGTH_SHORT).show();
             }
-        } , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                long totalRequestTime = System.currentTimeMillis() - mRequestStartTime;
-                Log.e("time","taken"+String.valueOf(totalRequestTime));
-                Log.e("url",JeevanBikashConfig.REQUEST_URL+URL);
-                Log.e("sendobj",sendObj.toString());
-
-                requestListener.onFailure(String.valueOf(error));
-                Log.d("error", "asdasdasdas");
-                if (error instanceof TimeoutError) {
-                    Toast.makeText(context, "Time Out Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof NoConnectionError) {
-                    Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof AuthFailureError) {
-                    Toast.makeText(context, "Wrong Credentials", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.NetworkError) {
-                    Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.ServerError) {
-                    Toast.makeText(context, "Server Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.ParseError) {
-                    Toast.makeText(context, "JSON Parse Error", Toast.LENGTH_SHORT).show();
-                }
-
+            if (error instanceof NoConnectionError) {
+                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
             }
+            if (error instanceof AuthFailureError) {
+                Toast.makeText(context, "Wrong Credentials", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof com.android.volley.NetworkError) {
+                Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof com.android.volley.ServerError) {
+                Toast.makeText(context, "Server Error", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof ParseError) {
+                Toast.makeText(context, "JSON Parse Error", Toast.LENGTH_SHORT).show();
+            }
+
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -160,47 +154,41 @@ public class VolleyRequestHandler {
         }
         final RequestQueue requestQueue = Volley.newRequestQueue(context);
         mRequestStartTime = System.currentTimeMillis();
-        final StringRequest request = new StringRequest(Request.Method.GET, JeevanBikashConfig.REQUEST_URL+URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                long totalRequestTime = System.currentTimeMillis() - mRequestStartTime;
-                Log.e("url",JeevanBikashConfig.REQUEST_URL+URL);
+        final StringRequest request = new StringRequest(Request.Method.GET, JeevanBikashConfig.REQUEST_URL+URL, response -> {
+            long totalRequestTime = System.currentTimeMillis() - mRequestStartTime;
+            Log.e("url",JeevanBikashConfig.REQUEST_URL+URL);
 //                Log.e("sendobj",sendObj.toString());
-                Log.e("time","taken"+String.valueOf(totalRequestTime));
-                requestListener.onSuccess(response);
+            Log.e("time","taken"+String.valueOf(totalRequestTime));
+            requestListener.onSuccess(response);
 
 
-            }
-        } , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                long totalRequestTime = System.currentTimeMillis() - mRequestStartTime;
-                Log.e("time","taken"+String.valueOf(totalRequestTime));
-                Log.e("url",JeevanBikashConfig.REQUEST_URL+URL);
+        }, error -> {
+            long totalRequestTime = System.currentTimeMillis() - mRequestStartTime;
+            Log.e("time","taken"+String.valueOf(totalRequestTime));
+            Log.e("url",JeevanBikashConfig.REQUEST_URL+URL);
 //                Log.e("sendobj",sendObj.toString());
 
-                requestListener.onFailure(String.valueOf(error));
-                Log.d("error", "asdasdasdas");
-                if (error instanceof TimeoutError) {
-                    Toast.makeText(context, "Time Out Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof NoConnectionError) {
-                    Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof AuthFailureError) {
-                    Toast.makeText(context, "Wrong Credentials", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.NetworkError) {
-                    Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.ServerError) {
-                    Toast.makeText(context, "Server Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.ParseError) {
-                    Toast.makeText(context, "JSON Parse Error", Toast.LENGTH_SHORT).show();
-                }
-
+            requestListener.onFailure(String.valueOf(error));
+            Log.d("error", "asdasdasdas");
+            if (error instanceof TimeoutError) {
+                Toast.makeText(context, "Time Out Error", Toast.LENGTH_SHORT).show();
             }
+            if (error instanceof NoConnectionError) {
+                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof AuthFailureError) {
+                Toast.makeText(context, "Wrong Credentials", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof com.android.volley.NetworkError) {
+                Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof com.android.volley.ServerError) {
+                Toast.makeText(context, "Server Error", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof ParseError) {
+                Toast.makeText(context, "JSON Parse Error", Toast.LENGTH_SHORT).show();
+            }
+
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -260,19 +248,13 @@ public class VolleyRequestHandler {
         final RequestQueue requestQueue = Volley.newRequestQueue(context);
         mRequestStartTime = System.currentTimeMillis();
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, JeevanBikashConfig.REQUEST_URL+URL, sendObj,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        System.out.println("response -->> " + response.toString());
-                        requestListener.onSuccess(String.valueOf(response));
-                    }
+                response -> {
+                    System.out.println("response -->> " + response.toString());
+                    requestListener.onSuccess(String.valueOf(response));
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("change Pass response -->> " + error.toString());
-                        requestListener.onFailure(error.toString());
-                    }
+                error -> {
+                    System.out.println("change Pass response -->> " + error.toString());
+                    requestListener.onFailure(error.toString());
                 }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

@@ -22,12 +22,14 @@ import com.squareup.picasso.Picasso;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DepositDetailsFragment extends Fragment implements View.OnClickListener{
-    EditText agent_pin,clientMobile;
-    ImageView demand_tick,demand_cross,depositUserPhoto;
-    String code,name,office ,photo;
-    TextView memberIdnnumber, branchName, accNoDetails,enquiryUserName,memberId,branch ,accNo,nameTxt;
+public class DepositDetailsFragment extends Fragment implements View.OnClickListener {
+    EditText agent_pin, clientMobile;
+    ImageView demand_tick, demand_cross, depositUserPhoto;
+    String code, name, office, photo;
+    TextView memberIdnnumber, branchName, accNoDetails, enquiryUserName, memberId, branch, accNo, nameTxt;
     PinEntryEditText txt_pin_entry;
+    Bundle bundle;
+
     public DepositDetailsFragment() {
         // Required empty public constructor
     }
@@ -38,15 +40,17 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        Bundle bundle = getArguments();
+        bundle = getArguments();
+
+        Log.d("bund d;le", "v^V^V^v" + bundle.toString());
         code = bundle.getString("code");
         name = bundle.getString("name");
         office = bundle.getString("office");
         photo = bundle.getString("photo");
 
-        View view= inflater.inflate(R.layout.fragment_deposit_details, container, false);
-        demand_tick=(ImageView)view.findViewById(R.id.demand_tick);
-        demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
+        View view = inflater.inflate(R.layout.fragment_deposit_details, container, false);
+        demand_tick = (ImageView) view.findViewById(R.id.demand_tick);
+        demand_cross = (ImageView) view.findViewById(R.id.demand_cross);
 
         nameTxt = (TextView) view.findViewById(R.id.name);
 
@@ -67,29 +71,23 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
 
         try {
             Picasso.with(getContext()).load(photo).into(depositUserPhoto);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         demand_tick.setOnClickListener(this);
         demand_cross.setOnClickListener(this);
-        return  view;
+        return view;
     }
 
     @Override
     public void onClick(View v) {
         int vId = v.getId();
-        switch (vId){
+        switch (vId) {
             case R.id.demand_tick:
                 Fragment fragment = new FingerPrintAuthDepositFragment();
-                Bundle args = new Bundle();
-                args.putString("code",code);
-                args.putString("name",name);
-                args.putString("office",office);
-                args.putString("photo",photo);
-//                args.putString("clientPin",txt_pin_entry.getText().toString());
-                args.putString("clientMobile",clientMobile.getText().toString());
-                fragment.setArguments(args);
+                bundle.putString("clientMobile", clientMobile.getText().toString());
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFrame, fragment);
                 transaction.addToBackStack(null);

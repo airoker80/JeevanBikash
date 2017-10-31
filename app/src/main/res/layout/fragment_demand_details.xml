@@ -30,7 +30,7 @@
                     android:orientation="vertical">
 
                     <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                        android:id="@+id/name"
+                        android:id="@+id/demDtlname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/_13sdp"
@@ -57,7 +57,7 @@
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/memberIdnnumber"
+                            android:id="@+id/demandDtlCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -85,7 +85,7 @@
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/branchName"
+                            android:id="@+id/demandDtlBranch"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -97,6 +97,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">

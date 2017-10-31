@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.harati.jeevanbikas.Helper.CGEditText;
+import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
@@ -23,6 +24,8 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
     String code,name,office ,photo,clientPin,clientCode;
     PinEntryEditText agentPin;
     CGEditText deposoitAmt,deposoitRemarks;
+
+    CenturyGothicTextView depdetailsName,depositCode ,depositBranch;
     Bundle bundle;
 
     public AgentPinDetailsFragment() {
@@ -37,19 +40,20 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         View view= inflater.inflate(R.layout.fragment_agent_pin_details, container, false);
 
         bundle = getArguments();
-
-        code = bundle.getString("code");
-        name = bundle.getString("name");
-        office = bundle.getString("office");
-        photo = bundle.getString("photo");
-        clientPin = bundle.getString("clientPin");
-        clientCode = bundle.getString("clientCode");
-
         agent_tick=(ImageView)view.findViewById(R.id.agent_tick);
 
         agentPin=(PinEntryEditText)view.findViewById(R.id.agentPin);
         deposoitAmt=(CGEditText) view.findViewById(R.id.deposoitAmt);
         deposoitRemarks=(CGEditText)view.findViewById(R.id.deposoitRemarks);
+
+        depdetailsName=(CenturyGothicTextView)view.findViewById(R.id.depdetailsName);
+        depositCode=(CenturyGothicTextView)view.findViewById(R.id.depositCode);
+        depositBranch=(CenturyGothicTextView)view.findViewById(R.id.depositBranch);
+
+
+        depdetailsName.setText(bundle.getString("name"));
+                depositCode.setText(bundle.getString("code"));
+        depositBranch.setText(bundle.getString("office"));
 
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         agent_tick.setOnClickListener(this);
@@ -63,14 +67,6 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         switch (vId){
             case  R.id.agent_tick:
                 Fragment fragment= new AgentClientTransferFragment();
-/*                Bundle args = new Bundle();
-                args.putString("code",code);
-                args.putString("name",name);
-                args.putString("office",office);
-//                    args.putString("office",response.body().getCode());
-                args.putString("photo",photo);
-                args.putString("agentPin",agentPin.getText().toString());
-                args.putString("clientCode",clientCode);*/
                 bundle.putString("agentPin",agentPin.getText().toString());
                 bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
                 bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());

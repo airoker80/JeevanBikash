@@ -57,20 +57,10 @@ public class LoginActivity extends AppCompatActivity {
         }
         reset_pin = (TextView) findViewById(R.id.reset_pin);
 
-        reset_pin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, ResetPin.class));
-            }
-        });
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                jeevanLogin();
-            loginWithRetrofit();
-//           startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            }
+        reset_pin.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ResetPin.class)));
+        loginBtn.setOnClickListener(v -> {
+//            loginWithRetrofit();
+           startActivity(new Intent(LoginActivity.this, MainActivity.class));
         });
     }
 

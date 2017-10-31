@@ -54,7 +54,7 @@ public class CashwithdrawlFragment extends Fragment {
     ImageView imgUser;
 
     TextView memberId,branch ,accNo,withdrawlTxt,at_pin ,remarks_txt,memberIdnnumber,branchName,nameTxt;
-    List<HelperListModelClass> helperListModelClassList =new ArrayList<HelperListModelClass>();
+    List<HelperListModelClass> helperListModelClassList = new ArrayList<>();
     public CashwithdrawlFragment() {
     }
 
@@ -104,37 +104,32 @@ public class CashwithdrawlFragment extends Fragment {
         Picasso.with(getContext()).load(photo).into(imgUser);
 
 
-        submit.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View view) {
-                withdrawlAmountTxt=withdrawlAmount.getText().toString();
-                agentPinTxt=agentPin.getText().toString();
-                withdrawlRemarkTxt=withdrawlRemark.getText().toString();
-                if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|withdrawlRemarkTxt.equals("")){
-                    getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
-                }else {
+        submit.setOnClickListener(view1 -> {
+            withdrawlAmountTxt=withdrawlAmount.getText().toString();
+            agentPinTxt=agentPin.getText().toString();
+            withdrawlRemarkTxt=withdrawlRemark.getText().toString();
+            if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|withdrawlRemarkTxt.equals("")){
+                getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
+            }else {
 
 /*                    VolleyRequestHandler volleyRequestHandler = new VolleyRequestHandler();
-                    helperListModelClassList.add(new HelperListModelClass("withdrawlAmount",""));
-                    helperListModelClassList.add(new HelperListModelClass("agentPin",""));
-                    helperListModelClassList.add(new HelperListModelClass("withdrawlRemark",""));
+                helperListModelClassList.add(new HelperListModelClass("withdrawlAmount",""));
+                helperListModelClassList.add(new HelperListModelClass("agentPin",""));
+                helperListModelClassList.add(new HelperListModelClass("withdrawlRemark",""));
 
-                    String response="";
-                    try {
-                         response = volleyRequestHandler.makePostRequest("url",helperListModelClassList);
-                        Log.d("respones",response);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }*/
+                String response="";
+                try {
+                     response = volleyRequestHandler.makePostRequest("url",helperListModelClassList);
+                    Log.d("respones",response);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }*/
 
 
-                        sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
+                    sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
 /*                        Intent intent= new Intent(getContext(), DialogActivity.class);
-                        getActivity().startActivity(intent);*/
+                    getActivity().startActivity(intent);*/
 
-                }
             }
         });
         return view;
@@ -162,11 +157,25 @@ public class CashwithdrawlFragment extends Fragment {
             @Override
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
-                if (response.isSuccessful()){
+                if (String.valueOf(response.code()).equals("200")){
                     String message = response.body().getMessage();
                     Intent intent = new Intent(getContext(),DialogActivity.class);
                     intent.putExtra("msg",message);
                     startActivity(intent);
+                }else {
+                    try {
+
+                        String jsonString = response.errorBody().string();
+
+                        Log.d("here ","--=>"+jsonString);
+
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",jsonObject.getString("message"));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

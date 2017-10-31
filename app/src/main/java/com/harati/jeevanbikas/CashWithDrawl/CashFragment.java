@@ -1,6 +1,7 @@
 package com.harati.jeevanbikas.CashWithDrawl;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.google.gson.JsonParser;
 import com.harati.jeevanbikas.BalanceEnquiry.EnquiryUserDetails;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
+import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
@@ -28,6 +30,8 @@ import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +50,7 @@ public class CashFragment extends Fragment {
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
 
-    List<AutoCompleteModel> autoCompleteModelList = new ArrayList<AutoCompleteModel>();
+    List<AutoCompleteModel> autoCompleteModelList = new ArrayList<>();
     AutoCompleteTextView input;
      ImageView imageView;
     TextView cash_wd_txt;
@@ -75,19 +79,16 @@ public class CashFragment extends Fragment {
 
         cash_wd_txt.setTypeface(MainActivity.centuryGothic);
         input.setTypeface(MainActivity.centuryGothic);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (input.getText().toString().equals("")){
-                    input.setError("Please Enter the Phone Number");
-                }else {
-                    getMemberList(input.getText().toString());
+        imageView.setOnClickListener(view1 -> {
+            if (input.getText().toString().equals("")){
+                input.setError("Please Enter the Phone Number");
+            }else {
+                getMemberList(input.getText().toString());
 //                    Fragment fragment= new FingerPrintAuthFragment();
 //                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 //                    transaction.addToBackStack(null);
 //                    transaction.replace(R.id.contentFrame, fragment);
 //                    transaction.commit();
-                }
             }
         });
         return view;
@@ -104,7 +105,7 @@ public class CashFragment extends Fragment {
             public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
                 sessionHandler.hideProgressDialog();
                 Log.d("DADAD0","response");
-                if (response.isSuccessful()){
+                if (String.valueOf(response.code()).equals("200")){
                     Log.d("DADAD0","succes");
                     Fragment fragment = new FingerPrintAuthFragment();
                     Bundle args = new Bundle();
@@ -120,11 +121,14 @@ public class CashFragment extends Fragment {
                     transaction.commit();
                 }else {
                     try {
-                        /*Gson gson = null;
-                        SuccesResponseModel successModel = gson.fromJson(response.errorBody().string(),SuccesResponseModel.class);*/
-                        JsonParser parser = new JsonParser();
-                        JsonObject data = parser.parse(String.valueOf(response)).getAsJsonObject();
-                        Log.d("DADAD0","succes===>"+data.toString());
+                        String jsonString = response.errorBody().string();
+
+                        Log.d("here ","--=>"+jsonString);
+
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",jsonObject.getString("message"));
+                        startActivity(intent);
                     }catch (Exception e){
                         e.printStackTrace();
                     }

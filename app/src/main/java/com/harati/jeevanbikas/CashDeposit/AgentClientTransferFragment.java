@@ -61,12 +61,9 @@ public class AgentClientTransferFragment extends Fragment {
         branchName.setText(bundle.getString("office"));
         shownDepositAmt.setText(bundle.getString("deposoitAmt"));
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
-        agent_client_tick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendDepositRequest();
+        agent_client_tick.setOnClickListener(v -> {
+            sendDepositRequest();
 //                startActivity(new Intent(getContext(), DialogActivity.class));
-            }
         });
         return  view;
     }
@@ -93,14 +90,24 @@ public class AgentClientTransferFragment extends Fragment {
             @Override
             public void onResponse(Call<TransferModel> call, Response<TransferModel> response) {
                 sessionHandler.hideProgressDialog();
-                if (response.isSuccessful()){
+                if (String.valueOf(response.code()).equals("200")){
                     Intent intent = new Intent( getContext(),DialogActivity.class);
                     intent.putExtra("msg",response.body().getMessage());
                     startActivity(intent);
                 }else {
-                    Intent intent = new Intent( getContext(),ErrorDialogActivity.class);
-                    intent.putExtra("msg","Some Field may be Wrong");
-                    startActivity(intent);
+                    try {
+
+                        String jsonString = response.errorBody().string();
+
+                        Log.d("here ","--=>"+jsonString);
+
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",jsonObject.getString("message"));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

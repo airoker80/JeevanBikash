@@ -104,6 +104,7 @@
 
                                     <com.harati.jeevanbikas.Helper.CGEditText
                                         android:textSize="@dimen/_10sdp"
+                                        android:inputType="number"
                                         android:id="@+id/enrollment_age"
                                         android:layout_width="match_parent"
                                         android:layout_height="@dimen/_32sdp"
@@ -266,6 +267,8 @@
                                     android:orientation="horizontal">
 
                                     <ImageView
+                                        android:clickable="true"
+                                        android:id="@+id/req_doc"
                                         android:layout_width="@dimen/_60sdp"
                                         android:layout_height="@dimen/_90sdp"
                                         android:src="@drawable/ic_new_file" />
@@ -283,6 +286,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/getFile"
+                                    android:visibility="gone"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="4dp"
@@ -648,4 +653,14 @@
 
     </FrameLayout>-->
 
+    <TextView
+        android:id="@+id/profileText"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/docText"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

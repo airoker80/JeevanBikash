@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.harati.jeevanbikas.BalanceEnquiry.FingerPrintFragment;
+import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
@@ -20,6 +21,8 @@ import com.harati.jeevanbikas.R;
 public class DemandDetailsFragment extends Fragment implements View.OnClickListener {
     ImageView demand_tick,demand_cross;
     Bundle bundle;
+
+    CenturyGothicTextView demDtlname,demandDtlCode, demandDtlBranch;
     private View.OnClickListener mClickListener;
 
     public DemandDetailsFragment() {
@@ -35,6 +38,15 @@ public class DemandDetailsFragment extends Fragment implements View.OnClickListe
         bundle = getArguments();
 
         View view =  inflater.inflate(R.layout.fragment_demand_details, container, false);
+
+        demDtlname=(CenturyGothicTextView)view.findViewById(R.id.demDtlname);
+        demandDtlCode=(CenturyGothicTextView)view.findViewById(R.id.demandDtlCode);
+        demandDtlBranch=(CenturyGothicTextView)view.findViewById(R.id.demandDtlBranch);
+
+        demDtlname.setText(bundle.getString("name"));
+        demandDtlCode.setText(bundle.getString("code"));
+        demandDtlBranch.setText(bundle.getString("office"));
+
         demand_tick=(ImageView)view.findViewById(R.id.demand_tick);
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         demand_tick.setOnClickListener(this);

@@ -98,13 +98,13 @@ public class FingerPrintFragment extends Fragment {
         FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(FINGERPRINT_SERVICE);
 
         if (!fingerprintManager.isHardwareDetected()) {
-            /**
-             * An error message will be displayed if the device does not contain the fingerprint hardware.
-             * However if you plan to implement a default authentication method,
-             * you can redirect the user to a default authentication activity from here.
-             * Example:
-             * Intent intent = new Intent(this, DefaultAuthenticationActivity.class);
-             * startActivity(intent);
+            /*
+              An error message will be displayed if the device does not contain the fingerprint hardware.
+              However if you plan to implement a default authentication method,
+              you can redirect the user to a default authentication activity from here.
+              Example:
+              Intent intent = new Intent(this, DefaultAuthenticationActivity.class);
+              startActivity(intent);
              */
             textView.setText("Your Device does not have a Fingerprint Sensor");
         } else {
@@ -136,22 +136,17 @@ public class FingerPrintFragment extends Fragment {
             }
         }
 
-        fingerPrint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        fingerPrint.setOnClickListener(view1 -> {
 //                showMessage();
 
-                sendBalanceEnquiryRequest();
+            sendBalanceEnquiryRequest();
 
 /*                Snackbar snackbar = Snackbar
-                        .make(view, "Please Place your right finger in the sensor", Snackbar.LENGTH_LONG);
-                snackbar.show();
-                View snackbarview = snackbar.getView();
-                TextView textView = (TextView) snackbarview.findViewById(android.support.design.R.id.snackbar_text);
-                textView.setTextColor(Color.RED);*/
-            }
-
-
+                    .make(view, "Please Place your right finger in the sensor", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            View snackbarview = snackbar.getView();
+            TextView textView = (TextView) snackbarview.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.RED);*/
         });
         return view;
     }
@@ -240,7 +235,7 @@ public class FingerPrintFragment extends Fragment {
             @Override
             public void onResponse(Call<SuccesResponseModel> call, Response<SuccesResponseModel> response) {
                 sessionHandler.hideProgressDialog();
-                if (response.isSuccessful()){
+                if (String.valueOf(response.code()).equals("200")){
                     if (response.body().getStatus().equals("Success")){
                         Intent intent = new Intent(getContext(),DialogActivity.class);
                         intent.putExtra("msg",response.body().getMessage());
@@ -249,6 +244,20 @@ public class FingerPrintFragment extends Fragment {
                         Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
                         intent.putExtra("msg",response.body().getMessage());
                         startActivity(intent);
+                    }
+                }else {
+                    try {
+
+                        String jsonString = response.errorBody().string();
+
+                        Log.d("here ","--=>"+jsonString);
+
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",jsonObject.getString("message"));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }

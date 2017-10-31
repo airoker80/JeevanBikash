@@ -1,21 +1,26 @@
 package com.harati.jeevanbikas.CashDeposit;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,37 +47,20 @@ public class FingerPrintAuthDepositFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fingerprint, container, false);
 
         bundle = getArguments();
+
+        Log.d("bund d;le", "v^V^V^v" + bundle.toString());
+
         apiInterface = RetrofitClient.getApiService();
         sessionHandler = new SessionHandler(getContext());
-        code = bundle.getString("code");
-        name = bundle.getString("name");
-        office = bundle.getString("office");
-        photo = bundle.getString("photo");
-//        clientPin = bundle.getString("clientPin");
-        clientMobile = bundle.getString("clientMobile");
-        getMemberList(clientMobile);
+//        getMemberList(clientMobile);
         fingerPrint = (ImageView) view.findViewById(R.id.fingerPrint);
-        fingerPrint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fragment= new AgentPinDetailsFragment();
-/*                Bundle args = new Bundle();
-                args.putString("code",code);
-                args.putString("name",name);
-                args.putString("office",office);
-//                    args.putString("office",response.body().getCode());
-                args.putString("photo",photo);
-                args.putString("clientPin",clientPin);*/
-                bundle.putString("clientCode",clientCode);
-                bundle.putString("clientName",clientName);
-                bundle.putString("clientOffice",clientOffice);
-                bundle.putString("clientPhoto",clientPhoto);
-                fragment.setArguments(bundle);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.addToBackStack(null);
-                transaction.replace(R.id.contentFrame, fragment);
-                transaction.commit();
-            }
+        fingerPrint.setOnClickListener(view1 -> {
+            Fragment fragment= new AgentPinDetailsFragment();
+            fragment.setArguments(bundle);
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.addToBackStack(null);
+            transaction.replace(R.id.contentFrame, fragment);
+            transaction.commit();
         });
         return view;
     }
@@ -88,14 +76,26 @@ public class FingerPrintAuthDepositFragment extends Fragment {
             public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
                 sessionHandler.hideProgressDialog();
 //                Log.d("DADAD0","ADA");
-                if (response.isSuccessful()){
+                if (String.valueOf(response.code()).equals("200")){
                     clientCode=response.body().getCode();
                     clientName=response.body().getName();
                     clientOffice=response.body().getOffice();
 //                    args.putString("office",response.body().getCode());
                     clientPhoto=response.body().getPhoto();
                 }else {
+                    try {
 
+                        String jsonString = response.errorBody().string();
+
+                        Log.d("here ","--=>"+jsonString);
+
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",jsonObject.getString("message"));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

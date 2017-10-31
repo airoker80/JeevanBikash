@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.R;
@@ -200,18 +201,12 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
       }
       String REQUESTURL = JeevanBikashConfig.REQUEST_URL + "requestotp?serialno=12348";
       StringRequest req = new StringRequest(Request.Method.POST, REQUESTURL,
-              new Response.Listener<String>() {
-                  @Override
-                  public void onResponse(String responseObject) {
+              responseObject -> {
 
 
-                  }
-              }, new Response.ErrorListener() {
-          @Override
-          public void onErrorResponse(VolleyError error) {
+              }, error -> {
 
-          }
-      }) {
+              }) {
           @Override
           public byte[] getBody() throws AuthFailureError {
               return jsonObject.toString().getBytes();
@@ -219,7 +214,7 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
 
           @Override
           public Map<String, String> getHeaders() throws AuthFailureError {
-                 HashMap<String, String> headers = new HashMap<String, String>();
+                 HashMap<String, String> headers = new HashMap<>();
               headers.put("X-Authorization", sessionHandler.getAgentToken());
               headers.put("Content-Type", "application/json");
               headers.put("Authorization", "Basic dXNlcjpqQiQjYUJAMjA1NA==");
@@ -252,12 +247,19 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
           @Override
           public void onResponse(retrofit2.Call<OTPmodel> call, retrofit2.Response<OTPmodel> response) {
               sessionHandler.hideProgressDialog();
-              if (response.isSuccessful()){
+              if (String.valueOf(response.code()).equals("200")){
                   startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
                   Toast.makeText(InitialResetPassword.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
               }else {
                   try {
-                      Toast.makeText(InitialResetPassword.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                      String jsonString = response.errorBody().string();
+
+                      Log.d("here ","--=>"+jsonString);
+
+                      JSONObject jsonObject = new JSONObject(jsonString);
+                      Intent intent = new Intent(InitialResetPassword.this, ErrorDialogActivity.class);
+                      intent.putExtra("msg",jsonObject.getString("message"));
+                      startActivity(intent);
                   }catch (Exception e){
                       e.printStackTrace();
                   }

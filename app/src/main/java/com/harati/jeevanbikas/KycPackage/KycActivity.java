@@ -32,12 +32,7 @@ public class KycActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
         setPage("home");
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        image.setOnClickListener(view -> onBackPressed());
     }
 
     public void setPage(String name) {

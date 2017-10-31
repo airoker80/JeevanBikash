@@ -48,7 +48,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                    android:id="@+id/nameDetails"
+                    android:id="@+id/loanNameDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
@@ -77,7 +77,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                    android:id="@+id/memberIdnnumber"
+                    android:id="@+id/loanDtCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
@@ -106,7 +106,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                    android:id="@+id/branchName"
+                    android:id="@+id/ldOffice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
@@ -130,7 +130,7 @@
                 android:id="@+id/spinner"
                 style="@style/SpinnerStyle"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_25sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/white"
                 android:entries="@array/loantype"></Spinner>

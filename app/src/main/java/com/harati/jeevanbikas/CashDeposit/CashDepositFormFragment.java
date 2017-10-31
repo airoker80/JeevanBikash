@@ -37,19 +37,16 @@ public class CashDepositFormFragment extends Fragment {
         accNo=(EditText)view.findViewById(R.id.accNo);
 
         submit = (ImageView)view.findViewById(R.id.submit);
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                withdrawlAmountTxt=withdrawlAmount.getText().toString();
-                agentPinTxt=agentPin.getText().toString();
-                withdrawlRemarkTxt=withdrawlRemark.getText().toString();
-                accNoTxt=accNo.getText().toString();
-                if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|withdrawlRemarkTxt.equals("")|accNo.getText().toString().equals("")){
-                    getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
-                }else {
-                    Intent intent= new Intent(getContext(), DialogActivity.class);
-                    getActivity().startActivity(intent);
-                }
+        submit.setOnClickListener(view1 -> {
+            withdrawlAmountTxt=withdrawlAmount.getText().toString();
+            agentPinTxt=agentPin.getText().toString();
+            withdrawlRemarkTxt=withdrawlRemark.getText().toString();
+            accNoTxt=accNo.getText().toString();
+            if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|withdrawlRemarkTxt.equals("")|accNo.getText().toString().equals("")){
+                getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
+            }else {
+                Intent intent= new Intent(getContext(), DialogActivity.class);
+                getActivity().startActivity(intent);
             }
         });
         return view;

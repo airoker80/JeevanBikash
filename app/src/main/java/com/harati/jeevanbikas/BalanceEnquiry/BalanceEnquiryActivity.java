@@ -35,12 +35,7 @@ public class BalanceEnquiryActivity extends AppCompatActivity {
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
                 R.array.language, R.layout.text_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onbackPressed();
-            }
-        });
+        image.setOnClickListener(view -> onbackPressed());
         spinner.setAdapter(adapter);
         setPage("home");
     }

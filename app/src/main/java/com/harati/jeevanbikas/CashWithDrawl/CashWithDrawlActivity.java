@@ -31,12 +31,7 @@ public class CashWithDrawlActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
        setPage("home");
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        image.setOnClickListener(view -> onBackPressed());
     }
 
     @Override

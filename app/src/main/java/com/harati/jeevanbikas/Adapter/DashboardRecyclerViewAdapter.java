@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.harati.jeevanbikas.ActivityLogPackage.AgentLogActivity;
 import com.harati.jeevanbikas.AgentDashboard.AgentDashboardActivity;
 import com.harati.jeevanbikas.BalanceEnquiry.BalanceEnquiryActivity;
 import com.harati.jeevanbikas.CashDeposit.CashDepositActivity;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<DashboardRecyclerViewAdapter.ViewHolder> {
     Context context;
-    List<DashBoardModel> dashBoardModelList = new ArrayList<DashBoardModel>();
+    List<DashBoardModel> dashBoardModelList = new ArrayList<>();
 
     public DashboardRecyclerViewAdapter(Context context, List<DashBoardModel> dashBoardModelList) {
         this.context = context;
@@ -54,39 +55,39 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
         holder.dashboard_text_id.setTypeface(MainActivity.centuryGothic);
         holder.dashboard_icon_id.setImageResource(dashBoardModel.getDashboard_icon_id());
         final AppCompatActivity activity=(AppCompatActivity) context;
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (dashBoardModel.getDashboard_icon_name().equals("Balance \n Inquiry")){
-                    context.startActivity(new Intent(context,BalanceEnquiryActivity.class));
-                }
-                if (dashBoardModel.getDashboard_icon_name().equals("Cash \n Withdrawal")){
-                        context.startActivity(new Intent(context,CashWithDrawlActivity.class));
-                }
-                if (dashBoardModel.getDashboard_icon_name().equals("Cash \n Deposit")){
-                        context.startActivity(new Intent(context,CashDepositActivity.class));
-                }
-                if (dashBoardModel.getDashboard_icon_name().equals("Funds \n Transfer")){
-                        context.startActivity(new Intent(context,FundTransferActivity.class));
-                }
-                if (dashBoardModel.getDashboard_icon_name().equals("New Member \n Enrollment")){
-                        context.startActivity(new Intent(context,EnrollmentActivity.class));
-                }
-                if (dashBoardModel.getDashboard_icon_name().equals("Loan \n Demand")){
-                        context.startActivity(new Intent(context,LoanDemandActivity.class));
-                }
-                if (dashBoardModel.getDashboard_icon_name().equals("Mobile Recharge \n & Topup")){
-                        context.startActivity(new Intent(context,RechargeTopup.class));
-                }
-                if (dashBoardModel.getDashboard_icon_name().equals("Utility \n Payment")){
-                        context.startActivity(new Intent(context,UtilityPayment.class));
-                }
-                if (dashBoardModel.getDashboard_icon_name().equals("Customization \n & Setting")){
-                        context.startActivity(new Intent(context,KycActivity.class));
-                }
-                if (dashBoardModel.getDashboard_icon_name().equals("Agent \n Dashboard")){
-                        context.startActivity(new Intent(context,AgentDashboardActivity.class));
-                }
+        holder.itemView.setOnClickListener(v -> {
+            if (dashBoardModel.getDashboard_icon_name().equals("Balance \n Inquiry")){
+                context.startActivity(new Intent(context,BalanceEnquiryActivity.class));
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("Cash \n Withdrawal")){
+                    context.startActivity(new Intent(context,CashWithDrawlActivity.class));
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("Cash \n Deposit")){
+                    context.startActivity(new Intent(context,CashDepositActivity.class));
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("Funds \n Transfer")){
+                    context.startActivity(new Intent(context,FundTransferActivity.class));
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("New Member \n Enrollment")){
+                    context.startActivity(new Intent(context,EnrollmentActivity.class));
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("Loan \n Demand")){
+                    context.startActivity(new Intent(context,LoanDemandActivity.class));
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("Mobile Recharge \n & Topup")){
+                    context.startActivity(new Intent(context,RechargeTopup.class));
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("Utility \n Payment")){
+                    context.startActivity(new Intent(context,UtilityPayment.class));
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("Customization \n & Setting")){
+                    context.startActivity(new Intent(context,KycActivity.class));
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("Agent \n Dashboard")){
+                    context.startActivity(new Intent(context,AgentDashboardActivity.class));
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("Activity \n Log")){
+                    context.startActivity(new Intent(context,AgentLogActivity.class));
             }
         });
     }

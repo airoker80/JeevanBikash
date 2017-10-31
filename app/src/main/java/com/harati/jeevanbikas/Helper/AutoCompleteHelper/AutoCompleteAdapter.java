@@ -29,8 +29,8 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutoCompleteModel> {
     public AutoCompleteAdapter(Context context, List<AutoCompleteModel> autoCompleteModelList) {
         super(context, android.R.layout.simple_list_item_1, autoCompleteModelList);
         this.autoCompleteModelList = autoCompleteModelList;
-        this.tempCustomer = new ArrayList<AutoCompleteModel>(autoCompleteModelList);
-        this.suggestions = new ArrayList<AutoCompleteModel>(autoCompleteModelList);
+        this.tempCustomer = new ArrayList<>(autoCompleteModelList);
+        this.suggestions = new ArrayList<>(autoCompleteModelList);
     }
 
     @NonNull

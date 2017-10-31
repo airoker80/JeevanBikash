@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
@@ -36,6 +38,8 @@ public class FundInfoFragment extends Fragment {
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
 
+    CenturyGothicTextView fundtransfername,fundMemberCode ,fundBranchName;
+
     Bundle bundle;
     ImageView submit;
     EditText BenificiaryaccNo,confirmAccNo ,transferAmt,agentPin ,fundRemarks;
@@ -53,39 +57,46 @@ public class FundInfoFragment extends Fragment {
 
         submit = (ImageView)view.findViewById(R.id.submit);
 
+
+        fundtransfername = (CenturyGothicTextView) view.findViewById(R.id.fundtransfername);
+        fundMemberCode = (CenturyGothicTextView) view.findViewById(R.id.fundMemberCode);
+        fundBranchName = (CenturyGothicTextView) view.findViewById(R.id.fundBranchName);
+
         bundle = getArguments();
+
+
+        fundtransfername.setText(bundle.getString("name"));
+        fundMemberCode.setText(bundle.getString("code"));
+        fundBranchName.setText(bundle.getString("office"));
 
         BenificiaryaccNo=(EditText)view.findViewById(R.id.BenificiaryaccNo) ;
         confirmAccNo=(EditText)view.findViewById(R.id.confirmAccNo) ;
         transferAmt=(EditText)view.findViewById(R.id.transferAmt) ;
         agentPin=(EditText)view.findViewById(R.id.agentPin) ;
         fundRemarks=(EditText)view.findViewById(R.id.fundRemarks) ;
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-      /*          Intent intent= new Intent(getContext(), DialogActivity.class);
-                getActivity().startActivity(intent);*/
+        submit.setOnClickListener(view1 -> {
+  /*          Intent intent= new Intent(getContext(), DialogActivity.class);
+            getActivity().startActivity(intent);*/
 
-                BenificiaryaccNoTxt=BenificiaryaccNo.getText().toString();
-                confirmAccNoTxt=confirmAccNo.getText().toString();
-                deposoitAmtTxt=transferAmt.getText().toString();
-                agentPinTxt=agentPin.getText().toString();
-                fundRemarksTxt=fundRemarks.getText().toString();
+            BenificiaryaccNoTxt=BenificiaryaccNo.getText().toString();
+            confirmAccNoTxt=confirmAccNo.getText().toString();
+            deposoitAmtTxt=transferAmt.getText().toString();
+            agentPinTxt=agentPin.getText().toString();
+            fundRemarksTxt=fundRemarks.getText().toString();
 
-                if (BenificiaryaccNoTxt.equals("")|confirmAccNoTxt.equals("")|deposoitAmtTxt.equals("")|
-                agentPinTxt.equals("")|fundRemarksTxt.equals("")){
-                    getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
-                }else {
+            if (BenificiaryaccNoTxt.equals("")|confirmAccNoTxt.equals("")|deposoitAmtTxt.equals("")|
+            agentPinTxt.equals("")|fundRemarksTxt.equals("")){
+                getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
+            }else {
 /*                    Bundle args = new Bundle();
-                    args.putString("goto","ok");
-                    Fragment fragment= new FundFingerCheckFragment();
-                    fragment.setArguments(args);
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragment);
-                    transaction.commit();*/
-                    sendTransferPostRequest();
-                }
+                args.putString("goto","ok");
+                Fragment fragment= new FundFingerCheckFragment();
+                fragment.setArguments(args);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.addToBackStack(null);
+                transaction.replace(R.id.contentFrame, fragment);
+                transaction.commit();*/
+                sendTransferPostRequest();
             }
         });
         return view;
@@ -112,15 +123,24 @@ public class FundInfoFragment extends Fragment {
             @Override
             public void onResponse(Call<TransferModel> call, Response<TransferModel> response) {
                 sessionHandler.hideProgressDialog();
-                if (response.isSuccessful()){
+                if (String.valueOf(response.code()).equals("200")){
                     Intent intent = new Intent(getContext(),DialogActivity.class);
                     intent.putExtra("msg",response.body().getMessage());
                     startActivity(intent);
                 }else {
-                    sessionHandler.hideProgressDialog();
-                    Intent intent = new Intent(getContext(),DialogActivity.class);
-                    intent.putExtra("msg","Error in Fields");
-                    startActivity(intent);
+                    try {
+
+                        String jsonString = response.errorBody().string();
+
+                        Log.d("here ","--=>"+jsonString);
+
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",jsonObject.getString("message"));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }

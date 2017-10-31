@@ -4,6 +4,12 @@
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -56,7 +62,8 @@
         <activity android:name=".ResetPassword.ResetPassword" />
         <activity android:name=".AgentDashboard.AgentDashboardActivity" />
         <activity android:name=".ResetPassword.InitialResetPassword" />
-        <activity android:name=".ResetPin.InitialResetPinActivity"></activity>
+        <activity android:name=".ResetPin.InitialResetPinActivity" />
+        <activity android:name=".ActivityLogPackage.AgentLogActivity"></activity>
     </application>
 
 </manifest>

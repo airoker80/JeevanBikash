@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.harati.jeevanbikas.CashDeposit.FingerPrintAuthDepositFragment;
+import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
@@ -18,6 +19,7 @@ import com.harati.jeevanbikas.R;
  * A simple {@link Fragment} subclass.
  */
 public class FundDetailsFragment extends Fragment implements View.OnClickListener {
+    CenturyGothicTextView fundName,fundmemberId,fundOffice;
     ImageView fund_tick,fund_cross;
     Bundle bundle;
     public FundDetailsFragment() {
@@ -31,6 +33,15 @@ public class FundDetailsFragment extends Fragment implements View.OnClickListene
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_fund_details, container, false);
         bundle = getArguments();
+
+        fundName =(CenturyGothicTextView)view.findViewById(R.id.fundName);
+        fundmemberId =(CenturyGothicTextView)view.findViewById(R.id.fundmemberId);
+        fundOffice =(CenturyGothicTextView)view.findViewById(R.id.fundOffice);
+
+        fundName.setText(bundle.getString("name"));
+        fundmemberId.setText(bundle.getString("code"));
+        fundOffice.setText(bundle.getString("office"));
+
         fund_tick=(ImageView)view.findViewById(R.id.fund_tick);
         fund_cross=(ImageView)view.findViewById(R.id.fund_cross);
         fund_tick.setOnClickListener(this);

@@ -36,34 +36,25 @@ public class VolleyRequestHandler {
 
     public void makePostRequest(String URL, final JSONObject sendObj, final RequestListener requestListener) {
         final RequestQueue requestQueue = Volley.newRequestQueue(context);
-        final StringRequest request = new StringRequest(Request.Method.POST, JeevanBikashConfig.REQUEST_URL+URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                requestListener.onSuccess(response);
-
+        final StringRequest request = new StringRequest(Request.Method.POST, JeevanBikashConfig.REQUEST_URL+URL, response -> requestListener.onSuccess(response), error -> {
+            Log.d("error", "asdasdasdas");
+            if (error instanceof TimeoutError) {
+                Toast.makeText(context, "Time Out Error", Toast.LENGTH_SHORT).show();
             }
-        } , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("error", "asdasdasdas");
-                if (error instanceof TimeoutError) {
-                    Toast.makeText(context, "Time Out Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof NoConnectionError) {
-                    Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof AuthFailureError) {
-                    Toast.makeText(context, "Wrong Username or Password", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.NetworkError) {
-                    Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.ServerError) {
-                    Toast.makeText(context, "Server Error", Toast.LENGTH_SHORT).show();
-                }
-                if (error instanceof com.android.volley.ParseError) {
-                    Toast.makeText(context, "JSON Parse Error", Toast.LENGTH_SHORT).show();
-                }
+            if (error instanceof NoConnectionError) {
+                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof AuthFailureError) {
+                Toast.makeText(context, "Wrong Username or Password", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof com.android.volley.NetworkError) {
+                Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof com.android.volley.ServerError) {
+                Toast.makeText(context, "Server Error", Toast.LENGTH_SHORT).show();
+            }
+            if (error instanceof com.android.volley.ParseError) {
+                Toast.makeText(context, "JSON Parse Error", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

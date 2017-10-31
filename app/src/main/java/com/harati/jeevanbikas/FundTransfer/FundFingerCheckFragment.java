@@ -34,22 +34,19 @@ public class FundFingerCheckFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_fund_finger_check, container, false);
         fingerPrint = (ImageView) view.findViewById(R.id.fingerPrint);
         final String value = getArguments().getString("goto");
-        fingerPrint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (value.equals("info")){
-                    Fragment fragment= new FundInfoFragment();
-                    fragment.setArguments(bundle);
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragment);
-                    transaction.commit();
-                }else if (value.equals("ok")){
-                    Intent intent= new Intent(getContext(), DialogActivity.class);
-                    getActivity().startActivity(intent);
-                }
-
+        fingerPrint.setOnClickListener(view1 -> {
+            if (value.equals("info")){
+                Fragment fragment= new FundInfoFragment();
+                fragment.setArguments(bundle);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.addToBackStack(null);
+                transaction.replace(R.id.contentFrame, fragment);
+                transaction.commit();
+            }else if (value.equals("ok")){
+                Intent intent= new Intent(getContext(), DialogActivity.class);
+                getActivity().startActivity(intent);
             }
+
         });
         return  view;
     }

@@ -21,8 +21,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
+import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
@@ -32,11 +34,13 @@ import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
 import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,11 +56,11 @@ import retrofit2.Response;
 
 public class BalanceFragment extends Fragment implements View.OnClickListener {
     ApiInterface apiInterface ;
-    List<AutoCompleteModel> autoCompleteModelList = new ArrayList<AutoCompleteModel>();
+    List<AutoCompleteModel> autoCompleteModelList = new ArrayList<>();
     AutoCompleteTextView input;
     ImageView imageView,enquiry_cross;
     SessionHandler sessionHandler;
-    List<HelperListModelClass> helperListModelClasses=new ArrayList<HelperListModelClass>();
+    List<HelperListModelClass> helperListModelClasses= new ArrayList<>();
     TextView text;
     public BalanceFragment() {
     }
@@ -160,7 +164,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
                 sessionHandler.hideProgressDialog();
 //                Log.d("DADAD0","ADA");
-                if (response.isSuccessful()){
+                if (String.valueOf(response.code()).equals("200")){
                     Fragment fragment = new EnquiryUserDetails();
                     Bundle args = new Bundle();
                     args.putString("code",response.body().getCode());
@@ -174,7 +178,19 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
                     transaction.replace(R.id.contentFrame, fragment);
                     transaction.commit();
                 }else {
+                    try {
 
+                        String jsonString = response.errorBody().string();
+
+                        Log.d("here ","--=>"+jsonString);
+
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",jsonObject.getString("message"));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
