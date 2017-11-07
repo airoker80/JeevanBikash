@@ -97,6 +97,7 @@ public class FingerPrintFragment extends Fragment {
         KeyguardManager keyguardManager = (KeyguardManager) getActivity().getSystemService(KEYGUARD_SERVICE);
         FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(FINGERPRINT_SERVICE);
 
+        assert fingerprintManager != null;
         if (!fingerprintManager.isHardwareDetected()) {
             /*
               An error message will be displayed if the device does not contain the fingerprint hardware.

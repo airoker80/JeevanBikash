@@ -1,7 +1,4 @@
-package com.harati.jeevanbikas.JeevanBikashConfig;
-
-import android.content.Context;
-import android.graphics.Typeface;
+package com.harati.jeevanbikas.Helper.JeevanBikashConfig;
 
 /**
  * Created by Sameer on 9/1/2017.

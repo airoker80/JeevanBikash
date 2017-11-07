@@ -27,11 +27,6 @@ public class ErrorDialogActivity extends AppCompatActivity {
     }
 
         ok= (Button)findViewById(R.id.ok);
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        ok.setOnClickListener(view -> finish());
     }
 }

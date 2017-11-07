@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
     tools:context="com.harati.jeevanbikas.CashDeposit.DepositDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -202,6 +203,7 @@
                     android:layout_weight="1"/>
             </LinearLayout>
             <com.alimuzaffar.lib.pin.PinEntryEditText
+                android:textColor="@color/white"
                 android:backgroundTint="@color/white"
                 android:maxLength="4"
                 android:layout_margin="@dimen/_10sdp"
@@ -217,6 +219,8 @@
                 android:text="Deposit Amount"
                 android:textColor="@color/white"/>
             <com.harati.jeevanbikas.Helper.CGEditText
+                android:inputType="number"
+                android:maxLength="6"
                 android:backgroundTint="@color/white"
                 android:layout_margin="@dimen/_10sdp"
                 android:id="@+id/deposoitAmt"
@@ -236,6 +240,8 @@
                 android:text="Remarks"
                 android:textColor="@color/white"/>
             <com.harati.jeevanbikas.Helper.CGEditText
+                android:inputType="text"
+                android:maxLength="50"
                 android:backgroundTint="@color/white"
                 android:layout_margin="@dimen/_10sdp"
                 android:id="@+id/deposoitRemarks"
@@ -244,7 +250,7 @@
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="100"
+                android:text="ok"
                 android:textColor="@color/white"/>
 
 

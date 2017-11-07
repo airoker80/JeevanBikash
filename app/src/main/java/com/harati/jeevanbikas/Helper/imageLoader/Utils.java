@@ -1,4 +1,4 @@
-package com.harati.jeevanbikas.imageLoader;
+package com.harati.jeevanbikas.Helper.imageLoader;
 
 import java.io.InputStream;
 import java.io.OutputStream;

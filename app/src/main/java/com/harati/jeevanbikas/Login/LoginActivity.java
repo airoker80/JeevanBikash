@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     SessionHandler sessionHandler;
     TextView reset_pin;
     EditText jb_username, jb_password;
-    List<HelperListModelClass> helperListModelClasses = new ArrayList<HelperListModelClass>();
+    List<HelperListModelClass> helperListModelClasses = new ArrayList<>();
     Button loginBtn;
 
     @Override
@@ -59,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
 
         reset_pin.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ResetPin.class)));
         loginBtn.setOnClickListener(v -> {
-//            loginWithRetrofit();
-           startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            loginWithRetrofit();
+//           startActivity(new Intent(LoginActivity.this, MainActivity.class));
         });
     }
 
@@ -92,17 +92,9 @@ public class LoginActivity extends AppCompatActivity {
                     String agentPin = "12348";
 
                     boolean passBol = false, pinBol = false;
-                    if (passwordChangeReqd.equals("true")) {
-                        passBol = true;
-                    } else {
-                        passBol = false;
-                    }
+                    passBol = passwordChangeReqd.equals("true");
 
-                    if (pinChangeReqd.equals("true")) {
-                        pinBol = true;
-                    } else {
-                        pinBol = false;
-                    }
+                    pinBol = pinChangeReqd.equals("true");
 
                     sessionHandler.saveLoginInformation(code, name, branch, passBol, pinBol,token,agentPin);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -157,17 +149,9 @@ public class LoginActivity extends AppCompatActivity {
                         String agentPin = "12348";
 
                         boolean passBol = false, pinBol = false;
-                        if (passwordChangeReqd.equals("true")) {
-                            passBol = true;
-                        } else {
-                            passBol = false;
-                        }
+                        passBol = passwordChangeReqd.equals("true");
 
-                        if (pinChangeReqd.equals("true")) {
-                            pinBol = true;
-                        } else {
-                            pinBol = false;
-                        }
+                        pinBol = pinChangeReqd.equals("true");
 
                         sessionHandler.saveLoginInformation(code, name, branch, passBol, pinBol,token,agentPin);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));

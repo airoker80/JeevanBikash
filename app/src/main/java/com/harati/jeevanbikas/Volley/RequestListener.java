@@ -6,6 +6,6 @@ package com.harati.jeevanbikas.Volley;
  */
 
 public interface RequestListener {
-    public void onSuccess(String response);
-    public void onFailure(String response);
+    void onSuccess(String response);
+    void onFailure(String response);
 }

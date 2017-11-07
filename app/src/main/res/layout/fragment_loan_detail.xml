@@ -144,6 +144,7 @@
                 android:textSize="@dimen/_10sdp" />
 
             <EditText
+                android:maxLength="6"
                 android:textSize="@dimen/_10sdp"
                 android:id="@+id/loanAmt"
                 android:layout_width="match_parent"

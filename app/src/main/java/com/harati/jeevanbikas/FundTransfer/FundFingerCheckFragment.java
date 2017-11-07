@@ -35,6 +35,7 @@ public class FundFingerCheckFragment extends Fragment {
         fingerPrint = (ImageView) view.findViewById(R.id.fingerPrint);
         final String value = getArguments().getString("goto");
         fingerPrint.setOnClickListener(view1 -> {
+            assert value != null;
             if (value.equals("info")){
                 Fragment fragment= new FundInfoFragment();
                 fragment.setArguments(bundle);

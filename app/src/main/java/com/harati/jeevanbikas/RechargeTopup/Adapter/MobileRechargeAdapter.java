@@ -20,7 +20,7 @@ import java.util.List;
 
 public class MobileRechargeAdapter extends RecyclerView.Adapter<MobileRechargeAdapter.ViewHolder> {
     Context context ;
-    List<MobileTopupModel> topupModelList = new ArrayList<MobileTopupModel>();
+    List<MobileTopupModel> topupModelList = new ArrayList<>();
 
     public MobileRechargeAdapter(Context context, List<MobileTopupModel> topupModelList) {
         this.context = context;

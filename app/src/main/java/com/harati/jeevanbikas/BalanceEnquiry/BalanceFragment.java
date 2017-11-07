@@ -2,49 +2,35 @@ package com.harati.jeevanbikas.BalanceEnquiry;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
 import com.harati.jeevanbikas.Helper.SessionHandler;
-import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
-import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
-import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
-import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

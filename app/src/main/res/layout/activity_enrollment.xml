@@ -88,6 +88,8 @@
                                         android:textSize="@dimen/_12sdp" />
 
                                     <com.harati.jeevanbikas.Helper.CGEditText
+                                        android:maxLength="100"
+                                        android:inputType="text"
                                         android:textSize="@dimen/_10sdp"
                                         android:id="@+id/enrollment_name"
                                         android:layout_width="match_parent"
@@ -103,6 +105,7 @@
                                         android:textSize="@dimen/_12sdp" />
 
                                     <com.harati.jeevanbikas.Helper.CGEditText
+                                        android:maxLength="3"
                                         android:textSize="@dimen/_10sdp"
                                         android:inputType="number"
                                         android:id="@+id/enrollment_age"
@@ -164,11 +167,33 @@
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:text="Caste"
+                                android:textColor="@color/enrollColor"
+                                android:textSize="@dimen/_12sdp" />
+
+                            <com.harati.jeevanbikas.Helper.CGEditText
+                                android:inputType="text"
+                                android:maxLength="50"
+                                android:textSize="@dimen/_10sdp"
+                                android:id="@+id/enrollment_caste"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_32sdp"
+                                android:backgroundTint="@color/enrollColor"
+                                android:textColor="@color/white" />
+
+
+
+                            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:text="Father's Name"
                                 android:textColor="@color/enrollColor"
                                 android:textSize="@dimen/_12sdp" />
 
                             <com.harati.jeevanbikas.Helper.CGEditText
+                                android:inputType="text"
+                                android:maxLength="50"
                                 android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_father_name"
                                 android:layout_width="match_parent"
@@ -184,6 +209,8 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <com.harati.jeevanbikas.Helper.CGEditText
+                                android:inputType="text"
+                                android:maxLength="50"
                                 android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_spouse_name"
                                 android:layout_width="match_parent"
@@ -200,6 +227,8 @@
 
                             <com.harati.jeevanbikas.Helper.CGEditText
                                 android:textSize="@dimen/_10sdp"
+                                android:inputType="text"
+                                android:maxLength="50"
                                 android:id="@+id/enrollment_grandfather_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_32sdp"
@@ -214,6 +243,8 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <com.harati.jeevanbikas.Helper.CGEditText
+                                android:inputType="text"
+                                android:maxLength="50"
                                 android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_address"
                                 android:layout_width="match_parent"
@@ -230,6 +261,8 @@
 
                             <com.harati.jeevanbikas.Helper.CGEditText
                                 android:textSize="@dimen/_10sdp"
+                                android:inputType="number"
+                                android:maxLength="10"
                                 android:id="@+id/enrollment_mobile_number"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_32sdp"
@@ -245,6 +278,8 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <com.harati.jeevanbikas.Helper.CGEditText
+                                android:inputType="text"
+                                android:maxLength="50"
                                 android:id="@+id/enrollment_czn"
                                 android:layout_width="match_parent"
                                 android:textSize="@dimen/_10sdp"

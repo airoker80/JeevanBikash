@@ -143,6 +143,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLength="50"
                     android:id="@+id/accNo"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"
@@ -159,6 +160,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLength="6"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/withdrawlAmount"
                     android:backgroundTint="@color/white"

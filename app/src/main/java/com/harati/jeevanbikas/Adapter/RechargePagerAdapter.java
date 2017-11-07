@@ -17,7 +17,7 @@ public class RechargePagerAdapter extends FragmentPagerAdapter {
 
     /*private String titles[] = new String[] { "Recharge Code","Use Recharge Code", "Generate Recharge Code" };*/
 
-    private String titles[]= new String[]{"Mobile", "Landline", "Internet/ISP","TV/DTH"};;
+    private String titles[]= new String[]{"Mobile", "Landline", "Internet/ISP","TV/DTH"};
 //    private String titles[] = new String[] {"Summary Report"};
 
 

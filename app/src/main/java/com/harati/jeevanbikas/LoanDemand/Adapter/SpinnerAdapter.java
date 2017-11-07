@@ -38,8 +38,9 @@ public class SpinnerAdapter extends ArrayAdapter<LoanDetailsModel> {
         return position;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // I created a dynamic TextView here, but you can reference your own  custom layout for each spinner item
         TextView label = new TextView(context);
         label.setTextColor(Color.BLACK);

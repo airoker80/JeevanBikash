@@ -1,50 +1,27 @@
 package com.harati.jeevanbikas.MainPackage;
 
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.harati.jeevanbikas.Adapter.DashboardRecyclerViewAdapter;
-import com.harati.jeevanbikas.CashDeposit.DepositDetailsFragment;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.SessionHandler;
-import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
-import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
-import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
-import com.harati.jeevanbikas.Volley.RequestListener;
-import com.harati.jeevanbikas.Volley.VolleyRequestHandler;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +29,7 @@ import retrofit2.Callback;
 public class MainActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     Spinner spinner;
-    List<DashBoardModel> dashBoardModels = new ArrayList<DashBoardModel>();
+    List<DashBoardModel> dashBoardModels = new ArrayList<>();
     RecyclerView dashboard_icon_list;
     public static RelativeLayout main_gone_rl;
     public static Typeface centuryGothic;

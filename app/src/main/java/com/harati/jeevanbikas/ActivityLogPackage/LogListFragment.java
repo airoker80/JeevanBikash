@@ -66,22 +66,30 @@ public class LogListFragment extends Fragment implements View.OnClickListener {
         int vId = v.getId();
         switch (vId){
             case R.id.rt_log_ll:
+                fragment = new DailyLogDetailsFragment();
                 break;
             case R.id.up_log_ll:
+                fragment = new DailyLogDetailsFragment();
                 break;
             case R.id.ft_log_ll:
                 break;
             case R.id.be_log_ll:
+                fragment = new DailyLogDetailsFragment();
                 break;
             case R.id.ne_log_ll:
+                fragment = new DailyLogDetailsFragment();
                 break;
             case R.id.ld_log_ll:
+                fragment = new DailyLogDetailsFragment();
                 break;
             case R.id.cw_log_ll:
+                fragment = new DailyLogDetailsFragment();
                 break;
             case R.id.cd_log_ll:
+                fragment = new DailyLogDetailsFragment();
                 break;
             case R.id.kyc_log_ll:
+                fragment = new DailyLogDetailsFragment();
                 break;
             case R.id.dl_log_ll:
                 fragment = new DailyLogDetailsFragment();

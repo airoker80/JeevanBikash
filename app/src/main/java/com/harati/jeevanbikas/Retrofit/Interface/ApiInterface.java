@@ -34,7 +34,6 @@ public interface ApiInterface {
     Call<LoginModel> authenticate(@Body RequestBody body);
 
 
-//    @Headers("{Authorization:Basic dXNlcjpqQiQjYUJAMjA1NA== ,Content-Type:application/json}")
     @POST("agent/requestotp?serialno=12346")
     Call<OTPmodel> sendRetrofitOtprequest(@Body RequestBody body,
                                         @Header("X-Authorization") String xAuth,

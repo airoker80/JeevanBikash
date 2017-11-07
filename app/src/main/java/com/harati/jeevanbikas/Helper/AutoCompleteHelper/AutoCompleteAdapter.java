@@ -35,7 +35,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutoCompleteModel> {
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         AutoCompleteModel autoCompleteModel = autoCompleteModelList.get(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.autocomplete_list_items, parent, false);
@@ -53,6 +53,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutoCompleteModel> {
         return  convertView;
     }
 
+    @NonNull
     @Override
     public Filter getFilter() {
         return myFilter;

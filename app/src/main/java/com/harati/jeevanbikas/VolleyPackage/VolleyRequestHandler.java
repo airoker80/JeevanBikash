@@ -8,14 +8,12 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
-import com.harati.jeevanbikas.VolleyPackage.RequestListener;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 
 import org.json.JSONObject;
 
@@ -36,7 +34,7 @@ public class VolleyRequestHandler {
 
     public void makePostRequest(String URL, final JSONObject sendObj, final RequestListener requestListener) {
         final RequestQueue requestQueue = Volley.newRequestQueue(context);
-        final StringRequest request = new StringRequest(Request.Method.POST, JeevanBikashConfig.REQUEST_URL+URL, response -> requestListener.onSuccess(response), error -> {
+        final StringRequest request = new StringRequest(Request.Method.POST, JeevanBikashConfig.REQUEST_URL+URL, requestListener::onSuccess, error -> {
             Log.d("error", "asdasdasdas");
             if (error instanceof TimeoutError) {
                 Toast.makeText(context, "Time Out Error", Toast.LENGTH_SHORT).show();

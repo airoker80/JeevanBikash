@@ -89,7 +89,7 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         int vId = v.getId();
         switch (vId) {
             case R.id.enquiry_submit:
-                Fragment fragment = new FingerPrintFragment();
+                Fragment fragment = new NewFingerPrintFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("memberId",code);
                 fragment.setArguments(bundle);

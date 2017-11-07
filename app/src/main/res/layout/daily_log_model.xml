@@ -19,24 +19,41 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                android:id="@+id/dl_title"
-                android:textSize="@dimen/_14sdp"
-                android:text="Recharge Topup"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                    android:id="@+id/dl_title"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="Recharge Topup"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                    android:layout_marginRight="@dimen/_8sdp"
+                    android:gravity="end"
+                    android:id="@+id/dl_amount"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="Rs 1000.00"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                 android:id="@+id/dl_time"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_10sdp"
                 android:text="10:00"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+<!--
         <RelativeLayout
-            android:layout_weight="3"
+            android:layout_weight="3.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -48,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
+-->
 
     </LinearLayout>
 
@@ -56,6 +74,6 @@
     <View
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
+        android:layout_height="1dp"
         android:background="@color/white"/>
 </LinearLayout>

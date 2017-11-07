@@ -1,4 +1,4 @@
-package com.harati.jeevanbikas.imageLoader;
+package com.harati.jeevanbikas.Helper.imageLoader;
 
 import android.app.Activity;
 import android.content.Context;
@@ -154,10 +154,8 @@ public class ImageLoader {
 
 	boolean imageViewReused(PhotoToLoad photoToLoad) {
 		String tag = imageViews.get(photoToLoad.imageView);
-		if (tag == null || !tag.equals(photoToLoad.url))
-			return true;
-		return false;
-	}
+        return tag == null || !tag.equals(photoToLoad.url);
+    }
 
 	// Used to display bitmap in the UI thread
 	class BitmapDisplayer implements Runnable {

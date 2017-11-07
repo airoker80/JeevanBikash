@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="JEEVAN BIKASH SAMAJ"
+                    android:text="JEEVAN BIKAS SAMAJ"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_11sdp"
                     />

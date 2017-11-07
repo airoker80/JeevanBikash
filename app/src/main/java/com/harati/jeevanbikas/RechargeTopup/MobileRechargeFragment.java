@@ -23,7 +23,7 @@ import java.util.List;
 public class MobileRechargeFragment extends Fragment {
 
     RecyclerView topupRv;
-    List<MobileTopupModel> mobileTopupModels = new ArrayList<MobileTopupModel>();
+    List<MobileTopupModel> mobileTopupModels = new ArrayList<>();
 
     public MobileRechargeFragment() {
         // Required empty public constructor

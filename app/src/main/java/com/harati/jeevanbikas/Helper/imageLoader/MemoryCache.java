@@ -1,4 +1,4 @@
-package com.harati.jeevanbikas.imageLoader;
+package com.harati.jeevanbikas.Helper.imageLoader;
 
 import android.graphics.Bitmap;
 import android.util.Log;

@@ -14,20 +14,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
-import com.harati.jeevanbikas.JeevanBikashConfig.JeevanBikashConfig;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
-import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.OTPmodel;
 import com.harati.jeevanbikas.Volley.RequestListener;
 import com.harati.jeevanbikas.Volley.VolleyRequestHandler;
@@ -36,14 +32,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 
 public class InitialResetPassword extends AppCompatActivity implements View.OnClickListener {

@@ -1,5 +1,7 @@
 package com.harati.jeevanbikas.Retrofit.Interceptor;
 
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -13,7 +15,7 @@ import okhttp3.Response;
 public class HeaderInterceptor
         implements Interceptor {
     @Override
-    public Response intercept(Chain chain)
+    public Response intercept(@NonNull Chain chain)
             throws IOException {
         Request request = chain.request();
         request = request.newBuilder()

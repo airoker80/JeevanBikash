@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.harati.jeevanbikas.ActivityLogPackage.LogListFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -35,10 +36,9 @@
 
                         <ImageView
                             android:layout_gravity="center"
-                            android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_mobile_topup"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp" />
+                            android:background="@drawable/ic_mobile_topup"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_gravity="center"
@@ -65,9 +65,9 @@
                         <ImageView
                             android:layout_gravity="center"
                             android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_mobile_topup"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp" />
+                            android:background="@drawable/ic_mobile_topup"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_gravity="center"
@@ -100,9 +100,9 @@
                         <ImageView
                             android:layout_gravity="center"
                             android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_mobile_topup"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp" />
+                            android:background="@drawable/ic_mobile_topup"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_gravity="center"
@@ -128,9 +128,9 @@
                         <ImageView
                             android:layout_gravity="center"
                             android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_mobile_topup"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp" />
+                            android:background="@drawable/ic_mobile_topup"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_gravity="center"
@@ -163,9 +163,9 @@
                         <ImageView
                             android:layout_gravity="center"
                             android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_mobile_topup"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp" />
+                            android:background="@drawable/ic_mobile_topup"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_gravity="center"
@@ -191,9 +191,9 @@
                         <ImageView
                             android:layout_gravity="center"
                             android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_mobile_topup"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp" />
+                            android:background="@drawable/ic_mobile_topup"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_gravity="center"
@@ -226,9 +226,9 @@
                         <ImageView
                             android:layout_gravity="center"
                             android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_mobile_topup"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp" />
+                            android:background="@drawable/ic_mobile_topup"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_gravity="center"
@@ -254,9 +254,9 @@
                         <ImageView
                             android:layout_gravity="center"
                             android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_mobile_topup"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp" />
+                            android:background="@drawable/ic_mobile_topup"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_gravity="center"
@@ -286,11 +286,11 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
                             android:layout_gravity="center"
                             android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_mobile_topup" />
+                            android:background="@drawable/ic_mobile_topup" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_width="wrap_content"
@@ -316,9 +316,9 @@
                         <ImageView
                             android:layout_gravity="center"
                             android:padding="@dimen/_2sdp"
-                            android:src="@drawable/ic_mobile_topup"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp" />
+                            android:background="@drawable/ic_mobile_topup"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:layout_gravity="center"

@@ -164,11 +164,12 @@
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Benificiary Account No"
+                    android:text="Beneficiary Account No"
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLength="10"
                     android:text="M0672475"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/BenificiaryaccNo"
@@ -183,11 +184,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Confirm Benificiary Account No"
+                    android:text="Confirm Beneficiary Account No"
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLength="10"
                     android:text="M0672475"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/confirmAccNo"
@@ -202,16 +204,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Deposit Amount"
+                    android:text="Transfer Amount"
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLength="6"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/transferAmt"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:imeOptions="actionNext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -230,11 +233,12 @@
                     app:passwordToggleEnabled="true">
 
                     <EditText
+                        android:maxLength="8"
                         android:textSize="@dimen/_10sdp"
                         android:id="@+id/agentPin"
                         android:backgroundTint="@color/white"
                         android:textColor="@color/white"
-                        android:inputType="textPassword"
+                        android:inputType="numberPassword"
                         android:imeOptions="actionNext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -249,6 +253,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLength="20"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/fundRemarks"
                     android:backgroundTint="@color/white"
