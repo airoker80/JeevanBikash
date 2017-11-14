@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
+import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
@@ -66,15 +67,21 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         int vId = v.getId();
         switch (vId){
             case  R.id.agent_tick:
-                Fragment fragment= new AgentClientTransferFragment();
-                bundle.putString("agentPin",agentPin.getText().toString());
-                bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
-                bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());
-                fragment.setArguments(bundle);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.addToBackStack(null);
-                transaction.replace(R.id.contentFrame, fragment);
-                transaction.commit();
+                if (Integer.parseInt(deposoitAmt.getText().toString())==0){
+                    Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                    intent.putExtra("msg","Zero amount cannot be deposited");
+                    startActivity(intent);
+                }else {
+                    Fragment fragment= new AgentClientTransferFragment();
+                    bundle.putString("agentPin",agentPin.getText().toString());
+                    bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
+                    bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());
+                    fragment.setArguments(bundle);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragment);
+                    transaction.commit();
+                }
                 break;
             case R.id.demand_cross:
                 startActivity(new Intent(getContext(), MainActivity.class));

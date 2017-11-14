@@ -203,6 +203,7 @@
                     android:layout_weight="1"/>
             </LinearLayout>
             <com.alimuzaffar.lib.pin.PinEntryEditText
+                android:inputType="number"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/white"
                 android:maxLength="4"

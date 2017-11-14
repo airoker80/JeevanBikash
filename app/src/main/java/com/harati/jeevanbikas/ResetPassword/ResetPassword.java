@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.harati.jeevanbikas.Helper.ApiSessionHandler;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
@@ -21,17 +24,22 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ResetPassword extends AppCompatActivity {
+    ApiSessionHandler apiSessionHandler;
     EditText reset_otp;
     Button resetPass;
     Spinner spinner;
     SessionHandler sessionHandler;
     ApiInterface apiInterface;
+    Retrofit retrofit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        apiInterface = RetrofitClient.getApiService();
+        retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
+        apiInterface = retrofit.create(ApiInterface.class);
+        apiSessionHandler = new ApiSessionHandler(this);
         sessionHandler = new SessionHandler(ResetPassword.this);
         setContentView(R.layout.activity_reset_password);
         resetPass = (Button)findViewById(R.id.resetPass);
@@ -62,10 +70,10 @@ public class ResetPassword extends AppCompatActivity {
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
 //      retrofit2.Call<String> call = apiInterface.sendRetrofitOtprequest(body,"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBMDA1MDAwMSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTUwODIyMjcyODMzOSwiZXhwIjoxNTA4ODI3NTI4fQ.lAqF1g6Oil2fC8FRfK_ktR2J4oiNZDVsqmLStY855ZQxvH6whWkRI7nkxmeOzXJM912yMXaWgv_Sk4kzJgoRFA");
-        retrofit2.Call<String> call = apiInterface.sendResetRequest(body,
+        retrofit2.Call<String> call = apiInterface.sendResetRequest(apiSessionHandler.getAGENT_PASSWORD_RESET(),body,
                 sessionHandler.getAgentToken(),
                 "Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json");
+                "application/json",apiSessionHandler.getAgentCode());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

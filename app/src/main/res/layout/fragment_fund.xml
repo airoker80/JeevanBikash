@@ -28,7 +28,7 @@
             android:backgroundTint="@color/white"
             android:hint="Enter Member code/Mobile Number"
             android:imeOptions="actionDone"
-            android:inputType="number"
+            android:inputType="text"
             android:completionThreshold="1"
             android:textAlignment="center"
             android:textColor="@color/white"

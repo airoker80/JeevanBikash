@@ -15,12 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
+import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
@@ -34,6 +37,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -41,6 +45,8 @@ import retrofit2.Response;
  */
 
 public class BalanceFragment extends Fragment implements View.OnClickListener {
+    ApiSessionHandler apiSessionHandler ;
+    Retrofit retrofit;
     ApiInterface apiInterface ;
     List<AutoCompleteModel> autoCompleteModelList = new ArrayList<>();
     AutoCompleteTextView input;
@@ -55,8 +61,10 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         sessionHandler = new SessionHandler(getContext());
+        apiSessionHandler = new ApiSessionHandler(getContext());
         View view = inflater.inflate(R.layout.fragment_balance, container, false);
-        apiInterface = RetrofitClient.getApiService();
+        retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
+        apiInterface = retrofit.create(ApiInterface.class);
         imageView = (ImageView) view.findViewById(R.id.imageView);
         enquiry_cross = (ImageView) view.findViewById(R.id.enquiry_cross);
         input = (AutoCompleteTextView) view.findViewById(R.id.input);
@@ -142,9 +150,9 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
 
 
         sessionHandler.showProgressDialog("Sending Request ...");
-        retrofit2.Call<SearchModel> call = apiInterface.sendMemberSearchRequest(mobile_no,sessionHandler.getAgentToken(),
+        retrofit2.Call<SearchModel> call = apiInterface.sendMemberSearchRequest(apiSessionHandler.getMEMBER_SEARCH(),mobile_no,sessionHandler.getAgentToken(),
                 "Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json");
+                "application/json",apiSessionHandler.getAgentCode());
         call.enqueue(new Callback<SearchModel>() {
             @Override
             public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {

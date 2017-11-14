@@ -143,7 +143,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
-                    android:maxLength="50"
+                    android:maxLength="20"
                     android:id="@+id/accNo"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"
@@ -186,6 +186,7 @@
                     app:passwordToggleEnabled="true">
 
                     <EditText
+                        android:maxLength="4"
                         android:textSize="@dimen/_10sdp"
                         android:id="@+id/agentPin"
                         android:backgroundTint="@color/white"

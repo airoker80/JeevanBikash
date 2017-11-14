@@ -13,11 +13,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
+import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
@@ -34,6 +37,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -41,7 +45,8 @@ import retrofit2.Response;
  */
 
 public class CashwithdrawlFragment extends Fragment {
-
+    ApiSessionHandler apiSessionHandler ;
+    Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
 
@@ -66,7 +71,9 @@ public class CashwithdrawlFragment extends Fragment {
         name = bundle.getString("name");
         office = bundle.getString("office");
         photo = bundle.getString("photo");
-        apiInterface= RetrofitClient.getApiService();
+        retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
+        apiSessionHandler = new ApiSessionHandler(getContext());
+        apiInterface = retrofit.create(ApiInterface.class);
         sessionHandler = new SessionHandler(getContext());
 
         View view= inflater.inflate(R.layout.fragment_cashwithdrawl, container, false);
@@ -111,25 +118,13 @@ public class CashwithdrawlFragment extends Fragment {
             if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|withdrawlRemarkTxt.equals("")){
                 getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
             }else {
-
-/*                    VolleyRequestHandler volleyRequestHandler = new VolleyRequestHandler();
-                helperListModelClassList.add(new HelperListModelClass("withdrawlAmount",""));
-                helperListModelClassList.add(new HelperListModelClass("agentPin",""));
-                helperListModelClassList.add(new HelperListModelClass("withdrawlRemark",""));
-
-                String response="";
-                try {
-                     response = volleyRequestHandler.makePostRequest("url",helperListModelClassList);
-                    Log.d("respones",response);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }*/
-
-
+                if (Integer.parseInt(withdrawlAmount.getText().toString())==0){
+                    Intent intent =new Intent(getContext(), ErrorDialogActivity.class);
+                    intent.putExtra("msg","Zero amount cannot be withdrawn");
+                    getActivity().startActivity(intent);
+                }else {
                     sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
-/*                        Intent intent= new Intent(getContext(), DialogActivity.class);
-                    getActivity().startActivity(intent);*/
-
+                }
             }
         });
         return view;
@@ -149,9 +144,9 @@ public class CashwithdrawlFragment extends Fragment {
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
 
-        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(body,
+        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getCASH_WITHDRAW(),body,
                 sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json");
+                "application/json",apiSessionHandler.getAgentCode());
 
         call.enqueue(new Callback<WithDrawlResponse>() {
             @Override

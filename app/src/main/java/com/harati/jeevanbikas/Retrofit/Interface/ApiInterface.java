@@ -1,18 +1,23 @@
 package com.harati.jeevanbikas.Retrofit.Interface;
 
 
-
+import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoanDetailsModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.OTPmodel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SearchModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SystemApiResponseModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.TransferModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.List;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -22,6 +27,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 
 /**
@@ -29,80 +35,117 @@ import retrofit2.http.Query;
  */
 
 public interface ApiInterface {
+    String jsonApi = SessionHandler.API_JSON;
+
     @Headers("{Authorization:Basic dXNlcjpqQiQjYUJAMjA1NA== ,Content-Type:application/json}")
-    @POST("agent/login?serialno=12346")
-    Call<LoginModel> authenticate(@Body RequestBody body);
+    @POST
+    Call<LoginModel> authenticate(@Body RequestBody body, @Url String url, @Query("serialno") String serialno);
 
 
-    @POST("agent/requestotp?serialno=12346")
-    Call<OTPmodel> sendRetrofitOtprequest(@Body RequestBody body,
-                                        @Header("X-Authorization") String xAuth,
-                                        @Header("Authorization") String Authorization,
-                                        @Header("Content-Type") String contentType);
+    @POST("systemapi")
+    Call<List<SystemApiResponseModel>> callSystem(@Body RequestBody body, @Query("serialno") String serialno);
 
-    @POST("member/enroll?serialno=12346")
-    Call<SuccesResponseModel> sendEnrollmentRequest(@Body RequestBody body,
-                                        @Header("X-Authorization") String xAuth,
-                                        @Header("Authorization") String Authorization,
-                                        @Header("Content-Type") String contentType);
-    @GET("agent/logout?serialno=12346")
+    @POST("systemapi")
+    Call<ResponseBody> callSystemApi(@Body RequestBody body, @Query("serialno") String serialno);
+
+
+    @POST
+    Call<OTPmodel> sendRetrofitOtprequest(@Url String url,
+                                          @Body RequestBody body,
+                                          @Header("X-Authorization") String xAuth,
+                                          @Header("Authorization") String Authorization,
+                                          @Header("Content-Type") String contentType,
+                                          @Query("serialno") String serialno);
+
+    @POST
+    Call<SuccesResponseModel> sendEnrollmentRequest(@Url String url,
+                                                    @Body RequestBody body,
+                                                    @Header("X-Authorization") String xAuth,
+                                                    @Header("Authorization") String Authorization,
+                                                    @Header("Content-Type") String contentType,
+                                                    @Query("serialno") String serialno);
+
+    //    @GET("agent/logout")
+    @GET("agent/logout")
     Call<SuccesResponseModel> sendLogoutRequest(@Header("X-Authorization") String xAuth,
-                                   @Header("Authorization") String Authorization,
-                                   @Header("Content-Type") String contentType);
+                                                @Header("Authorization") String Authorization,
+                                                @Header("Content-Type") String contentType,
+                                                @Query("serialno") String serialno);
 //    Call<String> sendRetrofitOtprequest(@Body RequestBody body, @Header("X-Authorization") String xAuth);
 
-    @POST("agent/passwordreset?serialno=12346")
-    Call<String> sendResetRequest(@Body RequestBody body,
-                                        @Header("X-Authorization") String xAuth,
-                                        @Header("Authorization") String Authorization,
-                                        @Header("Content-Type") String contentType);
+    @POST
+    Call<String> sendResetRequest(@Url String url,
+                                  @Body RequestBody body,
+                                  @Header("X-Authorization") String xAuth,
+                                  @Header("Authorization") String Authorization,
+                                  @Header("Content-Type") String contentType,
+                                  @Query("serialno") String serialno);
 
 
-    @POST("member/balance?serialno=12346")
-    Call<SuccesResponseModel> sendBalanceRequest(@Body RequestBody body,
+    @POST
+    Call<SuccesResponseModel> sendBalanceRequest(@Url String url,
+                                                 @Body RequestBody body,
                                                  @Header("X-Authorization") String xAuth,
                                                  @Header("Authorization") String Authorization,
-                                                 @Header("Content-Type") String contentType);
+                                                 @Header("Content-Type") String contentType,
+                                                 @Query("serialno") String serialno);
 
-    @POST("member/deposit?serialno=12346")
-    Call<TransferModel> sendDepositRequest(@Body RequestBody body,
-                                    @Header("X-Authorization") String xAuth,
-                                    @Header("Authorization") String Authorization,
-                                    @Header("Content-Type") String contentType);
-    @POST("member/fundtransfer?serialno=12346")
-    Call<TransferModel> sendFundTransferRequest(@Body RequestBody body,
+    @POST
+    Call<TransferModel> sendDepositRequest(@Url String url,
+                                           @Body RequestBody body,
+                                           @Header("X-Authorization") String xAuth,
+                                           @Header("Authorization") String Authorization,
+                                           @Header("Content-Type") String contentType,
+                                           @Query("serialno") String serialno);
+
+    @POST
+    Call<TransferModel> sendFundTransferRequest(@Url String url,
+                                                @Body RequestBody body,
                                                 @Header("X-Authorization") String xAuth,
                                                 @Header("Authorization") String Authorization,
-                                                @Header("Content-Type") String contentType);
-    @POST("member/loandemand?serialno=12346")
-    Call<SuccesResponseModel> sendPostLoanDemand(@Body RequestBody body,
-                                                @Header("X-Authorization") String xAuth,
-                                                @Header("Authorization") String Authorization,
-                                                @Header("Content-Type") String contentType);
+                                                @Header("Content-Type") String contentType,
+                                                @Query("serialno") String serialno
+    );
 
-    @POST("member/withdraw?serialno=12346")
-    Call<WithDrawlResponse> sendWithdrawRequest(@Body RequestBody body,
-                                                @Header("X-Authorization") String xAuth,
-                                                @Header("Authorization") String Authorization,
-                                                @Header("Content-Type") String contentType);
-
-//    @GET("member/search?serialno=12346&mobileno=M0670001")
-    @GET("member/search?serialno=12346")
-    Call<SearchModel> sendMemberSearchRequest(@Query("mobileno") String mobileno,
-                                              @Header("X-Authorization") String xAuth,
-                                              @Header("Authorization") String Authorization,
-                                              @Header("Content-Type") String contentType);
-
-
-
-    @GET("caste?serialno=12346")
-    Call<SearchModel> getCasteList(@Query("mobileno") String mobileno,
-                                              @Header("X-Authorization") String xAuth,
-                                              @Header("Authorization") String Authorization,
-                                              @Header("Content-Type") String contentType);
-
-    @GET("loantype?serialno=12346")
-    Call<List<LoanDetailsModel>> getLoanTypeList(@Header("X-Authorization") String xAuth,
+    @POST
+    Call<SuccesResponseModel> sendPostLoanDemand(@Url String url,
+                                                 @Body RequestBody body,
+                                                 @Header("X-Authorization") String xAuth,
                                                  @Header("Authorization") String Authorization,
-                                                 @Header("Content-Type") String contentType);
+                                                 @Header("Content-Type") String contentType,
+                                                 @Query("serialno") String serialno);
+
+    @POST
+    Call<WithDrawlResponse> sendWithdrawRequest(@Url String url,
+                                                @Body RequestBody body,
+                                                @Header("X-Authorization") String xAuth,
+                                                @Header("Authorization") String Authorization,
+                                                @Header("Content-Type") String contentType,
+                                                @Query("serialno") String serialno);
+
+    //    @GET("member/search?serialno=12346&mobileno=M0670001")
+    @GET
+    Call<SearchModel> sendMemberSearchRequest(@Url String url,
+                                              @Query("mobileno") String mobileno,
+                                              @Header("X-Authorization") String xAuth,
+                                              @Header("Authorization") String Authorization,
+                                              @Header("Content-Type") String contentType,
+                                              @Query("serialno") String serialno);
+
+
+    //    @GET("caste")
+    @GET
+    Call<SearchModel> getCasteList(@Url String url,
+                                   @Query("mobileno") String mobileno,
+                                   @Header("X-Authorization") String xAuth,
+                                   @Header("Authorization") String Authorization,
+                                   @Header("Content-Type") String contentType,
+                                   @Query("serialno") String serialno);
+
+    @GET
+    Call<List<LoanDetailsModel>> getLoanTypeList(@Url String url,
+                                                 @Header("X-Authorization") String xAuth,
+                                                 @Header("Authorization") String Authorization,
+                                                 @Header("Content-Type") String contentType,
+                                                 @Query("serialno") String serialno);
 }

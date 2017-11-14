@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_balance_enquiry"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id1"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_cash_withdrawl"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad1"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id1"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id2"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_cash_deposit"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad2"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id2"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id3"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_fund_transfer"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad3"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id3"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id4"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_loan_demand"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad4"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id4"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id5"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_new_enrollment"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad5"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Member Enrollment"
+                        android:id="@+id/dashboard_text_id5"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_marginLeft="@dimen/_7sdp"
+                            android:id="@+id/dashboard_icon_id6"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/ic_mobile_topup" />
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad6"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id6"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_marginLeft="@dimen/_7sdp"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id7"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_bill"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad7"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id7"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id8"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_utility"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad8"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id8"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id10"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_profile"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad10"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id10"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id11"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_passage_of_time"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad11"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id11"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="invisible"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:id="@+id/adad12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/dashboard_icon_id12"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/ic_utility"/>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_below="@+id/adad12"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balance  Inquiry"
+                        android:id="@+id/dashboard_text_id12"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/_8sdp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

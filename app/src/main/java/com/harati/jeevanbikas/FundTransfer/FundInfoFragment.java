@@ -13,10 +13,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
@@ -28,6 +31,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -35,6 +39,8 @@ import retrofit2.Response;
  */
 
 public class FundInfoFragment extends Fragment {
+    ApiSessionHandler apiSessionHandler;
+    Retrofit retrofit ;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
 
@@ -52,7 +58,10 @@ public class FundInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_fund_info, container, false);
 
-        apiInterface= RetrofitClient.getApiService();
+        apiSessionHandler = new ApiSessionHandler(getContext());
+        retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
+        apiInterface = retrofit.create(ApiInterface.class);
+
         sessionHandler = new SessionHandler(getContext());
 
         submit = (ImageView)view.findViewById(R.id.submit);
@@ -115,9 +124,9 @@ public class FundInfoFragment extends Fragment {
             e.printStackTrace();
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-        retrofit2.Call<TransferModel> call = apiInterface.sendFundTransferRequest(body,
+        retrofit2.Call<TransferModel> call = apiInterface.sendFundTransferRequest(apiSessionHandler.getFUND_TRANSFER(),body,
                 sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json");
+                "application/json",apiSessionHandler.getAgentCode());
 
         call.enqueue(new Callback<TransferModel>() {
             @Override

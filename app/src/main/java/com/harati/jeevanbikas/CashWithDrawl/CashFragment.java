@@ -20,11 +20,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.harati.jeevanbikas.BalanceEnquiry.EnquiryUserDetails;
+import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
+import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
@@ -39,6 +42,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -46,7 +50,8 @@ import retrofit2.Response;
  */
 
 public class CashFragment extends Fragment {
-
+    ApiSessionHandler apiSessionHandler;
+    Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
 
@@ -62,7 +67,11 @@ public class CashFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_fund, container, false);
 
-        apiInterface= RetrofitClient.getApiService();
+        apiSessionHandler = new ApiSessionHandler(getContext());
+
+        retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
+        apiInterface = retrofit.create(ApiInterface.class);
+
         sessionHandler = new SessionHandler(getContext());
 
 
@@ -97,9 +106,9 @@ public class CashFragment extends Fragment {
     private void getMemberList(String mobile_no){
         sessionHandler.showProgressDialog("Sending Request ...");
 //        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-        retrofit2.Call<SearchModel> call = apiInterface.sendMemberSearchRequest(mobile_no,sessionHandler.getAgentToken(),
+        retrofit2.Call<SearchModel> call = apiInterface.sendMemberSearchRequest(apiSessionHandler.getMEMBER_SEARCH(),mobile_no,sessionHandler.getAgentToken(),
                 "Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json");
+                "application/json",apiSessionHandler.getAgentCode());
         call.enqueue(new Callback<SearchModel>() {
             @Override
             public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {

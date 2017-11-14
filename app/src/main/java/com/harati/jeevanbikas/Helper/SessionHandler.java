@@ -10,6 +10,11 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 
 import com.harati.jeevanbikas.Login.LoginActivity;
+import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.SystemApiResponseModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Sameer on 9/22/2017.
@@ -31,7 +36,28 @@ public class SessionHandler {
     private static final String PIN_CHANGE_RQD ="pin_change_rqd";
     private static final String AGENT_TOKEN ="agent_token";
     private static final String AGENT_PIN ="agent_pin";
+    private static final String AGENT_URL ="agent_url";
+    private static final String AGENT_SERIAL_NO ="agent_serial_no";
 
+
+    public static  final  String API_JSON ="api_json";
+
+    public void  saveApiJson(String apiJson){
+        editor.putString(API_JSON,apiJson);
+        editor.commit();
+    }
+
+    public void saveUrl(String agentUrl){
+        editor.putString("agent_url",agentUrl);
+        editor.commit();
+    }
+
+    public void saveAgentUrlInfo(String agentSerialNo){
+//        editor.putString(AGENT_URL,agentUrl);
+        editor.putString(AGENT_SERIAL_NO,agentSerialNo);
+        editor.commit();
+        Log.d("save","saved");
+    }
 
     public SessionHandler(Context context) {
         this._context = context;
@@ -65,6 +91,11 @@ public class SessionHandler {
     public String getAgentCode(){
         return  pref.getString(AGENT_CODE,"");
     }
+    public String getAgentUrl(){return  pref.getString(AGENT_URL,"")+ "api/v1/";}
+    public String getAgentSerialNo(){return  pref.getString(AGENT_SERIAL_NO,"");
+    }
+
+
     public String getAgentToken(){
         return  pref.getString(AGENT_TOKEN,"");
     }

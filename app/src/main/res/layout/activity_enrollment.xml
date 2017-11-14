@@ -88,8 +88,8 @@
                                         android:textSize="@dimen/_12sdp" />
 
                                     <com.harati.jeevanbikas.Helper.CGEditText
-                                        android:maxLength="100"
-                                        android:inputType="text"
+                                        android:maxLength="30"
+                                        android:inputType="textPersonName"
                                         android:textSize="@dimen/_10sdp"
                                         android:id="@+id/enrollment_name"
                                         android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                                         android:textSize="@dimen/_12sdp" />
 
                                     <com.harati.jeevanbikas.Helper.CGEditText
-                                        android:maxLength="3"
+                                        android:maxLength="2"
                                         android:textSize="@dimen/_10sdp"
                                         android:inputType="number"
                                         android:id="@+id/enrollment_age"
@@ -172,8 +172,8 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <com.harati.jeevanbikas.Helper.CGEditText
-                                android:inputType="text"
-                                android:maxLength="50"
+                                android:inputType="textPersonName"
+                                android:maxLength="20"
                                 android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_caste"
                                 android:layout_width="match_parent"
@@ -192,8 +192,8 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <com.harati.jeevanbikas.Helper.CGEditText
-                                android:inputType="text"
-                                android:maxLength="50"
+                                android:inputType="textPersonName"
+                                android:maxLength="30"
                                 android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_father_name"
                                 android:layout_width="match_parent"
@@ -209,7 +209,7 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <com.harati.jeevanbikas.Helper.CGEditText
-                                android:inputType="text"
+                                android:inputType="textPersonName"
                                 android:maxLength="50"
                                 android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_spouse_name"
@@ -228,7 +228,7 @@
                             <com.harati.jeevanbikas.Helper.CGEditText
                                 android:textSize="@dimen/_10sdp"
                                 android:inputType="text"
-                                android:maxLength="50"
+                                android:maxLength="30"
                                 android:id="@+id/enrollment_grandfather_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_32sdp"
@@ -244,7 +244,7 @@
 
                             <com.harati.jeevanbikas.Helper.CGEditText
                                 android:inputType="text"
-                                android:maxLength="50"
+                                android:maxLength="30"
                                 android:textSize="@dimen/_10sdp"
                                 android:id="@+id/enrollment_address"
                                 android:layout_width="match_parent"
@@ -279,7 +279,7 @@
 
                             <com.harati.jeevanbikas.Helper.CGEditText
                                 android:inputType="text"
-                                android:maxLength="50"
+                                android:maxLength="20"
                                 android:id="@+id/enrollment_czn"
                                 android:layout_width="match_parent"
                                 android:textSize="@dimen/_10sdp"

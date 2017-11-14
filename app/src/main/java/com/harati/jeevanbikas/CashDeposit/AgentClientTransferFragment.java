@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
@@ -27,11 +30,14 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AgentClientTransferFragment extends Fragment {
+    ApiSessionHandler apiSessionHandler;
+    Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt;
@@ -47,7 +53,9 @@ public class AgentClientTransferFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         bundle =getArguments();
-        apiInterface= RetrofitClient.getApiService();
+        apiSessionHandler = new ApiSessionHandler(getContext());
+        retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
+        apiInterface = retrofit.create(ApiInterface.class);
         sessionHandler = new SessionHandler(getContext());
         View view= inflater.inflate(R.layout.fragment_agent_client_transfer, container, false);
 
@@ -83,9 +91,9 @@ public class AgentClientTransferFragment extends Fragment {
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
 
-        retrofit2.Call<TransferModel> call = apiInterface.sendDepositRequest(body,
+        retrofit2.Call<TransferModel> call = apiInterface.sendDepositRequest(apiSessionHandler.getCASH_DEPOSIT(),body,
                 sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json");
+                "application/json",apiSessionHandler.getAgentCode());
         call.enqueue(new Callback<TransferModel>() {
             @Override
             public void onResponse(Call<TransferModel> call, Response<TransferModel> response) {

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
 
 
     <LinearLayout
+        android:gravity="center"
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_60sdp"
@@ -12,10 +14,12 @@
 
 
         <RelativeLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <RelativeLayout
+                android:gravity="center"
                 android:id="@+id/adad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,6 +41,7 @@
                 android:text="Balance \n Inquiry"
                 android:id="@+id/dashboard_text_id"
                 android:textAlignment="center"
+                android:gravity="center"
                 android:textSize="@dimen/_8sdp"/>
         </RelativeLayout>
 

@@ -1,11 +1,6 @@
-package com.harati.jeevanbikas.Retrofit.RetrofiltClient;
+package com.harati.jeevanbikas;
 
-
-
-import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
-import com.harati.jeevanbikas.Helper.SessionHandler;
-import com.harati.jeevanbikas.Retrofit.Interceptor.HeaderInterceptor;
-import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
+import android.app.Application;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,20 +10,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by User on 8/9/2017.
+ * Created by Sameer on 11/9/2017.
  */
 
-public class RetrofitClient {
+public class MyApplication extends Application {
 
-    public static  String BASE_URL = JeevanBikashConfig.BASE_URL;
-//    private static final String BASE_URL = "http://103.1.94.77:8087/agentbank/";
-    private static final String APP_URL = "api/v1/";
-    private static final String ROOT_URL = BASE_URL + APP_URL;
 
-    /**
-     * Get Retrofit Instance
-     */
-    private static Retrofit getRetrofitInstance() {
+    public static Retrofit getRetrofitInstance(String baseurl) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -44,19 +32,10 @@ public class RetrofitClient {
 // add logging as last interceptor
         httpClient.addInterceptor(logging);
         return new Retrofit.Builder()
-                .baseUrl(ROOT_URL)
+                .baseUrl(baseurl+"/api/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
 //                .client(httpClient.build())
                 .build();
-    }
-
-    /**
-     * Get API Service
-     *
-     * @return API Service
-     */
-    public static ApiInterface getApiService() {
-        return getRetrofitInstance().create(ApiInterface.class);
     }
 }

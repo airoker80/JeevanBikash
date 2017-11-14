@@ -15,11 +15,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.LoanDemand.Adapter.SpinnerAdapter;
+import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
@@ -37,6 +40,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -44,10 +48,12 @@ import retrofit2.Response;
  */
 
 public class LoanDetailFragment extends Fragment {
+    ApiSessionHandler apiSessionHandler;
     Bundle bundle;
     List<LoanDetailsModel> loanDetailsModels = new ArrayList<>();
 
     SessionHandler sessionHandler;
+    Retrofit retrofit;
     ApiInterface apiInterface;
     List<String> stringList = new ArrayList<>();
     ImageView submit;
@@ -61,12 +67,12 @@ public class LoanDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-
-
         View view = inflater.inflate(R.layout.fragment_loan_detail, container, false);
         bundle = getArguments();
         sessionHandler = new SessionHandler(getContext());
-        apiInterface = RetrofitClient.getApiService();
+        apiSessionHandler = new ApiSessionHandler(getContext());
+        retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
+        apiInterface = retrofit.create(ApiInterface.class);
         Log.d("loantype", "=-");
         getLoanTypeList();
         Log.d("loantype", "=-" + loanDetailsModels.size());
@@ -97,9 +103,9 @@ public class LoanDetailFragment extends Fragment {
 
     private void getLoanTypeList() {
         sessionHandler.showProgressDialog("Sending Request ...");
-        retrofit2.Call<List<LoanDetailsModel>> call = apiInterface.getLoanTypeList(sessionHandler.getAgentToken(),
+        retrofit2.Call<List<LoanDetailsModel>> call = apiInterface.getLoanTypeList(apiSessionHandler.getLOAN_TYPE_LIST(),sessionHandler.getAgentToken(),
                 "Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json");
+                "application/json",apiSessionHandler.getAgentCode());
 
         call.enqueue(new Callback<List<LoanDetailsModel>>() {
             @Override
@@ -141,9 +147,9 @@ public class LoanDetailFragment extends Fragment {
         }
         Log.d("body jsonBody", "=()-" + jsonObject.toString());
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (jsonObject.toString()));
-        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendPostLoanDemand(body,
+        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendPostLoanDemand(apiSessionHandler.getLOAN_DEMAND(),body,
                 sessionHandler.getAgentToken(), "Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json");
+                "application/json",apiSessionHandler.getAgentCode());
 
         call.enqueue(new Callback<SuccesResponseModel>() {
             @Override

@@ -13,6 +13,16 @@
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+            android:visibility="invisible"
+            android:id="@+id/setupUrl"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:textSize="@dimen/_12sdp"
+            android:gravity="end"
+            android:text="Setup URL"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <ImageView
             android:visibility="visible"
             android:id="@+id/image"
@@ -34,7 +44,7 @@
     </RelativeLayout>
     <EditText
         android:id="@+id/jb_username"
-        android:text="A0751919"
+        android:text="A0262276"
         android:textSize="@dimen/_14sdp"
         android:drawablePadding="@dimen/_8sdp"
         android:drawableLeft="@drawable/ic_use_profile"

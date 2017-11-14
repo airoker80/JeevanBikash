@@ -12,9 +12,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.harati.jeevanbikas.Adapter.DashboardRecyclerViewAdapter;
+import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
+import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
@@ -25,8 +28,11 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
+    ApiSessionHandler apiSessionHandler;
+    Retrofit retrofit;
     ApiInterface apiInterface;
     Spinner spinner;
     List<DashBoardModel> dashBoardModels = new ArrayList<>();
@@ -42,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          sessionHandler = new SessionHandler(MainActivity.this);
-        apiInterface= RetrofitClient.getApiService();
+         apiSessionHandler = new ApiSessionHandler(MainActivity.this);
+        retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
+        apiInterface = retrofit.create(ApiInterface.class);
         setContentView(R.layout.activity_main);
         main_gone_rl = (RelativeLayout) findViewById(R.id.main_gone_rl);
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -85,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 //        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
             retrofit2.Call<SuccesResponseModel> call = apiInterface.sendLogoutRequest(sessionHandler.getAgentToken(),
                     "Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                    "application/json");
+                    "application/json",apiSessionHandler.getAgentCode());
             call.enqueue(new Callback<SuccesResponseModel>() {
                 @Override
                 public void onResponse(Call<SuccesResponseModel> call, retrofit2.Response<SuccesResponseModel> response) {

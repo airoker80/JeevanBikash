@@ -19,10 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
+import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
@@ -40,6 +43,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static android.content.Context.FINGERPRINT_SERVICE;
 import static android.content.Context.KEYGUARD_SERVICE;
@@ -49,9 +53,11 @@ import static android.content.Context.KEYGUARD_SERVICE;
  */
 
 public class NewFingerPrintFragment extends android.support.v4.app.Fragment {
+    ApiSessionHandler apiSessionHandler ;
     ImageView fingerPrint;
     SessionHandler sessionHandler;
     private KeyStore keyStore;
+    Retrofit retrofit;
     ApiInterface apiInterface;
     // Variable used for storing the key in the Android Keystore container
     private static final String KEY_NAME = "Bikash";
@@ -66,8 +72,10 @@ public class NewFingerPrintFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fingerprint, container, false);
         fingerPrint = (ImageView) view.findViewById(R.id.fingerPrint);
+        apiSessionHandler = new ApiSessionHandler(getContext());
         bundle = getArguments();
-        apiInterface = RetrofitClient.getApiService();
+        retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
+        apiInterface = retrofit.create(ApiInterface.class);
         sessionHandler = new SessionHandler(getContext());
         text = (TextView) view.findViewById(R.id.text);
         text.setTypeface(MainActivity.centuryGothic);
@@ -104,9 +112,9 @@ public class NewFingerPrintFragment extends android.support.v4.app.Fragment {
             e.printStackTrace();
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendBalanceRequest(body,
+        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendBalanceRequest(apiSessionHandler.getBALANCE_ENQUIRY(),body,
                 sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json");
+                "application/json",apiSessionHandler.getAgentCode());
         call.enqueue(new Callback<SuccesResponseModel>() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override

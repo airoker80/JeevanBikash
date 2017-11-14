@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
+    android:background="@color/transparent"
     tools:context="com.harati.jeevanbikas.CashDeposit.DepositDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->

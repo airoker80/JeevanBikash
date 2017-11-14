@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/topPanel"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
+    android:background="@color/transparent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView
@@ -233,7 +233,7 @@
                     app:passwordToggleEnabled="true">
 
                     <EditText
-                        android:maxLength="8"
+                        android:maxLength="4"
                         android:textSize="@dimen/_10sdp"
                         android:id="@+id/agentPin"
                         android:backgroundTint="@color/white"
