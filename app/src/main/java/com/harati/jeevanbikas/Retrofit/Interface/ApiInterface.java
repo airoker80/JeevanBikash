@@ -123,7 +123,7 @@ public interface ApiInterface {
                                                 @Header("Content-Type") String contentType,
                                                 @Query("serialno") String serialno);
 
-    //    @GET("member/search?serialno=12346&mobileno=M0670001")
+        /*@GET("member/search?serialno=12346&mobileno=M0670001")*/
     @GET
     Call<SearchModel> sendMemberSearchRequest(@Url String url,
                                               @Query("mobileno") String mobileno,
