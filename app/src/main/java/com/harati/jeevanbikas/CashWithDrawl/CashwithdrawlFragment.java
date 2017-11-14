@@ -25,7 +25,6 @@ import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
-import com.harati.jeevanbikas.VolleyPackage.VolleyRequestHandler;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
