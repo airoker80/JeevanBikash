@@ -1,13 +1,16 @@
 package com.harati.jeevanbikas.CashDeposit;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
@@ -17,16 +20,20 @@ import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.TransferModel;
+import com.harati.jeevanbikas.SplashActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +43,7 @@ import retrofit2.Retrofit;
  * A simple {@link Fragment} subclass.
  */
 public class AgentClientTransferFragment extends Fragment {
+    public String otpValue="";
     ApiSessionHandler apiSessionHandler;
     Retrofit retrofit;
     ApiInterface apiInterface;
@@ -70,7 +78,12 @@ public class AgentClientTransferFragment extends Fragment {
         shownDepositAmt.setText(bundle.getString("deposoitAmt"));
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         agent_client_tick.setOnClickListener(v -> {
-            sendDepositRequest();
+            if (otpValue.equals("")){
+                getOtpValue();
+            }else {
+                sendDepositRequest();
+            }
+
 //                startActivity(new Intent(getContext(), DialogActivity.class));
         });
         return  view;
@@ -86,6 +99,7 @@ public class AgentClientTransferFragment extends Fragment {
             jsonObject.put("amount",bundle.getString("deposoitAmt"));
             jsonObject.put("agentpin",bundle.getString("agentPin"));
             jsonObject.put("remark",bundle.getString("deposoitRemarks"));
+            jsonObject.put("otp",otpValue);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -130,4 +144,36 @@ public class AgentClientTransferFragment extends Fragment {
 
     }
 
+
+    private void getOtpValue(){
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_get_otp, null);
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("OK", null)
+                .setNegativeButton("CANCEL", null)
+                .setView(view)
+                .setTitle("Enter Otp")
+                .create();
+
+        CGEditText getOpt = (CGEditText) view.findViewById(R.id.getOpt);
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                otpValue = getOpt.getText().toString();
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> {
+                        builder.dismiss();
+                    }
+            );
+        });
+
+    }
 }

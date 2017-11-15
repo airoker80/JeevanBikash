@@ -34,6 +34,10 @@ public class ApiSessionHandler {
     public static  final  String CASTE_LIST ="CASTE_LIST";
     public static  final  String LOAN_TYPE_LIST ="LOAN_TYPE_LIST";
 
+    public static  final  String DEPOSIT_OTP ="DEPOSIT_OTP";
+    public static  final  String WITHDRAW_OTP ="WITHDRAW_OTP";
+    public static  final  String FUND_TRANSFER_OTP ="FUND_TRANSFER_OTP";
+
     public ApiSessionHandler(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREFS_NAME, PRIVATE_MODE);
@@ -68,6 +72,10 @@ public class ApiSessionHandler {
     public void  saveCASTE_LIST(String firstRun){editor.putString(CASTE_LIST,firstRun);editor.commit();}
     public void  saveLOAN_TYPE_LIST(String firstRun){editor.putString(LOAN_TYPE_LIST,firstRun);editor.commit();}
 
+    public void  saveDEPOSIT_OTP(String firstRun){editor.putString(DEPOSIT_OTP,firstRun);editor.commit();}
+    public void  saveWITHDRAW_OTP(String firstRun){editor.putString(WITHDRAW_OTP,firstRun);editor.commit();}
+    public void  saveFUND_TRANSFER_OTP(String firstRun){editor.putString(FUND_TRANSFER_OTP,firstRun);editor.commit();}
+
 
     public Boolean getFirstRunStatus(){return  pref.getBoolean(FIRST_RUN,true);}
     public String getAgentCode(){return  pref.getString(AGENT_CODE,"");}
@@ -87,5 +95,9 @@ public class ApiSessionHandler {
     public String getLOAN_DEMAND(){return  pref.getString(LOAN_DEMAND,"");}
     public String getCASTE_LIST(){return  pref.getString(CASTE_LIST,"");}
     public String getLOAN_TYPE_LIST(){return  pref.getString(LOAN_TYPE_LIST,"");}
+
+    public String getDEPOSIT_OTP(){return  pref.getString(DEPOSIT_OTP,"");}
+    public String getWITHDRAW_OTP(){return  pref.getString(WITHDRAW_OTP,"");}
+    public String getFUND_TRANSFER_OTP(){return  pref.getString(FUND_TRANSFER_OTP,"");}
     }
 

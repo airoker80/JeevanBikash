@@ -5,22 +5,42 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
+import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
+import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
+import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
+import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
+import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
+
+import org.json.JSONObject;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AgentPinDetailsFragment extends Fragment implements View.OnClickListener {
+    Retrofit retrofit;
+    ApiInterface apiInterface;
+    SessionHandler sessionHandler;
+    ApiSessionHandler apiSessionHandler;
     ImageView agent_tick,demand_cross;
     String code,name,office ,photo,clientPin,clientCode;
     PinEntryEditText agentPin;
@@ -40,7 +60,16 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_agent_pin_details, container, false);
 
+        apiSessionHandler = new ApiSessionHandler(getContext());
+        sessionHandler = new SessionHandler(getContext());
+
+
+        retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
+        apiInterface = retrofit.create(ApiInterface.class);
+
         bundle = getArguments();
+
+        Log.d("bfd","=-+"+bundle.toString());
         agent_tick=(ImageView)view.findViewById(R.id.agent_tick);
 
         agentPin=(PinEntryEditText)view.findViewById(R.id.agentPin);
@@ -72,7 +101,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     intent.putExtra("msg","Zero amount cannot be deposited");
                     startActivity(intent);
                 }else {
-                    Fragment fragment= new AgentClientTransferFragment();
+/*                    Fragment fragment= new AgentClientTransferFragment();
                     bundle.putString("agentPin",agentPin.getText().toString());
                     bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
                     bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());
@@ -80,12 +109,70 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);
                     transaction.replace(R.id.contentFrame, fragment);
-                    transaction.commit();
+                    transaction.commit();*/
+
+
+                    sendOtpForCashDeposit();
                 }
                 break;
             case R.id.demand_cross:
                 startActivity(new Intent(getContext(), MainActivity.class));
                 break;
         }
+    }
+
+
+    private void  sendOtpForCashDeposit(){
+        sessionHandler.showProgressDialog("Sending Request .... ");
+        final JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("membercode",bundle.get("code"));
+            jsonObject.put("finger","1234");
+            jsonObject.put("amount",deposoitAmt.getText().toString());
+            jsonObject.put("agentpin",agentPin.getText().toString());
+            jsonObject.put("mobile",bundle.get("clientMobile"));
+            jsonObject.put("remark",deposoitRemarks.getText().toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+
+        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getDEPOSIT_OTP(),body,
+                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json",apiSessionHandler.getAgentCode());
+
+        call.enqueue(new Callback<WithDrawlResponse>() {
+            @Override
+            public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
+                sessionHandler.hideProgressDialog();
+                if (String.valueOf(response.code()).equals("200")){
+                    String message = response.body().getMessage();
+                    Intent intent = new Intent(getContext(),DialogActivity.class);
+                    intent.putExtra("msg",message);
+                    startActivity(intent);
+                }else {
+                    try {
+
+                        String jsonString = response.errorBody().string();
+
+                        Log.d("here ","--=>"+jsonString);
+
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",jsonObject.getString("message"));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",("data mistake"));
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WithDrawlResponse> call, Throwable t) {
+                sessionHandler.hideProgressDialog();
+            }
+        });
     }
 }

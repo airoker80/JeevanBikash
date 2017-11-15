@@ -148,4 +148,30 @@ public interface ApiInterface {
                                                  @Header("Authorization") String Authorization,
                                                  @Header("Content-Type") String contentType,
                                                  @Query("serialno") String serialno);
+
+
+
+    @POST
+    Call<WithDrawlResponse> sendCashOtpRequest(@Url String url,
+                                                @Body RequestBody body,
+                                                @Header("X-Authorization") String xAuth,
+                                                @Header("Authorization") String Authorization,
+                                                @Header("Content-Type") String contentType,
+                                                @Query("serialno") String serialno);
+    @POST
+    Call<WithDrawlResponse> sendWithdrawOtpRequest(@Url String url,
+                                                @Body RequestBody body,
+                                                @Header("X-Authorization") String xAuth,
+                                                @Header("Authorization") String Authorization,
+                                                @Header("Content-Type") String contentType,
+                                                @Query("serialno") String serialno);
+
+    @POST
+    Call<WithDrawlResponse> sendFtOtpRequest(@Url String url,
+                                                   @Body RequestBody body,
+                                                   @Header("X-Authorization") String xAuth,
+                                                   @Header("Authorization") String Authorization,
+                                                   @Header("Content-Type") String contentType,
+                                                   @Query("serialno") String serialno);
+
 }

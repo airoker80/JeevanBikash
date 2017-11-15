@@ -67,7 +67,7 @@ public class SplashActivity extends AppCompatActivity {
                 .setPositiveButton("Save Url", null)
                 .setNegativeButton("CANCEL", null)
                 .setView(view)
-                .setTitle("Select Place")
+                .setTitle("Setting up the Application")
                 .create();
 
         CGEditText baseUrl = (CGEditText) view.findViewById(R.id.baseUrl);
@@ -171,6 +171,18 @@ public class SplashActivity extends AppCompatActivity {
                                         }
                                         if (object.getString("apiName").equals("LOAN TYPE LIST")) {
                                             apiSessionHandler.saveLOAN_TYPE_LIST(object.getString("baseUrl"));
+                                            Log.d("ok==" + i, "ok");
+                                        }
+                                        if (object.getString("apiName").equals("DEPOSIT OTP")) {
+                                            apiSessionHandler.saveDEPOSIT_OTP(object.getString("baseUrl"));
+                                            Log.d("ok==" + i, "ok");
+                                        }
+                                        if (object.getString("apiName").equals("WITHDRAW OTP")) {
+                                            apiSessionHandler.saveWITHDRAW_OTP(object.getString("baseUrl"));
+                                            Log.d("ok==" + i, "ok");
+                                        }
+                                        if (object.getString("apiName").equals("FUND TRANSFER OTP")) {
+                                            apiSessionHandler.saveFUND_TRANSFER_OTP(object.getString("baseUrl"));
                                             Log.d("ok==" + i, "ok");
                                         }
                                     }

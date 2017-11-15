@@ -143,7 +143,9 @@ public class DepositFragment extends Fragment implements View.OnClickListener{
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg","Wrong Credential");
+//                        e.printStackTrace();
                     }
                 }
             }

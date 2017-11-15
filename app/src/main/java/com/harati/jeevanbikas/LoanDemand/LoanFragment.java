@@ -132,6 +132,8 @@ public class LoanFragment extends Fragment {
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
                     } catch (Exception e) {
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg","Wrong Credential");
                         e.printStackTrace();
                     }
                 }

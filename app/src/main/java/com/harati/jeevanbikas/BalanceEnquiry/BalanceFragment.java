@@ -183,6 +183,9 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
                     } catch (Exception e) {
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg","Wrong Credential");
+                        startActivity(intent);
                         e.printStackTrace();
                     }
                 }
