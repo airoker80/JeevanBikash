@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/topPanel"
     android:orientation="vertical"
-    android:background="@color/transparent"
+    android:background="@color/colorPrimary"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView
@@ -224,6 +224,25 @@
                     android:maxLength="20"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/withdrawlRemark"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/white"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Mobile No"
+                    android:textColor="#95AFBE"
+                    android:textSize="@dimen/_10sdp" />
+
+                <com.harati.jeevanbikas.Helper.CGEditText
+                    android:maxLength="20"
+                    android:textSize="@dimen/_10sdp"
+                    android:id="@+id/withrwal_mobile"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"
                     android:inputType="text"

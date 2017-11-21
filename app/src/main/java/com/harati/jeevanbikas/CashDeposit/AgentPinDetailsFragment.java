@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
@@ -101,7 +102,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     intent.putExtra("msg","Zero amount cannot be deposited");
                     startActivity(intent);
                 }else {
-/*                    Fragment fragment= new AgentClientTransferFragment();
+                    Fragment fragment= new AgentClientTransferFragment();
                     bundle.putString("agentPin",agentPin.getText().toString());
                     bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
                     bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());
@@ -109,10 +110,10 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);
                     transaction.replace(R.id.contentFrame, fragment);
-                    transaction.commit();*/
+                    transaction.commit();
 
 
-                    sendOtpForCashDeposit();
+//                    sendOtpForCashDeposit();
                 }
                 break;
             case R.id.demand_cross:
@@ -146,10 +147,17 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
+                    Fragment fragment= null;
                     String message = response.body().getMessage();
-                    Intent intent = new Intent(getContext(),DialogActivity.class);
-                    intent.putExtra("msg",message);
-                    startActivity(intent);
+                    bundle.putString("agentPin",agentPin.getText().toString());
+                    bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
+                    bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());
+                    fragment.setArguments(bundle);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragment);
+                    transaction.commit();
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                 }else {
                     try {
 

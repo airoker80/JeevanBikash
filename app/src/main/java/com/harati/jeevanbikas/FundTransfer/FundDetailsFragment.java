@@ -54,7 +54,8 @@ public class FundDetailsFragment extends Fragment implements View.OnClickListene
         int vId = v.getId();
         switch (vId){
             case R.id.fund_tick:
-                Fragment fragment = new FundFingerCheckFragment();
+                Fragment fragment = new FundInfoFragment();
+//                Fragment fragment = new FundFingerCheckFragment();
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFrame, fragment);

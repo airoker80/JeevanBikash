@@ -116,7 +116,7 @@ public class CashFragment extends Fragment {
                 Log.d("DADAD0","response");
                 if (String.valueOf(response.code()).equals("200")){
                     Log.d("DADAD0","succes");
-                    Fragment fragment = new FingerPrintAuthFragment();
+                    Fragment fragment = new CashwithdrawlFragment();
                     Bundle args = new Bundle();
                     args.putString("code",response.body().getCode());
                     args.putString("name",response.body().getName());

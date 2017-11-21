@@ -307,6 +307,7 @@
                     android:layout_weight="0.7"
                     android:orientation="vertical">
                     <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                        android:id="@+id/amountType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/_13sdp"
@@ -326,6 +327,17 @@
                         android:text="RS 1000"
                         android:textColor="#95AFBE"
                         android:textSize="@dimen/_10sdp" />
+
+                    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                        android:id="@+id/sendOtpAgain"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp"
+                        android:textAlignment="center"
+                        android:text="Send OTP request again"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
 
                 </LinearLayout>
 

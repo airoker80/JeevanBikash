@@ -48,8 +48,8 @@ public class FundInfoFragment extends Fragment {
 
     Bundle bundle;
     ImageView submit;
-    EditText BenificiaryaccNo,confirmAccNo ,transferAmt,agentPin ,fundRemarks;
-    String BenificiaryaccNoTxt,confirmAccNoTxt ,deposoitAmtTxt,agentPinTxt ,fundRemarksTxt;
+    EditText BenificiaryaccNo,confirmAccNo ,transferAmt,agentPin ,fundMobile;
+    String BenificiaryaccNoTxt,confirmAccNoTxt ,deposoitAmtTxt,agentPinTxt ,fundMobileTxt;
     public FundInfoFragment() {
     }
 
@@ -82,7 +82,7 @@ public class FundInfoFragment extends Fragment {
         confirmAccNo=(EditText)view.findViewById(R.id.confirmAccNo) ;
         transferAmt=(EditText)view.findViewById(R.id.transferAmt) ;
         agentPin=(EditText)view.findViewById(R.id.agentPin) ;
-        fundRemarks=(EditText)view.findViewById(R.id.fundRemarks) ;
+        fundMobile=(EditText)view.findViewById(R.id.fundMobile) ;
         submit.setOnClickListener(view1 -> {
   /*          Intent intent= new Intent(getContext(), DialogActivity.class);
             getActivity().startActivity(intent);*/
@@ -91,21 +91,24 @@ public class FundInfoFragment extends Fragment {
             confirmAccNoTxt=confirmAccNo.getText().toString();
             deposoitAmtTxt=transferAmt.getText().toString();
             agentPinTxt=agentPin.getText().toString();
-            fundRemarksTxt=fundRemarks.getText().toString();
+            fundMobileTxt=fundMobile.getText().toString();
 
             if (BenificiaryaccNoTxt.equals("")|confirmAccNoTxt.equals("")|deposoitAmtTxt.equals("")|
-            agentPinTxt.equals("")|fundRemarksTxt.equals("")){
+            agentPinTxt.equals("")|fundMobileTxt.equals("")){
                 getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
             }else {
-/*                    Bundle args = new Bundle();
-                args.putString("goto","ok");
-                Fragment fragment= new FundFingerCheckFragment();
-                fragment.setArguments(args);
+                Fragment fragment= new TransferTransactionDetailFragment();
+                bundle.putString("transfer_amount",transferAmt.getText().toString());
+                bundle.putString("transfer_pin",agentPin.getText().toString());
+                bundle.putString("transfer_beneficiary_no",BenificiaryaccNo.getText().toString());
+                bundle.putString("transfer_mobile",fundMobile.getText().toString());
+
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.addToBackStack(null);
                 transaction.replace(R.id.contentFrame, fragment);
-                transaction.commit();*/
-                sendTransferPostRequest();
+                transaction.commit();
+//                sendTransferPostRequest();
             }
         });
         return view;

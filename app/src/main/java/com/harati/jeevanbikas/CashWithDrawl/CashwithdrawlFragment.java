@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
+import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
@@ -53,7 +55,7 @@ public class CashwithdrawlFragment extends Fragment {
 
 
     ImageView submit;
-    EditText withdrawlAmount,agentPin ,withdrawlRemark;
+    EditText withdrawlAmount,agentPin ,withdrawlRemark,withrwal_mobile;
     String withdrawlAmountTxt,agentPinTxt ,withdrawlRemarkTxt;
     ImageView imgUser;
 
@@ -80,6 +82,7 @@ public class CashwithdrawlFragment extends Fragment {
         withdrawlAmount=(EditText)view.findViewById(R.id.withdrawlAmount);
         agentPin=(EditText)view.findViewById(R.id.agentPin);
         withdrawlRemark=(EditText)view.findViewById(R.id.withdrawlRemark);
+        withrwal_mobile=(CGEditText)view.findViewById(R.id.withrwal_mobile);
         imgUser=(ImageView) view.findViewById(R.id.imgUser);
 
 
@@ -122,7 +125,18 @@ public class CashwithdrawlFragment extends Fragment {
                     intent.putExtra("msg","Zero amount cannot be withdrawn");
                     getActivity().startActivity(intent);
                 }else {
-                    sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
+//                    sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
+                    bundle.putString("withdraw_amount",withdrawlAmount.getText().toString());
+                    bundle.putString("withdraw_pin",agentPin.getText().toString());
+                    bundle.putString("withdraw_remarks",withdrawlRemark.getText().toString());
+                    bundle.putString("withdraw_mobile",withrwal_mobile.getText().toString());
+
+                    Fragment fragment = new WithdrawlTransactionFragment();
+                    fragment.setArguments(bundle);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragment);
+                    transaction.commit();
                 }
             }
         });

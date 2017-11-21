@@ -1,11 +1,10 @@
-package com.harati.jeevanbikas.CashDeposit;
+package com.harati.jeevanbikas.FundTransfer;
 
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
@@ -22,21 +22,15 @@ import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
-import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
-import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.TransferModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
-import com.harati.jeevanbikas.SplashActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,16 +39,18 @@ import retrofit2.Retrofit;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AgentClientTransferFragment extends Fragment {
+public class TransferTransactionDetailFragment extends Fragment {
+
     public String otpValue="";
     ApiSessionHandler apiSessionHandler;
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
-    CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,sendOtpAgain;
+    CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain;
     ImageView agent_client_tick;
     Bundle bundle;
-    public AgentClientTransferFragment() {
+
+    public TransferTransactionDetailFragment() {
         // Required empty public constructor
     }
 
@@ -62,37 +58,36 @@ public class AgentClientTransferFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         bundle =getArguments();
+
+        Log.d("bundle","==00--+>"+bundle.toString());
         apiSessionHandler = new ApiSessionHandler(getContext());
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
         sessionHandler = new SessionHandler(getContext());
         View view= inflater.inflate(R.layout.fragment_agent_client_transfer, container, false);
 
-
-
         name=(CenturyGothicTextView)view.findViewById(R.id.name);
         memberIdnnumber=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumber);
         branchName=(CenturyGothicTextView)view.findViewById(R.id.branchName);
         shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
+
+        amountType=(CenturyGothicTextView)view.findViewById(R.id.amountType);
         sendOtpAgain=(CenturyGothicTextView)view.findViewById(R.id.sendOtpAgain);
 
+        amountType.setText("Transfer amount");
+        shownDepositAmt.setText(bundle.getString("transfer_amount"));
         name.setText(bundle.getString("name"));
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
-        shownDepositAmt.setText(bundle.getString("deposoitAmt"));
 
-//        getOtpValue();
-
-        sendOtpForCashDeposit();
-
+        sendOtpForFundTransfer();
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         agent_client_tick.setOnClickListener(v -> {
             if (otpValue.equals("")){
                 getOtpValue();
             }else {
-                sendDepositRequest();
+                sendTransferPostRequest();
             }
 
 //                startActivity(new Intent(getContext(), DialogActivity.class));
@@ -113,7 +108,7 @@ public class AgentClientTransferFragment extends Fragment {
                         AlertDialog.BUTTON_POSITIVE);
 
                 btnAccept.setOnClickListener(v1 -> {
-                    sendOtpForCashDeposit();
+                    sendOtpForFundTransfer();
                     builder.dismiss();
 
                 });
@@ -125,37 +120,40 @@ public class AgentClientTransferFragment extends Fragment {
             });
             builder.show();
         });
-        return  view;
+        return view;
     }
 
-    private void sendDepositRequest(){
-        sessionHandler.showProgressDialog("Sending Request");
+
+    private void  sendOtpForFundTransfer(){
+        sessionHandler.showProgressDialog("Sending Request .... ");
         final JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.put("membercode",bundle.getString("code"));
+            jsonObject.put("membercode",bundle.get("code"));
             jsonObject.put("finger","1234");
-            jsonObject.put("amount",bundle.getString("deposoitAmt"));
-            jsonObject.put("agentpin",bundle.getString("agentPin"));
-            jsonObject.put("remark",bundle.getString("deposoitRemarks"));
-            jsonObject.put("otp","5678");
+            jsonObject.put("amount",bundle.getString("transfer_amount"));
+            jsonObject.put("agentpin",bundle.getString("transfer_pin"));
+            jsonObject.put("mobile",bundle.get("transfer_mobile"));
+            jsonObject.put("beneficiary",bundle.getString("transfer_beneficiary_no"));
         }catch (Exception e){
             e.printStackTrace();
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
 
-        retrofit2.Call<TransferModel> call = apiInterface.sendDepositRequest(apiSessionHandler.getCASH_DEPOSIT(),body,
+        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getFUND_TRANSFER_OTP(),body,
                 sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json",apiSessionHandler.getAgentCode());
-        call.enqueue(new Callback<TransferModel>() {
+
+        call.enqueue(new Callback<WithDrawlResponse>() {
             @Override
-            public void onResponse(Call<TransferModel> call, Response<TransferModel> response) {
+            public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
-                    Intent intent = new Intent( getContext(),DialogActivity.class);
-                    intent.putExtra("msg",response.body().getMessage());
-                    startActivity(intent);
+                    String message = response.body().getMessage();
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    getOtpValue();
                 }else {
                     try {
+
                         String jsonString = response.errorBody().string();
 
                         Log.d("here ","--=>"+jsonString);
@@ -165,20 +163,18 @@ public class AgentClientTransferFragment extends Fragment {
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
                     } catch (Exception e) {
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",("data mistake"));
                         e.printStackTrace();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<TransferModel> call, Throwable t) {
+            public void onFailure(Call<WithDrawlResponse> call, Throwable t) {
                 sessionHandler.hideProgressDialog();
-                Intent intent = new Intent( getContext(),ErrorDialogActivity.class);
-                intent.putExtra("msg","connection Error");
-                startActivity(intent);
             }
         });
-
     }
 
 
@@ -213,34 +209,32 @@ public class AgentClientTransferFragment extends Fragment {
         });
         builder.show();
     }
-
-    private void  sendOtpForCashDeposit(){
-        sessionHandler.showProgressDialog("Sending Request .... ");
-        final JSONObject jsonObject = new JSONObject();
+    void sendTransferPostRequest(){
+        sessionHandler.showProgressDialog("sending Request ... ");
+        JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.put("membercode",bundle.get("code"));
+            jsonObject.put("membercode",bundle.getString("code"));
             jsonObject.put("finger","1234");
-            jsonObject.put("amount",bundle.getString("deposoitAmt"));
-            jsonObject.put("agentpin",bundle.getString("agentPin"));
-            jsonObject.put("mobile",bundle.get("clientMobile"));
-            jsonObject.put("remark",bundle.getString("deposoitRemarks"));
+            jsonObject.put("amount",bundle.getString("transfer_amount"));
+            jsonObject.put("agentpin",bundle.getString("transfer_pin"));
+            jsonObject.put("beneficiary",bundle.getString("transfer_beneficiary_no"));
+            jsonObject.put("otp",otpValue);
         }catch (Exception e){
             e.printStackTrace();
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-
-        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getDEPOSIT_OTP(),body,
+        retrofit2.Call<TransferModel> call = apiInterface.sendFundTransferRequest(apiSessionHandler.getFUND_TRANSFER(),body,
                 sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json",apiSessionHandler.getAgentCode());
 
-        call.enqueue(new Callback<WithDrawlResponse>() {
+        call.enqueue(new Callback<TransferModel>() {
             @Override
-            public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
+            public void onResponse(Call<TransferModel> call, Response<TransferModel> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
-                    String message = response.body().getMessage();
-                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                    getOtpValue();
+                    Intent intent = new Intent(getContext(),DialogActivity.class);
+                    intent.putExtra("msg",response.body().getMessage());
+                    startActivity(intent);
                 }else {
                     try {
 
@@ -253,16 +247,18 @@ public class AgentClientTransferFragment extends Fragment {
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
                     } catch (Exception e) {
-                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",("data mistake"));
                         e.printStackTrace();
                     }
+
                 }
             }
 
             @Override
-            public void onFailure(Call<WithDrawlResponse> call, Throwable t) {
+            public void onFailure(Call<TransferModel> call, Throwable t) {
                 sessionHandler.hideProgressDialog();
+                Intent intent = new Intent(getContext(),DialogActivity.class);
+                intent.putExtra("msg","Connection Error");
+                startActivity(intent);
             }
         });
     }
