@@ -232,7 +232,7 @@ public class FundInfoFragment extends Fragment {
                         }else if (jsonObject.getString("message").equals("Member Authentication failed...")){
                             fiClienttPin.setError("Invalid Pincode");
                         }else if (jsonObject.getString("message").equals("Member Mobile No. is not registered...")){
-                            fundMobile.setError("Invalid Pincode");
+                            fundMobile.setError("Mobile not Registered");
                         }
                     } catch (Exception e) {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);

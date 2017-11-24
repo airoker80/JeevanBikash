@@ -104,7 +104,7 @@ public class FundFragment extends Fragment {
                 sessionHandler.hideProgressDialog();
 //                Log.d("DADAD0","ADA");
                 if (String.valueOf(response.code()).equals("200")){
-                    Fragment fragment = new FundDetailsFragment();
+                    Fragment fragment = new NewFundDetailsFragment();
                     args.putString("goto","beif");
                     args.putString("code",response.body().getCode());
                     args.putString("name",response.body().getName());

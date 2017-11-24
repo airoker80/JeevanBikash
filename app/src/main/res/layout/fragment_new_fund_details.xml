@@ -150,36 +150,179 @@
             </LinearLayout>
 
         </LinearLayout>
-        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-            android:id="@+id/cash_wd_txt"
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/mid_ll"
+            android:layout_below="@id/ffd_ll"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ffd_ll"
-            android:layout_margin="@dimen/_16sdp"
-            android:gravity="center"
-            android:text="Beneficiary code"
-            android:textColor="#95AFBE"
-            android:textSize="@dimen/_10sdp" />
+            android:layout_height="wrap_content">
+            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                android:id="@+id/cash_wd_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ffd_ll"
+                android:layout_margin="@dimen/_16sdp"
+                android:gravity="center"
+                android:text="Beneficiary code"
+                android:textColor="#95AFBE"
+                android:textSize="@dimen/_10sdp" />
 
-        <com.harati.jeevanbikas.Helper.AutoCompleteHelper.CustomACTextView
-            android:layout_below="@+id/cash_wd_txt"
-            android:maxLength="10"
-            android:id="@+id/input"
-            android:text="M0262270"
+            <EditText
+                android:maxLength="10"
+                android:id="@+id/benf_ft_etx"
+                android:text="M0262270"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:backgroundTint="@color/white"
+                android:hint="Enter Member code/Mobile Number"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:completionThreshold="1"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:visibility="gone"
+            android:id="@+id/down_ll"
+            android:layout_below="@+id/mid_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_16sdp"
-            android:layout_marginRight="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_24sdp"
-            android:backgroundTint="@color/white"
-            android:hint="Enter Member code/Mobile Number"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:completionThreshold="1"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/_12sdp" />
+            android:layout_marginRight="@dimen/_8sdp"
+            android:orientation="horizontal"
+            android:padding="@dimen/_4sdp"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:orientation="vertical">
+
+                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                    android:id="@+id/fundNameBenf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="Sushan Shrestha"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                        android:id="@+id/memberIdBenf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:text="Member Id"
+                        android:textColor="#95AFBE"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                        android:id="@+id/fundmemberIdBenf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:text="3343434"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                        android:id="@+id/branchBenf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:text="Branch"
+                        android:textColor="#95AFBE"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                        android:id="@+id/fundOfficeBenf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:text="Member Id"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                        android:id="@+id/accNoBenf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:text="Account No"
+                        android:textColor="#95AFBE"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                        android:id="@+id/accNoDetailsBenf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="8dp"
+                        android:text="3343434454"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:padding="@dimen/_4sdp"
+                    android:background="@drawable/image_baground">
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        android:src="@drawable/defaultprofile" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
