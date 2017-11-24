@@ -172,6 +172,7 @@
                                 android:textSize="@dimen/_12sdp" />
 
                             <com.harati.jeevanbikas.Helper.CGEditText
+                                android:visibility="gone"
                                 android:inputType="textPersonName"
                                 android:maxLength="20"
                                 android:textSize="@dimen/_10sdp"
@@ -180,6 +181,12 @@
                                 android:layout_height="@dimen/_32sdp"
                                 android:backgroundTint="@color/enrollColor"
                                 android:textColor="@color/white" />
+
+                            <Spinner
+                                style="@style/SpinnerStyle"
+                                android:id="@+id/castSpinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"></Spinner>
 
 
 

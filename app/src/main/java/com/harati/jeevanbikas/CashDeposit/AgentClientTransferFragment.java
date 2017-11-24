@@ -81,7 +81,7 @@ public class AgentClientTransferFragment extends Fragment {
         name.setText(bundle.getString("name"));
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
-        shownDepositAmt.setText(bundle.getString("deposoitAmt"));
+        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("deposoitAmt")+".00");
 
 //        getOtpValue();
 

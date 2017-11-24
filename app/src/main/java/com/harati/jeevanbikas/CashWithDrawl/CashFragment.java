@@ -122,7 +122,8 @@ public class CashFragment extends Fragment {
                     args.putString("name",response.body().getName());
                     args.putString("office",response.body().getOffice());
 //                    args.putString("office",response.body().getCode());
-                    args.putString("photo",response.body().getOffice());
+//                    args.putString("photo",response.body().getOffice());
+                    args.putString("phone",response.body().getMobileno());
                     fragment.setArguments(args);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);

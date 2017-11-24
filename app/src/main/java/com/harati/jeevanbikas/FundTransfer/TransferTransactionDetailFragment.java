@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,9 @@ public class TransferTransactionDetailFragment extends Fragment {
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
+    LinearLayout topPanel2;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain;
+    CenturyGothicTextView nameBeneficiary,memberIdnnumberBeneficiary,branchNameBeneficiary;
     ImageView agent_client_tick;
     Bundle bundle;
 
@@ -67,19 +70,33 @@ public class TransferTransactionDetailFragment extends Fragment {
         sessionHandler = new SessionHandler(getContext());
         View view= inflater.inflate(R.layout.fragment_agent_client_transfer, container, false);
 
+
+        topPanel2=(LinearLayout) view.findViewById(R.id.topPanel2);
+        topPanel2.setVisibility(View.VISIBLE);
+
         name=(CenturyGothicTextView)view.findViewById(R.id.name);
         memberIdnnumber=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumber);
         branchName=(CenturyGothicTextView)view.findViewById(R.id.branchName);
+
+        nameBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.nameBeneficiary);
+        memberIdnnumberBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumberBeneficiary);
+        branchNameBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.branchNameBeneficiary);
+
         shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
 
         amountType=(CenturyGothicTextView)view.findViewById(R.id.amountType);
         sendOtpAgain=(CenturyGothicTextView)view.findViewById(R.id.sendOtpAgain);
 
         amountType.setText("Transfer amount");
-        shownDepositAmt.setText(bundle.getString("transfer_amount"));
-        name.setText(bundle.getString("name"));
+        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("transfer_amount")+".00");
+
+        name.setText(bundle.getString("name")+" (Client)");
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
+
+        nameBeneficiary.setText(bundle.getString("nameBenificiary") + " Ben");
+        memberIdnnumberBeneficiary.setText(bundle.getString("codeBenificiary"));
+        branchNameBeneficiary.setText(bundle.getString("officeBenificiary"));
 
         sendOtpForFundTransfer();
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);

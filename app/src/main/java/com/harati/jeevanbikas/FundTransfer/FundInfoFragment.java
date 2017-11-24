@@ -86,6 +86,9 @@ public class FundInfoFragment extends Fragment {
         agentPin=(EditText)view.findViewById(R.id.agentPin) ;
         fundMobile=(EditText)view.findViewById(R.id.fundMobile) ;
         fiClienttPin=(CGEditText) view.findViewById(R.id.fiClienttPin) ;
+
+        BenificiaryaccNo.setText(bundle.getString("codeBenificiary"));
+
         submit.setOnClickListener(view1 -> {
   /*          Intent intent= new Intent(getContext(), DialogActivity.class);
             getActivity().startActivity(intent);*/
@@ -99,19 +102,31 @@ public class FundInfoFragment extends Fragment {
             if (BenificiaryaccNoTxt.equals("")|confirmAccNoTxt.equals("")|deposoitAmtTxt.equals("")|
             agentPinTxt.equals("")|fundMobileTxt.equals("")){
                 getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
-            }else {
-                Fragment fragment= new TransferTransactionDetailFragment();
-                bundle.putString("transfer_amount",transferAmt.getText().toString());
-                bundle.putString("transfer_pin",agentPin.getText().toString());
-                bundle.putString("transfer_beneficiary_no",BenificiaryaccNo.getText().toString());
-                bundle.putString("transfer_mobile",fundMobile.getText().toString());
-                bundle.putString("fiClienttPin",fiClienttPin.getText().toString());
+            }else if (!BenificiaryaccNo.getText().toString().equals(confirmAccNo.getText().toString())){
+                Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
+                intent.putExtra("msg","Beneficiary account number not matched");
+                startActivity(intent);
+            }
+            else {
+                if (BenificiaryaccNo.getText().toString().equals(bundle.getString("codeBenificiary"))){
+                    Fragment fragment= new TransferTransactionDetailFragment();
+                    bundle.putString("transfer_amount",transferAmt.getText().toString());
+                    bundle.putString("transfer_pin",agentPin.getText().toString());
+                    bundle.putString("transfer_beneficiary_no",BenificiaryaccNo.getText().toString());
+                    bundle.putString("transfer_mobile",fundMobile.getText().toString());
+                    bundle.putString("fiClienttPin",fiClienttPin.getText().toString());
 
-                fragment.setArguments(bundle);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.addToBackStack(null);
-                transaction.replace(R.id.contentFrame, fragment);
-                transaction.commit();
+                    fragment.setArguments(bundle);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragment);
+                    transaction.commit();
+                }else {
+                    Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
+                    intent.putExtra("msg","Beneficiary account number is not matched of previous beneficiary number that you searched");
+                    startActivity(intent);
+                }
+
 //                sendTransferPostRequest();
             }
         });

@@ -86,7 +86,7 @@ public class FingerPrintAuthDepositFragment extends Fragment {
                     clientName=response.body().getName();
                     clientOffice=response.body().getOffice();
 //                    args.putString("office",response.body().getCode());
-                    clientPhoto=response.body().getPhoto();
+                    clientPhoto=response.body().getPhoto().toString();
                 }else {
                     try {
 

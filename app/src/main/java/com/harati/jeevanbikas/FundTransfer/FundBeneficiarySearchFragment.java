@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
@@ -40,6 +41,7 @@ public class FundBeneficiarySearchFragment extends Fragment {
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
     Bundle args;
+    ImageView imageView;
     public FundBeneficiarySearchFragment() {
         // Required empty public constructor
     }
@@ -61,6 +63,23 @@ public class FundBeneficiarySearchFragment extends Fragment {
 
         input = (CustomACTextView) view.findViewById(R.id.input);
         input.setHint("Enter the beneficiary code/Mobile");
+//        input.setText("M0672475");
+        imageView = (ImageView)view.findViewById(R.id.imageView);
+
+        imageView.setOnClickListener(view1 -> {
+            if (input.getText().toString().equals("")){
+                input.setError("Please Enter the Phone Number");
+            }else {
+                getMemberList(input.getText().toString());
+/*                    Fragment fragment= new FundDetailsFragment();
+//                    Fragment fragment= new FundFingerCheckFragment();
+                fragment.setArguments(args);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.addToBackStack(null);
+                transaction.replace(R.id.contentFrame, fragment);
+                transaction.commit();*/
+            }
+        });
         return view;
     }
 
@@ -84,6 +103,7 @@ public class FundBeneficiarySearchFragment extends Fragment {
                     args.putString("officeBenificiary",response.body().getOffice());
 //                    args.putString("office",response.body().getCode());
                     args.putString("photoBenificiary",response.body().getOffice());
+                    args.putString("phoneBenificiary",response.body().getMobileno());
                     fragment.setArguments(args);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);

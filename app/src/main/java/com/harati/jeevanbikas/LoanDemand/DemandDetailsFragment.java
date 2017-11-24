@@ -59,7 +59,7 @@ public class DemandDetailsFragment extends Fragment implements View.OnClickListe
         int vId = v.getId();
         switch (vId){
             case R.id.demand_tick:
-                Fragment fragment = new FingerPrintLoanFragment();
+                Fragment fragment = new LoanDetailFragment();
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFrame, fragment);

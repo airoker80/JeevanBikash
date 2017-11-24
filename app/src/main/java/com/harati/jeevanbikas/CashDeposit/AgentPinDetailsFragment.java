@@ -104,17 +104,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     intent.putExtra("msg","Zero amount cannot be deposited");
                     startActivity(intent);
                 }else {
-                    Fragment fragment= new AgentClientTransferFragment();
-                    bundle.putString("agentPin",agentPin.getText().toString());
-                    bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
-                    bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());
-                    bundle.putString("clientsPin",clientsPinEtxt.getText().toString());
-                    bundle.putString("cd_mobile_no",cd_mobile_no.getText().toString());
-                    fragment.setArguments(bundle);
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragment);
-                    transaction.commit();
+                    sendOtpForCashDeposit();
 
 
 //                    sendOtpForCashDeposit();
@@ -132,10 +122,10 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         final JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("membercode",bundle.get("code"));
-            jsonObject.put("finger","1234");
+            jsonObject.put("finger",clientsPinEtxt.getText().toString());
             jsonObject.put("amount",deposoitAmt.getText().toString());
             jsonObject.put("agentpin",agentPin.getText().toString());
-            jsonObject.put("mobile",bundle.get("clientMobile"));
+            jsonObject.put("mobile",cd_mobile_no.getText().toString());
             jsonObject.put("remark",deposoitRemarks.getText().toString());
         }catch (Exception e){
             e.printStackTrace();
@@ -151,11 +141,13 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
-                    Fragment fragment= null;
+                    Fragment fragment= new AgentClientTransferFragment();
                     String message = response.body().getMessage();
                     bundle.putString("agentPin",agentPin.getText().toString());
                     bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
                     bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());
+                    bundle.putString("clientsPin",clientsPinEtxt.getText().toString());
+                    bundle.putString("cd_mobile_no",cd_mobile_no.getText().toString());
                     fragment.setArguments(bundle);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);
@@ -173,6 +165,13 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
+                        if (jsonObject.getString("message").equals("Sorry Invalid Agent Pincode...")){
+                            agentPin.setError("Invalid Pincode");
+                        }else if (jsonObject.getString("message").equals("Member Authentication failed...")){
+                            clientsPinEtxt.setError("Invalid Pincode");
+                        }else if (jsonObject.getString("message").equals("Member Mobile No. is not registered...")){
+                            cd_mobile_no.setError("Invalid Pincode");
+                        }
                     } catch (Exception e) {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",("data mistake"));
@@ -187,4 +186,5 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             }
         });
     }
+
 }

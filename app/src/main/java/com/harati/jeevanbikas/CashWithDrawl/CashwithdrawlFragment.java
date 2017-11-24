@@ -1,18 +1,22 @@
 package com.harati.jeevanbikas.CashWithDrawl;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CGEditText;
@@ -52,6 +56,7 @@ public class CashwithdrawlFragment extends Fragment {
     SessionHandler sessionHandler ;
 
     String code,name,office ,photo;
+    Bundle bundle;
 
 
     ImageView submit;
@@ -67,7 +72,7 @@ public class CashwithdrawlFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        Bundle bundle = getArguments();
+        bundle = getArguments();
         code = bundle.getString("code");
         name = bundle.getString("name");
         office = bundle.getString("office");
@@ -111,6 +116,7 @@ public class CashwithdrawlFragment extends Fragment {
         branchName.setText(office);
         nameTxt.setText(name);
 
+        withrwal_mobile.setText(bundle.getString("phone"));
         Picasso.with(getContext()).load(photo).into(imgUser);
 
 
@@ -127,18 +133,7 @@ public class CashwithdrawlFragment extends Fragment {
                     getActivity().startActivity(intent);
                 }else {
 //                    sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
-                    bundle.putString("withdraw_amount",withdrawlAmount.getText().toString());
-                    bundle.putString("withdraw_pin",agentPin.getText().toString());
-                    bundle.putString("withdraw_client_pin",clientPin.getText().toString());
-                    bundle.putString("withdraw_remarks",withdrawlRemark.getText().toString());
-                    bundle.putString("withdraw_mobile",withrwal_mobile.getText().toString());
-
-                    Fragment fragment = new WithdrawlTransactionFragment();
-                    fragment.setArguments(bundle);
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragment);
-                    transaction.commit();
+                    sendOtpForCashDeposit();
                 }
             }
         });
@@ -184,6 +179,76 @@ public class CashwithdrawlFragment extends Fragment {
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
                     } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WithDrawlResponse> call, Throwable t) {
+                sessionHandler.hideProgressDialog();
+            }
+        });
+    }
+    private void  sendOtpForCashDeposit(){
+        sessionHandler.showProgressDialog("Sending Request .... ");
+        final JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("membercode",code);
+            jsonObject.put("finger",clientPin.getText().toString());
+            jsonObject.put("amount",withdrawlAmount.getText().toString());
+            jsonObject.put("agentpin",agentPin.getText().toString());
+            jsonObject.put("mobile",withrwal_mobile.getText().toString());
+            jsonObject.put("remark",withdrawlRemark.getText().toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+
+        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getWITHDRAW_OTP(),body,
+                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json",apiSessionHandler.getAgentCode());
+
+        call.enqueue(new Callback<WithDrawlResponse>() {
+            @Override
+            public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
+                sessionHandler.hideProgressDialog();
+                if (String.valueOf(response.code()).equals("200")){
+                    String message = response.body().getMessage();
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    bundle.putString("withdraw_amount",withdrawlAmount.getText().toString());
+                    bundle.putString("withdraw_pin",agentPin.getText().toString());
+                    bundle.putString("withdraw_client_pin",clientPin.getText().toString());
+                    bundle.putString("withdraw_remarks",withdrawlRemark.getText().toString());
+                    bundle.putString("withdraw_mobile",withrwal_mobile.getText().toString());
+
+                    Fragment fragment = new WithdrawlTransactionFragment();
+                    fragment.setArguments(bundle);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragment);
+                    transaction.commit();
+                }else {
+                    try {
+
+                        String jsonString = response.errorBody().string();
+
+                        Log.d("here ","--=>"+jsonString);
+
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",jsonObject.getString("message"));
+                        startActivity(intent);
+                        if (jsonObject.getString("message").equals("Sorry Invalid Agent Pincode...")){
+                            agentPin.setError("Invalid Pincode");
+                        }else if (jsonObject.getString("message").equals("Member Authentication failed...")){
+                            clientPin.setError("Invalid Pincode");
+                        }else if (jsonObject.getString("message").equals("Member Mobile No. is not registered...")){
+                            withrwal_mobile.setError("Invalid Pincode");
+                        }
+                    } catch (Exception e) {
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",("data mistake"));
                         e.printStackTrace();
                     }
                 }

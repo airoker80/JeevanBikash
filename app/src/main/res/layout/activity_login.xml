@@ -61,7 +61,7 @@
     <EditText
         android:id="@+id/jb_password"
         android:layout_marginTop="@dimen/_15sdp"
-        android:text="Aft@12346"
+        android:text="#3c!fqfF"
         android:textSize="@dimen/_14sdp"
         android:drawablePadding="@dimen/_8sdp"
         android:drawableLeft="@drawable/ic_padlock"

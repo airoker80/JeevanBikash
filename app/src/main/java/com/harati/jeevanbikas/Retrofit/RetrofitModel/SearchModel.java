@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class SearchModel {
+
     @SerializedName("code")
     @Expose
     private String code;
@@ -19,7 +20,10 @@ public class SearchModel {
     private String office;
     @SerializedName("photo")
     @Expose
-    private String photo;
+    private Object photo;
+    @SerializedName("mobileno")
+    @Expose
+    private String mobileno;
 
     public String getCode() {
         return code;
@@ -45,11 +49,20 @@ public class SearchModel {
         this.office = office;
     }
 
-    public String getPhoto() {
+    public Object getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(Object photo) {
         this.photo = photo;
     }
+
+    public String getMobileno() {
+        return mobileno;
+    }
+
+    public void setMobileno(String mobileno) {
+        this.mobileno = mobileno;
+    }
+
 }

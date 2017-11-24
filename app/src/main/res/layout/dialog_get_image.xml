@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/galleryLL"
+        android:padding="@dimen/_8sdp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/gallery"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp" />
+        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="@dimen/_14sdp"
+            android:text="Gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/cameraLL"
+        android:padding="@dimen/_8sdp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/camera"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp" />
+        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="@dimen/_14sdp"
+            android:text="Camera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -2,6 +2,7 @@ package com.harati.jeevanbikas.Retrofit.Interface;
 
 
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.CastModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoanDetailsModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.OTPmodel;
@@ -134,12 +135,12 @@ public interface ApiInterface {
 
     //    @GET("caste")
     @GET
-    Call<SearchModel> getCasteList(@Url String url,
-                                   @Query("mobileno") String mobileno,
-                                   @Header("X-Authorization") String xAuth,
-                                   @Header("Authorization") String Authorization,
-                                   @Header("Content-Type") String contentType,
-                                   @Query("serialno") String serialno);
+    Call<List<CastModel>> getCasteList(@Url String url,
+//                                   @Query("mobileno") String mobileno,
+                                       @Header("X-Authorization") String xAuth,
+                                       @Header("Authorization") String Authorization,
+                                       @Header("Content-Type") String contentType,
+                                       @Query("serialno") String serialno);
 
     @GET
     Call<List<LoanDetailsModel>> getLoanTypeList(@Url String url,

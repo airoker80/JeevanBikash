@@ -176,7 +176,7 @@
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please enter your pin number to proceed"
+                android:text="Please enter Agent pin number to proceed"
                 android:textColor="@color/white"/>
             <LinearLayout
                 android:visibility="gone"
@@ -211,7 +211,7 @@
                     android:layout_weight="1"/>
             </LinearLayout>
             <com.alimuzaffar.lib.pin.PinEntryEditText
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/white"
                 android:maxLength="4"
