@@ -86,7 +86,7 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
         switch (vId) {
             case R.id.demand_tick:
                 Fragment fragment = new AgentPinDetailsFragment();
-                bundle.putString("clientMobile", clientMobile.getText().toString());
+//                bundle.putString("clientMobile", clientMobile.getText().toString());
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFrame, fragment);

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/transparent"
+    android:background="@color/colorPrimary"
     tools:context="com.harati.jeevanbikas.FundTransfer.FundDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,9 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:id="@+id/ffd_ll"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/topPanel"
                 android:layout_width="match_parent"
@@ -179,6 +180,9 @@
                 app:srcCompat="@drawable/ic_error" />
 
         </LinearLayout>
+
+
+
     </RelativeLayout>
 
 </FrameLayout>

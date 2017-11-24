@@ -326,7 +326,8 @@
                         android:paddingTop="@dimen/_8sdp"
                         android:text="RS 1000"
                         android:textColor="#95AFBE"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_17sdp" />
 
                     <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                         android:id="@+id/sendOtpAgain"

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
+import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
@@ -49,6 +50,7 @@ public class FundInfoFragment extends Fragment {
     Bundle bundle;
     ImageView submit;
     EditText BenificiaryaccNo,confirmAccNo ,transferAmt,agentPin ,fundMobile;
+    CGEditText fiClienttPin;
     String BenificiaryaccNoTxt,confirmAccNoTxt ,deposoitAmtTxt,agentPinTxt ,fundMobileTxt;
     public FundInfoFragment() {
     }
@@ -83,6 +85,7 @@ public class FundInfoFragment extends Fragment {
         transferAmt=(EditText)view.findViewById(R.id.transferAmt) ;
         agentPin=(EditText)view.findViewById(R.id.agentPin) ;
         fundMobile=(EditText)view.findViewById(R.id.fundMobile) ;
+        fiClienttPin=(CGEditText) view.findViewById(R.id.fiClienttPin) ;
         submit.setOnClickListener(view1 -> {
   /*          Intent intent= new Intent(getContext(), DialogActivity.class);
             getActivity().startActivity(intent);*/
@@ -102,6 +105,7 @@ public class FundInfoFragment extends Fragment {
                 bundle.putString("transfer_pin",agentPin.getText().toString());
                 bundle.putString("transfer_beneficiary_no",BenificiaryaccNo.getText().toString());
                 bundle.putString("transfer_mobile",fundMobile.getText().toString());
+                bundle.putString("fiClienttPin",fiClienttPin.getText().toString());
 
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

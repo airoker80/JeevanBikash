@@ -55,7 +55,7 @@ public class CashwithdrawlFragment extends Fragment {
 
 
     ImageView submit;
-    EditText withdrawlAmount,agentPin ,withdrawlRemark,withrwal_mobile;
+    EditText withdrawlAmount,agentPin ,withdrawlRemark,withrwal_mobile,clientPin;
     String withdrawlAmountTxt,agentPinTxt ,withdrawlRemarkTxt;
     ImageView imgUser;
 
@@ -81,6 +81,7 @@ public class CashwithdrawlFragment extends Fragment {
         submit = (ImageView)view.findViewById(R.id.submit);
         withdrawlAmount=(EditText)view.findViewById(R.id.withdrawlAmount);
         agentPin=(EditText)view.findViewById(R.id.agentPin);
+        clientPin=(EditText)view.findViewById(R.id.clientPin);
         withdrawlRemark=(EditText)view.findViewById(R.id.withdrawlRemark);
         withrwal_mobile=(CGEditText)view.findViewById(R.id.withrwal_mobile);
         imgUser=(ImageView) view.findViewById(R.id.imgUser);
@@ -117,7 +118,7 @@ public class CashwithdrawlFragment extends Fragment {
             withdrawlAmountTxt=withdrawlAmount.getText().toString();
             agentPinTxt=agentPin.getText().toString();
             withdrawlRemarkTxt=withdrawlRemark.getText().toString();
-            if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|withdrawlRemarkTxt.equals("")){
+            if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|withdrawlRemarkTxt.equals("")|clientPin.getText().toString().equals("")){
                 getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
             }else {
                 if (Integer.parseInt(withdrawlAmount.getText().toString())==0){
@@ -128,6 +129,7 @@ public class CashwithdrawlFragment extends Fragment {
 //                    sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
                     bundle.putString("withdraw_amount",withdrawlAmount.getText().toString());
                     bundle.putString("withdraw_pin",agentPin.getText().toString());
+                    bundle.putString("withdraw_client_pin",clientPin.getText().toString());
                     bundle.putString("withdraw_remarks",withdrawlRemark.getText().toString());
                     bundle.putString("withdraw_mobile",withrwal_mobile.getText().toString());
 

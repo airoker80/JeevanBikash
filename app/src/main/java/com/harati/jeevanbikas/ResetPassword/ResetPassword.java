@@ -1,5 +1,6 @@
 package com.harati.jeevanbikas.ResetPassword;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
+import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MyApplication;
@@ -28,7 +30,7 @@ import retrofit2.Retrofit;
 
 public class ResetPassword extends AppCompatActivity {
     ApiSessionHandler apiSessionHandler;
-    EditText reset_otp;
+    EditText reset_otp,reset_old_password,reset_new_password,re_reset_new_password;
     Button resetPass;
     Spinner spinner;
     SessionHandler sessionHandler;
@@ -44,12 +46,28 @@ public class ResetPassword extends AppCompatActivity {
         setContentView(R.layout.activity_reset_password);
         resetPass = (Button)findViewById(R.id.resetPass);
         reset_otp = (EditText) findViewById(R.id.reset_otp);
+
+        reset_old_password = (EditText) findViewById(R.id.reset_old_password);
+        reset_new_password = (EditText) findViewById(R.id.reset_new_password);
+        re_reset_new_password = (EditText) findViewById(R.id.re_reset_new_password);
+
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
                 R.array.language, R.layout.text_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        resetPass.setOnClickListener(v -> sendReestReq());
+        resetPass.setOnClickListener(v -> {
+            if (re_reset_new_password.getText().toString().equals(reset_new_password.getText().toString())){
+                sendReestReq();
+            }else {
+                Intent intent = new Intent(ResetPassword.this, ErrorDialogActivity.class);
+                intent.putExtra("msg","Both reset Passord field should be same");
+                startActivity(intent);
+            }
+
+                }
+
+        );
     }
 
     void sendReestReq(){

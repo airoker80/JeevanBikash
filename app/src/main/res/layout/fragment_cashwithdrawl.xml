@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/topPanel"
                 android:layout_marginLeft="@dimen/_16sdp"
-                android:layout_marginRight="32dp"
+                android:layout_marginRight="@dimen/_25sdp"
                 android:orientation="vertical"
                 android:padding="4dp"
                 android:layout_marginTop="8dp">
@@ -205,12 +205,37 @@
                         android:id="@+id/agentPin"
                         android:backgroundTint="@color/white"
                         android:textColor="@color/white"
-                        android:inputType="textPassword"
+                        android:inputType="numberPassword"
                         android:imeOptions="actionNext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
 
+                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                    android:id="@+id/ct_pin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="Client Transaction Pin"
+                    android:textColor="#95AFBE"
+                    android:textSize="@dimen/_10sdp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true">
+
+                    <EditText
+                        android:maxLength="4"
+                        android:textSize="@dimen/_10sdp"
+                        android:id="@+id/clientPin"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/white"
+                        android:inputType="numberPassword"
+                        android:imeOptions="actionNext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                     android:id="@+id/remarks_txt"
                     android:layout_width="wrap_content"

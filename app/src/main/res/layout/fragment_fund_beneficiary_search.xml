@@ -35,16 +35,6 @@
             android:textColorHint="@color/white"
             android:textSize="@dimen/_12sdp" />
 
-        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-            android:id="@+id/cash_wd_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/input"
-            android:layout_margin="@dimen/_16sdp"
-            android:text="@string/detialsMsg"
-            android:textAlignment="center"
-            android:textColor="#95AFBE"
-            android:textSize="@dimen/_10sdp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -76,15 +66,4 @@
 
     </LinearLayout>
 
-<!--
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_30sdp"
-        android:clickable="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:background="#F9B847"
-        app:srcCompat="@drawable/ic_check" />
--->
 </RelativeLayout>

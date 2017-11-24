@@ -230,7 +230,7 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
       try{
           Log.e("agentCode","ac"+sessionHandler.getAgentCode());
           jsonObject.put("agentCode",sessionHandler.getAgentCode());
-          jsonObject.put("mobile","9813297782");
+          jsonObject.put("mobile",agent_mobile_id.getText().toString());
 
           jsonArray.put(jsonObject);
       }catch (Exception e){

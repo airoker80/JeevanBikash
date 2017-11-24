@@ -45,7 +45,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
     ImageView agent_tick,demand_cross;
     String code,name,office ,photo,clientPin,clientCode;
     PinEntryEditText agentPin;
-    CGEditText deposoitAmt,deposoitRemarks;
+    CGEditText deposoitAmt,deposoitRemarks,clientsPinEtxt,cd_mobile_no;
 
     CenturyGothicTextView depdetailsName,depositCode ,depositBranch;
     Bundle bundle;
@@ -76,6 +76,8 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         agentPin=(PinEntryEditText)view.findViewById(R.id.agentPin);
         deposoitAmt=(CGEditText) view.findViewById(R.id.deposoitAmt);
         deposoitRemarks=(CGEditText)view.findViewById(R.id.deposoitRemarks);
+        clientsPinEtxt=(CGEditText)view.findViewById(R.id.clientsPinEtxt);
+        cd_mobile_no=(CGEditText)view.findViewById(R.id.cd_mobile_no);
 
         depdetailsName=(CenturyGothicTextView)view.findViewById(R.id.depdetailsName);
         depositCode=(CenturyGothicTextView)view.findViewById(R.id.depositCode);
@@ -106,6 +108,8 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     bundle.putString("agentPin",agentPin.getText().toString());
                     bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
                     bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());
+                    bundle.putString("clientsPin",clientsPinEtxt.getText().toString());
+                    bundle.putString("cd_mobile_no",cd_mobile_no.getText().toString());
                     fragment.setArguments(bundle);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);

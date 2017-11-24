@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.harati.jeevanbikas.CashDeposit.FingerPrintAuthDepositFragment;
+import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
@@ -19,6 +20,7 @@ import com.harati.jeevanbikas.R;
  * A simple {@link Fragment} subclass.
  */
 public class FundDetailsFragment extends Fragment implements View.OnClickListener {
+    Fragment fragment;
     CenturyGothicTextView fundName,fundmemberId,fundOffice;
     ImageView fund_tick,fund_cross;
     Bundle bundle;
@@ -38,9 +40,15 @@ public class FundDetailsFragment extends Fragment implements View.OnClickListene
         fundmemberId =(CenturyGothicTextView)view.findViewById(R.id.fundmemberId);
         fundOffice =(CenturyGothicTextView)view.findViewById(R.id.fundOffice);
 
-        fundName.setText(bundle.getString("name"));
-        fundmemberId.setText(bundle.getString("code"));
-        fundOffice.setText(bundle.getString("office"));
+        if (bundle.get("goto").equals("beif")){
+            fundName.setText(bundle.getString("name"));
+            fundmemberId.setText(bundle.getString("code"));
+            fundOffice.setText(bundle.getString("office"));
+        }else if (bundle.get("goto").equals("info")){
+            fundName.setText(bundle.getString("nameBenificiary"));
+            fundmemberId.setText(bundle.getString("codeBenificiary"));
+            fundOffice.setText(bundle.getString("officeBenificiary"));
+        }
 
         fund_tick=(ImageView)view.findViewById(R.id.fund_tick);
         fund_cross=(ImageView)view.findViewById(R.id.fund_cross);
@@ -54,7 +62,12 @@ public class FundDetailsFragment extends Fragment implements View.OnClickListene
         int vId = v.getId();
         switch (vId){
             case R.id.fund_tick:
-                Fragment fragment = new FundInfoFragment();
+                if (bundle.get("goto").equals("beif")){
+                    fragment = new FundBeneficiarySearchFragment();
+                }else if (bundle.get("goto").equals("info")){
+                    fragment = new FundInfoFragment();
+                }
+
 //                Fragment fragment = new FundFingerCheckFragment();
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

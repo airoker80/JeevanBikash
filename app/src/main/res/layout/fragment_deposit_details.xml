@@ -227,6 +227,7 @@
             </com.alimuzaffar.lib.pin.PinEntryEditText>
 
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:textSize="@dimen/_10sdp"
                 android:textAlignment="center"
@@ -236,6 +237,7 @@
                 android:textColor="@color/white"/>
 
             <EditText
+                android:visibility="gone"
                 android:maxLength="10"
                 android:inputType="number"
                 android:backgroundTint="@color/white"

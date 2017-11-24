@@ -84,7 +84,7 @@ public class NewFingerPrintFragment extends android.support.v4.app.Fragment {
         fingerPrint.setOnClickListener(view1 -> {
 //                showMessage();
 
-            sendBalanceEnquiryRequest();
+//            sendBalanceEnquiryRequest();
 
 /*                Snackbar snackbar = Snackbar
                     .make(view, "Please Place your right finger in the sensor", Snackbar.LENGTH_LONG);
@@ -97,62 +97,5 @@ public class NewFingerPrintFragment extends android.support.v4.app.Fragment {
     }
 
 
-    public  void  sendBalanceEnquiryRequest(){
-        sessionHandler.showProgressDialog("Sending Request ....");
-        final JSONObject jsonObject = new JSONObject();
-//      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
-        JSONArray jsonArray = new JSONArray();
-        try{
-            Log.e("agentCode","ac"+sessionHandler.getAgentCode());
-            jsonObject.put("membercode",bundle.get("memberId"));
-            jsonObject.put("finger","1234");
 
-            jsonArray.put(jsonObject);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendBalanceRequest(apiSessionHandler.getBALANCE_ENQUIRY(),body,
-                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json",apiSessionHandler.getAgentCode());
-        call.enqueue(new Callback<SuccesResponseModel>() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onResponse(Call<SuccesResponseModel> call, Response<SuccesResponseModel> response) {
-                sessionHandler.hideProgressDialog();
-                if (String.valueOf(response.code()).equals("200")){
-                    if (response.body().getStatus().equals("Success")){
-                        Intent intent = new Intent(getContext(),DialogActivity.class);
-                        intent.putExtra("msg",response.body().getMessage());
-                        startActivity(intent);
-                    }else {
-                        Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
-                        intent.putExtra("msg",response.body().getMessage());
-                        startActivity(intent);
-                    }
-                }else {
-                    try {
-
-                        String jsonString = response.errorBody().string();
-
-                        Log.d("here ","--=>"+jsonString);
-
-                        JSONObject jsonObject = new JSONObject(jsonString);
-                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",jsonObject.getString("message"));
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onFailure(Call<SuccesResponseModel> call, Throwable t) {
-                sessionHandler.hideProgressDialog();
-                Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

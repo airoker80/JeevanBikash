@@ -35,7 +35,6 @@ import retrofit2.http.Url;
  */
 
 public interface ApiInterface {
-    String jsonApi = SessionHandler.API_JSON;
 
     @Headers("{Authorization:Basic dXNlcjpqQiQjYUJAMjA1NA== ,Content-Type:application/json}")
     @POST

@@ -129,7 +129,7 @@ public class TransferTransactionDetailFragment extends Fragment {
         final JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("membercode",bundle.get("code"));
-            jsonObject.put("finger","1234");
+            jsonObject.put("finger",bundle.get("fiClienttPin"));
             jsonObject.put("amount",bundle.getString("transfer_amount"));
             jsonObject.put("agentpin",bundle.getString("transfer_pin"));
             jsonObject.put("mobile",bundle.get("transfer_mobile"));

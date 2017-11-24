@@ -58,7 +58,7 @@ public class LoanDetailFragment extends Fragment {
     List<String> stringList = new ArrayList<>();
     ImageView submit;
     Spinner spinner;
-    EditText loanAmt;
+    EditText loanAmt,ld_clients_pin;
     CenturyGothicTextView loanNameDetails ,loanDtCode ,ldOffice;
     public LoanDetailFragment() {
     }
@@ -78,6 +78,7 @@ public class LoanDetailFragment extends Fragment {
         Log.d("loantype", "=-" + loanDetailsModels.size());
         submit = (ImageView) view.findViewById(R.id.submit);
         loanAmt = (EditText) view.findViewById(R.id.loanAmt);
+        ld_clients_pin = (EditText) view.findViewById(R.id.ld_clients_pin);
         spinner = (Spinner) view.findViewById(R.id.spinner);
 
         loanNameDetails=(CenturyGothicTextView)view.findViewById(R.id.loanNameDetails);
@@ -90,7 +91,7 @@ public class LoanDetailFragment extends Fragment {
 
 
         submit.setOnClickListener(view1 -> {
-            if (loanAmt.getText().toString().equals("") | spinner.getSelectedItem().toString().equals("")) {
+            if (loanAmt.getText().toString().equals("") | spinner.getSelectedItem().toString().equals("")| ld_clients_pin.getText().toString().equals("")) {
                 Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                 getActivity().startActivity(intent);
             } else {
@@ -138,7 +139,7 @@ public class LoanDetailFragment extends Fragment {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("membercode", bundle.getString("code"));
-            jsonObject.put("finger", "1234");
+            jsonObject.put("finger", ld_clients_pin.getText().toString());
             jsonObject.put("amount", loanAmt.getText().toString());
             jsonObject.put("loantype", spinner.getSelectedItem().toString());
             jsonObject.put("remark", "testing");

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/topPanel"
     android:orientation="vertical"
-    android:background="@color/transparent"
+    android:background="@color/colorPrimary"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView
@@ -236,6 +236,30 @@
                         android:maxLength="4"
                         android:textSize="@dimen/_10sdp"
                         android:id="@+id/agentPin"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/white"
+                        android:inputType="numberPassword"
+                        android:imeOptions="actionNext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
+                <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="Client Transaction Pin"
+                    android:textColor="#95AFBE"
+                    android:textSize="@dimen/_10sdp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true">
+
+                    <com.harati.jeevanbikas.Helper.CGEditText
+                        android:maxLength="4"
+                        android:textSize="@dimen/_10sdp"
+                        android:id="@+id/fiClienttPin"
                         android:backgroundTint="@color/white"
                         android:textColor="@color/white"
                         android:inputType="numberPassword"

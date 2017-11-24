@@ -133,11 +133,12 @@ public class AgentClientTransferFragment extends Fragment {
         final JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("membercode",bundle.getString("code"));
-            jsonObject.put("finger","1234");
+            jsonObject.put("finger",bundle.getString("clientsPin"));
             jsonObject.put("amount",bundle.getString("deposoitAmt"));
             jsonObject.put("agentpin",bundle.getString("agentPin"));
             jsonObject.put("remark",bundle.getString("deposoitRemarks"));
-            jsonObject.put("otp","5678");
+            jsonObject.put("mobile",bundle.getString("cd_mobile_no"));
+            jsonObject.put("otp",otpValue);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -222,7 +223,7 @@ public class AgentClientTransferFragment extends Fragment {
             jsonObject.put("finger","1234");
             jsonObject.put("amount",bundle.getString("deposoitAmt"));
             jsonObject.put("agentpin",bundle.getString("agentPin"));
-            jsonObject.put("mobile",bundle.get("clientMobile"));
+            jsonObject.put("mobile",bundle.get("cd_mobile_no"));
             jsonObject.put("remark",bundle.getString("deposoitRemarks"));
         }catch (Exception e){
             e.printStackTrace();

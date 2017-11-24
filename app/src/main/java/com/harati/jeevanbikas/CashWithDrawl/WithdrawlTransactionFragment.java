@@ -76,7 +76,7 @@ public class WithdrawlTransactionFragment extends Fragment {
         name.setText(bundle.getString("name"));
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
-        shownDepositAmt.setText(bundle.getString("withdraw_amount"));
+        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("withdraw_amount")+".00");
 
         amountType.setText("Withdrawl Amount");
 
@@ -133,7 +133,7 @@ public class WithdrawlTransactionFragment extends Fragment {
         final JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("membercode",bundle.get("code"));
-            jsonObject.put("finger","1234");
+            jsonObject.put("finger",bundle.get("withdraw_client_pin"));
             jsonObject.put("amount",wa);
             jsonObject.put("agentpin",ap);
             jsonObject.put("remark",wr);
