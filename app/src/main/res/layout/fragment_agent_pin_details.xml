@@ -173,10 +173,9 @@
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                 android:layout_marginTop="@dimen/_20sdp"
                 android:textSize="@dimen/_10sdp"
-                android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please enter Agent pin number to proceed"
+                android:text="Agent pin transaction number"
                 android:textColor="@color/white"/>
             <LinearLayout
                 android:visibility="gone"
@@ -210,15 +209,43 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
-            <com.alimuzaffar.lib.pin.PinEntryEditText
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true">
+
+            <EditText
                 android:inputType="numberPassword"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/white"
                 android:maxLength="4"
-                android:layout_margin="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/agentPin"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clients Pin"
+                android:textColor="@color/white"/>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true">
+
+                <com.harati.jeevanbikas.Helper.CGEditText
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:backgroundTint="@color/white"
+                    android:id="@+id/clientsPinEtxt"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1234"
+                    android:textColor="@color/white"/>
+            </android.support.design.widget.TextInputLayout>
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="match_parent"
@@ -252,22 +279,7 @@
                 android:layout_height="wrap_content"
                 android:text="ok"
                 android:textColor="@color/white"/>
-            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Clients Pin"
-                android:textColor="@color/white"/>
-            <com.harati.jeevanbikas.Helper.CGEditText
-                android:inputType="numberPassword"
-                android:maxLength="4"
-                android:backgroundTint="@color/white"
-                android:id="@+id/clientsPinEtxt"
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="1234"
-                android:textColor="@color/white"/>
+
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="match_parent"

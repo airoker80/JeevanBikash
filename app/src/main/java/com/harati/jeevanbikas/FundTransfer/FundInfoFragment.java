@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CGEditText;
@@ -25,6 +26,7 @@ import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.TransferModel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
 
 import org.json.JSONObject;
 
@@ -109,18 +111,7 @@ public class FundInfoFragment extends Fragment {
             }
             else {
                 if (BenificiaryaccNo.getText().toString().equals(bundle.getString("codeBenificiary"))){
-                    Fragment fragment= new TransferTransactionDetailFragment();
-                    bundle.putString("transfer_amount",transferAmt.getText().toString());
-                    bundle.putString("transfer_pin",agentPin.getText().toString());
-                    bundle.putString("transfer_beneficiary_no",BenificiaryaccNo.getText().toString());
-                    bundle.putString("transfer_mobile",fundMobile.getText().toString());
-                    bundle.putString("fiClienttPin",fiClienttPin.getText().toString());
-
-                    fragment.setArguments(bundle);
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragment);
-                    transaction.commit();
+                    sendOtpForFundTransfer();
                 }else {
                     Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
                     intent.putExtra("msg","Beneficiary account number is not matched of previous beneficiary number that you searched");
@@ -182,6 +173,78 @@ public class FundInfoFragment extends Fragment {
                 Intent intent = new Intent(getContext(),DialogActivity.class);
                 intent.putExtra("msg","Connection Error");
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void  sendOtpForFundTransfer(){
+        sessionHandler.showProgressDialog("Sending Request .... ");
+        final JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("membercode",bundle.get("code"));
+            jsonObject.put("finger",fiClienttPin.getText().toString());
+            jsonObject.put("amount",agentPin.getText().toString());
+            jsonObject.put("agentpin",agentPin.getText().toString());
+            jsonObject.put("mobile",fundMobile.getText());
+            jsonObject.put("beneficiary",BenificiaryaccNo.getText().toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+
+        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getFUND_TRANSFER_OTP(),body,
+                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json",apiSessionHandler.getAgentCode());
+
+        call.enqueue(new Callback<WithDrawlResponse>() {
+            @Override
+            public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
+                sessionHandler.hideProgressDialog();
+                if (String.valueOf(response.code()).equals("200")){
+                    String message = response.body().getMessage();
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    Fragment fragment= new TransferTransactionDetailFragment();
+                    bundle.putString("transfer_amount",transferAmt.getText().toString());
+                    bundle.putString("transfer_pin",agentPin.getText().toString());
+                    bundle.putString("transfer_beneficiary_no",BenificiaryaccNo.getText().toString());
+                    bundle.putString("transfer_mobile",fundMobile.getText().toString());
+                    bundle.putString("fiClienttPin",fiClienttPin.getText().toString());
+
+                    fragment.setArguments(bundle);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragment);
+                    transaction.commit();
+                }else {
+                    try {
+
+                        String jsonString = response.errorBody().string();
+
+                        Log.d("here ","--=>"+jsonString);
+
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",jsonObject.getString("message"));
+                        startActivity(intent);
+
+                        if (jsonObject.getString("message").equals("Sorry Invalid Agent Pincode...")){
+                            agentPin.setError("Invalid Pincode");
+                        }else if (jsonObject.getString("message").equals("Member Authentication failed...")){
+                            fiClienttPin.setError("Invalid Pincode");
+                        }else if (jsonObject.getString("message").equals("Member Mobile No. is not registered...")){
+                            fundMobile.setError("Invalid Pincode");
+                        }
+                    } catch (Exception e) {
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg",("data mistake"));
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WithDrawlResponse> call, Throwable t) {
+                sessionHandler.hideProgressDialog();
             }
         });
     }

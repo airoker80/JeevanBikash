@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -44,7 +45,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
     ApiSessionHandler apiSessionHandler;
     ImageView agent_tick,demand_cross;
     String code,name,office ,photo,clientPin,clientCode;
-    PinEntryEditText agentPin;
+    EditText agentPin;
     CGEditText deposoitAmt,deposoitRemarks,clientsPinEtxt,cd_mobile_no;
 
     CenturyGothicTextView depdetailsName,depositCode ,depositBranch;
@@ -73,7 +74,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         Log.d("bfd","=-+"+bundle.toString());
         agent_tick=(ImageView)view.findViewById(R.id.agent_tick);
 
-        agentPin=(PinEntryEditText)view.findViewById(R.id.agentPin);
+        agentPin=(EditText)view.findViewById(R.id.agentPin);
         deposoitAmt=(CGEditText) view.findViewById(R.id.deposoitAmt);
         deposoitRemarks=(CGEditText)view.findViewById(R.id.deposoitRemarks);
         clientsPinEtxt=(CGEditText)view.findViewById(R.id.clientsPinEtxt);

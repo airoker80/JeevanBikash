@@ -184,6 +184,7 @@
                    android:layout_weight="1"
                    android:layout_margin="@dimen/_4sdp">
                    <ImageView
+                       android:id="@+id/loanPhoto1"
                        android:layout_width="@dimen/_50sdp"
                        android:layout_height="@dimen/_50sdp"
                        android:src="@drawable/ic_new_file"/>
@@ -204,9 +205,10 @@
                    android:layout_margin="@dimen/_4sdp">
 
                    <ImageView
+                       android:id="@+id/loanPhoto2"
                        android:layout_width="@dimen/_50sdp"
                        android:layout_height="@dimen/_50sdp"
-                       android:src="@drawable/ic_new_file"/>
+                       android:src="@drawable/ic_new_file" />
                    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                        android:layout_marginLeft="8dp"
                        android:textColor="@color/white"

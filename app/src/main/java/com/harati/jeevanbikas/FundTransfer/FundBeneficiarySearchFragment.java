@@ -68,7 +68,7 @@ public class FundBeneficiarySearchFragment extends Fragment {
 
         imageView.setOnClickListener(view1 -> {
             if (input.getText().toString().equals("")){
-                input.setError("Please Enter the Phone Number");
+                input.setError("Please Enter the Phone Number/Member code");
             }else {
                 getMemberList(input.getText().toString());
 /*                    Fragment fragment= new FundDetailsFragment();
