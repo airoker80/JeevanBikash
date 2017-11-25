@@ -3,6 +3,7 @@ package com.harati.jeevanbikas.LoanDemand;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -159,7 +160,31 @@ public class LoanDetailFragment extends Fragment {
                 intent.putExtra("msg","Please fill all images too");
                 getActivity().startActivity(intent);
             } else {
-                sendLoanDemandRequest();
+//                sendLoanDemandRequest();
+                final AlertDialog builder = new AlertDialog.Builder(getContext())
+                        .setPositiveButton("Yes", null)
+                        .setNegativeButton("CANCEL", null)
+                        .setTitle("Are you Sure you want to make loan deand request?")
+                        .create();
+
+                builder.setOnShowListener(dialog -> {
+
+                    final Button btnAccept = builder.getButton(
+                            AlertDialog.BUTTON_POSITIVE);
+
+                    btnAccept.setOnClickListener(v -> {
+                        sendLoanDemandRequest();
+                        Log.e("backpressed","bp");
+                        builder.dismiss();
+
+                    });
+
+                    final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+                    btnDecline.setOnClickListener(v -> builder.dismiss());
+                });
+
+                builder.show();
             }
 
         });

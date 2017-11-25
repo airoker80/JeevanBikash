@@ -41,6 +41,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static java.lang.Thread.sleep;
+
 
 /**
  * Created by User on 8/28/2017.
@@ -136,7 +138,14 @@ public class FundInfoFragment extends Fragment {
             }
             else {
                 if (BenificiaryaccNo.getText().toString().equals(bundle.getString("codeBenificiary"))){
-                    sendOtpForFundTransfer();
+
+//                    sendOtpForFundTransfer();
+                    if (JeevanBikashConfig.BASE_URL1.equals("1")){
+                        sendOtpForFundTransfer();
+                    }else {
+                        Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
+                    }
+
                 }else {
                     Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
                     intent.putExtra("msg","Beneficiary account number is not matched of previous beneficiary number that you searched");
@@ -226,13 +235,15 @@ public class FundInfoFragment extends Fragment {
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
+                    JeevanBikashConfig.BASE_URL1="2";
+                    new Thread(task1).start();
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                     Fragment fragment= new TransferTransactionDetailFragment();
                     bundle.putString("transfer_amount",transferAmt.getText().toString());
                     bundle.putString("transfer_pin",agentPin.getText().toString());
                     bundle.putString("transfer_beneficiary_no",BenificiaryaccNo.getText().toString());
-                    bundle.putString("transfer_mobile",fundMobile.getText().toString());
+                    bundle.putString("transfer_mobile",send_mob_id.getText().toString());
                     bundle.putString("fiClienttPin",fiClienttPin.getText().toString());
 
                     fragment.setArguments(bundle);
@@ -303,4 +314,14 @@ public class FundInfoFragment extends Fragment {
 
         builder.show();
     }
+    Runnable task1 = () -> {
+        try {
+            sleep(2*60*1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }finally {
+            JeevanBikashConfig.BASE_URL1="1";
+            Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
+        }
+    };
 }

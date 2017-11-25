@@ -53,7 +53,7 @@ public class AgentClientTransferFragment extends Fragment {
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
-    CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,sendOtpAgain;
+    CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,sendOtpAgain,cdt_mob_no;
     CGEditText act_otp_tf;
     ImageView agent_client_tick;
     Bundle bundle;
@@ -80,12 +80,14 @@ public class AgentClientTransferFragment extends Fragment {
         branchName=(CenturyGothicTextView)view.findViewById(R.id.branchName);
         shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
         sendOtpAgain=(CenturyGothicTextView)view.findViewById(R.id.sendOtpAgain);
+        cdt_mob_no=(CenturyGothicTextView)view.findViewById(R.id.cdt_mob_no);
 
         act_otp_tf=(CGEditText) view.findViewById(R.id.act_otp_tf);
 
         name.setText(bundle.getString("name"));
         memberIdnnumber.setText(bundle.getString("code"));
-        branchName.setText(bundle.getString("office"));
+        cdt_mob_no.setText(bundle.getString("code"));
+        branchName.setText(bundle.getString("phone"));
         shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("deposoitAmt")+".00");
 
 //        getOtpValue();

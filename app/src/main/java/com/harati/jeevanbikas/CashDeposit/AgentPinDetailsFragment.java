@@ -175,7 +175,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
                     bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());
                     bundle.putString("clientsPin",clientsPinEtxt.getText().toString());
-                    bundle.putString("cd_mobile_no",cd_mobile_no.getText().toString());
+                    bundle.putString("cd_mobile_no",apd_mob_no.getText().toString());
                     fragment.setArguments(bundle);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);

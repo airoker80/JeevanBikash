@@ -37,6 +37,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static java.lang.Thread.sleep;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -129,7 +131,12 @@ public class TransferTransactionDetailFragment extends Fragment {
                         AlertDialog.BUTTON_POSITIVE);
 
                 btnAccept.setOnClickListener(v1 -> {
-                    sendOtpForFundTransfer();
+//                    sendOtpForFundTransfer();
+                    if (JeevanBikashConfig.BASE_URL1.equals("1")){
+                        sendOtpForFundTransfer();
+                    }else {
+                        Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
+                    }
                     builder.dismiss();
 
                 });
@@ -253,6 +260,8 @@ public class TransferTransactionDetailFragment extends Fragment {
             public void onResponse(Call<TransferModel> call, Response<TransferModel> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
+                    JeevanBikashConfig.BASE_URL1="2";
+                    new Thread(task1).start();
                     Intent intent = new Intent(getContext(),DialogActivity.class);
                     intent.putExtra("msg",response.body().getMessage());
                     startActivity(intent);
@@ -283,4 +292,14 @@ public class TransferTransactionDetailFragment extends Fragment {
             }
         });
     }
+    Runnable task1 = () -> {
+        try {
+            sleep(2*60*1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }finally {
+            JeevanBikashConfig.BASE_URL1="1";
+            Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
+        }
+    };
 }
