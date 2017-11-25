@@ -244,7 +244,9 @@ public class CashwithdrawlFragment extends Fragment {
                         }else if (jsonObject.getString("message").equals("Member Authentication failed...")){
                             clientPin.setError("Invalid Pincode");
                         }else if (jsonObject.getString("message").equals("Member Mobile No. is not registered...")){
-                            withrwal_mobile.setError("Invalid Pincode");
+                            withrwal_mobile.setError("Mobile No. is not registered");
+                        }else if (jsonObject.getString("message").equals("Sorry,  Withdraw Amount must be greater than Rs. 1000.00")){
+                            withdrawlAmount.setError("Must be greater than 1000.00");
                         }
                     } catch (Exception e) {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);

@@ -85,7 +85,7 @@ public class AgentClientTransferFragment extends Fragment {
 
 //        getOtpValue();
 
-        sendOtpForCashDeposit();
+//        sendOtpForCashDeposit();
 
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         agent_client_tick.setOnClickListener(v -> {

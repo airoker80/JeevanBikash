@@ -107,6 +107,8 @@ public class FundInfoFragment extends Fragment {
             }else if (!BenificiaryaccNo.getText().toString().equals(confirmAccNo.getText().toString())){
                 Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
                 intent.putExtra("msg","Beneficiary account number not matched");
+                BenificiaryaccNo.setError("Beneficiary account number not matched");
+                confirmAccNo.setError("Beneficiary account number not matched");
                 startActivity(intent);
             }
             else {

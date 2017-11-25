@@ -270,7 +270,7 @@
                     android:id="@+id/withrwal_mobile"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:imeOptions="actionDone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

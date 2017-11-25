@@ -145,8 +145,10 @@ public class DepositFragment extends Fragment implements View.OnClickListener{
                         startActivity(intent);
                     } catch (Exception e) {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg","Wrong Credential");
-//                        e.printStackTrace();
+                        intent.putExtra("msg","Membercode not found");
+                        startActivity(intent);
+                        input.setError("Membercode not found");
+                        e.printStackTrace();
                     }
                 }
             }

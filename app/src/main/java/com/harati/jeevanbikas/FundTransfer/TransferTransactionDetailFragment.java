@@ -98,7 +98,7 @@ public class TransferTransactionDetailFragment extends Fragment {
         memberIdnnumberBeneficiary.setText(bundle.getString("codeBenificiary"));
         branchNameBeneficiary.setText(bundle.getString("officeBenificiary"));
 
-        sendOtpForFundTransfer();
+//        sendOtpForFundTransfer();
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         agent_client_tick.setOnClickListener(v -> {
             if (otpValue.equals("")){

@@ -81,7 +81,7 @@ public class WithdrawlTransactionFragment extends Fragment {
         amountType.setText("Withdrawl Amount");
 
 //        getOtpValue();
-        sendOtpForCashDeposit();
+//        sendOtpForCashDeposit();
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         agent_client_tick.setOnClickListener(v -> {
             if (otpValue.equals("")){

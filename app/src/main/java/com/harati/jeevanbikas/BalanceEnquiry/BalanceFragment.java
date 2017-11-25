@@ -185,8 +185,9 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
                         startActivity(intent);
                     } catch (Exception e) {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg","Wrong Credential");
+                        intent.putExtra("msg","Membercode not found");
                         startActivity(intent);
+                        input.setError("Membercode not found");
                         e.printStackTrace();
                     }
                 }
