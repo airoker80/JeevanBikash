@@ -119,7 +119,7 @@ public class DepositFragment extends Fragment implements View.OnClickListener{
                 sessionHandler.hideProgressDialog();
 //                Log.d("DADAD0","ADA");
                 if (String.valueOf(response.code()).equals("200")){
-                    Fragment fragment = new DepositDetailsFragment();
+                    Fragment fragment = new AgentPinDetailsFragment();
                     Bundle args = new Bundle();
                     args.putString("code",response.body().getCode());
                     args.putString("name",response.body().getName());

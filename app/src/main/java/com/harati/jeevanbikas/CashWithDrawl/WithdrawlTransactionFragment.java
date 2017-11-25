@@ -22,6 +22,7 @@ import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
@@ -47,9 +48,9 @@ public class WithdrawlTransactionFragment extends Fragment {
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
-    CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain;
+    CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain,cdt_mob_no;
     CGEditText act_otp_tf;
-    ImageView agent_client_tick;
+    ImageView agent_client_tick,demand_cross;
     Bundle bundle;
     public WithdrawlTransactionFragment() {
         // Required empty public constructor
@@ -76,11 +77,13 @@ public class WithdrawlTransactionFragment extends Fragment {
         shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
         amountType=(CenturyGothicTextView)view.findViewById(R.id.amountType);
         sendOtpAgain=(CenturyGothicTextView)view.findViewById(R.id.sendOtpAgain);
+        cdt_mob_no=(CenturyGothicTextView)view.findViewById(R.id.cdt_mob_no);
 
 
         name.setText(bundle.getString("name"));
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
+        cdt_mob_no.setText(bundle.getString("withdraw_mobile"));
         shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("withdraw_amount")+".00");
 
         amountType.setText("Withdrawl Amount");
@@ -88,6 +91,7 @@ public class WithdrawlTransactionFragment extends Fragment {
 //        getOtpValue();
 //        sendOtpForCashDeposit();
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
+        demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         agent_client_tick.setOnClickListener(v -> {
             if (act_otp_tf.getText().toString().equals("")){
                 act_otp_tf.setError("Please Enter Otp First");
@@ -95,9 +99,9 @@ public class WithdrawlTransactionFragment extends Fragment {
                 sendWithdrawequest(bundle.getString("withdraw_amount"),bundle.getString("withdraw_pin"),bundle.getString("withdraw_remarks"));
             }
 
-//                startActivity(new Intent(getContext(), DialogActivity.class));
+//                startActivity(new Intent(getContext(), DialogActivity.class))
         });
-
+        demand_cross.setOnClickListener(view1 -> {startActivity(new Intent(getContext(), MainActivity.class));});
 
         sendOtpAgain.setOnClickListener(v -> {
             final AlertDialog builder = new AlertDialog.Builder(getContext())
@@ -189,40 +193,6 @@ public class WithdrawlTransactionFragment extends Fragment {
             }
         });
     }
-
-    private void getOtpValue(){
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_get_otp, null);
-        final AlertDialog builder = new AlertDialog.Builder(getContext())
-                .setPositiveButton("OK", null)
-                .setNegativeButton("CANCEL", null)
-                .setView(view)
-                .setTitle("Enter Otp")
-                .create();
-
-        CGEditText getOpt = (CGEditText) view.findViewById(R.id.getOpt);
-
-        builder.setOnShowListener(dialog -> {
-
-            final Button btnAccept = builder.getButton(
-                    AlertDialog.BUTTON_POSITIVE);
-
-            btnAccept.setOnClickListener(v -> {
-                otpValue = getOpt.getText().toString();
-                builder.dismiss();
-
-            });
-
-            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
-
-            btnDecline.setOnClickListener(v -> {
-                        builder.dismiss();
-                    }
-            );
-        });
-        builder.show();
-    }
-
-
     private void  sendOtpForCashDeposit(){
         sessionHandler.showProgressDialog("Sending Request .... ");
         final JSONObject jsonObject = new JSONObject();

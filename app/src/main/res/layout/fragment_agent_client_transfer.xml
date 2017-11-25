@@ -507,16 +507,32 @@
 
         </ScrollView>
 
-        <ImageView
-            android:id="@+id/agent_client_tick"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+        <LinearLayout
             android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="#F9B847"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_check" />
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/agent_client_tick"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#F9B847"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_check" />
+            <ImageView
+                android:id="@+id/demand_cross"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#c93e3b"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_error" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 </FrameLayout>

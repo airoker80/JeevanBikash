@@ -23,6 +23,7 @@ import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
@@ -53,7 +54,7 @@ public class TransferTransactionDetailFragment extends Fragment {
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain;
     CenturyGothicTextView nameBeneficiary,memberIdnnumberBeneficiary,branchNameBeneficiary;
     CGEditText act_otp_tf;
-    ImageView agent_client_tick;
+    ImageView agent_client_tick,demand_cross;
     Bundle bundle;
 
     public TransferTransactionDetailFragment() {
@@ -95,7 +96,7 @@ public class TransferTransactionDetailFragment extends Fragment {
         amountType.setText("Transfer amount");
         shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("transfer_amount")+".00");
 
-        name.setText(bundle.getString("name")+" (Client)");
+        name.setText(bundle.getString("name"));
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
 
@@ -105,6 +106,7 @@ public class TransferTransactionDetailFragment extends Fragment {
 
 //        sendOtpForFundTransfer();
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
+        demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         agent_client_tick.setOnClickListener(v -> {
 
             if (!act_otp_tf.getText().toString().equals("")){
@@ -112,9 +114,9 @@ public class TransferTransactionDetailFragment extends Fragment {
             }else {
                 act_otp_tf.setError("Enter OTP first");
             }
-
 //                startActivity(new Intent(getContext(), DialogActivity.class));
         });
+        demand_cross.setOnClickListener(view1 -> startActivity(new Intent(getContext(), MainActivity.class)));
 
         sendOtpAgain.setOnClickListener(v -> {
             final AlertDialog builder = new AlertDialog.Builder(getContext())

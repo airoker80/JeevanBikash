@@ -108,7 +108,8 @@ public class LoanFragment extends Fragment {
                 sessionHandler.hideProgressDialog();
 //                Log.d("DADAD0","ADA");
                 if (String.valueOf(response.code()).equals("200")){
-                    Fragment fragment = new DemandDetailsFragment();
+                    Fragment fragment = new LoanDetailFragment();
+//                    Fragment fragment = new DemandDetailsFragment();
                     Bundle args = new Bundle();
                     args.putString("code",response.body().getCode());
                     args.putString("name",response.body().getName());

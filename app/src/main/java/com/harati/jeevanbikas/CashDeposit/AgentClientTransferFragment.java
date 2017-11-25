@@ -23,6 +23,7 @@ import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.Login.LoginActivity;
+import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
@@ -55,7 +56,7 @@ public class AgentClientTransferFragment extends Fragment {
     SessionHandler sessionHandler ;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,sendOtpAgain,cdt_mob_no;
     CGEditText act_otp_tf;
-    ImageView agent_client_tick;
+    ImageView agent_client_tick,demand_cross;
     Bundle bundle;
     public AgentClientTransferFragment() {
         // Required empty public constructor
@@ -95,6 +96,7 @@ public class AgentClientTransferFragment extends Fragment {
 //        sendOtpForCashDeposit();
 
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
+        demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         agent_client_tick.setOnClickListener(v -> {
 
             if (!act_otp_tf.getText().equals("")){
@@ -102,9 +104,9 @@ public class AgentClientTransferFragment extends Fragment {
             }else {
                 act_otp_tf.setError("Enter OTP first");
             }
-
 //                startActivity(new Intent(getContext(), DialogActivity.class));
         });
+        demand_cross.setOnClickListener(view1 -> {startActivity(new Intent(getContext(), MainActivity.class));});
 
         sendOtpAgain.setOnClickListener(v -> {
             final AlertDialog builder = new AlertDialog.Builder(getContext())
