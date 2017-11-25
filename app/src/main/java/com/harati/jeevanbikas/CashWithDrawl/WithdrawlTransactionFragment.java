@@ -60,7 +60,7 @@ public class WithdrawlTransactionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bundle =getArguments();
-        new Thread(task1).start();
+//        new Thread(task1).start();
         Log.d("bundle","==00--+>"+bundle.toString());
         apiSessionHandler = new ApiSessionHandler(getContext());
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
@@ -278,7 +278,7 @@ public class WithdrawlTransactionFragment extends Fragment {
     }
     Runnable task1 = () -> {
         try {
-            sleep(2*1000);
+            sleep(2*60*1000);
         }catch (InterruptedException e){
             e.printStackTrace();
         }finally {

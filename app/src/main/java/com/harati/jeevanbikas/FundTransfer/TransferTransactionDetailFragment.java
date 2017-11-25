@@ -50,6 +50,7 @@ public class TransferTransactionDetailFragment extends Fragment {
     LinearLayout topPanel2;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain;
     CenturyGothicTextView nameBeneficiary,memberIdnnumberBeneficiary,branchNameBeneficiary;
+    CGEditText act_otp_tf;
     ImageView agent_client_tick;
     Bundle bundle;
 
@@ -82,6 +83,8 @@ public class TransferTransactionDetailFragment extends Fragment {
         memberIdnnumberBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumberBeneficiary);
         branchNameBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.branchNameBeneficiary);
 
+        act_otp_tf=(CGEditText) view.findViewById(R.id.act_otp_tf);
+
         shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
 
         amountType=(CenturyGothicTextView)view.findViewById(R.id.amountType);
@@ -101,10 +104,11 @@ public class TransferTransactionDetailFragment extends Fragment {
 //        sendOtpForFundTransfer();
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         agent_client_tick.setOnClickListener(v -> {
-            if (otpValue.equals("")){
-                getOtpValue();
-            }else {
+
+            if (!act_otp_tf.getText().toString().equals("")){
                 sendTransferPostRequest();
+            }else {
+                act_otp_tf.setError("Enter OTP first");
             }
 
 //                startActivity(new Intent(getContext(), DialogActivity.class));
@@ -235,7 +239,7 @@ public class TransferTransactionDetailFragment extends Fragment {
             jsonObject.put("amount",bundle.getString("transfer_amount"));
             jsonObject.put("agentpin",bundle.getString("transfer_pin"));
             jsonObject.put("beneficiary",bundle.getString("transfer_beneficiary_no"));
-            jsonObject.put("otp",otpValue);
+            jsonObject.put("otp",act_otp_tf.getText().toString());
         }catch (Exception e){
             e.printStackTrace();
         }

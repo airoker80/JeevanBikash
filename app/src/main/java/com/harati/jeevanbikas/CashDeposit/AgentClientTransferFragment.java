@@ -42,6 +42,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static java.lang.Thread.sleep;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -52,6 +54,7 @@ public class AgentClientTransferFragment extends Fragment {
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,sendOtpAgain;
+    CGEditText act_otp_tf;
     ImageView agent_client_tick;
     Bundle bundle;
     public AgentClientTransferFragment() {
@@ -78,6 +81,8 @@ public class AgentClientTransferFragment extends Fragment {
         shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
         sendOtpAgain=(CenturyGothicTextView)view.findViewById(R.id.sendOtpAgain);
 
+        act_otp_tf=(CGEditText) view.findViewById(R.id.act_otp_tf);
+
         name.setText(bundle.getString("name"));
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
@@ -89,10 +94,11 @@ public class AgentClientTransferFragment extends Fragment {
 
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         agent_client_tick.setOnClickListener(v -> {
-            if (otpValue.equals("")){
-                getOtpValue();
-            }else {
+
+            if (!act_otp_tf.getText().equals("")){
                 sendDepositRequest();
+            }else {
+                act_otp_tf.setError("Enter OTP first");
             }
 
 //                startActivity(new Intent(getContext(), DialogActivity.class));
@@ -113,7 +119,11 @@ public class AgentClientTransferFragment extends Fragment {
                         AlertDialog.BUTTON_POSITIVE);
 
                 btnAccept.setOnClickListener(v1 -> {
-                    sendOtpForCashDeposit();
+                    if (JeevanBikashConfig.BASE_URL1.equals("1")) {
+                        sendOtpForCashDeposit();
+                    }else {
+                        Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
+                    }
                     builder.dismiss();
 
                 });
@@ -138,7 +148,7 @@ public class AgentClientTransferFragment extends Fragment {
             jsonObject.put("agentpin",bundle.getString("agentPin"));
             jsonObject.put("remark",bundle.getString("deposoitRemarks"));
             jsonObject.put("mobile",bundle.getString("cd_mobile_no"));
-            jsonObject.put("otp",otpValue);
+            jsonObject.put("otp",act_otp_tf.getText().toString());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -239,6 +249,8 @@ public class AgentClientTransferFragment extends Fragment {
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
+                    JeevanBikashConfig.BASE_URL1="2";
+                    new Thread(task1).start();
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                     getOtpValue();
@@ -267,4 +279,14 @@ public class AgentClientTransferFragment extends Fragment {
             }
         });
     }
+    Runnable task1 = () -> {
+        try {
+            sleep(2*60*1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }finally {
+            JeevanBikashConfig.BASE_URL1="1";
+            Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
+        }
+    };
 }

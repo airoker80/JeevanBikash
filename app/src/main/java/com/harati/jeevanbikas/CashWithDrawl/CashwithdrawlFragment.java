@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
@@ -85,6 +87,18 @@ public class CashwithdrawlFragment extends Fragment {
         sessionHandler = new SessionHandler(getContext());
 
         View view= inflater.inflate(R.layout.fragment_cashwithdrawl, container, false);
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+            Log.e("ad","dasd"+event.toString());
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    confirmBack();
+                }
+            }
+            return false;
+        });
+
         submit = (ImageView)view.findViewById(R.id.submit);
         withdrawlAmount=(EditText)view.findViewById(R.id.withdrawlAmount);
         agentPin=(EditText)view.findViewById(R.id.agentPin);
@@ -128,7 +142,7 @@ public class CashwithdrawlFragment extends Fragment {
             withdrawlAmountTxt=withdrawlAmount.getText().toString();
             agentPinTxt=agentPin.getText().toString();
             withdrawlRemarkTxt=withdrawlRemark.getText().toString();
-            if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|withdrawlRemarkTxt.equals("")|clientPin.getText().toString().equals("")){
+            if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|clientPin.getText().toString().equals("")){
                 getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
             }else {
                 if (Integer.parseInt(withdrawlAmount.getText().toString())==0){
@@ -145,57 +159,6 @@ public class CashwithdrawlFragment extends Fragment {
             }
         });
         return view;
-    }
-
-    private void sendWithdrawequest(String wa,String ap,String wr){
-        sessionHandler.showProgressDialog("Sending Request .... ");
-        final JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("membercode",code);
-            jsonObject.put("finger","1234");
-            jsonObject.put("amount",wa);
-            jsonObject.put("agentpin",ap);
-            jsonObject.put("remark",wr);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-
-        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getCASH_WITHDRAW(),body,
-                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json",apiSessionHandler.getAgentCode());
-
-        call.enqueue(new Callback<WithDrawlResponse>() {
-            @Override
-            public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
-                sessionHandler.hideProgressDialog();
-                if (String.valueOf(response.code()).equals("200")){
-                    String message = response.body().getMessage();
-                    Intent intent = new Intent(getContext(),DialogActivity.class);
-                    intent.putExtra("msg",message);
-                    startActivity(intent);
-                }else {
-                    try {
-
-                        String jsonString = response.errorBody().string();
-
-                        Log.d("here ","--=>"+jsonString);
-
-                        JSONObject jsonObject = new JSONObject(jsonString);
-                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",jsonObject.getString("message"));
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<WithDrawlResponse> call, Throwable t) {
-                sessionHandler.hideProgressDialog();
-            }
-        });
     }
     private void  sendOtpForCashDeposit(){
         sessionHandler.showProgressDialog("Sending Request .... ");
@@ -277,7 +240,40 @@ public class CashwithdrawlFragment extends Fragment {
         }catch (InterruptedException e){
             e.printStackTrace();
         }finally {
+            Log.e("adas","dada");
             JeevanBikashConfig.BASE_URL1="1";
         }
     };
+
+
+    void confirmBack(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back??");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want to go back?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                getActivity().onBackPressed();
+                Log.e("backpressed","bp");
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
 }

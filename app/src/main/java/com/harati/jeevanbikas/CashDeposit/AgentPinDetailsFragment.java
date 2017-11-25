@@ -1,14 +1,18 @@
 package com.harati.jeevanbikas.CashDeposit;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +40,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static java.lang.Thread.sleep;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -62,6 +68,18 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_agent_pin_details, container, false);
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+            Log.e("ad","dasd"+event.toString());
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    confirmBack();
+                }
+            }
+            return false;
+        });
 
         apiSessionHandler = new ApiSessionHandler(getContext());
         sessionHandler = new SessionHandler(getContext());
@@ -109,8 +127,11 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     intent.putExtra("msg","Zero amount cannot be deposited");
                     startActivity(intent);
                 }else {
-                    sendOtpForCashDeposit();
-
+                    if (JeevanBikashConfig.BASE_URL1.equals("1")) {
+                        sendOtpForCashDeposit();
+                    }else {
+                        Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
+                    }
 
 //                    sendOtpForCashDeposit();
                 }
@@ -130,7 +151,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             jsonObject.put("finger",clientsPinEtxt.getText().toString());
             jsonObject.put("amount",deposoitAmt.getText().toString());
             jsonObject.put("agentpin",agentPin.getText().toString());
-            jsonObject.put("mobile",cd_mobile_no.getText().toString());
+            jsonObject.put("mobile",apd_mob_no.getText().toString());
             jsonObject.put("remark",deposoitRemarks.getText().toString());
         }catch (Exception e){
             e.printStackTrace();
@@ -146,6 +167,8 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
+                    JeevanBikashConfig.BASE_URL1="2";
+                    new Thread(task1).start();
                     Fragment fragment= new AgentClientTransferFragment();
                     String message = response.body().getMessage();
                     bundle.putString("agentPin",agentPin.getText().toString());
@@ -191,5 +214,45 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             }
         });
     }
+    Runnable task1 = () -> {
+        try {
+            sleep(2*60*1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }finally {
+            JeevanBikashConfig.BASE_URL1="1";
+            Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
+        }
+    };
 
+    void confirmBack(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back??");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want to go back?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                getActivity().onBackPressed();
+                Log.e("backpressed","bp");
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
 }
