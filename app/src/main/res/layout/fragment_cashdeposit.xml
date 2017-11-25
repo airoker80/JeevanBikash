@@ -180,11 +180,6 @@
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true">
-
                     <EditText
                         android:maxLength="4"
                         android:textSize="@dimen/_10sdp"
@@ -195,7 +190,6 @@
                         android:imeOptions="actionNext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                </android.support.design.widget.TextInputLayout>
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                     android:layout_width="wrap_content"

@@ -42,8 +42,8 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
-    CenturyGothicTextView fundName,fundmemberId,fundOffice;
-    CenturyGothicTextView fundNameBenf,fundmemberIdBenf,fundOfficeBenf;
+    CenturyGothicTextView fundName,fundmemberId,fundOffice,senderMid;
+    CenturyGothicTextView fundNameBenf,fundmemberIdBenf,fundOfficeBenf,mobileBenf;
     EditText benf_ft_etx;
     LinearLayout down_ll,mid_ll;
     ImageView fund_tick,fund_cross;
@@ -70,6 +70,8 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
         fundName =(CenturyGothicTextView)view.findViewById(R.id.fundName);
         fundmemberId =(CenturyGothicTextView)view.findViewById(R.id.fundmemberId);
         fundOffice =(CenturyGothicTextView)view.findViewById(R.id.fundOffice);
+        senderMid =(CenturyGothicTextView)view.findViewById(R.id.senderMid);
+        mobileBenf =(CenturyGothicTextView)view.findViewById(R.id.mobileBenf);
 
         fundNameBenf =(CenturyGothicTextView)view.findViewById(R.id.fundNameBenf);
         fundmemberIdBenf =(CenturyGothicTextView)view.findViewById(R.id.fundmemberIdBenf);
@@ -81,10 +83,13 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
             fundName.setText(bundle.getString("name"));
             fundmemberId.setText(bundle.getString("code"));
             fundOffice.setText(bundle.getString("office"));
+            senderMid.setText(bundle.getString("phone"));
         }else if (bundle.get("goto").equals("info")){
             fundName.setText(bundle.getString("nameBenificiary"));
             fundmemberId.setText(bundle.getString("codeBenificiary"));
             fundOffice.setText(bundle.getString("officeBenificiary"));
+            Log.e("fad","===>"+bundle.getString("phoneBenificiary"));
+            mobileBenf.setText(bundle.getString("phoneBenificiary"));
         }
 
         fund_tick=(ImageView)view.findViewById(R.id.fund_tick);
@@ -100,8 +105,15 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
         switch (vId){
             case R.id.fund_tick:
                 if (mid_ll.getVisibility() !=View.GONE){
-                    Log.e("Ok","okkkkk"+benf_ft_etx.getText().toString());
-                    getMemberList(benf_ft_etx.getText().toString());
+                    if (benf_ft_etx.getText().toString().equals(fundmemberId.getText().toString())){
+                        Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
+                        intent.putExtra("msg","Same Member Codes");
+                        startActivity(intent);
+                    }else {
+                        Log.e("Ok","okkkkk"+benf_ft_etx.getText().toString());
+                        getMemberList(benf_ft_etx.getText().toString());
+                    }
+
                 }else {
                     Fragment fragment = new FundInfoFragment();
                     fragment.setArguments(bundle);
@@ -143,6 +155,7 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
                     fundNameBenf.setText(response.body().getName());
                             fundmemberIdBenf.setText(response.body().getCode());
                     fundOfficeBenf.setText(response.body().getOffice());
+                    mobileBenf.setText(response.body().getMobileno());
 
                 }else {
                     try {

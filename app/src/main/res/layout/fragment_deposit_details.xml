@@ -113,12 +113,12 @@
                             android:layout_weight="1"
                             android:paddingBottom="@dimen/_8sdp"
                             android:paddingTop="@dimen/_8sdp"
-                            android:text="Account No"
+                            android:text="Mobile No."
                             android:textColor="#95AFBE"
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/accNoDetails"
+                            android:id="@+id/dd_mob_no"
                             android:visibility="invisible"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

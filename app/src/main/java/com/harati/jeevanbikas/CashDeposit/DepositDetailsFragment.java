@@ -26,7 +26,7 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
     EditText agent_pin, clientMobile;
     ImageView demand_tick, demand_cross, depositUserPhoto;
     String code, name, office, photo;
-    TextView memberIdnnumber, branchName, accNoDetails, enquiryUserName, memberId, branch, accNo, nameTxt;
+    TextView memberIdnnumber, branchName, accNoDetails, enquiryUserName, memberId, branch, accNo, nameTxt,dd_mob_no;
     PinEntryEditText txt_pin_entry;
     Bundle bundle;
 
@@ -53,6 +53,7 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
         demand_cross = (ImageView) view.findViewById(R.id.demand_cross);
 
         nameTxt = (TextView) view.findViewById(R.id.name);
+        dd_mob_no = (TextView) view.findViewById(R.id.dd_mob_no);
 
 //        agent_pin = (EditText) view.findViewById(R.id.agent_pin);
         clientMobile = (EditText) view.findViewById(R.id.clientMobile);
@@ -67,6 +68,7 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
         nameTxt.setText(name);
         memberIdnnumber.setText(code);
         branchName.setText(office);
+        dd_mob_no.setText(bundle.getString("phone"));
 
 
         try {

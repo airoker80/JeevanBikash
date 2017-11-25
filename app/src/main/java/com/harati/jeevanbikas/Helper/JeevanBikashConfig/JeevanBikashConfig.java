@@ -5,7 +5,10 @@ package com.harati.jeevanbikas.Helper.JeevanBikashConfig;
  */
 
 public class JeevanBikashConfig {
+//    public static String BASE_URL = "1";
+    public static String BASE_URL1 = "1";
     public static String BASE_URL = "http://103.1.94.77:8087/agentbank";
+    public static String OTP_STATUS = "";
     private static final String APP_URL = "api/v1/";
     public static final String ADDED_URL = "api/v1/agent/";
     public static final String REQUEST_URL = BASE_URL+ADDED_URL;

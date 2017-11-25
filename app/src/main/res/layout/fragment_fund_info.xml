@@ -19,7 +19,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/topPanel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -115,12 +115,147 @@
                             android:layout_weight="1"
                             android:paddingBottom="@dimen/_8sdp"
                             android:paddingTop="@dimen/_8sdp"
-                            android:text="Account No"
+                            android:text="Mobile No."
                             android:textColor="#95AFBE"
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/accNoDetails"
+                            android:id="@+id/send_mob_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
+                            android:text="3343434454"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.3">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:padding="@dimen/_4sdp"
+                        android:background="@drawable/image_baground">
+                        <ImageView
+                            android:layout_alignParentRight="true"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_100sdp"
+                            android:src="@drawable/defaultprofile" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/middlPanel"
+                android:visibility="visible"
+                android:layout_below="@+id/topPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:orientation="horizontal"
+                android:padding="@dimen/_4sdp"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:orientation="vertical">
+
+                    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                        android:id="@+id/reciverUn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="Sushan Shrestha"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                            android:id="@+id/memberId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
+                            android:text="Member Id"
+                            android:textColor="#95AFBE"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                            android:id="@+id/reciver_mc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
+                            android:text="3343434"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                            android:id="@+id/branch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
+                            android:text="Branch"
+                            android:textColor="#95AFBE"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                            android:id="@+id/reciver_bn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
+                            android:text="Member Id"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                            android:id="@+id/monid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_8sdp"
+                            android:text="Mobile No."
+                            android:textColor="#95AFBE"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                            android:id="@+id/rec_mob_id"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -157,13 +292,14 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/topPanel"
+                android:layout_below="@+id/middlPanel"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:orientation="vertical"
                 android:padding="@dimen/_4sdp">
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Beneficiary Account No"
@@ -171,6 +307,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:visibility="gone"
                     android:maxLength="10"
                     android:text="M0672475"
                     android:textSize="@dimen/_10sdp"
@@ -183,6 +320,7 @@
                     android:layout_height="wrap_content" />
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
@@ -191,6 +329,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:visibility="gone"
                     android:maxLength="10"
                     android:text="M0672475"
                     android:textSize="@dimen/_10sdp"
@@ -205,7 +344,6 @@
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
                     android:text="Transfer Amount"
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
@@ -225,14 +363,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Agent Transaction Pin"
+                    android:text="Agent  PIN"
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true">
+
 
                     <EditText
                         android:maxLength="4"
@@ -244,20 +379,13 @@
                         android:imeOptions="actionNext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                </android.support.design.widget.TextInputLayout>
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Client Transaction Pin"
+                    android:text="Client PIN"
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true">
-
                     <com.harati.jeevanbikas.Helper.CGEditText
                         android:maxLength="4"
                         android:textSize="@dimen/_10sdp"
@@ -268,9 +396,9 @@
                         android:imeOptions="actionNext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                </android.support.design.widget.TextInputLayout>
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
@@ -279,6 +407,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:visibility="gone"
                     android:maxLength="10"
                     android:textSize="@dimen/_10sdp"
                     android:text="9802796417"

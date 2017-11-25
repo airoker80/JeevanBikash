@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
@@ -48,7 +49,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
     EditText agentPin;
     CGEditText deposoitAmt,deposoitRemarks,clientsPinEtxt,cd_mobile_no;
 
-    CenturyGothicTextView depdetailsName,depositCode ,depositBranch;
+    CenturyGothicTextView depdetailsName,depositCode ,depositBranch,apd_mob_no;
     Bundle bundle;
 
     public AgentPinDetailsFragment() {
@@ -80,6 +81,8 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         clientsPinEtxt=(CGEditText)view.findViewById(R.id.clientsPinEtxt);
         cd_mobile_no=(CGEditText)view.findViewById(R.id.cd_mobile_no);
 
+        apd_mob_no=(CenturyGothicTextView) view.findViewById(R.id.apd_mob_no);
+
         depdetailsName=(CenturyGothicTextView)view.findViewById(R.id.depdetailsName);
         depositCode=(CenturyGothicTextView)view.findViewById(R.id.depositCode);
         depositBranch=(CenturyGothicTextView)view.findViewById(R.id.depositBranch);
@@ -88,6 +91,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         depdetailsName.setText(bundle.getString("name"));
                 depositCode.setText(bundle.getString("code"));
         depositBranch.setText(bundle.getString("office"));
+        apd_mob_no.setText(bundle.getString("phone"));
 
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         agent_tick.setOnClickListener(this);

@@ -164,6 +164,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
                     args.putString("code",response.body().getCode());
                     args.putString("name",response.body().getName());
                     args.putString("office",response.body().getOffice());
+//                    args.putString("mobileno",response.body().getMobileno());
 //                    args.putString("office",response.body().getCode());
 //                    args.putString("photo",response.body().getOffice());
                     args.putString("phone",response.body().getMobileno());

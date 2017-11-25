@@ -35,6 +35,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static java.lang.Thread.sleep;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -46,6 +48,7 @@ public class WithdrawlTransactionFragment extends Fragment {
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain;
+    CGEditText act_otp_tf;
     ImageView agent_client_tick;
     Bundle bundle;
     public WithdrawlTransactionFragment() {
@@ -57,13 +60,15 @@ public class WithdrawlTransactionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bundle =getArguments();
-
+        new Thread(task1).start();
         Log.d("bundle","==00--+>"+bundle.toString());
         apiSessionHandler = new ApiSessionHandler(getContext());
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
         sessionHandler = new SessionHandler(getContext());
         View view= inflater.inflate(R.layout.fragment_agent_client_transfer, container, false);
+
+        act_otp_tf= (CGEditText) view.findViewById(R.id.act_otp_tf);
 
         name=(CenturyGothicTextView)view.findViewById(R.id.name);
         memberIdnnumber=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumber);
@@ -84,8 +89,8 @@ public class WithdrawlTransactionFragment extends Fragment {
 //        sendOtpForCashDeposit();
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         agent_client_tick.setOnClickListener(v -> {
-            if (otpValue.equals("")){
-                getOtpValue();
+            if (act_otp_tf.getText().toString().equals("")){
+                act_otp_tf.setError("Please Enter Otp First");
             }else {
                 sendWithdrawequest(bundle.getString("withdraw_amount"),bundle.getString("withdraw_pin"),bundle.getString("withdraw_remarks"));
             }
@@ -109,7 +114,12 @@ public class WithdrawlTransactionFragment extends Fragment {
                         AlertDialog.BUTTON_POSITIVE);
 
                 btnAccept.setOnClickListener(v1 -> {
-                    sendOtpForCashDeposit();
+                    if (JeevanBikashConfig.BASE_URL1.equals("1")){
+                        sendOtpForCashDeposit();
+                    }else {
+                        Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
+                    }
+
                     builder.dismiss();
 
                 });
@@ -137,7 +147,7 @@ public class WithdrawlTransactionFragment extends Fragment {
             jsonObject.put("amount",wa);
             jsonObject.put("agentpin",ap);
             jsonObject.put("remark",wr);
-            jsonObject.put("otp",otpValue);
+            jsonObject.put("otp",act_otp_tf.getText().toString());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -237,12 +247,13 @@ public class WithdrawlTransactionFragment extends Fragment {
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
+                    JeevanBikashConfig.BASE_URL1="2";
+                    new Thread(task1).start();
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                    getOtpValue();
+//                    getOtpValue();
                 }else {
                     try {
-
                         String jsonString = response.errorBody().string();
 
                         Log.d("here ","--=>"+jsonString);
@@ -265,4 +276,14 @@ public class WithdrawlTransactionFragment extends Fragment {
             }
         });
     }
+    Runnable task1 = () -> {
+        try {
+            sleep(2*1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }finally {
+            JeevanBikashConfig.BASE_URL1="1";
+            Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
+        }
+    };
 }

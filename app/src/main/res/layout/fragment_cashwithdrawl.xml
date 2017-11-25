@@ -107,20 +107,20 @@
                         android:orientation="horizontal">
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:visibility="invisible"
+                            android:visibility="visible"
                             android:id="@+id/accNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingBottom="@dimen/_8sdp"
                             android:paddingTop="@dimen/_8sdp"
-                            android:text="Account No"
+                            android:text="Mobile No"
                             android:textColor="#95AFBE"
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:visibility="invisible"
-                            android:id="@+id/accNoDetails"
+                            android:visibility="visible"
+                            android:id="@+id/dw_mob_no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -190,14 +190,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Agent Transaction Pin"
+                    android:text="Agent Pin"
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true">
+
 
                     <EditText
                         android:maxLength="4"
@@ -209,21 +206,15 @@
                         android:imeOptions="actionNext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                </android.support.design.widget.TextInputLayout>
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                     android:id="@+id/ct_pin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Member Transaction Pin"
+                    android:text="Member Pin"
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true">
 
                     <EditText
                         android:maxLength="4"
@@ -235,8 +226,8 @@
                         android:imeOptions="actionNext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                </android.support.design.widget.TextInputLayout>
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                    android:visibility="gone"
                     android:id="@+id/remarks_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -246,6 +237,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:visibility="gone"
                     android:maxLength="20"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/withdrawlRemark"
@@ -256,7 +248,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -265,6 +257,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <com.harati.jeevanbikas.Helper.CGEditText
+                    android:visibility="gone"
                     android:maxLength="10"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/withrwal_mobile"

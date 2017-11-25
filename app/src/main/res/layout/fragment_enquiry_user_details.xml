@@ -77,8 +77,8 @@
 
                     <TextView
                         android:id="@+id/branch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="109dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:paddingBottom="@dimen/_8sdp"
                         android:paddingTop="@dimen/_8sdp"
@@ -87,6 +87,7 @@
                         android:textSize="@dimen/_10sdp" />
 
                     <TextView
+                        android:gravity="center"
                         android:id="@+id/branchName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -99,7 +100,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -111,12 +112,12 @@
                         android:layout_weight="1"
                         android:paddingBottom="@dimen/_8sdp"
                         android:paddingTop="@dimen/_8sdp"
-                        android:text="Account No"
+                        android:text="Mobile No."
                         android:textColor="#95AFBE"
                         android:textSize="@dimen/_10sdp" />
 
                     <TextView
-                        android:id="@+id/accNoDetails"
+                        android:id="@+id/be_mob_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -155,13 +156,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Agent Pin"
+            android:text="Member Pin"
             android:textColor="#95AFBE"
             android:textSize="@dimen/_10sdp" />
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true">
+
         <EditText
             android:paddingLeft="@dimen/_10sdp"
             android:visibility="visible"
@@ -178,7 +176,6 @@
             android:maxLength="4"
             android:textIsSelectable="false"
             android:textSize="20sp"/>
-        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

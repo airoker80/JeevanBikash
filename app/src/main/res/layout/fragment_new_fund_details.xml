@@ -99,7 +99,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -111,12 +111,12 @@
                             android:layout_weight="1"
                             android:paddingBottom="@dimen/_8sdp"
                             android:paddingTop="@dimen/_8sdp"
-                            android:text="Account No"
+                            android:text="Mobile No"
                             android:textColor="#95AFBE"
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/accNoDetails"
+                            android:id="@+id/senderMid"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -177,7 +177,7 @@
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginRight="@dimen/_16sdp"
                 android:backgroundTint="@color/white"
-                android:hint="Enter Member code/Mobile Number"
+                android:hint="Enter Next Member code/Mobile Number"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:completionThreshold="1"
@@ -273,7 +273,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -285,12 +285,12 @@
                         android:layout_weight="1"
                         android:paddingBottom="@dimen/_8sdp"
                         android:paddingTop="@dimen/_8sdp"
-                        android:text="Account No"
+                        android:text="Mobile No"
                         android:textColor="#95AFBE"
                         android:textSize="@dimen/_10sdp" />
 
                     <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                        android:id="@+id/accNoDetailsBenf"
+                        android:id="@+id/mobileBenf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

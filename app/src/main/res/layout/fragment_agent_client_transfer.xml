@@ -472,7 +472,21 @@
                             android:textStyle="bold"
                             android:textSize="@dimen/_17sdp" />
 
+
+                        <com.harati.jeevanbikas.Helper.CGEditText
+                            android:id="@+id/act_otp_tf"
+                            android:textColorHint="@color/white"
+                            android:hint="Enter OTP Here"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:backgroundTint="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                            android:drawableLeft="@drawable/ic_refresh_arrow"
+                            android:padding="@dimen/_6sdp"
+                            android:background="@drawable/shape_resend_bag"
+                            android:layout_marginLeft="@dimen/_40sdp"
+                            android:layout_marginRight="@dimen/_40sdp"
                             android:id="@+id/sendOtpAgain"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:textColor="@color/white"

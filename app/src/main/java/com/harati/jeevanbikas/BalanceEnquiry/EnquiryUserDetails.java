@@ -48,7 +48,7 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
     ApiInterface apiInterface;
     Retrofit retrofit;
     ImageView enquiry_submit, enquiry_cross, enquiryUserPhoto;
-    TextView memberIdnnumber, branchName, accNoDetails,enquiryUserName,memberId,branch ,accNo;
+    TextView memberIdnnumber, branchName, accNoDetails,enquiryUserName,memberId,branch ,accNo,be_mob_no;
     EditText client_pin_entry;
     String code,name,office ,photo;
 
@@ -83,6 +83,7 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         memberId = (TextView) view.findViewById(R.id.memberId);
         branch = (TextView) view.findViewById(R.id.branch);
         accNo = (TextView) view.findViewById(R.id.accNo);
+        be_mob_no = (TextView) view.findViewById(R.id.be_mob_no);
 //        enquiryUserName = (TextView) view.findViewById(R.id.enquiryUserName);
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
@@ -91,7 +92,7 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
 
         memberIdnnumber = (TextView) view.findViewById(R.id.memberIdnnumber);
         branchName = (TextView) view.findViewById(R.id.branchName);
-        accNoDetails = (TextView) view.findViewById(R.id.accNoDetails);
+//        accNoDetails = (TextView) view.findViewById(R.id.accNoDetails);
         enquiryUserName = (TextView) view.findViewById(R.id.enquiryUserName);
 
         memberId.setTypeface(MainActivity.centuryGothic);
@@ -99,13 +100,14 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         accNo.setTypeface(MainActivity.centuryGothic);
         memberIdnnumber.setTypeface(MainActivity.centuryGothic);
         branchName.setTypeface(MainActivity.centuryGothic);
-        accNoDetails.setTypeface(MainActivity.centuryGothic);
+//        accNoDetails.setTypeface(MainActivity.centuryGothic);
         enquiryUserName.setTypeface(MainActivity.centuryGothic);
 
         enquiryUserName.setText(name);
         memberIdnnumber.setText(code);
         branchName.setText(office);
-        accNoDetails.setText(name);
+//        accNoDetails.setText(name);
+        be_mob_no.setText(bundle.getString("phone"));
 
         try {
             Picasso.with(getContext()).load(photo).into(enquiryUserPhoto);

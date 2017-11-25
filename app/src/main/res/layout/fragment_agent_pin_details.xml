@@ -98,7 +98,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -110,12 +110,12 @@
                             android:layout_weight="1"
                             android:paddingBottom="@dimen/_8sdp"
                             android:paddingTop="@dimen/_8sdp"
-                            android:text="Account No"
+                            android:text="Mobile No."
                             android:textColor="#95AFBE"
                             android:textSize="@dimen/_10sdp" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/accNoDetails"
+                            android:id="@+id/apd_mob_no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -175,7 +175,7 @@
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Agent pin transaction number"
+                android:text="Agent PIN"
                 android:textColor="@color/white"/>
             <LinearLayout
                 android:visibility="gone"
@@ -209,10 +209,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:passwordToggleEnabled="true">
 
             <EditText
                 android:inputType="numberPassword"
@@ -222,18 +218,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/agentPin"/>
-            </android.support.design.widget.TextInputLayout>
+
 
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Clients Pin"
+                android:text="Member PIN"
                 android:textColor="@color/white"/>
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:passwordToggleEnabled="true">
+
 
                 <com.harati.jeevanbikas.Helper.CGEditText
                     android:inputType="numberPassword"
@@ -245,7 +238,6 @@
                     android:layout_height="wrap_content"
                     android:text="1234"
                     android:textColor="@color/white"/>
-            </android.support.design.widget.TextInputLayout>
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="match_parent"
@@ -280,12 +272,14 @@
                 android:textColor="@color/white"/>
 
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                android:visibility="gone"
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mobile Number"
                 android:textColor="@color/white"/>
             <com.harati.jeevanbikas.Helper.CGEditText
+                android:visibility="gone"
                 android:inputType="number"
                 android:maxLength="10"
                 android:backgroundTint="@color/white"

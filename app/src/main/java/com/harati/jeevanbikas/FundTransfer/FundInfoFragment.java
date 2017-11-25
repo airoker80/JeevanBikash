@@ -47,7 +47,8 @@ public class FundInfoFragment extends Fragment {
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
 
-    CenturyGothicTextView fundtransfername,fundMemberCode ,fundBranchName;
+    CenturyGothicTextView fundtransfername,fundMemberCode ,fundBranchName,
+            send_mob_id,reciverUn,reciver_mc,reciver_bn,rec_mob_id;
 
     Bundle bundle;
     ImageView submit;
@@ -75,12 +76,24 @@ public class FundInfoFragment extends Fragment {
         fundMemberCode = (CenturyGothicTextView) view.findViewById(R.id.fundMemberCode);
         fundBranchName = (CenturyGothicTextView) view.findViewById(R.id.fundBranchName);
 
+        send_mob_id = (CenturyGothicTextView) view.findViewById(R.id.send_mob_id);
+        reciverUn = (CenturyGothicTextView) view.findViewById(R.id.reciverUn);
+        reciver_mc = (CenturyGothicTextView) view.findViewById(R.id.reciver_mc);
+        reciver_bn = (CenturyGothicTextView) view.findViewById(R.id.reciver_bn);
+        rec_mob_id = (CenturyGothicTextView) view.findViewById(R.id.rec_mob_id);
+
         bundle = getArguments();
 
 
-        fundtransfername.setText(bundle.getString("name"));
+        fundtransfername.setText(bundle.getString("name") +" (Sender)");
         fundMemberCode.setText(bundle.getString("code"));
         fundBranchName.setText(bundle.getString("office"));
+        send_mob_id.setText(bundle.getString("phone"));
+
+        reciverUn.setText(bundle.getString("nameBenificiary") + " (Reciver)");
+        reciver_mc.setText(bundle.getString("codeBenificiary"));
+        reciver_bn.setText(bundle.getString("officeBenificiary"));
+        rec_mob_id.setText(bundle.getString("phoneBenificiary"));
 
         BenificiaryaccNo=(EditText)view.findViewById(R.id.BenificiaryaccNo) ;
         confirmAccNo=(EditText)view.findViewById(R.id.confirmAccNo) ;
@@ -104,12 +117,6 @@ public class FundInfoFragment extends Fragment {
             if (BenificiaryaccNoTxt.equals("")|confirmAccNoTxt.equals("")|deposoitAmtTxt.equals("")|
             agentPinTxt.equals("")|fundMobileTxt.equals("")){
                 getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
-            }else if (!BenificiaryaccNo.getText().toString().equals(confirmAccNo.getText().toString())){
-                Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
-                intent.putExtra("msg","Beneficiary account number not matched");
-                BenificiaryaccNo.setError("Beneficiary account number not matched");
-                confirmAccNo.setError("Beneficiary account number not matched");
-                startActivity(intent);
             }
             else {
                 if (BenificiaryaccNo.getText().toString().equals(bundle.getString("codeBenificiary"))){
@@ -187,7 +194,7 @@ public class FundInfoFragment extends Fragment {
             jsonObject.put("finger",fiClienttPin.getText().toString());
             jsonObject.put("amount",agentPin.getText().toString());
             jsonObject.put("agentpin",agentPin.getText().toString());
-            jsonObject.put("mobile",fundMobile.getText());
+            jsonObject.put("mobile",send_mob_id.getText().toString());
             jsonObject.put("beneficiary",BenificiaryaccNo.getText().toString());
         }catch (Exception e){
             e.printStackTrace();

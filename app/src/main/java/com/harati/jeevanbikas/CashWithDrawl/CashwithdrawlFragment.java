@@ -44,6 +44,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static java.lang.Thread.sleep;
+
 
 /**
  * Created by User on 8/28/2017.
@@ -64,7 +66,7 @@ public class CashwithdrawlFragment extends Fragment {
     String withdrawlAmountTxt,agentPinTxt ,withdrawlRemarkTxt;
     ImageView imgUser;
 
-    TextView memberId,branch ,accNo,withdrawlTxt,at_pin ,remarks_txt,memberIdnnumber,branchName,nameTxt;
+    TextView memberId,branch ,accNo,withdrawlTxt,at_pin ,remarks_txt,memberIdnnumber,branchName,nameTxt,dw_mob_no;
     List<HelperListModelClass> helperListModelClassList = new ArrayList<>();
     public CashwithdrawlFragment() {
     }
@@ -102,6 +104,7 @@ public class CashwithdrawlFragment extends Fragment {
 
         branchName=(TextView) view.findViewById(R.id.branchName);
         nameTxt=(TextView) view.findViewById(R.id.name);
+        dw_mob_no=(TextView) view.findViewById(R.id.dw_mob_no);
         memberIdnnumber=(TextView) view.findViewById(R.id.memberIdnnumber);
 
 
@@ -115,6 +118,7 @@ public class CashwithdrawlFragment extends Fragment {
         memberIdnnumber.setText(code);
         branchName.setText(office);
         nameTxt.setText(name);
+        dw_mob_no.setText(bundle.getString("phone"));
 
         withrwal_mobile.setText(bundle.getString("phone"));
         Picasso.with(getContext()).load(photo).into(imgUser);
@@ -132,8 +136,11 @@ public class CashwithdrawlFragment extends Fragment {
                     intent.putExtra("msg","Zero amount cannot be withdrawn");
                     getActivity().startActivity(intent);
                 }else {
+                    if (JeevanBikashConfig.BASE_URL1.equals("1")){
+                        sendOtpForCashDeposit();
+                    }
 //                    sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
-                    sendOtpForCashDeposit();
+
                 }
             }
         });
@@ -214,6 +221,8 @@ public class CashwithdrawlFragment extends Fragment {
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
+                    JeevanBikashConfig.BASE_URL1="2";
+                    new Thread(task1).start();
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                     bundle.putString("withdraw_amount",withdrawlAmount.getText().toString());
@@ -262,4 +271,13 @@ public class CashwithdrawlFragment extends Fragment {
             }
         });
     }
+    Runnable task1 = () -> {
+        try {
+            sleep(2*60*1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }finally {
+            JeevanBikashConfig.BASE_URL1="1";
+        }
+    };
 }
