@@ -143,7 +143,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
-                    android:maxLength="20"
+                    android:maxLength="10"
                     android:id="@+id/accNo"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"
@@ -191,7 +191,7 @@
                         android:id="@+id/agentPin"
                         android:backgroundTint="@color/white"
                         android:textColor="@color/white"
-                        android:inputType="textPassword"
+                        android:inputType="numberPassword"
                         android:imeOptions="actionNext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -206,6 +206,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLength="50"
                     android:id="@+id/withdrawlRemark"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"

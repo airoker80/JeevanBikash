@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +49,7 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
     Retrofit retrofit;
     ImageView enquiry_submit, enquiry_cross, enquiryUserPhoto;
     TextView memberIdnnumber, branchName, accNoDetails,enquiryUserName,memberId,branch ,accNo;
-    PinEntryEditText client_pin_entry;
+    EditText client_pin_entry;
     String code,name,office ,photo;
 
     public EnquiryUserDetails() {
@@ -73,7 +74,7 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         enquiryUserPhoto = (ImageView) view.findViewById(R.id.enquiryUserPhoto);
         enquiry_cross = (ImageView) view.findViewById(R.id.enquiry_cross);
 
-        client_pin_entry = (PinEntryEditText) view.findViewById(R.id.client_pin_entry);
+        client_pin_entry = (EditText) view.findViewById(R.id.client_pin_entry);
 
         enquiry_submit.setOnClickListener(this);
         enquiry_cross.setOnClickListener(this);

@@ -279,13 +279,13 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
-                    android:maxLength="20"
+                    android:maxLength="10"
                     android:textSize="@dimen/_10sdp"
                     android:text="9802796417"
                     android:id="@+id/fundMobile"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/white"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:imeOptions="actionDone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

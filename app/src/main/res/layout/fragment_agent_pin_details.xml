@@ -257,7 +257,6 @@
                 android:maxLength="6"
                 android:backgroundTint="@color/white"
                 android:id="@+id/deposoitAmt"
-
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
