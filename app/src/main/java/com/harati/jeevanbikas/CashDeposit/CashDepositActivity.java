@@ -14,6 +14,7 @@ import com.harati.jeevanbikas.R;
 
 
 public class CashDepositActivity extends AppCompatActivity {
+
     Spinner spinner;
     ImageView image;
     TextView title;

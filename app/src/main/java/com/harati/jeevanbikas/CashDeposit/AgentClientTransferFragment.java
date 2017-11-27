@@ -49,12 +49,13 @@ import static java.lang.Thread.sleep;
  * A simple {@link Fragment} subclass.
  */
 public class AgentClientTransferFragment extends Fragment {
+
     public String otpValue="";
     ApiSessionHandler apiSessionHandler;
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
-    CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,sendOtpAgain,cdt_mob_no;
+    CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,sendOtpAgain,cdt_mob_no,title;
     CGEditText act_otp_tf;
     ImageView agent_client_tick,demand_cross;
     Bundle bundle;
@@ -82,8 +83,11 @@ public class AgentClientTransferFragment extends Fragment {
         shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
         sendOtpAgain=(CenturyGothicTextView)view.findViewById(R.id.sendOtpAgain);
         cdt_mob_no=(CenturyGothicTextView)view.findViewById(R.id.cdt_mob_no);
+        title=(CenturyGothicTextView)view.findViewById(R.id.title);
 
         act_otp_tf=(CGEditText) view.findViewById(R.id.act_otp_tf);
+
+        title.setText("Cash Deposit");
 
         name.setText(bundle.getString("name"));
         memberIdnnumber.setText(bundle.getString("code"));
@@ -92,7 +96,6 @@ public class AgentClientTransferFragment extends Fragment {
         shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("deposoitAmt")+".00");
 
 //        getOtpValue();
-
 //        sendOtpForCashDeposit();
 
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);

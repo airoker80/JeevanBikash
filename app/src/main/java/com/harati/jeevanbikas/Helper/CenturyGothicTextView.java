@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.harati.jeevanbikas.MainPackage.MainActivity;
@@ -55,5 +56,7 @@ public class CenturyGothicTextView extends android.support.v7.widget.AppCompatTe
     protected void onDraw (Canvas canvas) {
         super.onDraw(canvas);
     }
+
+
 
 }

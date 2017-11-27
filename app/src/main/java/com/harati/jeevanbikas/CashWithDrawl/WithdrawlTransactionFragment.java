@@ -7,14 +7,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
@@ -42,14 +45,16 @@ import static java.lang.Thread.sleep;
  * A simple {@link Fragment} subclass.
  */
 public class WithdrawlTransactionFragment extends Fragment {
-
+    CenturyGothicTextView title;
+    ImageView image;
+    ImageButton resend_otp;
     public String otpValue="";
     ApiSessionHandler apiSessionHandler;
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain,cdt_mob_no;
-    CGEditText act_otp_tf;
+    PinEntryEditText act_otp_tf;
     ImageView agent_client_tick,demand_cross;
     Bundle bundle;
     public WithdrawlTransactionFragment() {
@@ -69,8 +74,21 @@ public class WithdrawlTransactionFragment extends Fragment {
         sessionHandler = new SessionHandler(getContext());
         View view= inflater.inflate(R.layout.fragment_agent_client_transfer, container, false);
 
-        act_otp_tf= (CGEditText) view.findViewById(R.id.act_otp_tf);
+        act_otp_tf= (PinEntryEditText) view.findViewById(R.id.act_otp_tf);
 
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+            Log.e("ad","dasd"+event.toString());
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    confirmBack();
+                }
+            }
+            return false;
+        });
+
+        title=(CenturyGothicTextView)view.findViewById(R.id.title);
         name=(CenturyGothicTextView)view.findViewById(R.id.name);
         memberIdnnumber=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumber);
         branchName=(CenturyGothicTextView)view.findViewById(R.id.branchName);
@@ -78,6 +96,10 @@ public class WithdrawlTransactionFragment extends Fragment {
         amountType=(CenturyGothicTextView)view.findViewById(R.id.amountType);
         sendOtpAgain=(CenturyGothicTextView)view.findViewById(R.id.sendOtpAgain);
         cdt_mob_no=(CenturyGothicTextView)view.findViewById(R.id.cdt_mob_no);
+
+        image=(ImageView) view.findViewById(R.id.image);
+
+        image.setOnClickListener(view1 -> confirmBack());
 
 
         name.setText(bundle.getString("name"));
@@ -91,7 +113,19 @@ public class WithdrawlTransactionFragment extends Fragment {
 //        getOtpValue();
 //        sendOtpForCashDeposit();
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
+        resend_otp=(ImageButton) view.findViewById(R.id.resend_otp);
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
+
+        resend_otp.setOnClickListener(view1 -> {
+            if (JeevanBikashConfig.BASE_URL1.equals("1")){
+                sendOtpForCashDeposit();
+            }else {
+                Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        title.setText("Cash Withdrawl");
+
         agent_client_tick.setOnClickListener(v -> {
             if (act_otp_tf.getText().toString().equals("")){
                 act_otp_tf.setError("Please Enter Otp First");
@@ -256,4 +290,35 @@ public class WithdrawlTransactionFragment extends Fragment {
             Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
         }
     };
+
+    void confirmBack(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back??");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want to go back?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                getActivity().onBackPressed();
+                Log.e("backpressed","bp");
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
 }

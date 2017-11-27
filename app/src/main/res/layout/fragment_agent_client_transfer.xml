@@ -7,10 +7,52 @@
     android:background="@color/colorPrimary">
 
     <!-- TODO: Update blank fragment layout -->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/topPanel5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:paddingTop="4dp">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="2dp"
+                android:padding="4dp"
+                app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/image"
+                android:padding="8dp"
+                android:text="Cash Withdrawl"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                style="@style/SpinnerStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:backgroundTint="@color/white"
+                android:entries="@array/language"
+                android:padding="8dp"></Spinner>
+        </RelativeLayout>
         <ScrollView
+            android:layout_below="@id/topPanel5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -447,7 +489,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.7"
+                        android:layout_weight="0.5"
                         android:orientation="vertical">
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:id="@+id/amountType"
@@ -457,7 +499,7 @@
                             android:layout_marginTop="@dimen/_8sdp"
                             android:text="Deposit Amount"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_25sdp" />
 
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
@@ -468,33 +510,58 @@
                             android:paddingBottom="@dimen/_8sdp"
                             android:paddingTop="@dimen/_8sdp"
                             android:text="RS 1000"
-                            android:textColor="#95AFBE"
+                            android:textColor="#b7ea0f"
                             android:textStyle="bold"
-                            android:textSize="@dimen/_17sdp" />
+                            android:textSize="@dimen/_40sdp" />
 
 
-                        <com.harati.jeevanbikas.Helper.CGEditText
-                            android:id="@+id/act_otp_tf"
-                            android:textColorHint="@color/white"
-                            android:hint="Enter OTP Here"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:backgroundTint="@color/white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:drawableLeft="@drawable/ic_refresh_arrow"
-                            android:padding="@dimen/_6sdp"
-                            android:background="@drawable/shape_resend_bag"
-                            android:layout_marginLeft="@dimen/_40sdp"
-                            android:layout_marginRight="@dimen/_40sdp"
-                            android:id="@+id/sendOtpAgain"
-                            android:layout_marginTop="@dimen/_20sdp"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_10sdp"
-                            android:textAlignment="center"
-                            android:text="Send OTP request again"
+                            android:text="Enter Otp Here"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.alimuzaffar.lib.pin.PinEntryEditText
+                                android:inputType="numberPassword"
+                                android:id="@+id/act_otp_tf"
+                                android:layout_width="@dimen/_250sdp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/white"
+                                android:hint="Enter OTP Here"
+                                android:textColorHint="@color/white" />
+                            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                                android:visibility="gone"
+                                android:layout_weight="1"
+                                android:drawableLeft="@drawable/ic_refresh_arrow"
+                                android:padding="@dimen/_6sdp"
+                                android:background="@drawable/shape_resend_bag"
+                                android:layout_marginLeft="@dimen/_40sdp"
+                                android:layout_marginRight="@dimen/_40sdp"
+                                android:id="@+id/sendOtpAgain"
+                                android:layout_marginTop="@dimen/_20sdp"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_10sdp"
+                                android:textAlignment="center"
+                                android:text="Send OTP request again"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                            <ImageButton
+                                android:id="@+id/resend_otp"
+                                android:layout_width="@dimen/_50sdp"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_weight="1"
+                                android:padding="@dimen/_8sdp"
+                                android:src="@drawable/ic_refreshing" />
+                        </LinearLayout>
+
 
 
                     </LinearLayout>

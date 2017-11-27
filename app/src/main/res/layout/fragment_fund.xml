@@ -8,14 +8,52 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
     <RelativeLayout
+        android:paddingTop="4dp"
+        android:id="@+id/topPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="2dp"
+            android:padding="4dp"
+            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/image"
+            android:padding="8dp"
+            android:text="Cash Deposit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            style="@style/SpinnerStyle"
+            android:layout_marginRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/white"
+            android:entries="@array/language"
+            android:padding="8dp"></Spinner>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/topPanel"
+        android:id="@+id/mid_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
-
         <com.harati.jeevanbikas.Helper.AutoCompleteHelper.CustomACTextView
             android:maxLength="10"
             android:id="@+id/input"

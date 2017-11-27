@@ -3,24 +3,30 @@ package com.harati.jeevanbikas.CashWithDrawl;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CGEditText;
+import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
@@ -54,11 +60,14 @@ import static java.lang.Thread.sleep;
  */
 
 public class CashwithdrawlFragment extends Fragment {
+
+    LinearLayout beforConfirmation;
     ApiSessionHandler apiSessionHandler ;
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
-
+    ImageView image,crossIV;
+    CenturyGothicTextView title;
     String code,name,office ,photo;
     Bundle bundle;
 
@@ -68,7 +77,7 @@ public class CashwithdrawlFragment extends Fragment {
     String withdrawlAmountTxt,agentPinTxt ,withdrawlRemarkTxt;
     ImageView imgUser;
 
-    TextView memberId,branch ,accNo,withdrawlTxt,at_pin ,remarks_txt,memberIdnnumber,branchName,nameTxt,dw_mob_no;
+    TextView memberId,branch ,accNo,withdrawlTxt,at_pin ,remarks_txt,memberIdnnumber,branchName,nameTxt,dw_mob_no,gone_cw_txt;
     List<HelperListModelClass> helperListModelClassList = new ArrayList<>();
     public CashwithdrawlFragment() {
     }
@@ -81,6 +90,8 @@ public class CashwithdrawlFragment extends Fragment {
         name = bundle.getString("name");
         office = bundle.getString("office");
         photo = bundle.getString("photo");
+
+
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiSessionHandler = new ApiSessionHandler(getContext());
         apiInterface = retrofit.create(ApiInterface.class);
@@ -88,20 +99,44 @@ public class CashwithdrawlFragment extends Fragment {
 
         View view= inflater.inflate(R.layout.fragment_cashwithdrawl, container, false);
         view.setFocusableInTouchMode(true);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        image= (ImageView)view.findViewById(R.id.image);
+        crossIV= (ImageView)view.findViewById(R.id.crossIV);
+
+        beforConfirmation= (LinearLayout) view.findViewById(R.id.beforConfirmation);
+
+        image.setOnClickListener(view1 -> confirmBack());
+        crossIV.setOnClickListener(view1 -> {
+            if (beforConfirmation.getVisibility()==View.VISIBLE){
+                getActivity().onBackPressed();
+            }else {
+                beforConfirmation.setVisibility(View.VISIBLE);
+                gone_cw_txt.setVisibility(View.GONE);
+            }
+//            startActivity(new Intent(getContext(),MainActivity.class));
+        });
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
-            Log.e("ad","dasd"+event.toString());
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    confirmBack();
-                }
-            }
-            return false;
-        });
+                    if (view.hasFocusable()){
+
+                        Log.e("focus","==="+String.valueOf(view.findFocus()));
+                        Log.e("ad","dasd"+event.toString());
+                        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                confirmBack();
+                            }
+                        }
+                    }else {
+                        view.setFocusableInTouchMode(true);
+                        view.requestFocus();
+                    }
+                    return false;
+                } );
 
         submit = (ImageView)view.findViewById(R.id.submit);
         withdrawlAmount=(EditText)view.findViewById(R.id.withdrawlAmount);
         agentPin=(EditText)view.findViewById(R.id.agentPin);
+        title=(CenturyGothicTextView) view.findViewById(R.id.title);
         clientPin=(EditText)view.findViewById(R.id.clientPin);
         withdrawlRemark=(EditText)view.findViewById(R.id.withdrawlRemark);
         withrwal_mobile=(CGEditText)view.findViewById(R.id.withrwal_mobile);
@@ -119,6 +154,7 @@ public class CashwithdrawlFragment extends Fragment {
         branchName=(TextView) view.findViewById(R.id.branchName);
         nameTxt=(TextView) view.findViewById(R.id.name);
         dw_mob_no=(TextView) view.findViewById(R.id.dw_mob_no);
+        gone_cw_txt=(TextView) view.findViewById(R.id.gone_cw_txt);
         memberIdnnumber=(TextView) view.findViewById(R.id.memberIdnnumber);
 
 
@@ -129,13 +165,27 @@ public class CashwithdrawlFragment extends Fragment {
         at_pin.setTypeface(MainActivity.centuryGothic);
         remarks_txt.setTypeface(MainActivity.centuryGothic);
 
+        title.setText("Cash Withdrawl");
         memberIdnnumber.setText(code);
         branchName.setText(office);
         nameTxt.setText(name);
         dw_mob_no.setText(bundle.getString("phone"));
 
         withrwal_mobile.setText(bundle.getString("phone"));
-        Picasso.with(getContext()).load(photo).into(imgUser);
+
+//        Picasso.with(getContext()).load(photo).into(imgUser);
+
+        try {
+            String[] splitString = photo.split(",");
+            String base64Photo = splitString[1];
+            byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
+            Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            imgUser.setImageBitmap(userPhoto);
+
+            Log.e("photo","--->"+photo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
         submit.setOnClickListener(view1 -> {
@@ -150,8 +200,14 @@ public class CashwithdrawlFragment extends Fragment {
                     intent.putExtra("msg","Zero amount cannot be withdrawn");
                     getActivity().startActivity(intent);
                 }else {
-                    if (JeevanBikashConfig.BASE_URL1.equals("1")){
-                        sendOtpForCashDeposit();
+                    if (beforConfirmation.getVisibility() == View.VISIBLE){
+                        beforConfirmation.setVisibility(View.GONE);
+                        gone_cw_txt.setVisibility(View.VISIBLE);
+                        gone_cw_txt.setText("के तपाई रु "+withdrawlAmount.getText().toString() + " झिक्न   चाहनुहुन्छ ?");
+                    }else {
+                        if (JeevanBikashConfig.BASE_URL1.equals("1")){
+                            sendOtpForCashDeposit();
+                        }
                     }
 //                    sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
 
@@ -276,4 +332,6 @@ public class CashwithdrawlFragment extends Fragment {
 
         builder.show();
     }
+
+
 }

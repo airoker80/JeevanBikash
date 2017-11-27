@@ -23,6 +23,7 @@ import com.harati.jeevanbikas.BalanceEnquiry.EnquiryUserDetails;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
+import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
@@ -54,7 +55,9 @@ public class CashFragment extends Fragment {
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
+    ImageView image;
 
+    CenturyGothicTextView title;
     List<AutoCompleteModel> autoCompleteModelList = new ArrayList<>();
     AutoCompleteTextView input;
      ImageView imageView;
@@ -68,6 +71,7 @@ public class CashFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_fund, container, false);
 
         apiSessionHandler = new ApiSessionHandler(getContext());
+        image= (ImageView)view.findViewById(R.id.image);
 
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
@@ -78,6 +82,7 @@ public class CashFragment extends Fragment {
         imageView = (ImageView)view.findViewById(R.id.imageView);
         input = (AutoCompleteTextView) view.findViewById(R.id.input);
         cash_wd_txt = (TextView) view.findViewById(R.id.cash_wd_txt);
+        title = (CenturyGothicTextView) view.findViewById(R.id.title);
 
         autoCompleteModelList.add(new AutoCompleteModel("Sameer","9843697320",R.drawable.ic_username));
         autoCompleteModelList.add(new AutoCompleteModel("arjun","9844400099",R.drawable.ic_username));
@@ -88,6 +93,8 @@ public class CashFragment extends Fragment {
 
         cash_wd_txt.setTypeface(MainActivity.centuryGothic);
         input.setTypeface(MainActivity.centuryGothic);
+
+        title.setText("Cash Withdrawl");
         imageView.setOnClickListener(view1 -> {
             if (input.getText().toString().equals("")){
                 input.setError("Please Enter the Phone Number");
@@ -100,6 +107,8 @@ public class CashFragment extends Fragment {
 //                    transaction.commit();
             }
         });
+
+        image.setOnClickListener(view1 -> getActivity().onBackPressed());
         return view;
     }
 
@@ -121,6 +130,7 @@ public class CashFragment extends Fragment {
                     args.putString("code",response.body().getCode());
                     args.putString("name",response.body().getName());
                     args.putString("office",response.body().getOffice());
+                    args.putString("photo",response.body().getPhoto());
 //                    args.putString("office",response.body().getCode());
 //                    args.putString("photo",response.body().getOffice());
                     args.putString("phone",response.body().getMobileno());

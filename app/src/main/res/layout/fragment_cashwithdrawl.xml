@@ -4,13 +4,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@+id/topPanel"
-    android:orientation="vertical"
     android:background="@color/colorPrimary"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <RelativeLayout
+        android:id="@+id/topPanel1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="2dp"
+            android:padding="4dp"
+            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+        <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/image"
+            android:padding="8dp"
+            android:text="Fund Transfer"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            style="@style/SpinnerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/white"
+            android:entries="@array/language"
+            android:padding="8dp"></Spinner>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/topPanel1"
         android:clipToPadding="false"
         android:paddingBottom="80dp">
 
@@ -107,7 +145,6 @@
                         android:orientation="horizontal">
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:visibility="visible"
                             android:id="@+id/accNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -116,10 +153,10 @@
                             android:paddingTop="@dimen/_8sdp"
                             android:text="Mobile No"
                             android:textColor="#95AFBE"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_10sdp"
+                            android:visibility="visible" />
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:visibility="visible"
                             android:id="@+id/dw_mob_no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -128,7 +165,8 @@
                             android:paddingTop="8dp"
                             android:text="3343434454"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_10sdp"
+                            android:visibility="visible" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -137,17 +175,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.3">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:padding="@dimen/_4sdp"
-                        android:background="@drawable/image_baground">
+                        android:background="@drawable/image_baground"
+                        android:padding="@dimen/_4sdp">
+
                         <ImageView
                             android:id="@+id/imgUser"
-                            android:layout_alignParentRight="true"
                             android:layout_width="@dimen/_100sdp"
                             android:layout_height="@dimen/_100sdp"
+                            android:layout_alignParentRight="true"
                             android:src="@drawable/defaultprofile" />
                     </LinearLayout>
 
@@ -155,14 +195,16 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/beforConfirmation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/topPanel"
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginRight="@dimen/_25sdp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 android:padding="4dp"
-                android:layout_marginTop="8dp">
+                android:visibility="visible">
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                     android:id="@+id/withdrawlTxt"
@@ -173,17 +215,17 @@
                     android:textSize="@dimen/_12sdp" />
 
                 <EditText
-                    android:textSize="@dimen/_10sdp"
                     android:id="@+id/withdrawlAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
-                    android:textColor="@color/white"
+                    android:hint="Rs"
+                    android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="6"
-                    android:hint="Rs"
+                    android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:imeOptions="actionNext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                     android:id="@+id/at_pin"
@@ -195,17 +237,16 @@
                     android:textSize="@dimen/_10sdp" />
 
 
-
-                    <EditText
-                        android:maxLength="4"
-                        android:textSize="@dimen/_10sdp"
-                        android:id="@+id/agentPin"
-                        android:backgroundTint="@color/white"
-                        android:textColor="@color/white"
-                        android:inputType="numberPassword"
-                        android:imeOptions="actionNext"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/agentPin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp" />
 
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                     android:id="@+id/ct_pin"
@@ -216,61 +257,61 @@
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
 
-                    <EditText
-                        android:maxLength="4"
-                        android:textSize="@dimen/_10sdp"
-                        android:id="@+id/clientPin"
-                        android:backgroundTint="@color/white"
-                        android:textColor="@color/white"
-                        android:inputType="numberPassword"
-                        android:imeOptions="actionNext"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/clientPin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp" />
+
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                    android:visibility="gone"
                     android:id="@+id/remarks_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Remarks"
                     android:textColor="#95AFBE"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
 
                 <EditText
-                    android:visibility="gone"
-                    android:maxLength="20"
-                    android:textSize="@dimen/_10sdp"
                     android:id="@+id/withdrawlRemark"
-                    android:backgroundTint="@color/white"
-                    android:textColor="@color/white"
-                    android:inputType="text"
-                    android:imeOptions="actionDone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLength="20"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
+
                 <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Mobile No"
                     android:textColor="#95AFBE"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
 
                 <com.harati.jeevanbikas.Helper.CGEditText
-                    android:visibility="gone"
-                    android:maxLength="10"
-                    android:textSize="@dimen/_10sdp"
                     android:id="@+id/withrwal_mobile"
-                    android:backgroundTint="@color/white"
-                    android:textColor="@color/white"
-                    android:inputType="number"
-                    android:imeOptions="actionDone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
 
                 <com.alimuzaffar.lib.pin.PinEntryEditText
-                    android:visibility="gone"
-                    android:text="1234"
                     android:id="@+id/txt_pin_entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -278,54 +319,73 @@
                     android:digits="1234567890"
                     android:inputType="number"
                     android:maxLength="4"
+                    android:text="1234"
                     android:textIsSelectable="false"
-                    android:textSize="20sp">
+                    android:textSize="20sp"
+                    android:visibility="gone">
 
                 </com.alimuzaffar.lib.pin.PinEntryEditText>
 
             </LinearLayout>
+
+            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                android:textColor="@color/white"
+                android:visibility="gone"
+                android:id="@+id/gone_cw_txt"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_25sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/beforConfirmation"
+                android:text="Are you Sure to withdraw Rs 1000"
+                android:textSize="@dimen/_30sdp" />
         </RelativeLayout>
     </ScrollView>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
         <ImageView
-            android:layout_weight="1"
             android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:clickable="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
-            android:background="#F9B847"
-            app:srcCompat="@drawable/ic_check" />
-        <ImageView
-            android:visibility="gone"
             android:layout_weight="1"
+            android:background="#F9B847"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_check" />
+
+        <ImageView
             android:id="@+id/crossIV"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:clickable="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:background="#c93e3b"
+            android:clickable="true"
+            android:visibility="visible"
             app:srcCompat="@drawable/ic_error" />
 
     </LinearLayout>
 
-<!--
-    <ImageView
-        android:id="@+id/submit"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:background="#F9B847"
-        android:clickable="true"
-        app:srcCompat="@drawable/ic_check" />
--->
+    <!--
+        <ImageView
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:background="#F9B847"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_check" />
+    -->
 </RelativeLayout>
 
 

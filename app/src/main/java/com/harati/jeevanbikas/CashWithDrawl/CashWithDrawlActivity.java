@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -36,6 +37,11 @@ public class CashWithDrawlActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Fragment fragment = null;
+        if (fragment instanceof  CashwithdrawlFragment){
+            Log.e("ada","csaww");
+            ((CashwithdrawlFragment) fragment).confirmBack();
+        }
         super.onBackPressed();
     }
     public void setPage(String name) {
@@ -52,4 +58,5 @@ public class CashWithDrawlActivity extends AppCompatActivity {
         transaction.replace(R.id.contentFrame, fragment);
         transaction.commit();
     }
+
 }

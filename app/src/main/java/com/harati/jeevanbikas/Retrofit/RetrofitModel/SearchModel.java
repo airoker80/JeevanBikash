@@ -20,7 +20,7 @@ public class SearchModel {
     private String office;
     @SerializedName("photo")
     @Expose
-    private Object photo;
+    private String photo;
     @SerializedName("mobileno")
     @Expose
     private String mobileno;
@@ -49,11 +49,11 @@ public class SearchModel {
         this.office = office;
     }
 
-    public Object getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Object photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 

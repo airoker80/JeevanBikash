@@ -35,4 +35,6 @@ public class CGEditText extends android.support.v7.widget.AppCompatEditText {
         super.onDraw(canvas);
     }
 
+
+
 }
