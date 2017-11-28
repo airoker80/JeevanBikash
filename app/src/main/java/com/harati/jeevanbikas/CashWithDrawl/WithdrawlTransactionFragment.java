@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +38,12 @@ import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
 
 import org.json.JSONObject;
 
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -110,7 +117,7 @@ public class WithdrawlTransactionFragment extends Fragment {
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
         cdt_mob_no.setText(bundle.getString("withdraw_mobile"));
-        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+sessionHandler.returnCash(bundle.getString("withdraw_amount"))+".00");
+        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+sessionHandler.returnCash(bundle.getString("withdraw_amount")));
 
         amountType.setText("Withdrawl Amount");
 
@@ -131,10 +138,17 @@ public class WithdrawlTransactionFragment extends Fragment {
             }
         });*/
 
+        Observable.fromCallable(callable).
+                subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).
+                doOnSubscribe(disposable ->
+                        resend_otp.setEnabled(false)
+                ).
+                subscribe(getDisposableObserver());
+
         title.setText("Cash Withdrawl");
 
 
-        new Thread(task1).start();
+//        new Thread(task1).start();
 
         try {
             String[] splitString = bundle.getString("photo").split(",");
@@ -232,7 +246,7 @@ public class WithdrawlTransactionFragment extends Fragment {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
-                        ((CashWithDrawlActivity)getActivity()).backpressed();
+                        act_otp_tf.setText("");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -269,7 +283,6 @@ public class WithdrawlTransactionFragment extends Fragment {
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
-                    JeevanBikashConfig.BASE_URL1="2";
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 //                    getOtpValue();
@@ -283,6 +296,7 @@ public class WithdrawlTransactionFragment extends Fragment {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
+                        act_otp_tf.setText("");
                     } catch (Exception e) {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",("data mistake"));
@@ -297,19 +311,6 @@ public class WithdrawlTransactionFragment extends Fragment {
             }
         });
     }
-    Runnable task1 = () -> {
-        try {
-            resend_otp.setClickable(false);
-            resend_otp.setEnabled(false);
-            sleep(2*60*1000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }finally {
-            resend_otp.setClickable(true);
-            resend_otp.setEnabled(true);
-            Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
-        }
-    };
 
     void confirmBack(){
         Log.e("backpressed","bp");
@@ -377,5 +378,29 @@ public class WithdrawlTransactionFragment extends Fragment {
         interrupted();
         super.onDestroyView();
 
+    }
+
+    Callable callable =() -> {
+        SystemClock.sleep(60000);
+        return  null;
+    };
+
+    private DisposableObserver<String> getDisposableObserver() {
+        return new DisposableObserver<String>() {
+
+            @Override
+            public void onComplete() {
+                resend_otp.setEnabled(true);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                resend_otp.setEnabled(true);
+            }
+
+            @Override
+            public void onNext(String message) {
+            }
+        };
     }
 }

@@ -3,9 +3,15 @@ package com.harati.jeevanbikas.FundTransfer;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
@@ -33,6 +40,12 @@ import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
 
 import org.json.JSONObject;
 
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,8 +69,8 @@ public class TransferTransactionDetailFragment extends Fragment {
     LinearLayout topPanel2;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain;
     CenturyGothicTextView nameBeneficiary,memberIdnnumberBeneficiary,branchNameBeneficiary;
-    CGEditText act_otp_tf;
-    ImageView agent_client_tick,demand_cross;
+    PinEntryEditText act_otp_tf;
+    ImageView agent_client_tick,demand_cross,image,benif_image,act_mem_photo;
     Bundle bundle;
 
     public TransferTransactionDetailFragment() {
@@ -89,7 +102,7 @@ public class TransferTransactionDetailFragment extends Fragment {
         memberIdnnumberBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumberBeneficiary);
         branchNameBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.branchNameBeneficiary);
 
-        act_otp_tf=(CGEditText) view.findViewById(R.id.act_otp_tf);
+        act_otp_tf=(PinEntryEditText) view.findViewById(R.id.act_otp_tf);
 
         shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
 
@@ -97,7 +110,7 @@ public class TransferTransactionDetailFragment extends Fragment {
         sendOtpAgain=(CenturyGothicTextView)view.findViewById(R.id.sendOtpAgain);
 
         amountType.setText("Transfer amount");
-        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("transfer_amount")+".00");
+        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("transfer_amount"));
 
         name.setText(bundle.getString("name"));
         memberIdnnumber.setText(bundle.getString("code"));
@@ -109,9 +122,33 @@ public class TransferTransactionDetailFragment extends Fragment {
 
 //        sendOtpForFundTransfer();
         resend_otp=(ImageButton) view.findViewById(R.id.resend_otp);
+        image=(ImageView) view.findViewById(R.id.image);
+        benif_image=(ImageView) view.findViewById(R.id.benif_image);
+        act_mem_photo=(ImageView) view.findViewById(R.id.act_mem_photo);
 
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
+
+        try {
+            String[] splitString = bundle.getString("photo").split(",");
+            String base64Photo = splitString[1];
+            byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
+            Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            act_mem_photo.setImageBitmap(userPhoto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String[] splitString = bundle.getString("photoBenificiary").split(",");
+            String base64Photo = splitString[1];
+            byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
+            Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            benif_image.setImageBitmap(userPhoto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         agent_client_tick.setOnClickListener(v -> {
 
             if (!act_otp_tf.getText().toString().equals("")){
@@ -121,18 +158,28 @@ public class TransferTransactionDetailFragment extends Fragment {
             }
 //                startActivity(new Intent(getContext(), DialogActivity.class));
         });
-        demand_cross.setOnClickListener(view1 -> startActivity(new Intent(getContext(), MainActivity.class)));
+        demand_cross.setOnClickListener(view1 -> confirmBackCross());
 
-        new Thread(task1).run();
+//        new Thread(task1).start();
+
+//        getActivity().runOnUiThread(task1);
+        Observable.fromCallable(callable).
+                subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).
+                doOnSubscribe(disposable ->
+                        resend_otp.setEnabled(false)
+                ).
+                subscribe(getDisposableObserver());
+
+
+        image.setOnClickListener(view1 -> {
+            confirmBack();
+        });
         sendOtpAgain.setOnClickListener(v -> {
             final AlertDialog builder = new AlertDialog.Builder(getContext())
                     .setPositiveButton("OK", null)
                     .setNegativeButton("CANCEL", null)
                     .setTitle("Send Otp request Again?")
                     .create();
-
-
-
             builder.setOnShowListener(dialog -> {
 
                 final Button btnAccept = builder.getButton(
@@ -140,11 +187,7 @@ public class TransferTransactionDetailFragment extends Fragment {
 
                 btnAccept.setOnClickListener(v1 -> {
 //                    sendOtpForFundTransfer();
-                    if (JeevanBikashConfig.BASE_URL1.equals("1")){
                         sendOtpForFundTransfer();
-                    }else {
-                        Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
-                    }
                     builder.dismiss();
 
                 });
@@ -188,7 +231,7 @@ public class TransferTransactionDetailFragment extends Fragment {
                 if (String.valueOf(response.code()).equals("200")){
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                    getOtpValue();
+//                    getOtpValue();
                 }else {
                     try {
 
@@ -268,8 +311,6 @@ public class TransferTransactionDetailFragment extends Fragment {
             public void onResponse(Call<TransferModel> call, Response<TransferModel> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
-                    JeevanBikashConfig.BASE_URL1="2";
-                    new Thread(task1).start();
                     Intent intent = new Intent(getContext(),DialogActivity.class);
                     intent.putExtra("msg",response.body().getMessage());
                     startActivity(intent);
@@ -284,6 +325,7 @@ public class TransferTransactionDetailFragment extends Fragment {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
+                        act_otp_tf.setText("");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -300,24 +342,96 @@ public class TransferTransactionDetailFragment extends Fragment {
             }
         });
     }
-    Runnable task1 = () -> {
-        try {
-            resend_otp.setEnabled(false);
-            resend_otp.setClickable(false);
-            sleep(2*60*1000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }finally {
-            resend_otp.setEnabled(true);
-            resend_otp.setClickable(true);
-            JeevanBikashConfig.BASE_URL1="1";
-            Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
-        }
-    };
+
+    private DisposableObserver<String> getDisposableObserver() {
+        return new DisposableObserver<String>() {
+
+            @Override
+            public void onComplete() {
+                resend_otp.setEnabled(true);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                resend_otp.setEnabled(true);
+            }
+
+            @Override
+            public void onNext(String message) {
+            }
+        };
+    }
+
 
     @Override
     public void onDestroyView() {
         interrupted();
         super.onDestroyView();
     }
+    void confirmBack(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back??");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want to go back?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                    ((FundTransferActivity)getActivity()).backpress();
+
+                Log.e("backpressed","bp");
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
+    void confirmBackCross(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back??");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want to go back?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                startActivity(new Intent(getContext(),MainActivity.class));
+                Log.e("backpressed","bp");
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
+
+    Callable callable =() -> {
+        SystemClock.sleep(60000);
+        return  null;
+    };
 }

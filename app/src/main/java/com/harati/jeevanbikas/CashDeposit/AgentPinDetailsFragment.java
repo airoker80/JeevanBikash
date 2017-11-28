@@ -119,9 +119,6 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         depositBranch.setText(bundle.getString("office"));
         apd_mob_no.setText(bundle.getString("phone"));
 
-
-        gone_cd_txt.setText("के तपाई रु "+sessionHandler.returnCash(deposoitAmt.getText().toString())+" आफ्नो खाता मा जम्मा गर्न चाहनु  हुन्छ ?");
-
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         cd_search_photo=(ImageView)view.findViewById(R.id.cd_search_photo);
         image=(ImageView)view.findViewById(R.id.image);
@@ -156,6 +153,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     startActivity(intent);
                 }else {
                     if (gone_cd_txt.getVisibility()==View.GONE){
+                        gone_cd_txt.setText("के तपाई रु "+sessionHandler.returnCash(deposoitAmt.getText().toString())+" आफ्नो खाता मा जम्मा गर्न चाहनु  हुन्छ ?");
                         gone_cd_txt.setVisibility(View.VISIBLE);
                         cd_before_conf.setVisibility(View.GONE);
                     }else {
@@ -196,8 +194,6 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
-                    JeevanBikashConfig.BASE_URL1="2";
-                    new Thread(task1).start();
                     Fragment fragment= new AgentClientTransferFragment();
                     String message = response.body().getMessage();
                     bundle.putString("agentPin",agentPin.getText().toString());
@@ -243,17 +239,6 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             }
         });
     }
-    Runnable task1 = () -> {
-        try {
-            sleep(2*60*1000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }finally {
-            JeevanBikashConfig.BASE_URL1="1";
-            Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
-        }
-    };
-
     void confirmBack(){
         Log.e("backpressed","bp");
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -42,6 +43,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -63,7 +70,7 @@ public class AgentClientTransferFragment extends Fragment {
     SessionHandler sessionHandler ;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,sendOtpAgain,cdt_mob_no,title;
     PinEntryEditText act_otp_tf;
-    ImageView agent_client_tick,demand_cross,act_mem_photo;
+    ImageView agent_client_tick,demand_cross,act_mem_photo,image;
     Bundle bundle;
     ImageButton resend_otp;
     public AgentClientTransferFragment() {
@@ -100,7 +107,7 @@ public class AgentClientTransferFragment extends Fragment {
         memberIdnnumber.setText(bundle.getString("code"));
         cdt_mob_no.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("phone"));
-        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("deposoitAmt")+".00");
+        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("deposoitAmt"));
 
 //        getOtpValue();
 //        sendOtpForCashDeposit();
@@ -108,12 +115,20 @@ public class AgentClientTransferFragment extends Fragment {
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         act_mem_photo=(ImageView)view.findViewById(R.id.act_mem_photo);
+        image=(ImageView)view.findViewById(R.id.image);
 
         resend_otp=(ImageButton) view.findViewById(R.id.resend_otp);
 
 
 
-        new Thread(task1).start();
+//        new Thread(task1).start();
+
+        Observable.fromCallable(callable).
+                subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).
+                doOnSubscribe(disposable ->
+                        resend_otp.setEnabled(false)
+                ).
+                subscribe(getDisposableObserver());
         try {
             String[] splitString = bundle.getString("photo").split(",");
             String base64Photo = splitString[1];
@@ -124,6 +139,8 @@ public class AgentClientTransferFragment extends Fragment {
             e.printStackTrace();
         }
 
+
+        image.setOnClickListener(view1 -> ((CashDepositActivity)getActivity()).backpressed());
         resend_otp.setOnClickListener(view1 -> {
             final AlertDialog builder = new AlertDialog.Builder(getContext())
                     .setPositiveButton("OK", null)
@@ -237,8 +254,9 @@ public class AgentClientTransferFragment extends Fragment {
                         JSONObject jsonObject = new JSONObject(jsonString);
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",jsonObject.getString("message"));
-                        ((CashDepositActivity)getActivity()).backpressed();
+//                        ((CashDepositActivity)getActivity()).backpressed();
                         startActivity(intent);
+                        act_otp_tf.setText("");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -254,37 +272,6 @@ public class AgentClientTransferFragment extends Fragment {
             }
         });
 
-    }
-
-
-    private void getOtpValue(){
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_get_otp, null);
-        final AlertDialog builder = new AlertDialog.Builder(getContext())
-                .setPositiveButton("OK", null)
-                .setNegativeButton("CANCEL", null)
-                .setView(view)
-                .setTitle("Enter Otp")
-                .create();
-
-        CGEditText getOpt = (CGEditText) view.findViewById(R.id.getOpt);
-
-        builder.setOnShowListener(dialog -> {
-
-            final Button btnAccept = builder.getButton(
-                    AlertDialog.BUTTON_POSITIVE);
-
-            btnAccept.setOnClickListener(v -> {
-                otpValue = getOpt.getText().toString();
-                builder.dismiss();
-
-            });
-
-            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
-
-            btnDecline.setOnClickListener(v -> builder.dismiss()
-            );
-        });
-        builder.show();
     }
 
     private void  sendOtpForCashDeposit(){
@@ -313,7 +300,7 @@ public class AgentClientTransferFragment extends Fragment {
                 if (String.valueOf(response.code()).equals("200")){
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                    getOtpValue();
+//                    getOtpValue();
                 }else {
                     try {
 
@@ -370,18 +357,27 @@ public class AgentClientTransferFragment extends Fragment {
         builder.show();
     }
 
-    Runnable task1 = () -> {
-        try {
-            resend_otp.setEnabled(false);
-            resend_otp.setClickable(false);
-            sleep(2*60*1000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }finally {
-            resend_otp.setEnabled(true);
-            resend_otp.setClickable(true);
-            JeevanBikashConfig.BASE_URL1="1";
-            Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
-        }
+    Callable callable =() -> {
+        SystemClock.sleep(60000);
+        return  null;
     };
+
+    private DisposableObserver<String> getDisposableObserver() {
+        return new DisposableObserver<String>() {
+
+            @Override
+            public void onComplete() {
+                resend_otp.setEnabled(true);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                resend_otp.setEnabled(true);
+            }
+
+            @Override
+            public void onNext(String message) {
+            }
+        };
+    }
 }

@@ -35,9 +35,9 @@ public class FundTransferActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
+    public void onBackPressed() {}
+
+    public void backpress() {super.onBackPressed();}
     public void setPage(String name) {
         Fragment fragment = null;
         switch (name) {

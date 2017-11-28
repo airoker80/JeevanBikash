@@ -51,7 +51,7 @@ public class FundFragment extends Fragment {
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
-     ImageView imageView;
+     ImageView imageView,image;
     AutoCompleteTextView input;
     Bundle args;
     public FundFragment() {
@@ -63,6 +63,7 @@ public class FundFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_fund, container, false);
         args = new Bundle();
         imageView = (ImageView)view.findViewById(R.id.imageView);
+        image = (ImageView)view.findViewById(R.id.image);
         input = (AutoCompleteTextView) view.findViewById(R.id.input);
 
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
@@ -88,6 +89,10 @@ public class FundFragment extends Fragment {
                 transaction.replace(R.id.contentFrame, fragment);
                 transaction.commit();*/
             }
+        });
+
+        image.setOnClickListener(view1 -> {
+            ((FundTransferActivity)getActivity()).backpress();
         });
         return view;
     }

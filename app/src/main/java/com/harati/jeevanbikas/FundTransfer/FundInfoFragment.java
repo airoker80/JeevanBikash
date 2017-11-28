@@ -3,11 +3,14 @@ package com.harati.jeevanbikas.FundTransfer;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,10 +62,12 @@ public class FundInfoFragment extends Fragment {
             send_mob_id,reciverUn,reciver_mc,reciver_bn,rec_mob_id;
 
     Bundle bundle;
-    ImageView submit;
+    ImageView submit,crossIV,image,rec_ff_photo,ff_send_photo;
     EditText BenificiaryaccNo,confirmAccNo ,transferAmt,agentPin ,fundMobile;
     CGEditText fiClienttPin;
     String BenificiaryaccNoTxt,confirmAccNoTxt ,deposoitAmtTxt,agentPinTxt ,fundMobileTxt;
+    CenturyGothicTextView gone_ft_txt;
+    LinearLayout befor_conf_ll;
     public FundInfoFragment() {
     }
 
@@ -69,18 +75,6 @@ public class FundInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_fund_info, container, false);
-
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener((v, keyCode, event) -> {
-            Log.e("ad","dasd"+event.toString());
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    confirmBack();
-                }
-            }
-            return false;
-        });
         apiSessionHandler = new ApiSessionHandler(getContext());
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
@@ -88,9 +82,17 @@ public class FundInfoFragment extends Fragment {
         sessionHandler = new SessionHandler(getContext());
 
         submit = (ImageView)view.findViewById(R.id.submit);
+        crossIV = (ImageView)view.findViewById(R.id.crossIV);
+        image = (ImageView)view.findViewById(R.id.image);
 
+        rec_ff_photo = (ImageView)view.findViewById(R.id.rec_ff_photo);
+        ff_send_photo = (ImageView)view.findViewById(R.id.ff_send_photo);
+
+
+        befor_conf_ll = (LinearLayout) view.findViewById(R.id.befor_conf_ll);
 
         fundtransfername = (CenturyGothicTextView) view.findViewById(R.id.fundtransfername);
+        gone_ft_txt = (CenturyGothicTextView) view.findViewById(R.id.gone_ft_txt);
         fundMemberCode = (CenturyGothicTextView) view.findViewById(R.id.fundMemberCode);
         fundBranchName = (CenturyGothicTextView) view.findViewById(R.id.fundBranchName);
 
@@ -112,6 +114,26 @@ public class FundInfoFragment extends Fragment {
         reciver_mc.setText(bundle.getString("codeBenificiary"));
         reciver_bn.setText(bundle.getString("officeBenificiary"));
         rec_mob_id.setText(bundle.getString("phoneBenificiary"));
+
+        try {
+            String[] splitString = bundle.getString("photo").split(",");
+            String base64Photo = splitString[1];
+            byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
+            Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            ff_send_photo.setImageBitmap(userPhoto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String[] splitString = bundle.getString("photoBenificiary").split(",");
+            String base64Photo = splitString[1];
+            byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
+            Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            rec_ff_photo.setImageBitmap(userPhoto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         BenificiaryaccNo=(EditText)view.findViewById(R.id.BenificiaryaccNo) ;
         confirmAccNo=(EditText)view.findViewById(R.id.confirmAccNo) ;
@@ -138,7 +160,14 @@ public class FundInfoFragment extends Fragment {
             }
             else {
                 if (BenificiaryaccNo.getText().toString().equals(bundle.getString("codeBenificiary"))){
+                    if (gone_ft_txt.getVisibility()==View.VISIBLE){
                         sendOtpForFundTransfer();
+                    }else {
+                        gone_ft_txt.setText("के तपाई आफ्नो खाता बाट रु "+sessionHandler.returnCash(transferAmt.getText().toString())+" रुपया "+ bundle.getString("nameBenificiary")+" को खातामा पठाउना चाहनु हुन्छ ?");
+                        gone_ft_txt.setVisibility(View.VISIBLE);
+                        befor_conf_ll.setVisibility(View.GONE);
+                    }
+
                 }else {
                     Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
                     intent.putExtra("msg","Beneficiary account number is not matched of previous beneficiary number that you searched");
@@ -148,6 +177,12 @@ public class FundInfoFragment extends Fragment {
 //                sendTransferPostRequest();
             }
         });
+
+        crossIV.setOnClickListener(view1 -> {
+
+        });
+
+        image.setOnClickListener(view1 -> confirmBack());
         return view;
     }
 
@@ -292,7 +327,13 @@ public class FundInfoFragment extends Fragment {
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                getActivity().onBackPressed();
+                if (befor_conf_ll.getVisibility()==View.VISIBLE){
+                    ((FundTransferActivity)getActivity()).backpress();
+                }else {
+                    befor_conf_ll.setVisibility(View.VISIBLE);
+                    gone_ft_txt.setVisibility(View.GONE);
+                }
+
                 Log.e("backpressed","bp");
                 builder.dismiss();
 

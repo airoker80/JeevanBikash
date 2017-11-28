@@ -147,7 +147,7 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
                 }
                 break;
             case R.id.fund_cross:
-                confirmBackCross();
+                confirmBack();
                 break;
             case R.id.image:
                 confirmBack();
@@ -236,6 +236,12 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
+                if (mid_ll.getVisibility()==View.VISIBLE){
+                    ((FundTransferActivity)getActivity()).backpress();
+                }else {
+                    mid_ll.setVisibility(View.VISIBLE);
+                    down_ll.setVisibility(View.GONE);
+                }
                 builder.dismiss();
 
             });
@@ -265,8 +271,14 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                getActivity().onBackPressed();
-                Log.e("backpressed", "bp");
+                if (mid_ll.getVisibility()==View.VISIBLE){
+                    ((FundTransferActivity)getActivity()).backpress();
+                    Log.e("backpressed", "bp");
+                }else {
+                    Log.e("backpressed", "gone");
+                    mid_ll.setVisibility(View.VISIBLE);
+                    down_ll.setVisibility(View.GONE);
+                }
                 builder.dismiss();
 
             });

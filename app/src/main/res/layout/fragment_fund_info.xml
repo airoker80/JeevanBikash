@@ -182,6 +182,7 @@
                         android:padding="@dimen/_4sdp"
                         android:background="@drawable/image_baground">
                         <ImageView
+                            android:id="@+id/ff_send_photo"
                             android:layout_alignParentRight="true"
                             android:layout_width="@dimen/_100sdp"
                             android:layout_height="@dimen/_100sdp"
@@ -317,6 +318,7 @@
                         android:padding="@dimen/_4sdp"
                         android:background="@drawable/image_baground">
                         <ImageView
+                            android:id="@+id/rec_ff_photo"
                             android:layout_alignParentRight="true"
                             android:layout_width="@dimen/_100sdp"
                             android:layout_height="@dimen/_100sdp"
@@ -327,6 +329,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/befor_conf_ll"
+                android:visibility="visible"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -457,6 +461,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
+            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                android:textColor="@color/white"
+                android:id="@+id/gone_ft_txt"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_25sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/befor_conf_ll"
+                android:text="Are you Sure to withdraw Rs 1000"
+                android:textSize="@dimen/_30sdp" />
+
         </RelativeLayout>
     </ScrollView>
     <LinearLayout
@@ -475,7 +493,7 @@
             android:background="#F9B847"
             app:srcCompat="@drawable/ic_check" />
         <ImageView
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_weight="1"
             android:id="@+id/crossIV"
             android:layout_width="match_parent"

@@ -247,8 +247,6 @@ public class CashwithdrawlFragment extends Fragment {
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
-                    JeevanBikashConfig.BASE_URL1="2";
-                    new Thread(task1).start();
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                     bundle.putString("withdraw_amount",withdrawlAmount.getText().toString());
@@ -299,16 +297,6 @@ public class CashwithdrawlFragment extends Fragment {
             }
         });
     }
-    Runnable task1 = () -> {
-        try {
-            sleep(2*60*1000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }finally {
-            Log.e("adas","dada");
-            JeevanBikashConfig.BASE_URL1="1";
-        }
-    };
 
 
     void confirmBack(){
@@ -334,6 +322,7 @@ public class CashwithdrawlFragment extends Fragment {
                     beforConfirmation.setVisibility(View.VISIBLE);
                     clientPin.setText("");
                     agentPin.setText("");
+                    withdrawlAmount.setText("");
                     gone_cw_txt.setVisibility(View.GONE);
                 }
 
@@ -371,6 +360,9 @@ public class CashwithdrawlFragment extends Fragment {
                 }else {
                     beforConfirmation.setVisibility(View.VISIBLE);
                     gone_cw_txt.setVisibility(View.GONE);
+                    withdrawlAmount.setText("");
+                    agentPin.setText("");
+                    clientPin.setText("");
                 }
                 builder.dismiss();
 
