@@ -43,6 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static java.lang.Thread.interrupted;
 import static java.lang.Thread.sleep;
 
 /**
@@ -70,15 +71,14 @@ public class WithdrawlTransactionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bundle =getArguments();
-//        new Thread(task1).start();
         apiSessionHandler = new ApiSessionHandler(getContext());
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
         sessionHandler = new SessionHandler(getContext());
         View view= inflater.inflate(R.layout.fragment_agent_client_transfer, container, false);
-
         act_otp_tf= (PinEntryEditText) view.findViewById(R.id.act_otp_tf);
 
+/*
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
@@ -90,6 +90,7 @@ public class WithdrawlTransactionFragment extends Fragment {
             }
             return false;
         });
+*/
 
         title=(CenturyGothicTextView)view.findViewById(R.id.title);
         name=(CenturyGothicTextView)view.findViewById(R.id.name);
@@ -120,6 +121,8 @@ public class WithdrawlTransactionFragment extends Fragment {
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         act_mem_photo=(ImageView)view.findViewById(R.id.act_mem_photo);
 
+
+
 /*        resend_otp.setOnClickListener(view1 -> {
             if (JeevanBikashConfig.BASE_URL1.equals("1")){
                 sendOtpForCashDeposit();
@@ -129,6 +132,9 @@ public class WithdrawlTransactionFragment extends Fragment {
         });*/
 
         title.setText("Cash Withdrawl");
+
+
+        new Thread(task1).start();
 
         try {
             String[] splitString = bundle.getString("photo").split(",");
@@ -166,7 +172,7 @@ public class WithdrawlTransactionFragment extends Fragment {
                         AlertDialog.BUTTON_POSITIVE);
 
                 btnAccept.setOnClickListener(v1 -> {
-                    if (JeevanBikashConfig.BASE_URL1.equals("1")){
+                    if (resend_otp.isEnabled()){
                         sendOtpForCashDeposit();
                     }else {
                         Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
@@ -226,6 +232,7 @@ public class WithdrawlTransactionFragment extends Fragment {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",jsonObject.getString("message"));
                         startActivity(intent);
+                        ((CashWithDrawlActivity)getActivity()).backpressed();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -263,7 +270,6 @@ public class WithdrawlTransactionFragment extends Fragment {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
                     JeevanBikashConfig.BASE_URL1="2";
-                    new Thread(task1).start();
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 //                    getOtpValue();
@@ -293,11 +299,14 @@ public class WithdrawlTransactionFragment extends Fragment {
     }
     Runnable task1 = () -> {
         try {
+            resend_otp.setClickable(false);
+            resend_otp.setEnabled(false);
             sleep(2*60*1000);
         }catch (InterruptedException e){
             e.printStackTrace();
         }finally {
-            JeevanBikashConfig.BASE_URL1="1";
+            resend_otp.setClickable(true);
+            resend_otp.setEnabled(true);
             Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
         }
     };
@@ -319,7 +328,7 @@ public class WithdrawlTransactionFragment extends Fragment {
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                getActivity().onBackPressed();
+                ((CashWithDrawlActivity)getActivity()).backpressed();
                 Log.e("backpressed","bp");
                 builder.dismiss();
 
@@ -361,5 +370,12 @@ public class WithdrawlTransactionFragment extends Fragment {
         });
 
         builder.show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        interrupted();
+        super.onDestroyView();
+
     }
 }

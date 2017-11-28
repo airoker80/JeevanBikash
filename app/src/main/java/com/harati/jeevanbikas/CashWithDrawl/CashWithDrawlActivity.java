@@ -37,11 +37,9 @@ public class CashWithDrawlActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Fragment fragment = null;
-        if (fragment instanceof  CashwithdrawlFragment){
-            Log.e("ada","csaww");
-            ((CashwithdrawlFragment) fragment).confirmBack();
-        }
+    }
+
+    public void backpressed() {
         super.onBackPressed();
     }
     public void setPage(String name) {

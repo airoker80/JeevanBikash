@@ -112,6 +112,8 @@ public class AgentClientTransferFragment extends Fragment {
         resend_otp=(ImageButton) view.findViewById(R.id.resend_otp);
 
 
+
+        new Thread(task1).start();
         try {
             String[] splitString = bundle.getString("photo").split(",");
             String base64Photo = splitString[1];
@@ -235,6 +237,7 @@ public class AgentClientTransferFragment extends Fragment {
                         JSONObject jsonObject = new JSONObject(jsonString);
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",jsonObject.getString("message"));
+                        ((CashDepositActivity)getActivity()).backpressed();
                         startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -308,8 +311,6 @@ public class AgentClientTransferFragment extends Fragment {
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
-                    JeevanBikashConfig.BASE_URL1="2";
-                    new Thread(task1).start();
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                     getOtpValue();
@@ -371,10 +372,14 @@ public class AgentClientTransferFragment extends Fragment {
 
     Runnable task1 = () -> {
         try {
+            resend_otp.setEnabled(false);
+            resend_otp.setClickable(false);
             sleep(2*60*1000);
         }catch (InterruptedException e){
             e.printStackTrace();
         }finally {
+            resend_otp.setEnabled(true);
+            resend_otp.setClickable(true);
             JeevanBikashConfig.BASE_URL1="1";
             Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
         }

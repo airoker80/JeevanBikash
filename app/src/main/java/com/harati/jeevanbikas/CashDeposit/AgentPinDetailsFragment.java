@@ -74,7 +74,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_agent_pin_details, container, false);
 
-        view.setFocusableInTouchMode(true);
+/*        view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
             Log.e("ad","dasd"+event.toString());
@@ -84,7 +84,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                 }
             }
             return false;
-        });
+        });*/
 
         apiSessionHandler = new ApiSessionHandler(getContext());
         sessionHandler = new SessionHandler(getContext());
@@ -120,7 +120,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         apd_mob_no.setText(bundle.getString("phone"));
 
 
-        gone_cd_txt.setText("के तपाई रु "+deposoitAmt.getText().toString()+" आफ्नो खाता मा जम्मा गर्न चाहनु  हुन्छ ?");
+        gone_cd_txt.setText("के तपाई रु "+sessionHandler.returnCash(deposoitAmt.getText().toString())+" आफ्नो खाता मा जम्मा गर्न चाहनु  हुन्छ ?");
 
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         cd_search_photo=(ImageView)view.findViewById(R.id.cd_search_photo);
@@ -159,24 +159,14 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                         gone_cd_txt.setVisibility(View.VISIBLE);
                         cd_before_conf.setVisibility(View.GONE);
                     }else {
-                        if (JeevanBikashConfig.BASE_URL1.equals("1")) {
                             sendOtpForCashDeposit();
-                        }else {
-                            Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
-                        }
                     }
 
 //                    sendOtpForCashDeposit();
                 }
                 break;
             case R.id.demand_cross:
-                if (gone_cd_txt.getVisibility()==View.VISIBLE){
-                    gone_cd_txt.setVisibility(View.GONE);
-                    cd_before_conf.setVisibility(View.VISIBLE);
-                }else {
-//                    startActivity(new Intent(getContext(), MainActivity.class));
-                    getActivity().onBackPressed();
-                }
+                confirmBackCross();
                 break;
         }
     }
@@ -284,10 +274,48 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                 if (cd_before_conf.getVisibility()==View.GONE){
                     cd_before_conf.setVisibility(View.VISIBLE);
                     gone_cd_txt.setVisibility(View.GONE);
+                    clientsPinEtxt.setText("");
+                    agentPin.setText("");
                 }else {
-                    getActivity().onBackPressed();
+                    ((CashDepositActivity)getActivity()).backpressed();
                 }
                 Log.e("backpressed","bp");
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
+
+    void confirmBackCross(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to Cancel??");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want Cancel?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                if (gone_cd_txt.getVisibility()==View.VISIBLE){
+                    gone_cd_txt.setVisibility(View.GONE);
+                    cd_before_conf.setVisibility(View.VISIBLE);
+                }else {
+//                    startActivity(new Intent(getContext(), MainActivity.class));
+                    ((CashDepositActivity)getActivity()).backpressed();
+                }
                 builder.dismiss();
 
             });

@@ -32,11 +32,14 @@ public class CashDepositActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
         setPage("home");
-        image.setOnClickListener(view -> onBackPressed());
+        image.setOnClickListener(view -> super.onBackPressed());
     }
 
     @Override
     public void onBackPressed() {
+    }
+
+    public void backpressed() {
         super.onBackPressed();
     }
 

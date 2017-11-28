@@ -18,6 +18,7 @@ import com.harati.jeevanbikas.BalanceEnquiry.EnquiryUserDetails;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteAdapter;
 import com.harati.jeevanbikas.Helper.AutoCompleteHelper.AutoCompleteModel;
+import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
@@ -52,6 +53,7 @@ public class LoanFragment extends Fragment {
     List<AutoCompleteModel> autoCompleteModelList = new ArrayList<>();
     ImageView imageView;
     AutoCompleteTextView input;
+    CenturyGothicTextView title;
     public LoanFragment() {
     }
 
@@ -69,12 +71,18 @@ public class LoanFragment extends Fragment {
         imageView = (ImageView)view.findViewById(R.id.imageView);
         input = (AutoCompleteTextView) view.findViewById(R.id.input);
 
+/*
         autoCompleteModelList.add(new AutoCompleteModel("Sameer","9843697320",R.drawable.ic_username));
         autoCompleteModelList.add(new AutoCompleteModel("arjun","9844400099",R.drawable.ic_username));
         autoCompleteModelList.add(new AutoCompleteModel("Binaya","9841012346",R.drawable.ic_username));
         input.setDropDownBackgroundResource(R.drawable.shape_transparent);
         AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(getContext(),autoCompleteModelList);
         input.setAdapter(autoCompleteAdapter);
+*/
+
+        title = (CenturyGothicTextView)view.findViewById(R.id.title);
+
+        title.setText("Loan Demand");
 
         imageView.setOnClickListener(view1 -> {
             if (input.getText().toString().equals("")){
@@ -115,7 +123,7 @@ public class LoanFragment extends Fragment {
                     args.putString("name",response.body().getName());
                     args.putString("office",response.body().getOffice());
 //                    args.putString("office",response.body().getCode());
-//                    args.putString("photo",response.body().getPhoto().toString() );
+                    args.putString("photo",response.body().getPhoto());
                     args.putString("phone",response.body().getMobileno());
                     fragment.setArguments(args);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

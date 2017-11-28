@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -93,10 +94,10 @@ public class LoanDetailFragment extends Fragment {
     Retrofit retrofit;
     ApiInterface apiInterface;
     List<String> stringList = new ArrayList<>();
-    ImageView submit;
+    ImageView submit,ld_photo;
     Spinner spinner;
     EditText loanAmt,ld_clients_pin;
-    CenturyGothicTextView loanNameDetails ,loanDtCode ,ldOffice;
+    CenturyGothicTextView loanNameDetails ,loanDtCode ,ldOffice,ld_mid;
     public LoanDetailFragment() {
     }
 
@@ -114,6 +115,7 @@ public class LoanDetailFragment extends Fragment {
         getLoanTypeList();
         Log.d("loantype", "=-" + loanDetailsModels.size());
         submit = (ImageView) view.findViewById(R.id.submit);
+        ld_photo = (ImageView) view.findViewById(R.id.ld_photo);
         loanAmt = (EditText) view.findViewById(R.id.loanAmt);
         ld_clients_pin = (EditText) view.findViewById(R.id.ld_clients_pin);
         spinner = (Spinner) view.findViewById(R.id.spinner);
@@ -125,10 +127,22 @@ public class LoanDetailFragment extends Fragment {
         loanNameDetails=(CenturyGothicTextView)view.findViewById(R.id.loanNameDetails);
         loanDtCode=(CenturyGothicTextView)view.findViewById(R.id.loanDtCode);
         ldOffice=(CenturyGothicTextView)view.findViewById(R.id.ldOffice);
+        ld_mid=(CenturyGothicTextView)view.findViewById(R.id.ld_mid);
 
         loanNameDetails.setText(bundle.getString("name"));
                 loanDtCode.setText(bundle.getString("code"));
         ldOffice.setText(bundle.getString("office"));
+        ld_mid.setText(bundle.getString("phone"));
+
+        try {
+            String[] splitString = bundle.getString("photo").split(",");
+            String base64Photo = splitString[1];
+            byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
+            Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            ld_photo.setImageBitmap(userPhoto);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         loanPhoto2.setOnClickListener(v -> {
             loanPhoto2.setTag("profile");
@@ -305,8 +319,12 @@ public class LoanDetailFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             cameraBitmap = (Bitmap) data.getExtras().get("data");//this is your bitmap image and now you can do whatever you want with this
-            setInImage.setImageBitmap(cameraBitmap);
-            encodeImagetoString(cameraBitmap);
+            Matrix matrix = new Matrix();
+
+            matrix.postRotate(90);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(cameraBitmap , 0, 0, cameraBitmap .getWidth(), cameraBitmap .getHeight(), matrix, true);
+            setInImage.setImageBitmap(rotatedBitmap);
+            encodeImagetoString(rotatedBitmap);
         }
         if (resultCode == Activity.RESULT_OK
                 && null != data) {
@@ -331,19 +349,23 @@ public class LoanDetailFragment extends Fragment {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 4;
                 Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-                setInImage.setImageBitmap(bitmap);
-                int height = bitmap.getHeight(), width = bitmap.getWidth();
+                Matrix matrix = new Matrix();
+
+                matrix.postRotate(90);
+                Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap , 0, 0, bitmap .getWidth(), bitmap .getHeight(), matrix, true);
+                setInImage.setImageBitmap(rotatedBitmap);
+                int height = rotatedBitmap.getHeight(), width = rotatedBitmap.getWidth();
 
                 if (height > 1280 && width > 960) {
                     imgFile = new File(imgPath);
                     Bitmap imgbitmap = BitmapFactory.decodeFile(imgPath, options);
-                    updatedImageBitmap = bitmap;
+                    updatedImageBitmap = rotatedBitmap;
 //                imgView.setImageBitmap(imgbitmap);
                     System.out.println("Need to resize");
                 } else {
                     imgFile = new File(imgPath);
 //                imgView.setImageBitmap(bitmap);
-                    updatedImageBitmap = bitmap;
+                    updatedImageBitmap = rotatedBitmap;
                     System.out.println("WORKS");
                 }
 
@@ -357,7 +379,8 @@ public class LoanDetailFragment extends Fragment {
                 options.inSampleSize = 3;
                 bitmap = BitmapFactory.decodeFile(imgPath,
                         options);
-                encodeImagetoString(bitmap);
+                encodeImagetoString(rotatedBitmap);
+
 
             } catch (Exception e) {
                 e.printStackTrace();

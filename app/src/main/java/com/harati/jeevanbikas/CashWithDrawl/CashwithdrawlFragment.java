@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.harati.jeevanbikas.CashDeposit.CashDepositActivity;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
@@ -100,7 +101,7 @@ public class CashwithdrawlFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_cashwithdrawl, container, false);
 
         view.setFocusableInTouchMode(true);
-        view.requestFocus();
+/*        view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
             if (view.hasFocusable()){
 
@@ -116,7 +117,7 @@ public class CashwithdrawlFragment extends Fragment {
                 view.requestFocus();
             }
             return false;
-        });
+        });*/
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         image= (ImageView)view.findViewById(R.id.image);
@@ -211,11 +212,9 @@ public class CashwithdrawlFragment extends Fragment {
                     if (beforConfirmation.getVisibility() == View.VISIBLE){
                         beforConfirmation.setVisibility(View.GONE);
                         gone_cw_txt.setVisibility(View.VISIBLE);
-                        gone_cw_txt.setText("के तपाई रु "+sessionHandler.returnCash(withdrawlAmount.getText().toString()) +".00 "+ " झिक्न   चाहनुहुन्छ ?");
+                        gone_cw_txt.setText("के तपाई रु "+sessionHandler.returnCash(withdrawlAmount.getText().toString()) + " झिक्न   चाहनुहुन्छ ?");
                     }else {
-                        if (JeevanBikashConfig.BASE_URL1.equals("1")){
                             sendOtpForCashDeposit();
-                        }
                     }
 //                    sendWithdrawequest(withdrawlAmount.getText().toString(),agentPin.getText().toString(),withdrawlRemark.getText().toString());
 
@@ -283,6 +282,8 @@ public class CashwithdrawlFragment extends Fragment {
                             withrwal_mobile.setError("Mobile No. is not registered");
                         }else if (jsonObject.getString("message").equals("Sorry,  Withdraw Amount must be greater than Rs. 1000.00")){
                             withdrawlAmount.setError("Must be greater than 1000.00");
+                        }else if (jsonObject.getString("message").equals("Failed to send OTP")){
+                            withdrawlAmount.setError("Must be greater than 1000.00");
                         }
                     } catch (Exception e) {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
@@ -328,9 +329,11 @@ public class CashwithdrawlFragment extends Fragment {
 
             btnAccept.setOnClickListener(v -> {
                 if (beforConfirmation.getVisibility()==View.VISIBLE){
-                    getActivity().onBackPressed();
+                    ((CashWithDrawlActivity)getActivity()).backpressed();
                 }else {
                     beforConfirmation.setVisibility(View.VISIBLE);
+                    clientPin.setText("");
+                    agentPin.setText("");
                     gone_cw_txt.setVisibility(View.GONE);
                 }
 
@@ -364,7 +367,7 @@ public class CashwithdrawlFragment extends Fragment {
 
             btnAccept.setOnClickListener(v -> {
                 if (beforConfirmation.getVisibility()==View.VISIBLE){
-                    getActivity().onBackPressed();
+                    ((CashWithDrawlActivity)getActivity()).backpressed();
                 }else {
                     beforConfirmation.setVisibility(View.VISIBLE);
                     gone_cw_txt.setVisibility(View.GONE);

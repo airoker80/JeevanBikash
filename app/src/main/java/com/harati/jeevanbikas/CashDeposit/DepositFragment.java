@@ -52,7 +52,7 @@ public class DepositFragment extends Fragment implements View.OnClickListener{
     SessionHandler sessionHandler ;
 
     List<AutoCompleteModel> autoCompleteModelList = new ArrayList<>();
-     ImageView imageView,deposit_cross;
+     ImageView imageView,deposit_cross,image;
     AutoCompleteTextView input;
     public DepositFragment() {
     }
@@ -70,6 +70,8 @@ public class DepositFragment extends Fragment implements View.OnClickListener{
 
         imageView = (ImageView)view.findViewById(R.id.imageView);
         deposit_cross = (ImageView)view.findViewById(R.id.deposit_cross);
+        image = (ImageView)view.findViewById(R.id.image);
+
         input = (AutoCompleteTextView) view.findViewById(R.id.input);
 
         autoCompleteModelList.add(new AutoCompleteModel("Sameer","9843697320",R.drawable.ic_username));
@@ -80,6 +82,7 @@ public class DepositFragment extends Fragment implements View.OnClickListener{
         input.setAdapter(autoCompleteAdapter);
         imageView.setOnClickListener(this);
         deposit_cross.setOnClickListener(this);
+        image.setOnClickListener(this);
         return view;
     }
 
@@ -103,6 +106,9 @@ public class DepositFragment extends Fragment implements View.OnClickListener{
 
             case R.id.deposit_cross:
                 startActivity(new Intent(getContext(), MainActivity.class));
+                break;
+                case R.id.image:
+                    ((CashDepositActivity)getActivity()).backpressed();
                 break;
         }
 

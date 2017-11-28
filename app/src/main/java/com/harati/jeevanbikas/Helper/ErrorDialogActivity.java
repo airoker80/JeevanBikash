@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.harati.jeevanbikas.CashDeposit.CashDepositActivity;
 import com.harati.jeevanbikas.R;
 
 
@@ -21,7 +22,11 @@ public class ErrorDialogActivity extends AppCompatActivity {
         try {
             Intent intent = getIntent();
             String msg = intent.getExtras().getString("msg");
+            String tag = intent.getExtras().getString("tag");
             msgDetail.setText(msg);
+            if (tag.equals("ACTF")){
+                super.onBackPressed();
+            }
     }catch (Exception e){
         e.printStackTrace();
     }

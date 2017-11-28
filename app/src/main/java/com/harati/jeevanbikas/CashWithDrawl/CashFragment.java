@@ -108,7 +108,7 @@ public class CashFragment extends Fragment {
             }
         });
 
-        image.setOnClickListener(view1 -> getActivity().onBackPressed());
+        image.setOnClickListener(view1 -> ((CashWithDrawlActivity)getActivity()).backpressed());
         return view;
     }
 
