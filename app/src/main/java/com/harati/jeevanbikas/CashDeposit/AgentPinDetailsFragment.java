@@ -3,10 +3,13 @@ package com.harati.jeevanbikas.CashDeposit;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,12 +54,13 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
     ApiInterface apiInterface;
     SessionHandler sessionHandler;
     ApiSessionHandler apiSessionHandler;
-    ImageView agent_tick,demand_cross;
+    ImageView agent_tick,demand_cross,cd_search_photo,image;
     String code,name,office ,photo,clientPin,clientCode;
     EditText agentPin;
     CGEditText deposoitAmt,deposoitRemarks,clientsPinEtxt,cd_mobile_no;
+    LinearLayout cd_before_conf;
 
-    CenturyGothicTextView depdetailsName,depositCode ,depositBranch,apd_mob_no;
+    CenturyGothicTextView depdetailsName,depositCode ,depositBranch,apd_mob_no,gone_cd_txt;
     Bundle bundle;
 
     public AgentPinDetailsFragment() {
@@ -100,10 +105,13 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         cd_mobile_no=(CGEditText)view.findViewById(R.id.cd_mobile_no);
 
         apd_mob_no=(CenturyGothicTextView) view.findViewById(R.id.apd_mob_no);
+        gone_cd_txt=(CenturyGothicTextView) view.findViewById(R.id.gone_cd_txt);
 
         depdetailsName=(CenturyGothicTextView)view.findViewById(R.id.depdetailsName);
         depositCode=(CenturyGothicTextView)view.findViewById(R.id.depositCode);
         depositBranch=(CenturyGothicTextView)view.findViewById(R.id.depositBranch);
+
+        cd_before_conf=(LinearLayout) view.findViewById(R.id.cd_before_conf);
 
 
         depdetailsName.setText(bundle.getString("name"));
@@ -111,9 +119,29 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         depositBranch.setText(bundle.getString("office"));
         apd_mob_no.setText(bundle.getString("phone"));
 
+
+        gone_cd_txt.setText("के तपाई रु "+deposoitAmt.getText().toString()+" आफ्नो खाता मा जम्मा गर्न चाहनु  हुन्छ ?");
+
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
+        cd_search_photo=(ImageView)view.findViewById(R.id.cd_search_photo);
+        image=(ImageView)view.findViewById(R.id.image);
+
         agent_tick.setOnClickListener(this);
         demand_cross.setOnClickListener(this);
+
+        try {
+            String[] splitString = bundle.getString("photo").split(",");
+            String base64Photo = splitString[1];
+            byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
+            Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            cd_search_photo.setImageBitmap(userPhoto);
+
+            Log.e("photo","--->"+photo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        image.setOnClickListener(view1 -> confirmBack());
         return  view;
     }
 
@@ -127,17 +155,28 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     intent.putExtra("msg","Zero amount cannot be deposited");
                     startActivity(intent);
                 }else {
-                    if (JeevanBikashConfig.BASE_URL1.equals("1")) {
-                        sendOtpForCashDeposit();
+                    if (gone_cd_txt.getVisibility()==View.GONE){
+                        gone_cd_txt.setVisibility(View.VISIBLE);
+                        cd_before_conf.setVisibility(View.GONE);
                     }else {
-                        Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
+                        if (JeevanBikashConfig.BASE_URL1.equals("1")) {
+                            sendOtpForCashDeposit();
+                        }else {
+                            Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
 //                    sendOtpForCashDeposit();
                 }
                 break;
             case R.id.demand_cross:
-                startActivity(new Intent(getContext(), MainActivity.class));
+                if (gone_cd_txt.getVisibility()==View.VISIBLE){
+                    gone_cd_txt.setVisibility(View.GONE);
+                    cd_before_conf.setVisibility(View.VISIBLE);
+                }else {
+//                    startActivity(new Intent(getContext(), MainActivity.class));
+                    getActivity().onBackPressed();
+                }
                 break;
         }
     }
@@ -242,7 +281,12 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                getActivity().onBackPressed();
+                if (cd_before_conf.getVisibility()==View.GONE){
+                    cd_before_conf.setVisibility(View.VISIBLE);
+                    gone_cd_txt.setVisibility(View.GONE);
+                }else {
+                    getActivity().onBackPressed();
+                }
                 Log.e("backpressed","bp");
                 builder.dismiss();
 

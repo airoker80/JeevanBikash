@@ -166,7 +166,7 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
                     args.putString("office",response.body().getOffice());
 //                    args.putString("mobileno",response.body().getMobileno());
 //                    args.putString("office",response.body().getCode());
-//                    args.putString("photo",response.body().getOffice());
+                    args.putString("photo",response.body().getPhoto());
                     args.putString("phone",response.body().getMobileno());
                     fragment.setArguments(args);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

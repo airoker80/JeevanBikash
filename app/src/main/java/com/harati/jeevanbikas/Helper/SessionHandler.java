@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class SessionHandler {
-    ProgressDialog progress ;
+    ProgressDialog progress;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Context _context;
@@ -29,34 +29,34 @@ public class SessionHandler {
     public static final String PREFS_NAME = "LoginPrefs";
     private static final String IS_USER_LOGIN = "IsUserLoggedIn";
 
-    private static final String AGENT_CODE ="agent_code";
-    private static final String USERNAME ="user_name";
-    private static final String BRANCH_OFFICE ="branch_office";
-    private static final String PASSWORD_CHANGE_RQD ="password_change_rqd";
-    private static final String PIN_CHANGE_RQD ="pin_change_rqd";
-    private static final String AGENT_TOKEN ="agent_token";
-    private static final String AGENT_PIN ="agent_pin";
-    private static final String AGENT_URL ="agent_url";
-    private static final String AGENT_SERIAL_NO ="agent_serial_no";
+    private static final String AGENT_CODE = "agent_code";
+    private static final String USERNAME = "user_name";
+    private static final String BRANCH_OFFICE = "branch_office";
+    private static final String PASSWORD_CHANGE_RQD = "password_change_rqd";
+    private static final String PIN_CHANGE_RQD = "pin_change_rqd";
+    private static final String AGENT_TOKEN = "agent_token";
+    private static final String AGENT_PIN = "agent_pin";
+    private static final String AGENT_URL = "agent_url";
+    private static final String AGENT_SERIAL_NO = "agent_serial_no";
 
 
-    public static  final  String API_JSON ="api_json";
+    public static final String API_JSON = "api_json";
 
-    public void  saveApiJson(String apiJson){
-        editor.putString(API_JSON,apiJson);
+    public void saveApiJson(String apiJson) {
+        editor.putString(API_JSON, apiJson);
         editor.commit();
     }
 
-    public void saveUrl(String agentUrl){
-        editor.putString("agent_url",agentUrl);
+    public void saveUrl(String agentUrl) {
+        editor.putString("agent_url", agentUrl);
         editor.commit();
     }
 
-    public void saveAgentUrlInfo(String agentSerialNo){
+    public void saveAgentUrlInfo(String agentSerialNo) {
 //        editor.putString(AGENT_URL,agentUrl);
-        editor.putString(AGENT_SERIAL_NO,agentSerialNo);
+        editor.putString(AGENT_SERIAL_NO, agentSerialNo);
         editor.commit();
-        Log.d("save","saved");
+        Log.d("save", "saved");
     }
 
     public SessionHandler(Context context) {
@@ -66,16 +66,16 @@ public class SessionHandler {
     }
 
     public void saveLoginInformation(String agentCode, String username,
-                                     String branchoffice,boolean passwordChangeReqd,
-                                     boolean pinChangeReqd,String token,String agentPin){
+                                     String branchoffice, boolean passwordChangeReqd,
+                                     boolean pinChangeReqd, String token, String agentPin) {
         editor.putBoolean(IS_USER_LOGIN, true);
         editor.putBoolean(PASSWORD_CHANGE_RQD, passwordChangeReqd);
         editor.putBoolean(PIN_CHANGE_RQD, pinChangeReqd);
         editor.putString(AGENT_CODE, agentCode);
-        editor.putString(USERNAME,username);
-        editor.putString(BRANCH_OFFICE,branchoffice);
-        editor.putString(AGENT_TOKEN,token);
-        editor.putString(AGENT_PIN,agentPin);
+        editor.putString(USERNAME, username);
+        editor.putString(BRANCH_OFFICE, branchoffice);
+        editor.putString(AGENT_TOKEN, token);
+        editor.putString(AGENT_PIN, agentPin);
         editor.commit();
     }
 
@@ -83,25 +83,32 @@ public class SessionHandler {
         return pref.getBoolean(IS_USER_LOGIN, false);
     }
 
-    public String  getInfo(){
-        Log.d("info","------>"+ pref.getString(USERNAME,"") +"<--------------");
-        return  pref.getString(USERNAME,"");
+    public String getInfo() {
+        Log.d("info", "------>" + pref.getString(USERNAME, "") + "<--------------");
+        return pref.getString(USERNAME, "");
     }
 
-    public String getAgentCode(){
-        return  pref.getString(AGENT_CODE,"");
+    public String getAgentCode() {
+        return pref.getString(AGENT_CODE, "");
     }
-    public String getAgentUrl(){return  pref.getString(AGENT_URL,"")+ "api/v1/";}
-    public String getAgentSerialNo(){return  pref.getString(AGENT_SERIAL_NO,"");
+
+    public String getAgentUrl() {
+        return pref.getString(AGENT_URL, "") + "api/v1/";
+    }
+
+    public String getAgentSerialNo() {
+        return pref.getString(AGENT_SERIAL_NO, "");
     }
 
 
-    public String getAgentToken(){
-        return  pref.getString(AGENT_TOKEN,"");
+    public String getAgentToken() {
+        return pref.getString(AGENT_TOKEN, "");
     }
-    public String getBranchOffice(){
-        return  pref.getString(BRANCH_OFFICE,"");
+
+    public String getBranchOffice() {
+        return pref.getString(BRANCH_OFFICE, "");
     }
+
     public void logoutUser() {
         editor.clear();
         editor.commit();
@@ -113,13 +120,14 @@ public class SessionHandler {
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         _context.startActivity(i);
     }
+
     public void showProgressDialog(String message) {
 
-        Log.i("","showProgressDialog");
+        Log.i("", "showProgressDialog");
         progress = new ProgressDialog(_context);
-        if(!progress.isShowing()){
-            SpannableString titleMsg= new SpannableString("Processing");
-            titleMsg.setSpan(new ForegroundColorSpan(Color.BLACK),0,titleMsg.length(),0);
+        if (!progress.isShowing()) {
+            SpannableString titleMsg = new SpannableString("Processing");
+            titleMsg.setSpan(new ForegroundColorSpan(Color.BLACK), 0, titleMsg.length(), 0);
             progress.setTitle(titleMsg);
             progress.setMessage(message);
             progress.setCancelable(false);
@@ -129,12 +137,45 @@ public class SessionHandler {
     }
 
     public void hideProgressDialog() {
-        Log.i("","hideProgressDialog");
-        if(progress !=null){
-            if(progress.isShowing()){
+        Log.i("", "hideProgressDialog");
+        if (progress != null) {
+            if (progress.isShowing()) {
                 progress.dismiss();
             }
         }
 
+    }
+
+
+    public String returnCash(String cash) {
+        String returningCash = "";
+        StringBuilder stringBuilder = new StringBuilder(cash);
+        switch (cash.length()) {
+            case 1:
+                returningCash = cash;
+                break;
+            case 2:
+                returningCash = cash;
+                break;
+            case 3:
+                stringBuilder.insert(1,",");
+                returningCash = stringBuilder.toString();
+                break;
+            case 4:
+                stringBuilder.insert(1,",");
+                returningCash = stringBuilder.toString();
+                break;
+            case 5:
+                stringBuilder.insert(2,",");
+                returningCash = stringBuilder.toString();
+                break;
+            case 6:
+                stringBuilder.insert(1,",");
+                stringBuilder.insert(4,",");
+                returningCash = stringBuilder.toString();
+                break;
+
+        }
+        return returningCash;
     }
 }

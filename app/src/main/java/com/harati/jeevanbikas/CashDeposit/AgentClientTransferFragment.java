@@ -3,18 +3,24 @@ package com.harati.jeevanbikas.CashDeposit;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CGEditText;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
@@ -56,9 +62,10 @@ public class AgentClientTransferFragment extends Fragment {
     ApiInterface apiInterface;
     SessionHandler sessionHandler ;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,sendOtpAgain,cdt_mob_no,title;
-    CGEditText act_otp_tf;
-    ImageView agent_client_tick,demand_cross;
+    PinEntryEditText act_otp_tf;
+    ImageView agent_client_tick,demand_cross,act_mem_photo;
     Bundle bundle;
+    ImageButton resend_otp;
     public AgentClientTransferFragment() {
         // Required empty public constructor
     }
@@ -85,7 +92,7 @@ public class AgentClientTransferFragment extends Fragment {
         cdt_mob_no=(CenturyGothicTextView)view.findViewById(R.id.cdt_mob_no);
         title=(CenturyGothicTextView)view.findViewById(R.id.title);
 
-        act_otp_tf=(CGEditText) view.findViewById(R.id.act_otp_tf);
+        act_otp_tf=(PinEntryEditText) view.findViewById(R.id.act_otp_tf);
 
         title.setText("Cash Deposit");
 
@@ -100,6 +107,53 @@ public class AgentClientTransferFragment extends Fragment {
 
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
+        act_mem_photo=(ImageView)view.findViewById(R.id.act_mem_photo);
+
+        resend_otp=(ImageButton) view.findViewById(R.id.resend_otp);
+
+
+        try {
+            String[] splitString = bundle.getString("photo").split(",");
+            String base64Photo = splitString[1];
+            byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
+            Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            act_mem_photo.setImageBitmap(userPhoto);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        resend_otp.setOnClickListener(view1 -> {
+            final AlertDialog builder = new AlertDialog.Builder(getContext())
+                    .setPositiveButton("OK", null)
+                    .setNegativeButton("CANCEL", null)
+                    .setTitle("Send Otp request Again?")
+                    .create();
+
+
+
+            builder.setOnShowListener(dialog -> {
+
+                final Button btnAccept = builder.getButton(
+                        AlertDialog.BUTTON_POSITIVE);
+
+                btnAccept.setOnClickListener(v1 -> {
+                    if (JeevanBikashConfig.BASE_URL1.equals("1")){
+                        sendDepositRequest();
+                    }else {
+                        Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
+                    }
+
+                    builder.dismiss();
+
+                });
+
+                final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+                btnDecline.setOnClickListener(v1 -> builder.dismiss()
+                );
+            });
+            builder.show();
+        });
         agent_client_tick.setOnClickListener(v -> {
 
             if (!act_otp_tf.getText().equals("")){
@@ -109,7 +163,7 @@ public class AgentClientTransferFragment extends Fragment {
             }
 //                startActivity(new Intent(getContext(), DialogActivity.class));
         });
-        demand_cross.setOnClickListener(view1 -> {startActivity(new Intent(getContext(), MainActivity.class));});
+        demand_cross.setOnClickListener(view1 -> confirmBackCross());
 
         sendOtpAgain.setOnClickListener(v -> {
             final AlertDialog builder = new AlertDialog.Builder(getContext())
@@ -224,9 +278,7 @@ public class AgentClientTransferFragment extends Fragment {
 
             final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
 
-            btnDecline.setOnClickListener(v -> {
-                        builder.dismiss();
-                    }
+            btnDecline.setOnClickListener(v -> builder.dismiss()
             );
         });
         builder.show();
@@ -286,6 +338,37 @@ public class AgentClientTransferFragment extends Fragment {
             }
         });
     }
+
+    void confirmBackCross(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back to dashboard?");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want Cancel?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                startActivity(new Intent(getContext(),MainActivity.class));
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
+
     Runnable task1 = () -> {
         try {
             sleep(2*60*1000);

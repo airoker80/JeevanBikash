@@ -181,7 +181,7 @@
                     </LinearLayout>
 
                     <RelativeLayout
-                        android:visibility="invisible"
+                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3">
@@ -192,6 +192,7 @@
                             android:padding="@dimen/_4sdp"
                             android:background="@drawable/image_baground">
                             <ImageView
+                                android:id="@+id/act_mem_photo"
                                 android:layout_alignParentRight="true"
                                 android:layout_width="@dimen/_100sdp"
                                 android:layout_height="@dimen/_100sdp"
@@ -527,7 +528,6 @@
                             android:layout_height="wrap_content">
 
                             <com.alimuzaffar.lib.pin.PinEntryEditText
-                                android:inputType="numberPassword"
                                 android:id="@+id/act_otp_tf"
                                 android:layout_width="@dimen/_250sdp"
                                 android:layout_height="wrap_content"
@@ -535,6 +535,10 @@
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/white"
                                 android:hint="Enter OTP Here"
+                                android:inputType="numberPassword"
+                                android:maxLength="4"
+                                android:paddingTop="@dimen/_8sdp"
+                                android:textColor="@color/white"
                                 android:textColorHint="@color/white" />
                             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                                 android:visibility="gone"

@@ -125,7 +125,7 @@ public class DepositFragment extends Fragment implements View.OnClickListener{
                     args.putString("name",response.body().getName());
                     args.putString("office",response.body().getOffice());
 //                    args.putString("office",response.body().getCode());
-//                    args.putString("photo",response.body().getPhoto().toString());
+                    args.putString("photo",response.body().getPhoto());
                     args.putString("phone",response.body().getMobileno());
                     fragment.setArguments(args);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

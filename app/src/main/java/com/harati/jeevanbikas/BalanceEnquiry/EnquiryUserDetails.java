@@ -2,11 +2,14 @@ package com.harati.jeevanbikas.BalanceEnquiry;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,7 +113,15 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         be_mob_no.setText(bundle.getString("phone"));
 
         try {
-            Picasso.with(getContext()).load(photo).into(enquiryUserPhoto);
+//            Picasso.with(getContext()).load(photo).into(enquiryUserPhoto);
+            String[] splitString = photo.split(",");
+            String base64Photo = splitString[1];
+            byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
+            Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            enquiryUserPhoto.setImageBitmap(userPhoto);
+
+            Log.e("photo","--->"+photo);
+
         }catch (Exception e){
             e.printStackTrace();
         }

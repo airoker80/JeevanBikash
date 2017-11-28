@@ -3,9 +3,13 @@ package com.harati.jeevanbikas.CashWithDrawl;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -55,7 +59,7 @@ public class WithdrawlTransactionFragment extends Fragment {
     SessionHandler sessionHandler ;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain,cdt_mob_no;
     PinEntryEditText act_otp_tf;
-    ImageView agent_client_tick,demand_cross;
+    ImageView agent_client_tick,demand_cross,act_mem_photo;
     Bundle bundle;
     public WithdrawlTransactionFragment() {
         // Required empty public constructor
@@ -67,7 +71,6 @@ public class WithdrawlTransactionFragment extends Fragment {
                              Bundle savedInstanceState) {
         bundle =getArguments();
 //        new Thread(task1).start();
-        Log.d("bundle","==00--+>"+bundle.toString());
         apiSessionHandler = new ApiSessionHandler(getContext());
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
@@ -106,7 +109,7 @@ public class WithdrawlTransactionFragment extends Fragment {
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
         cdt_mob_no.setText(bundle.getString("withdraw_mobile"));
-        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("withdraw_amount")+".00");
+        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+sessionHandler.returnCash(bundle.getString("withdraw_amount"))+".00");
 
         amountType.setText("Withdrawl Amount");
 
@@ -115,16 +118,27 @@ public class WithdrawlTransactionFragment extends Fragment {
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         resend_otp=(ImageButton) view.findViewById(R.id.resend_otp);
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
+        act_mem_photo=(ImageView)view.findViewById(R.id.act_mem_photo);
 
-        resend_otp.setOnClickListener(view1 -> {
+/*        resend_otp.setOnClickListener(view1 -> {
             if (JeevanBikashConfig.BASE_URL1.equals("1")){
                 sendOtpForCashDeposit();
             }else {
                 Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         title.setText("Cash Withdrawl");
+
+        try {
+            String[] splitString = bundle.getString("photo").split(",");
+            String base64Photo = splitString[1];
+            byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
+            Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            act_mem_photo.setImageBitmap(userPhoto);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         agent_client_tick.setOnClickListener(v -> {
             if (act_otp_tf.getText().toString().equals("")){
@@ -135,9 +149,9 @@ public class WithdrawlTransactionFragment extends Fragment {
 
 //                startActivity(new Intent(getContext(), DialogActivity.class))
         });
-        demand_cross.setOnClickListener(view1 -> {startActivity(new Intent(getContext(), MainActivity.class));});
+        demand_cross.setOnClickListener(view1 -> confirmBackCross());
 
-        sendOtpAgain.setOnClickListener(v -> {
+        resend_otp.setOnClickListener(v -> {
             final AlertDialog builder = new AlertDialog.Builder(getContext())
                     .setPositiveButton("OK", null)
                     .setNegativeButton("CANCEL", null)
@@ -206,11 +220,8 @@ public class WithdrawlTransactionFragment extends Fragment {
                     startActivity(intent);
                 }else {
                     try {
-
                         String jsonString = response.errorBody().string();
-
                         Log.d("here ","--=>"+jsonString);
-
                         JSONObject jsonObject = new JSONObject(jsonString);
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",jsonObject.getString("message"));
@@ -310,6 +321,36 @@ public class WithdrawlTransactionFragment extends Fragment {
             btnAccept.setOnClickListener(v -> {
                 getActivity().onBackPressed();
                 Log.e("backpressed","bp");
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
+
+    void confirmBackCross(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back to dashboard?");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want Cancel?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                startActivity(new Intent(getContext(),MainActivity.class));
                 builder.dismiss();
 
             });

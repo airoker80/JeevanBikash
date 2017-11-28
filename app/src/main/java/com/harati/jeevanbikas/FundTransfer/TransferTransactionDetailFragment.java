@@ -232,9 +232,7 @@ public class TransferTransactionDetailFragment extends Fragment {
 
             final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
 
-            btnDecline.setOnClickListener(v -> {
-                        builder.dismiss();
-                    }
+            btnDecline.setOnClickListener(v -> builder.dismiss()
             );
         });
         builder.show();

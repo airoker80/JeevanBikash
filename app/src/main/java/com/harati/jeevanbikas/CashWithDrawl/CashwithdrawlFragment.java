@@ -98,7 +98,26 @@ public class CashwithdrawlFragment extends Fragment {
         sessionHandler = new SessionHandler(getContext());
 
         View view= inflater.inflate(R.layout.fragment_cashwithdrawl, container, false);
+
         view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+            if (view.hasFocusable()){
+
+                Log.e("focus","==="+String.valueOf(view.findFocus()));
+                Log.e("ad","dasd"+event.toString());
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        confirmBack();
+                    }
+                }
+            }else {
+                view.setFocusableInTouchMode(true);
+                view.requestFocus();
+            }
+            return false;
+        });
+
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         image= (ImageView)view.findViewById(R.id.image);
         crossIV= (ImageView)view.findViewById(R.id.crossIV);
@@ -107,32 +126,15 @@ public class CashwithdrawlFragment extends Fragment {
 
         image.setOnClickListener(view1 -> confirmBack());
         crossIV.setOnClickListener(view1 -> {
-            if (beforConfirmation.getVisibility()==View.VISIBLE){
+            confirmBackCross();
+/*            if (beforConfirmation.getVisibility()==View.VISIBLE){
                 getActivity().onBackPressed();
             }else {
                 beforConfirmation.setVisibility(View.VISIBLE);
                 gone_cw_txt.setVisibility(View.GONE);
-            }
+            }*/
 //            startActivity(new Intent(getContext(),MainActivity.class));
         });
-        view.requestFocus();
-        view.setOnKeyListener((v, keyCode, event) -> {
-                    if (view.hasFocusable()){
-
-                        Log.e("focus","==="+String.valueOf(view.findFocus()));
-                        Log.e("ad","dasd"+event.toString());
-                        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                                confirmBack();
-                            }
-                        }
-                    }else {
-                        view.setFocusableInTouchMode(true);
-                        view.requestFocus();
-                    }
-                    return false;
-                } );
-
         submit = (ImageView)view.findViewById(R.id.submit);
         withdrawlAmount=(EditText)view.findViewById(R.id.withdrawlAmount);
         agentPin=(EditText)view.findViewById(R.id.agentPin);
@@ -173,6 +175,12 @@ public class CashwithdrawlFragment extends Fragment {
 
         withrwal_mobile.setText(bundle.getString("phone"));
 
+
+        Log.e("currency",
+                sessionHandler.returnCash("1000")+
+                sessionHandler.returnCash("10000")+
+                sessionHandler.returnCash("100000")
+        );
 //        Picasso.with(getContext()).load(photo).into(imgUser);
 
         try {
@@ -203,7 +211,7 @@ public class CashwithdrawlFragment extends Fragment {
                     if (beforConfirmation.getVisibility() == View.VISIBLE){
                         beforConfirmation.setVisibility(View.GONE);
                         gone_cw_txt.setVisibility(View.VISIBLE);
-                        gone_cw_txt.setText("के तपाई रु "+withdrawlAmount.getText().toString() + " झिक्न   चाहनुहुन्छ ?");
+                        gone_cw_txt.setText("के तपाई रु "+sessionHandler.returnCash(withdrawlAmount.getText().toString()) +".00 "+ " झिक्न   चाहनुहुन्छ ?");
                     }else {
                         if (JeevanBikashConfig.BASE_URL1.equals("1")){
                             sendOtpForCashDeposit();
@@ -319,7 +327,13 @@ public class CashwithdrawlFragment extends Fragment {
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                getActivity().onBackPressed();
+                if (beforConfirmation.getVisibility()==View.VISIBLE){
+                    getActivity().onBackPressed();
+                }else {
+                    beforConfirmation.setVisibility(View.VISIBLE);
+                    gone_cw_txt.setVisibility(View.GONE);
+                }
+
                 Log.e("backpressed","bp");
                 builder.dismiss();
 
@@ -332,6 +346,47 @@ public class CashwithdrawlFragment extends Fragment {
 
         builder.show();
     }
+    void confirmBackCross(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to Cancel??");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want Cancel?")
+                .create();
 
+        builder.setOnShowListener(dialog -> {
 
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                if (beforConfirmation.getVisibility()==View.VISIBLE){
+                    getActivity().onBackPressed();
+                }else {
+                    beforConfirmation.setVisibility(View.VISIBLE);
+                    gone_cw_txt.setVisibility(View.GONE);
+                }
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
+
+    @Override
+    public void onResume() {
+        withdrawlAmount.setText("");
+        agentPin.setText("");
+        clientPin.setText("");
+        withdrawlRemark.setText("");
+        super.onResume();
+    }
 }
