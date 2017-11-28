@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static java.lang.Thread.interrupted;
 import static java.lang.Thread.sleep;
 
 /**
@@ -45,6 +47,7 @@ import static java.lang.Thread.sleep;
  */
 public class TransferTransactionDetailFragment extends Fragment {
 
+    ImageButton resend_otp;
     public String otpValue="";
     ApiSessionHandler apiSessionHandler;
     Retrofit retrofit;
@@ -105,6 +108,8 @@ public class TransferTransactionDetailFragment extends Fragment {
         branchNameBeneficiary.setText(bundle.getString("officeBenificiary"));
 
 //        sendOtpForFundTransfer();
+        resend_otp=(ImageButton) view.findViewById(R.id.resend_otp);
+
         agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
         demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
         agent_client_tick.setOnClickListener(v -> {
@@ -118,6 +123,7 @@ public class TransferTransactionDetailFragment extends Fragment {
         });
         demand_cross.setOnClickListener(view1 -> startActivity(new Intent(getContext(), MainActivity.class)));
 
+        new Thread(task1).run();
         sendOtpAgain.setOnClickListener(v -> {
             final AlertDialog builder = new AlertDialog.Builder(getContext())
                     .setPositiveButton("OK", null)
@@ -150,6 +156,8 @@ public class TransferTransactionDetailFragment extends Fragment {
             });
             builder.show();
         });
+
+        resend_otp.setOnClickListener(view1 -> sendOtpForFundTransfer());
         return view;
     }
 
@@ -294,12 +302,22 @@ public class TransferTransactionDetailFragment extends Fragment {
     }
     Runnable task1 = () -> {
         try {
+            resend_otp.setEnabled(false);
+            resend_otp.setClickable(false);
             sleep(2*60*1000);
         }catch (InterruptedException e){
             e.printStackTrace();
         }finally {
+            resend_otp.setEnabled(true);
+            resend_otp.setClickable(true);
             JeevanBikashConfig.BASE_URL1="1";
             Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
         }
     };
+
+    @Override
+    public void onDestroyView() {
+        interrupted();
+        super.onDestroyView();
+    }
 }

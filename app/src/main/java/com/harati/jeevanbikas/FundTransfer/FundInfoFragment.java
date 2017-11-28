@@ -138,14 +138,7 @@ public class FundInfoFragment extends Fragment {
             }
             else {
                 if (BenificiaryaccNo.getText().toString().equals(bundle.getString("codeBenificiary"))){
-
-//                    sendOtpForFundTransfer();
-                    if (JeevanBikashConfig.BASE_URL1.equals("1")){
                         sendOtpForFundTransfer();
-                    }else {
-                        Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
-                    }
-
                 }else {
                     Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
                     intent.putExtra("msg","Beneficiary account number is not matched of previous beneficiary number that you searched");
@@ -235,8 +228,6 @@ public class FundInfoFragment extends Fragment {
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
-                    JeevanBikashConfig.BASE_URL1="2";
-                    new Thread(task1).start();
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                     Fragment fragment= new TransferTransactionDetailFragment();
