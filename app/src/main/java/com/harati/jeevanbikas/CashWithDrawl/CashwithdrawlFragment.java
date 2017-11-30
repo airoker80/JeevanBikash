@@ -322,7 +322,6 @@ public class CashwithdrawlFragment extends Fragment {
                     beforConfirmation.setVisibility(View.VISIBLE);
                     clientPin.setText("");
                     agentPin.setText("");
-                    withdrawlAmount.setText("");
                     gone_cw_txt.setVisibility(View.GONE);
                 }
 
@@ -360,7 +359,6 @@ public class CashwithdrawlFragment extends Fragment {
                 }else {
                     beforConfirmation.setVisibility(View.VISIBLE);
                     gone_cw_txt.setVisibility(View.GONE);
-                    withdrawlAmount.setText("");
                     agentPin.setText("");
                     clientPin.setText("");
                 }
@@ -378,10 +376,8 @@ public class CashwithdrawlFragment extends Fragment {
 
     @Override
     public void onResume() {
-        withdrawlAmount.setText("");
         agentPin.setText("");
         clientPin.setText("");
-        withdrawlRemark.setText("");
         super.onResume();
     }
 }

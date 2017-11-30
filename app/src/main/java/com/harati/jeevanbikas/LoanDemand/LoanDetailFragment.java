@@ -3,6 +3,8 @@ package com.harati.jeevanbikas.LoanDemand;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,6 +29,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +39,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.harati.jeevanbikas.CashDeposit.CashDepositActivity;
 import com.harati.jeevanbikas.Enrollment.EnrollmentActivity;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
@@ -89,7 +93,7 @@ public class LoanDetailFragment extends Fragment {
     
     Bundle bundle;
     List<LoanDetailsModel> loanDetailsModels = new ArrayList<>();
-    ImageView loanPhoto2,loanPhoto1;
+    ImageView loanPhoto2,loanPhoto1,image,crossIV;
     SessionHandler sessionHandler;
     Retrofit retrofit;
     ApiInterface apiInterface;
@@ -123,6 +127,8 @@ public class LoanDetailFragment extends Fragment {
         profileText = new TextView(getContext());
         loanPhoto2=(ImageView) view.findViewById(R.id.loanPhoto2);
         loanPhoto1=(ImageView) view.findViewById(R.id.loanPhoto1);
+        image=(ImageView) view.findViewById(R.id.image);
+        crossIV=(ImageView) view.findViewById(R.id.crossIV);
 
         loanNameDetails=(CenturyGothicTextView)view.findViewById(R.id.loanNameDetails);
         loanDtCode=(CenturyGothicTextView)view.findViewById(R.id.loanDtCode);
@@ -143,6 +149,12 @@ public class LoanDetailFragment extends Fragment {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        image.setOnClickListener(view1 -> {
+            confirmBackCross();
+        });
+
+        crossIV.setOnClickListener(view1 -> confirmBackCross());
 
         loanPhoto2.setOnClickListener(v -> {
             loanPhoto2.setTag("profile");
@@ -202,6 +214,7 @@ public class LoanDetailFragment extends Fragment {
             }
 
         });
+
         return view;
     }
 
@@ -324,7 +337,27 @@ public class LoanDetailFragment extends Fragment {
             matrix.postRotate(90);
             Bitmap rotatedBitmap = Bitmap.createBitmap(cameraBitmap , 0, 0, cameraBitmap .getWidth(), cameraBitmap .getHeight(), matrix, true);
             setInImage.setImageBitmap(rotatedBitmap);
-            encodeImagetoString(rotatedBitmap);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 4;
+            int height = rotatedBitmap.getHeight(), width = rotatedBitmap.getWidth();
+
+            if (height > 1280 && width > 960) {
+                Uri tempUri = getImageUri(getContext(), rotatedBitmap);
+
+                imgFile = new File(getRealPathFromURI(tempUri));
+
+                imgPath = imgFile.getAbsolutePath();
+                Bitmap imgbitmap = BitmapFactory.decodeFile(imgPath, options);
+                updatedImageBitmap = imgbitmap;
+//                imgView.setImageBitmap(imgbitmap);
+                System.out.println("Need to resize");
+            } else {
+//                imgView.setImageBitmap(bitmap);
+                updatedImageBitmap = rotatedBitmap;
+                System.out.println("WORKS");
+            }
+
+            encodeImagetoString(updatedImageBitmap);
         }
         if (resultCode == Activity.RESULT_OK
                 && null != data) {
@@ -374,12 +407,11 @@ public class LoanDetailFragment extends Fragment {
                 imgFilefieldTagName = filefieldTagName;
                 fileNameButton.setText(filefieldTagName);
                 Log.i("msg ", "filefieldTagName : " + filefieldTagName + " imgPath : " + imgPath);
-                options = null;
                 options = new BitmapFactory.Options();
                 options.inSampleSize = 3;
                 bitmap = BitmapFactory.decodeFile(imgPath,
                         options);
-                encodeImagetoString(rotatedBitmap);
+                encodeImagetoString(bitmap);
 
 
             } catch (Exception e) {
@@ -508,4 +540,63 @@ public class LoanDetailFragment extends Fragment {
         });
         builder.show();
     }
+
+    void confirmBackCross(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to Cancel??");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want Cancel?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+//                    startActivity(new Intent(getContext(), MainActivity.class));
+                    ((LoanDemandActivity)getActivity()).backPressed();
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
+
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    void showImage(int resource){
+        final Dialog nagDialog = new Dialog(getContext(),android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+        nagDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        nagDialog.setCancelable(false);
+        nagDialog.setContentView(R.layout.preview_image);
+        Button btnClose = (Button)nagDialog.findViewById(R.id.btnIvClose);
+        ImageView ivPreview = (ImageView)nagDialog.findViewById(R.id.iv_preview_image);
+        ivPreview.setBackgroundResource(resource);
+
+        btnClose.setOnClickListener(arg0 -> nagDialog.dismiss());
+        nagDialog.show();
+}
 }

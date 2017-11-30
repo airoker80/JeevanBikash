@@ -68,7 +68,7 @@ public class TransferTransactionDetailFragment extends Fragment {
     SessionHandler sessionHandler ;
     LinearLayout topPanel2;
     CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain;
-    CenturyGothicTextView nameBeneficiary,memberIdnnumberBeneficiary,branchNameBeneficiary;
+    CenturyGothicTextView nameBeneficiary,memberIdnnumberBeneficiary,branchNameBeneficiary,title;
     PinEntryEditText act_otp_tf;
     ImageView agent_client_tick,demand_cross,image,benif_image,act_mem_photo;
     Bundle bundle;
@@ -101,22 +101,23 @@ public class TransferTransactionDetailFragment extends Fragment {
         nameBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.nameBeneficiary);
         memberIdnnumberBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumberBeneficiary);
         branchNameBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.branchNameBeneficiary);
+        title=(CenturyGothicTextView)view.findViewById(R.id.title);
 
         act_otp_tf=(PinEntryEditText) view.findViewById(R.id.act_otp_tf);
 
         shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
-
+        title.setText("Fund Transfer");
         amountType=(CenturyGothicTextView)view.findViewById(R.id.amountType);
         sendOtpAgain=(CenturyGothicTextView)view.findViewById(R.id.sendOtpAgain);
 
         amountType.setText("Transfer amount");
         shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("transfer_amount"));
 
-        name.setText(bundle.getString("name"));
+        name.setText(bundle.getString("name")+"(Sender)");
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
 
-        nameBeneficiary.setText(bundle.getString("nameBenificiary") + " Ben");
+        nameBeneficiary.setText(bundle.getString("nameBenificiary") + " (Reciver)");
         memberIdnnumberBeneficiary.setText(bundle.getString("codeBenificiary"));
         branchNameBeneficiary.setText(bundle.getString("officeBenificiary"));
 

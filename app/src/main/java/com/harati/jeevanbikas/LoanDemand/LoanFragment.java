@@ -51,7 +51,7 @@ public class LoanFragment extends Fragment {
     ApiSessionHandler apiSessionHandler;
 
     List<AutoCompleteModel> autoCompleteModelList = new ArrayList<>();
-    ImageView imageView;
+    ImageView imageView,image;
     AutoCompleteTextView input;
     CenturyGothicTextView title;
     public LoanFragment() {
@@ -69,6 +69,7 @@ public class LoanFragment extends Fragment {
         apiSessionHandler = new ApiSessionHandler(getContext());
 
         imageView = (ImageView)view.findViewById(R.id.imageView);
+        image = (ImageView)view.findViewById(R.id.image);
         input = (AutoCompleteTextView) view.findViewById(R.id.input);
 
 /*
@@ -83,6 +84,10 @@ public class LoanFragment extends Fragment {
         title = (CenturyGothicTextView)view.findViewById(R.id.title);
 
         title.setText("Loan Demand");
+
+        image.setOnClickListener(view1 -> {
+            ((LoanDemandActivity)getActivity()).backPressed();
+        });
 
         imageView.setOnClickListener(view1 -> {
             if (input.getText().toString().equals("")){

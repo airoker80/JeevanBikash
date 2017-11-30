@@ -151,6 +151,8 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                     intent.putExtra("msg","Zero amount cannot be deposited");
                     startActivity(intent);
+                }else if (deposoitAmt.getText().toString().equals("")|agentPin.getText().toString().equals("")|clientsPinEtxt.getText().toString().equals("")){
+                    startActivity(new Intent(getContext(),ErrorDialogActivity.class));
                 }else {
                     if (gone_cd_txt.getVisibility()==View.GONE){
                         gone_cd_txt.setText("के तपाई रु "+sessionHandler.returnCash(deposoitAmt.getText().toString())+" आफ्नो खाता मा जम्मा गर्न चाहनु  हुन्छ ?");
@@ -259,6 +261,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                 if (cd_before_conf.getVisibility()==View.GONE){
                     cd_before_conf.setVisibility(View.VISIBLE);
                     gone_cd_txt.setVisibility(View.GONE);
+                    agentPin.setText("");
                     clientsPinEtxt.setText("");
                     agentPin.setText("");
                 }else {
@@ -297,6 +300,8 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                 if (gone_cd_txt.getVisibility()==View.VISIBLE){
                     gone_cd_txt.setVisibility(View.GONE);
                     cd_before_conf.setVisibility(View.VISIBLE);
+                    agentPin.setText("");
+                    clientsPinEtxt.setText("");
                 }else {
 //                    startActivity(new Intent(getContext(), MainActivity.class));
                     ((CashDepositActivity)getActivity()).backpressed();
@@ -311,5 +316,12 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         });
 
         builder.show();
+    }
+
+    @Override
+    public void onResume() {
+        agentPin.setText("");
+        clientsPinEtxt.setText("");
+        super.onResume();
     }
 }

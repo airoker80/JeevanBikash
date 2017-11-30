@@ -1,17 +1,22 @@
 package com.harati.jeevanbikas.BalanceEnquiry;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.harati.jeevanbikas.Enrollment.EnrollmentActivity;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
@@ -40,7 +45,10 @@ public class BalanceEnquiryActivity extends AppCompatActivity {
         setPage("home");
     }
     public void onbackPressed() {
-        super.onBackPressed();
+        confirmBack();
+    }
+    @Override
+    public void onBackPressed() {
     }
 
     public void setPage(String name) {
@@ -59,4 +67,35 @@ public class BalanceEnquiryActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+
+    void confirmBack(){
+        Log.e("backpressed","bp");
+        View view = getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back??");
+        final AlertDialog builder = new AlertDialog.Builder(BalanceEnquiryActivity.this)
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want to go back?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                super.onBackPressed();
+                Log.e("backpressed","bp");
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
 }

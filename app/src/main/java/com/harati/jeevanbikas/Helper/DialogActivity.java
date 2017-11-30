@@ -27,7 +27,7 @@ public class DialogActivity extends AppCompatActivity {
         }
         ok= (Button)findViewById(R.id.ok);
         ok.setOnClickListener(view -> {
-            startActivity(new Intent(DialogActivity.this, MainActivity.class));
+//            startActivity(new Intent(DialogActivity.this, MainActivity.class));
             finish();
         });
     }

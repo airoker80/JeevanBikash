@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         sessionHandler = new SessionHandler(LoginActivity.this);
         if (sessionHandler.isUserLoggedIn()) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
         }
         reset_pin = (TextView) findViewById(R.id.reset_pin);
 

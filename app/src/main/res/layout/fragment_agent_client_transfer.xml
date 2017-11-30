@@ -82,7 +82,6 @@
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:drawablePadding="@dimen/_2sdp"
-                            android:drawableRight="@drawable/ic_checked"
                             android:id="@+id/name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -222,7 +221,6 @@
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                             android:drawablePadding="@dimen/_2sdp"
-                            android:drawableRight="@drawable/ic_checked"
                             android:id="@+id/nameBeneficiary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -479,7 +477,7 @@
                     </RelativeLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:id="@+id/topPanel3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -498,7 +496,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/_13sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:text="Deposit Amount"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_25sdp" />
@@ -510,7 +507,6 @@
                             android:id="@+id/shownDepositAmt"
                             android:layout_weight="1"
                             android:paddingBottom="@dimen/_8sdp"
-                            android:paddingTop="@dimen/_8sdp"
                             android:text="RS 1000"
                             android:textColor="#b7ea0f"
                             android:textStyle="bold"

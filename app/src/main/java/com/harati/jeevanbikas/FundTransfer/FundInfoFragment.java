@@ -63,7 +63,7 @@ public class FundInfoFragment extends Fragment {
 
     Bundle bundle;
     ImageView submit,crossIV,image,rec_ff_photo,ff_send_photo;
-    EditText BenificiaryaccNo,confirmAccNo ,transferAmt,agentPin ,fundMobile;
+    EditText BenificiaryaccNo,confirmAccNo ,transferAmt,agentPin ,fundMobile,ff_remark;
     CGEditText fiClienttPin;
     String BenificiaryaccNoTxt,confirmAccNoTxt ,deposoitAmtTxt,agentPinTxt ,fundMobileTxt;
     CenturyGothicTextView gone_ft_txt;
@@ -140,6 +140,7 @@ public class FundInfoFragment extends Fragment {
         transferAmt=(EditText)view.findViewById(R.id.transferAmt) ;
         agentPin=(EditText)view.findViewById(R.id.agentPin) ;
         fundMobile=(EditText)view.findViewById(R.id.fundMobile) ;
+        ff_remark=(EditText)view.findViewById(R.id.ff_remark) ;
         fiClienttPin=(CGEditText) view.findViewById(R.id.fiClienttPin) ;
 
         BenificiaryaccNo.setText(bundle.getString("codeBenificiary"));
@@ -179,7 +180,7 @@ public class FundInfoFragment extends Fragment {
         });
 
         crossIV.setOnClickListener(view1 -> {
-
+            confirmBack();
         });
 
         image.setOnClickListener(view1 -> confirmBack());
@@ -247,6 +248,7 @@ public class FundInfoFragment extends Fragment {
             jsonObject.put("finger",fiClienttPin.getText().toString());
             jsonObject.put("amount",agentPin.getText().toString());
             jsonObject.put("agentpin",agentPin.getText().toString());
+            jsonObject.put("remark",ff_remark.getText().toString());
             jsonObject.put("mobile",send_mob_id.getText().toString());
             jsonObject.put("beneficiary",BenificiaryaccNo.getText().toString());
         }catch (Exception e){
@@ -332,6 +334,9 @@ public class FundInfoFragment extends Fragment {
                 }else {
                     befor_conf_ll.setVisibility(View.VISIBLE);
                     gone_ft_txt.setVisibility(View.GONE);
+
+                    agentPin.setText("");
+                    fiClienttPin.setText("");
                 }
 
                 Log.e("backpressed","bp");
@@ -346,14 +351,10 @@ public class FundInfoFragment extends Fragment {
 
         builder.show();
     }
-    Runnable task1 = () -> {
-        try {
-            sleep(2*60*1000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }finally {
-            JeevanBikashConfig.BASE_URL1="1";
-            Log.e("baeUrl","dad"+JeevanBikashConfig.BASE_URL1);
-        }
-    };
+    @Override
+    public void onResume() {
+        agentPin.setText("");
+        fiClienttPin.setText("");
+        super.onResume();
+    }
 }

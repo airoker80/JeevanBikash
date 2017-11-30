@@ -89,7 +89,7 @@ public class CashFragment extends Fragment {
         autoCompleteModelList.add(new AutoCompleteModel("Binaya","9841012346",R.drawable.ic_username));
         input.setDropDownBackgroundResource(R.drawable.shape_transparent);
         AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(getContext(),autoCompleteModelList);
-        input.setAdapter(autoCompleteAdapter);
+//        input.setAdapter(autoCompleteAdapter);
 
         cash_wd_txt.setTypeface(MainActivity.centuryGothic);
         input.setTypeface(MainActivity.centuryGothic);

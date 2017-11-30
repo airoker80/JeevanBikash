@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/image"
             android:padding="8dp"
-            android:text="Cash Deposit"
+            android:text="Loan Demand"
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp" />
 
@@ -442,16 +442,17 @@
             android:layout_gravity="center"
             android:background="#F9B847"
             app:srcCompat="@drawable/ic_check" />
+
         <ImageView
-            android:visibility="visible"
-            android:layout_weight="1"
             android:id="@+id/crossIV"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
-            android:clickable="true"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:background="#c93e3b"
+            android:clickable="true"
+            android:visibility="visible"
             app:srcCompat="@drawable/ic_error" />
 
     </LinearLayout>

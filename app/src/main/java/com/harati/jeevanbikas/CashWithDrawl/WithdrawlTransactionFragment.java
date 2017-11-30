@@ -238,6 +238,7 @@ public class WithdrawlTransactionFragment extends Fragment {
                     Intent intent = new Intent(getContext(),DialogActivity.class);
                     intent.putExtra("msg",message);
                     startActivity(intent);
+                    getActivity().finish();
                 }else {
                     try {
                         String jsonString = response.errorBody().string();

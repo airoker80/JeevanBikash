@@ -84,6 +84,7 @@
             </RelativeLayout>
         </LinearLayout>
 
+
         <android.support.v7.widget.RecyclerView
             android:visibility="visible"
             android:id="@+id/dashboard_icon_list"

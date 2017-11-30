@@ -1,11 +1,16 @@
 package com.harati.jeevanbikas;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +57,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onResume();
         if (!apiSessionHandler.getFirstRunStatus()) {
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         } else {
 //            apiSessionHandler.saveAppFirstState(false);
             setUpUrl();
@@ -219,6 +225,7 @@ public class SplashActivity extends AppCompatActivity {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent);
+                        finish();
                     }
             );
         });

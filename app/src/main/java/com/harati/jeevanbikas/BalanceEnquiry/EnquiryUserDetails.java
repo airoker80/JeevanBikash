@@ -179,6 +179,7 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
                         Intent intent = new Intent(getContext(),DialogActivity.class);
                         intent.putExtra("msg",response.body().getMessage());
                         startActivity(intent);
+                        getActivity().finish();
                     }else {
                         Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
                         intent.putExtra("msg",response.body().getMessage());

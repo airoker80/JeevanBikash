@@ -36,6 +36,8 @@ public class LoanDemandActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+    }
+    public void backPressed() {
         super.onBackPressed();
     }
     public void setPage(String name) {

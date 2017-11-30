@@ -208,7 +208,37 @@
             android:padding="4dp"
             android:layout_marginTop="8dp">
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                android:layout_marginTop="@dimen/_20sdp"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Deposit Amount"
+                android:textColor="@color/white"/>
+            <com.harati.jeevanbikas.Helper.CGEditText
+                android:inputType="number"
+                android:maxLength="6"
+                android:backgroundTint="@color/white"
+                android:id="@+id/deposoitAmt"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"/>
+
+            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Remarks"
+                android:textColor="@color/white"/>
+            <com.harati.jeevanbikas.Helper.CGEditText
+                android:inputType="text"
+                android:maxLength="50"
+                android:backgroundTint="@color/white"
+                android:id="@+id/deposoitRemarks"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"/>
+            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -273,40 +303,8 @@
                     android:textSize="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1234"
                     android:textColor="@color/white"/>
-            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Deposit Amount"
-                android:textColor="@color/white"/>
-            <com.harati.jeevanbikas.Helper.CGEditText
-                android:inputType="number"
-                android:maxLength="6"
-                android:backgroundTint="@color/white"
-                android:id="@+id/deposoitAmt"
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="1000"
-                android:textColor="@color/white"/>
-            <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Remarks"
-                android:textColor="@color/white"/>
-            <com.harati.jeevanbikas.Helper.CGEditText
-                android:inputType="text"
-                android:maxLength="50"
-                android:backgroundTint="@color/white"
-                android:id="@+id/deposoitRemarks"
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ok"
-                android:textColor="@color/white"/>
+
 
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                 android:visibility="gone"

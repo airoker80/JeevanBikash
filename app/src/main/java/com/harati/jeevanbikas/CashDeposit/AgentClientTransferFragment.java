@@ -140,7 +140,7 @@ public class AgentClientTransferFragment extends Fragment {
         }
 
 
-        image.setOnClickListener(view1 -> ((CashDepositActivity)getActivity()).backpressed());
+        image.setOnClickListener(view1 -> confirmBack());
         resend_otp.setOnClickListener(view1 -> {
             final AlertDialog builder = new AlertDialog.Builder(getContext())
                     .setPositiveButton("OK", null)
@@ -156,12 +156,7 @@ public class AgentClientTransferFragment extends Fragment {
                         AlertDialog.BUTTON_POSITIVE);
 
                 btnAccept.setOnClickListener(v1 -> {
-                    if (JeevanBikashConfig.BASE_URL1.equals("1")){
-                        sendDepositRequest();
-                    }else {
-                        Toast.makeText(getContext(), "cannot send OTP until 2mins", Toast.LENGTH_SHORT).show();
-                    }
-
+                        sendOtpForCashDeposit();
                     builder.dismiss();
 
                 });
@@ -245,6 +240,7 @@ public class AgentClientTransferFragment extends Fragment {
                     Intent intent = new Intent( getContext(),DialogActivity.class);
                     intent.putExtra("msg",response.body().getMessage());
                     startActivity(intent);
+                    getActivity().finish();
                 }else {
                     try {
                         String jsonString = response.errorBody().string();
@@ -345,6 +341,35 @@ public class AgentClientTransferFragment extends Fragment {
 
             btnAccept.setOnClickListener(v -> {
                 startActivity(new Intent(getContext(),MainActivity.class));
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
+    void confirmBack(){
+        Log.e("backpressed","bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back to dashboard?");
+        final AlertDialog builder = new AlertDialog.Builder(getContext())
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want Cancel?")
+                .create();
+
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                ((CashDepositActivity)getActivity()).backpressed();
                 builder.dismiss();
 
             });

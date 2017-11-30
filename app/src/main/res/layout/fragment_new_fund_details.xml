@@ -207,7 +207,6 @@
             <EditText
                 android:maxLength="10"
                 android:id="@+id/benf_ft_etx"
-                android:text="M0262270"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_16sdp"
