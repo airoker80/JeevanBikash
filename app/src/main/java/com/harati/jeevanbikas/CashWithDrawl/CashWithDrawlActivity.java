@@ -1,6 +1,7 @@
 package com.harati.jeevanbikas.CashWithDrawl;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.R;
 
 
@@ -18,6 +20,10 @@ public class CashWithDrawlActivity extends AppCompatActivity {
     Spinner spinner;
     ImageView image;
     TextView title;
+
+    SessionHandler sessionHandler;
+    Handler handler;
+    Runnable r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,13 @@ public class CashWithDrawlActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
        setPage("home");
         image.setOnClickListener(view -> onBackPressed());
+
+        sessionHandler = new SessionHandler(this);
+
+        handler=new Handler();
+        r=() -> sessionHandler.logoutUser();
+
+        startHandler();
     }
 
     @Override
@@ -56,5 +69,24 @@ public class CashWithDrawlActivity extends AppCompatActivity {
         transaction.replace(R.id.contentFrame, fragment);
         transaction.commit();
     }
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        stopHandler();
+        startHandler();
+    }
 
+    public void startHandler() {
+        handler.postDelayed(r, 60*1000); //for 5 minutes
+    }
+    public void stopHandler() {
+        Log.e("Handler","Stoped");
+        handler.removeCallbacks(r);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopHandler();
+        super.onDestroy();
+    }
 }

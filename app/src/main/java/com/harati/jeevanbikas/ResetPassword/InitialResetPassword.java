@@ -2,6 +2,7 @@ package com.harati.jeevanbikas.ResetPassword;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,7 +48,11 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
     Spinner spinner;
     Button initial_password_reset;
     EditText agent_mobile_id;
-    SessionHandler sessionHandler ;
+
+    SessionHandler sessionHandler;
+    Handler handler;
+    Runnable r;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,12 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
                 R.array.language, R.layout.text_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+
+        handler=new Handler();
+        r=() -> sessionHandler.logoutUser();
+
+        startHandler();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -272,4 +283,27 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
 
 
   }
+
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        stopHandler();
+        startHandler();
+    }
+
+    public void startHandler() {
+        handler.postDelayed(r, 60*1000); //for 5 minutes
+    }
+    public void stopHandler() {
+        Log.e("Handler","Stoped");
+        handler.removeCallbacks(r);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopHandler();
+        super.onDestroy();
+    }
+
 }

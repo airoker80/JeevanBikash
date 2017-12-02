@@ -1,6 +1,7 @@
 package com.harati.jeevanbikas.ResetPassword;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,10 @@ public class ResetPassword extends AppCompatActivity {
     SessionHandler sessionHandler;
     ApiInterface apiInterface;
     Retrofit retrofit;
+
+    Handler handler;
+    Runnable r;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,12 @@ public class ResetPassword extends AppCompatActivity {
                 }
 
         );
+
+        handler=new Handler();
+        r=() -> sessionHandler.logoutUser();
+
+        startHandler();
+
     }
 
     void sendReestReq(){
@@ -105,4 +116,26 @@ public class ResetPassword extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        stopHandler();
+        startHandler();
+    }
+
+    public void startHandler() {
+        handler.postDelayed(r, 60*1000); //for 5 minutes
+    }
+    public void stopHandler() {
+        Log.e("Handler","Stoped");
+        handler.removeCallbacks(r);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopHandler();
+        super.onDestroy();
+    }
+
 }

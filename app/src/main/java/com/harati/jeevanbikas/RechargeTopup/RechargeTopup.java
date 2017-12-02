@@ -1,16 +1,19 @@
 package com.harati.jeevanbikas.RechargeTopup;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
@@ -18,6 +21,11 @@ public class RechargeTopup extends AppCompatActivity implements View.OnClickList
 
     Spinner spinner;
     ImageView topup_back;
+
+    SessionHandler sessionHandler;
+    Handler handler;
+    Runnable r;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +46,13 @@ public class RechargeTopup extends AppCompatActivity implements View.OnClickList
         fragmentTransaction.replace(R.id.recharge_frame, fragment);
 //        finish();
         fragmentTransaction.commit();
+
+        sessionHandler = new SessionHandler(this);
+
+        handler=new Handler();
+        r=() -> sessionHandler.logoutUser();
+
+        startHandler();
     }
     @Override
     public void onBackPressed() {
@@ -53,5 +68,26 @@ public class RechargeTopup extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(RechargeTopup.this,MainActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        stopHandler();
+        startHandler();
+    }
+
+    public void startHandler() {
+        handler.postDelayed(r, 60*1000); //for 5 minutes
+    }
+    public void stopHandler() {
+        Log.e("Handler","Stoped");
+        handler.removeCallbacks(r);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopHandler();
+        super.onDestroy();
     }
 }

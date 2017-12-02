@@ -1,10 +1,12 @@
 package com.harati.jeevanbikas.MainPackage;
 
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -42,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
     ImageView app_icon;
     CenturyGothicTextView logoutTxt;
     SessionHandler sessionHandler;
+
+    Handler handler;
+    Runnable r;
+
+
 //    public Typeface centuryGothic=Typeface.createFromAsset(getAssets(), "fonts/epimodem.ttf");
 
     @Override
@@ -66,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
         logoutTxt.setOnClickListener(v -> logout());
 
 //        sessionHandler.getInfo();
+        handler=new Handler();
+        r=() -> logout();
+
+        startHandler();
 
         centuryGothic=Typeface.createFromAsset(MainActivity.this.getAssets(), "cg.ttf");
         dashboardTitile.setTypeface(centuryGothic);
@@ -116,4 +127,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
     }
+
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        stopHandler();
+        startHandler();
+    }
+
+    public void startHandler() {
+        handler.postDelayed(r, 5*60*1000); //for 5 minutes
+    }
+    public void stopHandler() {
+        Log.e("Handler","Stoped");
+        handler.removeCallbacks(r);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopHandler();
+        super.onDestroy();
+    }
+    Runnable runnable = () -> {
+            sessionHandler.logoutUser();
+    };
 }
+
+
+
+
+
