@@ -33,6 +33,7 @@ import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.HelperListModelClass;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.Helper.imageLoader.ImageZoomActivity;
 import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.MyApplication;
@@ -195,6 +196,22 @@ public class CashwithdrawlFragment extends Fragment {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        imgUser.setOnClickListener(v -> {
+            try {
+                if (!bundle.getString("photo").toString().equals(null)) {
+                    Intent intent = new Intent(getContext(), ImageZoomActivity.class);
+                    intent.putExtra("photo", bundle.getString("photo"));
+//                intent.putExtra("imageUrl",imageUrl);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "No Image Found", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
 
         submit.setOnClickListener(view1 -> {

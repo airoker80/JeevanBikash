@@ -29,6 +29,7 @@ import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.Helper.imageLoader.ImageZoomActivity;
 import com.harati.jeevanbikas.Login.LoginActivity;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.MyApplication;
@@ -125,10 +126,8 @@ public class AgentClientTransferFragment extends Fragment {
 
         Observable.fromCallable(callable).
                 subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).
-                doOnSubscribe(disposable ->
-                        resend_otp.setEnabled(false)
-                ).
-                subscribe(getDisposableObserver());
+                doOnSubscribe(disposable ->resend_otp.setEnabled(false)).subscribe(getDisposableObserver());
+
         try {
             String[] splitString = bundle.getString("photo").split(",");
             String base64Photo = splitString[1];
@@ -138,6 +137,22 @@ public class AgentClientTransferFragment extends Fragment {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        act_mem_photo.setOnClickListener(v -> {
+            try {
+                if (!bundle.getString("photo").toString().equals(null)) {
+                    Intent intent = new Intent(getContext(), ImageZoomActivity.class);
+                    intent.putExtra("photo", bundle.getString("photo"));
+//                intent.putExtra("imageUrl",imageUrl);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "No Image Found", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
 
         image.setOnClickListener(view1 -> confirmBack());

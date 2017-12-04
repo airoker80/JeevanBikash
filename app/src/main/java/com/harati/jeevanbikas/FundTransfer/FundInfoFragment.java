@@ -30,6 +30,7 @@ import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.Helper.imageLoader.ImageZoomActivity;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
@@ -115,6 +116,37 @@ public class FundInfoFragment extends Fragment {
         reciver_bn.setText(bundle.getString("officeBenificiary"));
         rec_mob_id.setText(bundle.getString("phoneBenificiary"));
 
+        ff_send_photo.setOnClickListener(v -> {
+            try {
+                if (!bundle.getString("photo").toString().equals(null)) {
+                    Intent intent = new Intent(getContext(), ImageZoomActivity.class);
+                    intent.putExtra("photo", bundle.getString("photo"));
+//                intent.putExtra("imageUrl",imageUrl);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "No Image Found", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        rec_ff_photo.setOnClickListener(v -> {
+            try {
+                if (!bundle.getString("photoBenificiary").toString().equals(null)) {
+                    Intent intent = new Intent(getContext(), ImageZoomActivity.class);
+                    intent.putExtra("photo", bundle.getString("photoBenificiary"));
+//                intent.putExtra("imageUrl",imageUrl);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "No Image Found", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
         try {
             String[] splitString = bundle.getString("photo").split(",");
             String base64Photo = splitString[1];
@@ -179,9 +211,7 @@ public class FundInfoFragment extends Fragment {
             }
         });
 
-        crossIV.setOnClickListener(view1 -> {
-            confirmBack();
-        });
+        crossIV.setOnClickListener(view1 -> confirmBack());
 
         image.setOnClickListener(view1 -> confirmBack());
         return view;
