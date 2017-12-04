@@ -88,18 +88,16 @@ public class LoginActivity extends AppCompatActivity {
         retrofit = MyApplication.getRetrofitInstance(apiSessionHandler.getAGENT_LOGIN());
         apiInterface = retrofit.create(ApiInterface.class);
         sessionHandler = new SessionHandler(LoginActivity.this);
-        if (sessionHandler.isUserLoggedIn()) {
+/*        if (sessionHandler.isUserLoggedIn()) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
-        }
+        }*/
         reset_pin = (TextView) findViewById(R.id.reset_pin);
 
         reset_pin.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ResetPin.class)));
 //        loginBtn.setOnClickListener(v -> startActivity(new Intent(this,MainActivity.class)));
         loginBtn.setOnClickListener(v -> loginWithRetrofit());
 //        setupUrl.setOnClickListener(v -> setUpUrl());
-
-
     }
 
     private void jeevanLogin() {

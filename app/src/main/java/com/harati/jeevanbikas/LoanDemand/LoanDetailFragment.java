@@ -47,6 +47,7 @@ import com.harati.jeevanbikas.Helper.DialogActivity;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.Helper.imageLoader.ImageZoomActivity;
 import com.harati.jeevanbikas.LoanDemand.Adapter.SpinnerAdapter;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
@@ -152,6 +153,22 @@ public class LoanDetailFragment extends Fragment {
 
         image.setOnClickListener(view1 -> {
             confirmBackCross();
+        });
+
+        ld_photo.setOnClickListener(v -> {
+            try {
+                if (!bundle.getString("photo").toString().equals(null)){
+                    Intent intent = new Intent(getContext(), ImageZoomActivity.class);
+                    intent.putExtra("photo", bundle.getString("photo"));
+//                intent.putExtra("imageUrl",imageUrl);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(getContext(), "No Image Found", Toast.LENGTH_SHORT).show();
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
         crossIV.setOnClickListener(view1 -> confirmBackCross());

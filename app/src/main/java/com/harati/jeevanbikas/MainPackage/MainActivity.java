@@ -1,5 +1,7 @@
 package com.harati.jeevanbikas.MainPackage;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
+    PackageInfo pInfo = null;
     ApiSessionHandler apiSessionHandler;
     Retrofit retrofit;
     ApiInterface apiInterface;
@@ -70,6 +73,18 @@ public class MainActivity extends AppCompatActivity {
         app_icon=(ImageView)findViewById(R.id.app_icon);
         logoutTxt=(CenturyGothicTextView)findViewById(R.id.logoutTxt);
 
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+/*            requestParams.put("installedAppVersionName", pInfo.versionName+"");
+            requestParams.put("installedAppVersionCode", pInfo.versionCode+"");
+            requestParams.put("applicationName", getPackageName()+"");*/
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
         logoutTxt.setOnClickListener(v -> logout());
 
 //        sessionHandler.getInfo();
@@ -80,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         centuryGothic=Typeface.createFromAsset(MainActivity.this.getAssets(), "cg.ttf");
         dashboardTitile.setTypeface(centuryGothic);
+        dashboardTitile.setText("JEEVAN BIKAS SAMAJ "+"( Version :"+String.valueOf(pInfo.versionName)+")");
         dashboard_icon_list = (RecyclerView) findViewById(R.id.dashboard_icon_list);
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_balance_enquiry, "Balance \n Inquiry"));
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_cash_withdrawl, "Cash \n Withdrawal"));

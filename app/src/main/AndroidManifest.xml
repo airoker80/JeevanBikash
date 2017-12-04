@@ -60,6 +60,7 @@
         <activity android:name=".ResetPassword.InitialResetPassword" />
         <activity android:name=".ResetPin.InitialResetPinActivity" />
         <activity android:name=".ActivityLogPackage.AgentLogActivity" />
+        <activity android:name=".Helper.imageLoader.ImageZoomActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

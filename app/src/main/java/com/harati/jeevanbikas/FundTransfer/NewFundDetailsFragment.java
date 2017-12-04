@@ -28,6 +28,7 @@ import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
+import com.harati.jeevanbikas.Helper.imageLoader.ImageZoomActivity;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
@@ -119,6 +120,9 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
         fund_tick.setOnClickListener(this);
         fund_cross.setOnClickListener(this);
         image.setOnClickListener(this);
+        fst_mem_ft_photo.setOnClickListener(this);
+        ben_photo_ft.setOnClickListener(this);
+
         return view;
     }
 
@@ -151,6 +155,35 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.image:
                 confirmBack();
+                break;
+            case R.id.fst_mem_ft_photo:
+                try {
+                    if (!bundle.getString("photo").toString().equals(null)) {
+                        Intent intent = new Intent(getContext(), ImageZoomActivity.class);
+                        intent.putExtra("photo", bundle.getString("photo"));
+//                intent.putExtra("imageUrl",imageUrl);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getContext(), "No Image Found", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.ben_photo_ft:
+                try {
+                    if (!bundle.getString("photoBenificiary").toString().equals(null)) {
+                        Intent intent = new Intent(getContext(), ImageZoomActivity.class);
+                        intent.putExtra("photo", bundle.getString("photoBenificiary"));
+//                intent.putExtra("imageUrl",imageUrl);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getContext(), "No Image Found", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
@@ -236,9 +269,9 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                if (mid_ll.getVisibility()==View.VISIBLE){
-                    ((FundTransferActivity)getActivity()).backpress();
-                }else {
+                if (mid_ll.getVisibility() == View.VISIBLE) {
+                    ((FundTransferActivity) getActivity()).backpress();
+                } else {
                     mid_ll.setVisibility(View.VISIBLE);
                     down_ll.setVisibility(View.GONE);
                 }
@@ -271,10 +304,10 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                if (mid_ll.getVisibility()==View.VISIBLE){
-                    ((FundTransferActivity)getActivity()).backpress();
+                if (mid_ll.getVisibility() == View.VISIBLE) {
+                    ((FundTransferActivity) getActivity()).backpress();
                     Log.e("backpressed", "bp");
-                }else {
+                } else {
                     Log.e("backpressed", "gone");
                     mid_ll.setVisibility(View.VISIBLE);
                     down_ll.setVisibility(View.GONE);
