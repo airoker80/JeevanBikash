@@ -65,6 +65,9 @@ public class SessionHandler {
         editor = pref.edit();
     }
 
+    public boolean changePasswordReqd(){return pref.getBoolean(PASSWORD_CHANGE_RQD,false);}
+    public boolean changePinReqd(){return pref.getBoolean(PIN_CHANGE_RQD,false);}
+
     public void saveLoginInformation(String agentCode, String username,
                                      String branchoffice, boolean passwordChangeReqd,
                                      boolean pinChangeReqd, String token, String agentPin) {

@@ -1,5 +1,6 @@
 package com.harati.jeevanbikas.MainPackage;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.harati.jeevanbikas.Adapter.DashboardRecyclerViewAdapter;
+import com.harati.jeevanbikas.AgentDashboard.AgentDashboardActivity;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
@@ -23,6 +25,9 @@ import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
+import com.harati.jeevanbikas.ResetPassword.InitialResetPassword;
+import com.harati.jeevanbikas.ResetPassword.ResetPassword;
+import com.harati.jeevanbikas.ResetPin.InitialResetPinActivity;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
@@ -112,6 +117,20 @@ public class MainActivity extends AppCompatActivity {
         dashboard_icon_list.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
         DashboardRecyclerViewAdapter dashboardRecyclerViewAdapter = new DashboardRecyclerViewAdapter(MainActivity.this, dashBoardModels);
         dashboard_icon_list.setAdapter(dashboardRecyclerViewAdapter);
+
+        if (sessionHandler.changePasswordReqd()&sessionHandler.changePinReqd()){
+            Intent intent =  new Intent(this, AgentDashboardActivity.class);
+            intent.putExtra("snackmsg","fromMA");
+            startActivity(intent);
+        }else if (sessionHandler.changePinReqd()){
+            Intent intent =  new Intent(this, InitialResetPinActivity.class);
+            intent.putExtra("snackmsg","fromMA");
+            startActivity(intent);
+        }else if (sessionHandler.changePasswordReqd()){
+            Intent intent =  new Intent(this, ResetPassword.class);
+            intent.putExtra("snackmsg","fromMA");
+            startActivity(intent);
+        }
     }
 
     void logout(){

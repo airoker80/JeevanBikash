@@ -2,6 +2,7 @@ package com.harati.jeevanbikas.AgentDashboard;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,24 @@ public class AgentDashboardActivity extends AppCompatActivity  implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agent_dashboard);
+        View parentLayout = findViewById(android.R.id.content);
+        String mainmsg = getIntent().getStringExtra("snackmsg");
+
+        try {
+            if (mainmsg.equals("fromMA")){
+                Snackbar.make(parentLayout, "Please change your password and pin before proceeding", Snackbar.LENGTH_LONG)
+                        .setAction("CLOSE", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        })
+                        .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                        .show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         resetPin=(Button)findViewById(R.id.resetPin);
         resetPassword=(Button)findViewById(R.id.resetPassword);

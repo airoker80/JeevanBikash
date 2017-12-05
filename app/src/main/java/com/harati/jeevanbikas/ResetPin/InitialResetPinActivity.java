@@ -2,6 +2,7 @@ package com.harati.jeevanbikas.ResetPin;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,24 @@ public class InitialResetPinActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_reset_pin);
 
+        View parentLayout = findViewById(android.R.id.content);
+        String mainmsg = getIntent().getStringExtra("snackmsg");
+
+        try {
+            if (mainmsg.equals("fromMA")){
+                Snackbar.make(parentLayout, "Please change your  pin before proceeding", Snackbar.LENGTH_LONG)
+                        .setAction("CLOSE", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        })
+                        .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                        .show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
                 R.array.language, R.layout.text_layout);
