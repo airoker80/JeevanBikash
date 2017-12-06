@@ -79,7 +79,7 @@ public class UtilityPayment extends AppCompatActivity implements View.OnClickLis
     }
 
     public void startHandler() {
-        handler.postDelayed(r, 60*1000); //for 5 minutes
+        handler.postDelayed(r, 2*60*1000); //for 5 minutes
     }
     public void stopHandler() {
         Log.e("Handler","Stoped");

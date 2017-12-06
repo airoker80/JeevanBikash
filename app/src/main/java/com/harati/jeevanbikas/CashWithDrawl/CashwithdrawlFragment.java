@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,6 +49,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -63,7 +66,10 @@ import static java.lang.Thread.sleep;
 
 public class CashwithdrawlFragment extends Fragment {
 
-    LinearLayout beforConfirmation;
+    ImageButton cw_speak_imgbtn;
+    TextToSpeech t1;
+
+    LinearLayout beforConfirmation,gone_ll_txt_img;
     ApiSessionHandler apiSessionHandler ;
     Retrofit retrofit;
     ApiInterface apiInterface;
@@ -120,11 +126,33 @@ public class CashwithdrawlFragment extends Fragment {
             return false;
         });*/
 
+        try {
+            t1=new TextToSpeech(getContext(), status -> {
+                if (status == TextToSpeech.SUCCESS) {
+
+                    int result = t1.setLanguage(new Locale("hi"));
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language is not supported");
+                    } else {
+                        Log.e("ok","ok");
+                    }
+
+                } else {
+                    Log.e("TTS", "Initilization Failed");
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         image= (ImageView)view.findViewById(R.id.image);
         crossIV= (ImageView)view.findViewById(R.id.crossIV);
 
         beforConfirmation= (LinearLayout) view.findViewById(R.id.beforConfirmation);
+        gone_ll_txt_img= (LinearLayout) view.findViewById(R.id.gone_ll_txt_img);
 
         image.setOnClickListener(view1 -> confirmBack());
         crossIV.setOnClickListener(view1 -> {
@@ -133,11 +161,14 @@ public class CashwithdrawlFragment extends Fragment {
                 getActivity().onBackPressed();
             }else {
                 beforConfirmation.setVisibility(View.VISIBLE);
-                gone_cw_txt.setVisibility(View.GONE);
+                gone_ll_txt_img.setVisibility(View.GONE);
             }*/
 //            startActivity(new Intent(getContext(),MainActivity.class));
         });
         submit = (ImageView)view.findViewById(R.id.submit);
+
+        cw_speak_imgbtn = (ImageButton) view.findViewById(R.id.cw_speak_imgbtn);
+
         withdrawlAmount=(EditText)view.findViewById(R.id.withdrawlAmount);
         agentPin=(EditText)view.findViewById(R.id.agentPin);
         title=(CenturyGothicTextView) view.findViewById(R.id.title);
@@ -178,11 +209,6 @@ public class CashwithdrawlFragment extends Fragment {
         withrwal_mobile.setText(bundle.getString("phone"));
 
 
-        Log.e("currency",
-                sessionHandler.returnCash("1000")+
-                sessionHandler.returnCash("10000")+
-                sessionHandler.returnCash("100000")
-        );
 //        Picasso.with(getContext()).load(photo).into(imgUser);
 
         try {
@@ -213,22 +239,31 @@ public class CashwithdrawlFragment extends Fragment {
             }
         });
 
+        cw_speak_imgbtn.setOnClickListener(v -> {
+            t1.speak("Ke tapai ru "+withdrawlAmount.getText().toString()+"jhikna chahanuhuncha", TextToSpeech.QUEUE_FLUSH, null);
+        });
+
 
         submit.setOnClickListener(view1 -> {
             withdrawlAmountTxt=withdrawlAmount.getText().toString();
             agentPinTxt=agentPin.getText().toString();
             withdrawlRemarkTxt=withdrawlRemark.getText().toString();
             if (withdrawlAmountTxt.equals("")|agentPinTxt.equals("")|clientPin.getText().toString().equals("")){
-                getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
+                if (withdrawlAmount.getText().toString().equals("")){withdrawlAmount.setError("This Field is Empty");}
+                if (agentPin.getText().toString().equals("")){agentPin.setError("This Field is Empty");}
+                if (clientPin.getText().toString().equals("")){clientPin.setError("This Field is Empty");}
+
+//                getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
             }else {
                 if (Integer.parseInt(withdrawlAmount.getText().toString())==0){
+                    withdrawlAmount.setError("This field cannot be zero");
                     Intent intent =new Intent(getContext(), ErrorDialogActivity.class);
                     intent.putExtra("msg","Zero amount cannot be withdrawn");
                     getActivity().startActivity(intent);
                 }else {
                     if (beforConfirmation.getVisibility() == View.VISIBLE){
                         beforConfirmation.setVisibility(View.GONE);
-                        gone_cw_txt.setVisibility(View.VISIBLE);
+                        gone_ll_txt_img.setVisibility(View.VISIBLE);
                         gone_cw_txt.setText("के तपाई रु "+sessionHandler.returnCash(withdrawlAmount.getText().toString()) + " झिक्न   चाहनुहुन्छ ?");
                     }else {
                             sendOtpForCashDeposit();
@@ -286,9 +321,12 @@ public class CashwithdrawlFragment extends Fragment {
                         Log.d("here ","--=>"+jsonString);
 
                         JSONObject jsonObject = new JSONObject(jsonString);
-                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+/*                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",jsonObject.getString("message"));
-                        startActivity(intent);
+                        startActivity(intent);*/
+                        beforConfirmation.setVisibility(View.VISIBLE);
+                        gone_ll_txt_img.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                         if (jsonObject.getString("message").equals("Sorry Invalid Agent Pincode...")){
                             agentPin.setError("Invalid Pincode");
                         }else if (jsonObject.getString("message").equals("Member Authentication failed...")){
@@ -339,7 +377,7 @@ public class CashwithdrawlFragment extends Fragment {
                     beforConfirmation.setVisibility(View.VISIBLE);
                     clientPin.setText("");
                     agentPin.setText("");
-                    gone_cw_txt.setVisibility(View.GONE);
+                    gone_ll_txt_img.setVisibility(View.GONE);
                 }
 
                 Log.e("backpressed","bp");
@@ -375,7 +413,7 @@ public class CashwithdrawlFragment extends Fragment {
                     ((CashWithDrawlActivity)getActivity()).backpressed();
                 }else {
                     beforConfirmation.setVisibility(View.VISIBLE);
-                    gone_cw_txt.setVisibility(View.GONE);
+                    gone_ll_txt_img.setVisibility(View.GONE);
                     agentPin.setText("");
                     clientPin.setText("");
                 }
@@ -396,5 +434,12 @@ public class CashwithdrawlFragment extends Fragment {
         agentPin.setText("");
         clientPin.setText("");
         super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        t1.stop();
+        t1.shutdown();
+        super.onDestroyView();
     }
 }

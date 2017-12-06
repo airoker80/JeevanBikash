@@ -159,7 +159,12 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
                 transaction.replace(R.id.contentFrame, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();*/
-                sendBalanceEnquiryRequest();
+                if (client_pin_entry.getText().toString().equals("")){
+                    client_pin_entry.setError("Member Pin is empty");
+                }else {
+                    sendBalanceEnquiryRequest();
+                }
+
                 break;
             case R.id.enquiry_cross:
                 startActivity(new Intent(getContext(), MainActivity.class));
@@ -197,6 +202,9 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
                         startActivity(intent);
                         getActivity().finish();
                     }else {
+                        if (response.body().getMessage().equals("Member Authentication failed...")){
+                            client_pin_entry.setError("Worng member Pin");
+                        }
                         Intent intent = new Intent(getContext(),ErrorDialogActivity.class);
                         intent.putExtra("msg",response.body().getMessage());
                         startActivity(intent);

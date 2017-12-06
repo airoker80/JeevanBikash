@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +41,8 @@ import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
 
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,18 +55,20 @@ import static java.lang.Thread.sleep;
  * A simple {@link Fragment} subclass.
  */
 public class AgentPinDetailsFragment extends Fragment implements View.OnClickListener {
+    ImageButton cd_speak_imgbtn;
     Retrofit retrofit;
     ApiInterface apiInterface;
     SessionHandler sessionHandler;
     ApiSessionHandler apiSessionHandler;
-    ImageView agent_tick,demand_cross,cd_search_photo,image;
-    String code,name,office ,photo,clientPin,clientCode;
+    ImageView agent_tick, demand_cross, cd_search_photo, image;
+    String code, name, office, photo, clientPin, clientCode;
     EditText agentPin;
-    CGEditText deposoitAmt,deposoitRemarks,clientsPinEtxt,cd_mobile_no;
-    LinearLayout cd_before_conf;
+    CGEditText deposoitAmt, deposoitRemarks, clientsPinEtxt, cd_mobile_no;
+    LinearLayout cd_before_conf, cd_gone_ll_txt_img;
 
-    CenturyGothicTextView depdetailsName,depositCode ,depositBranch,apd_mob_no,gone_cd_txt;
+    CenturyGothicTextView depdetailsName, depositCode, depositBranch, apd_mob_no, gone_cd_txt;
     Bundle bundle;
+    TextToSpeech t1;
 
     public AgentPinDetailsFragment() {
         // Required empty public constructor
@@ -73,7 +79,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_agent_pin_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_agent_pin_details, container, false);
 
 /*        view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -96,36 +102,62 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
 
         bundle = getArguments();
 
-        Log.d("bfd","=-+"+bundle.toString());
-        agent_tick=(ImageView)view.findViewById(R.id.agent_tick);
+        Log.d("bfd", "=-+" + bundle.toString());
+        agent_tick = (ImageView) view.findViewById(R.id.agent_tick);
 
-        agentPin=(EditText)view.findViewById(R.id.agentPin);
-        deposoitAmt=(CGEditText) view.findViewById(R.id.deposoitAmt);
-        deposoitRemarks=(CGEditText)view.findViewById(R.id.deposoitRemarks);
-        clientsPinEtxt=(CGEditText)view.findViewById(R.id.clientsPinEtxt);
-        cd_mobile_no=(CGEditText)view.findViewById(R.id.cd_mobile_no);
+        agentPin = (EditText) view.findViewById(R.id.agentPin);
+        deposoitAmt = (CGEditText) view.findViewById(R.id.deposoitAmt);
+        deposoitRemarks = (CGEditText) view.findViewById(R.id.deposoitRemarks);
+        clientsPinEtxt = (CGEditText) view.findViewById(R.id.clientsPinEtxt);
+        cd_mobile_no = (CGEditText) view.findViewById(R.id.cd_mobile_no);
 
-        apd_mob_no=(CenturyGothicTextView) view.findViewById(R.id.apd_mob_no);
-        gone_cd_txt=(CenturyGothicTextView) view.findViewById(R.id.gone_cd_txt);
+        apd_mob_no = (CenturyGothicTextView) view.findViewById(R.id.apd_mob_no);
+        gone_cd_txt = (CenturyGothicTextView) view.findViewById(R.id.gone_cd_txt);
 
-        depdetailsName=(CenturyGothicTextView)view.findViewById(R.id.depdetailsName);
-        depositCode=(CenturyGothicTextView)view.findViewById(R.id.depositCode);
-        depositBranch=(CenturyGothicTextView)view.findViewById(R.id.depositBranch);
+        depdetailsName = (CenturyGothicTextView) view.findViewById(R.id.depdetailsName);
+        depositCode = (CenturyGothicTextView) view.findViewById(R.id.depositCode);
+        depositBranch = (CenturyGothicTextView) view.findViewById(R.id.depositBranch);
 
-        cd_before_conf=(LinearLayout) view.findViewById(R.id.cd_before_conf);
+        cd_before_conf = (LinearLayout) view.findViewById(R.id.cd_before_conf);
+        cd_gone_ll_txt_img = (LinearLayout) view.findViewById(R.id.cd_gone_ll_txt_img);
 
 
         depdetailsName.setText(bundle.getString("name"));
-                depositCode.setText(bundle.getString("code"));
+        depositCode.setText(bundle.getString("code"));
         depositBranch.setText(bundle.getString("office"));
         apd_mob_no.setText(bundle.getString("phone"));
 
-        demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
-        cd_search_photo=(ImageView)view.findViewById(R.id.cd_search_photo);
-        image=(ImageView)view.findViewById(R.id.image);
+        cd_speak_imgbtn = (ImageButton) view.findViewById(R.id.cd_speak_imgbtn);
+
+        demand_cross = (ImageView) view.findViewById(R.id.demand_cross);
+        cd_search_photo = (ImageView) view.findViewById(R.id.cd_search_photo);
+        image = (ImageView) view.findViewById(R.id.image);
 
         agent_tick.setOnClickListener(this);
         demand_cross.setOnClickListener(this);
+
+
+        try {
+            t1 = new TextToSpeech(getContext(), status -> {
+                if (status == TextToSpeech.SUCCESS) {
+
+                    int result = t1.setLanguage(new Locale("hi"));
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language is not supported");
+                    } else {
+                        Log.e("ok", "ok");
+                    }
+
+                } else {
+                    Log.e("TTS", "Initilization Failed");
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
 
         try {
             String[] splitString = bundle.getString("photo").split(",");
@@ -134,11 +166,14 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             cd_search_photo.setImageBitmap(userPhoto);
 
-            Log.e("photo","--->"+photo);
-        }catch (Exception e){
+            Log.e("photo", "--->" + photo);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
+        cd_speak_imgbtn.setOnClickListener(v -> {
+            t1.speak("Ke tapai ru " + deposoitAmt.getText().toString() + "aafno khata ma jamma garna chahanu huncha", TextToSpeech.QUEUE_FLUSH, null);
+        });
 
         cd_search_photo.setOnClickListener(v -> {
             try {
@@ -157,33 +192,43 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         });
 
 
-
         image.setOnClickListener(view1 -> confirmBack());
-        return  view;
+        return view;
     }
 
     @Override
     public void onClick(View v) {
         int vId = v.getId();
-        switch (vId){
-            case  R.id.agent_tick:
-                if (Integer.parseInt(deposoitAmt.getText().toString())==0){
-                    Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                    intent.putExtra("msg","Zero amount cannot be deposited");
-                    startActivity(intent);
-                }else if (deposoitAmt.getText().toString().equals("")|agentPin.getText().toString().equals("")|clientsPinEtxt.getText().toString().equals("")){
-                    startActivity(new Intent(getContext(),ErrorDialogActivity.class));
-                }else {
-                    if (gone_cd_txt.getVisibility()==View.GONE){
-                        gone_cd_txt.setText("के तपाई रु "+sessionHandler.returnCash(deposoitAmt.getText().toString())+" आफ्नो खाता मा जम्मा गर्न चाहनु  हुन्छ ?");
-                        gone_cd_txt.setVisibility(View.VISIBLE);
-                        cd_before_conf.setVisibility(View.GONE);
-                    }else {
-                            sendOtpForCashDeposit();
+        switch (vId) {
+            case R.id.agent_tick:
+                if (deposoitAmt.getText().toString().equals("") | agentPin.getText().toString().equals("") | clientsPinEtxt.getText().toString().equals("")) {
+                    if (deposoitAmt.getText().toString().equals("")) {
+                        deposoitAmt.setError("This field is empty");
+                    } if (agentPin.getText().toString().equals("")) {
+                        agentPin.setError("This field is empty");
+                    }if (clientsPinEtxt.getText().toString().equals("")) {
+                        clientsPinEtxt.setError("This field is empty");
                     }
+                }else {
+                    if (Integer.parseInt(deposoitAmt.getText().toString()) == 0) {
+                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                        intent.putExtra("msg", "Zero amount cannot be deposited");
+                        startActivity(intent);
+                    } else if (deposoitAmt.getText().toString().equals("") | agentPin.getText().toString().equals("") | clientsPinEtxt.getText().toString().equals("")) {
+                        startActivity(new Intent(getContext(), ErrorDialogActivity.class));
+                    } else {
+                        if (cd_gone_ll_txt_img.getVisibility() == View.GONE) {
+                            gone_cd_txt.setText("के तपाई रु " + sessionHandler.returnCash(deposoitAmt.getText().toString()) + " आफ्नो खाता मा जम्मा गर्न चाहनु  हुन्छ ?");
+                            cd_gone_ll_txt_img.setVisibility(View.VISIBLE);
+                            cd_before_conf.setVisibility(View.GONE);
+                        } else {
+                            sendOtpForCashDeposit();
+                        }
 
 //                    sendOtpForCashDeposit();
+                    }
                 }
+
                 break;
             case R.id.demand_cross:
                 confirmBackCross();
@@ -192,64 +237,71 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
     }
 
 
-    private void  sendOtpForCashDeposit(){
+    private void sendOtpForCashDeposit() {
         sessionHandler.showProgressDialog("Sending Request .... ");
         final JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("membercode",bundle.get("code"));
-            jsonObject.put("finger",clientsPinEtxt.getText().toString());
-            jsonObject.put("amount",deposoitAmt.getText().toString());
-            jsonObject.put("agentpin",agentPin.getText().toString());
-            jsonObject.put("mobile",apd_mob_no.getText().toString());
-            jsonObject.put("remark",deposoitRemarks.getText().toString());
-        }catch (Exception e){
+        try {
+            jsonObject.put("membercode", bundle.get("code"));
+            jsonObject.put("finger", clientsPinEtxt.getText().toString());
+            jsonObject.put("amount", deposoitAmt.getText().toString());
+            jsonObject.put("agentpin", agentPin.getText().toString());
+            jsonObject.put("mobile", apd_mob_no.getText().toString());
+            jsonObject.put("remark", deposoitRemarks.getText().toString());
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (jsonObject.toString()));
 
-        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getDEPOSIT_OTP(),body,
-                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json",apiSessionHandler.getAgentCode());
+        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getDEPOSIT_OTP(), body,
+                sessionHandler.getAgentToken(), "Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json", apiSessionHandler.getAgentCode());
 
         call.enqueue(new Callback<WithDrawlResponse>() {
             @Override
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
-                if (String.valueOf(response.code()).equals("200")){
-                    Fragment fragment= new AgentClientTransferFragment();
+                if (String.valueOf(response.code()).equals("200")) {
+                    Fragment fragment = new AgentClientTransferFragment();
                     String message = response.body().getMessage();
-                    bundle.putString("agentPin",agentPin.getText().toString());
-                    bundle.putString("deposoitAmt",deposoitAmt.getText().toString());
-                    bundle.putString("deposoitRemarks",deposoitRemarks.getText().toString());
-                    bundle.putString("clientsPin",clientsPinEtxt.getText().toString());
-                    bundle.putString("cd_mobile_no",apd_mob_no.getText().toString());
+                    bundle.putString("agentPin", agentPin.getText().toString());
+                    bundle.putString("deposoitAmt", deposoitAmt.getText().toString());
+                    bundle.putString("deposoitRemarks", deposoitRemarks.getText().toString());
+                    bundle.putString("clientsPin", clientsPinEtxt.getText().toString());
+                    bundle.putString("cd_mobile_no", apd_mob_no.getText().toString());
                     fragment.setArguments(bundle);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.addToBackStack(null);
                     transaction.replace(R.id.contentFrame, fragment);
                     transaction.commit();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     try {
 
+
+                        cd_before_conf.setVisibility(View.VISIBLE);
+                        cd_gone_ll_txt_img.setVisibility(View.GONE);
                         String jsonString = response.errorBody().string();
 
-                        Log.d("here ","--=>"+jsonString);
+                        Log.d("here ", "--=>" + jsonString);
 
-                        JSONObject jsonObject = new JSONObject(jsonString);
+/*                        JSONObject jsonObject = new JSONObject(jsonString);
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",jsonObject.getString("message"));
-                        startActivity(intent);
-                        if (jsonObject.getString("message").equals("Sorry Invalid Agent Pincode...")){
+                        intent.putExtra("msg", jsonObject.getString("message"));
+                        startActivity(intent);*/
+                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        if (jsonObject.getString("message").equals("Sorry Invalid Agent Pincode...")) {
                             agentPin.setError("Invalid Pincode");
-                        }else if (jsonObject.getString("message").equals("Member Authentication failed...")){
+                        } else if (jsonObject.getString("message").equals("Member Authentication failed...")) {
                             clientsPinEtxt.setError("Invalid Pincode");
-                        }else if (jsonObject.getString("message").equals("Member Mobile No. is not registered...")){
+                        } else if (jsonObject.getString("message").equals("Member Mobile No. is not registered...")) {
                             cd_mobile_no.setError("Invalid Pincode");
+                        }else if (jsonObject.getString("message").equals("Sorry,  Cash Deposit Amount must be greater than Rs. 1000.00")) {
+                            deposoitAmt.setError("Cash Deposit Amount must be greater than Rs. 1000");
                         }
                     } catch (Exception e) {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",("data mistake"));
+                        intent.putExtra("msg", ("data mistake"));
                         e.printStackTrace();
                     }
                 }
@@ -261,10 +313,11 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             }
         });
     }
-    void confirmBack(){
-        Log.e("backpressed","bp");
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
-        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+
+    void confirmBack() {
+        Log.e("backpressed", "bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission, null);
+        TextView askPermission = (TextView) view.findViewById(R.id.askPermission);
         askPermission.setText("Are you Sure you want to go back??");
         final AlertDialog builder = new AlertDialog.Builder(getContext())
                 .setPositiveButton("Yes", null)
@@ -278,16 +331,16 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                if (cd_before_conf.getVisibility()==View.GONE){
+                if (cd_before_conf.getVisibility() == View.GONE) {
                     cd_before_conf.setVisibility(View.VISIBLE);
-                    gone_cd_txt.setVisibility(View.GONE);
+                    cd_gone_ll_txt_img.setVisibility(View.GONE);
                     agentPin.setText("");
                     clientsPinEtxt.setText("");
                     agentPin.setText("");
-                }else {
-                    ((CashDepositActivity)getActivity()).backpressed();
+                } else {
+                    ((CashDepositActivity) getActivity()).backpressed();
                 }
-                Log.e("backpressed","bp");
+                Log.e("backpressed", "bp");
                 builder.dismiss();
 
             });
@@ -300,10 +353,10 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         builder.show();
     }
 
-    void confirmBackCross(){
-        Log.e("backpressed","bp");
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
-        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+    void confirmBackCross() {
+        Log.e("backpressed", "bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission, null);
+        TextView askPermission = (TextView) view.findViewById(R.id.askPermission);
         askPermission.setText("Are you Sure you want to Cancel??");
         final AlertDialog builder = new AlertDialog.Builder(getContext())
                 .setPositiveButton("Yes", null)
@@ -317,14 +370,14 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                if (gone_cd_txt.getVisibility()==View.VISIBLE){
-                    gone_cd_txt.setVisibility(View.GONE);
+                if (cd_gone_ll_txt_img.getVisibility() == View.VISIBLE) {
+                    cd_gone_ll_txt_img.setVisibility(View.GONE);
                     cd_before_conf.setVisibility(View.VISIBLE);
                     agentPin.setText("");
                     clientsPinEtxt.setText("");
-                }else {
+                } else {
 //                    startActivity(new Intent(getContext(), MainActivity.class));
-                    ((CashDepositActivity)getActivity()).backpressed();
+                    ((CashDepositActivity) getActivity()).backpressed();
                 }
                 builder.dismiss();
 
@@ -343,5 +396,12 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
         agentPin.setText("");
         clientsPinEtxt.setText("");
         super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        t1.stop();
+        t1.shutdown();
+        super.onDestroy();
     }
 }
