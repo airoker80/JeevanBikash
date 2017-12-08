@@ -77,6 +77,7 @@ import retrofit2.Retrofit;
  */
 
 public class LoanDetailFragment extends Fragment {
+    Uri mImageUri;
     Bitmap cameraBitmap;
     Button fileNameButton;
     String filefieldTagName, imgFilefieldTagName, encodedString, compressedFilefieldTagName, fieldTagName;
@@ -91,18 +92,19 @@ public class LoanDetailFragment extends Fragment {
     private static final int CAMERA_REQUEST = 1888;
     ApiSessionHandler apiSessionHandler;
     ImageView setInImage;
-    
+
     Bundle bundle;
     List<LoanDetailsModel> loanDetailsModels = new ArrayList<>();
-    ImageView loanPhoto2,loanPhoto1,image,crossIV;
+    ImageView loanPhoto2, loanPhoto1, image, crossIV;
     SessionHandler sessionHandler;
     Retrofit retrofit;
     ApiInterface apiInterface;
     List<String> stringList = new ArrayList<>();
-    ImageView submit,ld_photo;
+    ImageView submit, ld_photo;
     Spinner spinner;
-    EditText loanAmt,ld_clients_pin;
-    CenturyGothicTextView loanNameDetails ,loanDtCode ,ldOffice,ld_mid;
+    EditText loanAmt, ld_clients_pin;
+    CenturyGothicTextView loanNameDetails, loanDtCode, ldOffice, ld_mid;
+
     public LoanDetailFragment() {
     }
 
@@ -126,18 +128,18 @@ public class LoanDetailFragment extends Fragment {
         spinner = (Spinner) view.findViewById(R.id.spinner);
         docText = new TextView(getContext());
         profileText = new TextView(getContext());
-        loanPhoto2=(ImageView) view.findViewById(R.id.loanPhoto2);
-        loanPhoto1=(ImageView) view.findViewById(R.id.loanPhoto1);
-        image=(ImageView) view.findViewById(R.id.image);
-        crossIV=(ImageView) view.findViewById(R.id.crossIV);
+        loanPhoto2 = (ImageView) view.findViewById(R.id.loanPhoto2);
+        loanPhoto1 = (ImageView) view.findViewById(R.id.loanPhoto1);
+        image = (ImageView) view.findViewById(R.id.image);
+        crossIV = (ImageView) view.findViewById(R.id.crossIV);
 
-        loanNameDetails=(CenturyGothicTextView)view.findViewById(R.id.loanNameDetails);
-        loanDtCode=(CenturyGothicTextView)view.findViewById(R.id.loanDtCode);
-        ldOffice=(CenturyGothicTextView)view.findViewById(R.id.ldOffice);
-        ld_mid=(CenturyGothicTextView)view.findViewById(R.id.ld_mid);
+        loanNameDetails = (CenturyGothicTextView) view.findViewById(R.id.loanNameDetails);
+        loanDtCode = (CenturyGothicTextView) view.findViewById(R.id.loanDtCode);
+        ldOffice = (CenturyGothicTextView) view.findViewById(R.id.ldOffice);
+        ld_mid = (CenturyGothicTextView) view.findViewById(R.id.ld_mid);
 
         loanNameDetails.setText(bundle.getString("name"));
-                loanDtCode.setText(bundle.getString("code"));
+        loanDtCode.setText(bundle.getString("code"));
         ldOffice.setText(bundle.getString("office"));
         ld_mid.setText(bundle.getString("phone"));
 
@@ -147,7 +149,7 @@ public class LoanDetailFragment extends Fragment {
             byte[] decodedString = Base64.decode(base64Photo, Base64.DEFAULT);
             Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             ld_photo.setImageBitmap(userPhoto);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -157,16 +159,16 @@ public class LoanDetailFragment extends Fragment {
 
         ld_photo.setOnClickListener(v -> {
             try {
-                if (!bundle.getString("photo").toString().equals(null)){
+                if (!bundle.getString("photo").toString().equals(null)) {
                     Intent intent = new Intent(getContext(), ImageZoomActivity.class);
                     intent.putExtra("photo", bundle.getString("photo"));
 //                intent.putExtra("imageUrl",imageUrl);
                     startActivity(intent);
-                }else {
+                } else {
                     Toast.makeText(getContext(), "No Image Found", Toast.LENGTH_SHORT).show();
                 }
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -181,26 +183,34 @@ public class LoanDetailFragment extends Fragment {
             profileText.setTag("profile");
             Button button = new Button(getContext());
             button.setTag("profile");
-            imageOptionDialog(button, "profile", "profile", profileText,loanPhoto2);
+            imageOptionDialog(button, "profile", "profile", profileText, loanPhoto2);
         });
-                loanPhoto1.setOnClickListener(v -> {
-                    loanPhoto1.setTag("doc");
-                    String file1 = "";
-                    TextView testView1 = new TextView(getContext());
-                    testView1.setVisibility(View.GONE);
-                    docText.setTag("doc");
-                    Button button1 = new Button(getContext());
-                    button1.setTag("doc");
-                    imageOptionDialog(button1, "doc", "doc", docText,loanPhoto1);
-                });
+        loanPhoto1.setOnClickListener(v -> {
+            loanPhoto1.setTag("doc");
+            String file1 = "";
+            TextView testView1 = new TextView(getContext());
+            testView1.setVisibility(View.GONE);
+            docText.setTag("doc");
+            Button button1 = new Button(getContext());
+            button1.setTag("doc");
+            imageOptionDialog(button1, "doc", "doc", docText, loanPhoto1);
+        });
 
         submit.setOnClickListener(view1 -> {
-            if (loanAmt.getText().toString().equals("") | spinner.getSelectedItem().toString().equals("")| ld_clients_pin.getText().toString().equals("")) {
-                    Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                    getActivity().startActivity(intent);
-            }else if (docText.getText().toString().equals("")|profileText.getText().toString().equals("")){
+            if (loanAmt.getText().toString().equals("") | spinner.getSelectedItem().toString().equals("") | ld_clients_pin.getText().toString().equals("")) {
+/*                Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                startActivity(intent);*/
+
+                if (loanAmt.getText().toString().equals("")) {
+                    loanAmt.setError("This field is empty");
+                }
+                if (ld_clients_pin.getText().toString().equals("")) {
+                    ld_clients_pin.setError("This field is empty");
+                }
+
+            } else if (docText.getText().toString().equals("") | profileText.getText().toString().equals("")) {
                 Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                intent.putExtra("msg","Please fill all images too");
+                intent.putExtra("msg", "Please fill all images too");
                 getActivity().startActivity(intent);
             } else {
 //                sendLoanDemandRequest();
@@ -217,7 +227,7 @@ public class LoanDetailFragment extends Fragment {
 
                     btnAccept.setOnClickListener(v -> {
                         sendLoanDemandRequest();
-                        Log.e("backpressed","bp");
+                        Log.e("backpressed", "bp");
                         builder.dismiss();
 
                     });
@@ -237,9 +247,9 @@ public class LoanDetailFragment extends Fragment {
 
     private void getLoanTypeList() {
         sessionHandler.showProgressDialog("Sending Request ...");
-        retrofit2.Call<List<LoanDetailsModel>> call = apiInterface.getLoanTypeList(apiSessionHandler.getLOAN_TYPE_LIST(),sessionHandler.getAgentToken(),
+        retrofit2.Call<List<LoanDetailsModel>> call = apiInterface.getLoanTypeList(apiSessionHandler.getLOAN_TYPE_LIST(), sessionHandler.getAgentToken(),
                 "Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json",apiSessionHandler.getAgentCode());
+                "application/json", apiSessionHandler.getAgentCode());
 
         call.enqueue(new Callback<List<LoanDetailsModel>>() {
             @Override
@@ -283,9 +293,9 @@ public class LoanDetailFragment extends Fragment {
         }
         Log.d("body jsonBody", "=()-" + jsonObject.toString());
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (jsonObject.toString()));
-        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendPostLoanDemand(apiSessionHandler.getLOAN_DEMAND(),body,
+        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendPostLoanDemand(apiSessionHandler.getLOAN_DEMAND(), body,
                 sessionHandler.getAgentToken(), "Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json",apiSessionHandler.getAgentCode());
+                "application/json", apiSessionHandler.getAgentCode());
 
         call.enqueue(new Callback<SuccesResponseModel>() {
             @Override
@@ -293,6 +303,7 @@ public class LoanDetailFragment extends Fragment {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")) {
                     if (response.body().getStatus().equals("Success")) {
+                        getActivity().finish();
                         Intent intent = new Intent(getContext(), DialogActivity.class);
                         intent.putExtra("msg", response.body().getMessage());
                         startActivity(intent);
@@ -312,9 +323,15 @@ public class LoanDetailFragment extends Fragment {
                         Log.d("here ", "--=>" + jsonString);
 
                         JSONObject jsonObject = new JSONObject(jsonString);
-                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg", jsonObject.getString("message"));
-                        startActivity(intent);
+//                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+//                        intent.putExtra("msg", jsonObject.getString("message"));
+//                        startActivity(intent);
+
+                        if (jsonObject.getString("message").equals("Member Authentication failed...")) {
+                            ld_clients_pin.setError("Wrong member pin");
+                        }
+                        if (jsonObject.getString("message").equals("")) {
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -337,6 +354,7 @@ public class LoanDetailFragment extends Fragment {
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
+
     private void startYourCameraIntent() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -347,34 +365,20 @@ public class LoanDetailFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            cameraBitmap = (Bitmap) data.getExtras().get("data");//this is your bitmap image and now you can do whatever you want with this
-            Matrix matrix = new Matrix();
-
-            matrix.postRotate(90);
-            Bitmap rotatedBitmap = Bitmap.createBitmap(cameraBitmap , 0, 0, cameraBitmap .getWidth(), cameraBitmap .getHeight(), matrix, true);
-            setInImage.setImageBitmap(rotatedBitmap);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;
-            int height = rotatedBitmap.getHeight(), width = rotatedBitmap.getWidth();
-
-            if (height > 1280 && width > 960) {
-                Uri tempUri = getImageUri(getContext(), rotatedBitmap);
-
-                imgFile = new File(getRealPathFromURI(tempUri));
-
-                imgPath = imgFile.getAbsolutePath();
-                Bitmap imgbitmap = BitmapFactory.decodeFile(imgPath, options);
-                updatedImageBitmap = imgbitmap;
-//                imgView.setImageBitmap(imgbitmap);
-                System.out.println("Need to resize");
-            } else {
-//                imgView.setImageBitmap(bitmap);
-                updatedImageBitmap = rotatedBitmap;
-                System.out.println("WORKS");
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK && null != data) {
+            try {
+                cameraBitmap = (Bitmap) data.getExtras().get("data");//this is your bitmap image and now you can do whatever you want with this
+                mImageUri = getImageUri(getContext(), cameraBitmap);
+                Matrix matrix = new Matrix();
+                imgFile = new File(getRealPathFromURI(mImageUri));
+                matrix.postRotate(sessionHandler.getCameraPhotoOrientation(getContext(), mImageUri, imgFile.getAbsolutePath()));
+                Bitmap rotatedBitmap = Bitmap.createBitmap(cameraBitmap, 0, 0, cameraBitmap.getWidth(), cameraBitmap.getHeight(), matrix, true);
+                setInImage.setImageBitmap(rotatedBitmap);
+                encodeImagetoString(rotatedBitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            encodeImagetoString(updatedImageBitmap);
         }
         if (resultCode == Activity.RESULT_OK
                 && null != data) {
@@ -382,54 +386,11 @@ public class LoanDetailFragment extends Fragment {
                 // Get the Image from data
 
                 Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
 
-                // Get the cursor
-                Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
-                // Move to first row
-                assert cursor != null;
-                cursor.moveToFirst();
+                setInImage.setImageBitmap(bitmap);
 
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                imgPath = cursor.getString(columnIndex);
-                cursor.close();
-
-//            imgView.setVisibility(View.VISIBLE);
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 4;
-                Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-                Matrix matrix = new Matrix();
-
-                matrix.postRotate(90);
-                Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap , 0, 0, bitmap .getWidth(), bitmap .getHeight(), matrix, true);
-                setInImage.setImageBitmap(rotatedBitmap);
-                int height = rotatedBitmap.getHeight(), width = rotatedBitmap.getWidth();
-
-                if (height > 1280 && width > 960) {
-                    imgFile = new File(imgPath);
-                    Bitmap imgbitmap = BitmapFactory.decodeFile(imgPath, options);
-                    updatedImageBitmap = rotatedBitmap;
-//                imgView.setImageBitmap(imgbitmap);
-                    System.out.println("Need to resize");
-                } else {
-                    imgFile = new File(imgPath);
-//                imgView.setImageBitmap(bitmap);
-                    updatedImageBitmap = rotatedBitmap;
-                    System.out.println("WORKS");
-                }
-
-                String filefieldTagNameSegments[] = imgPath.split("/");
-                filefieldTagName = filefieldTagNameSegments[filefieldTagNameSegments.length - 1];
-                imgFilefieldTagName = filefieldTagName;
-                fileNameButton.setText(filefieldTagName);
-                Log.i("msg ", "filefieldTagName : " + filefieldTagName + " imgPath : " + imgPath);
-                options = new BitmapFactory.Options();
-                options.inSampleSize = 3;
-                bitmap = BitmapFactory.decodeFile(imgPath,
-                        options);
                 encodeImagetoString(bitmap);
-
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -504,7 +465,7 @@ public class LoanDetailFragment extends Fragment {
         fileNameButton = imageView;
         imgFilefieldTagName = imageFilefieldTagName;
         testTextview = testView;
-        setInImage=setImg;
+        setInImage = setImg;
 //        compressedFilefieldTagName=file;
         fieldTagName = file;
 
@@ -527,7 +488,7 @@ public class LoanDetailFragment extends Fragment {
     }
 
 
-    private void takePicture(Button imageView, String file, String imageFilefieldTagName, TextView testView,ImageView setImg) {
+    private void takePicture(Button imageView, String file, String imageFilefieldTagName, TextView testView, ImageView setImg) {
         //you can call this every 5 seconds using a timer or whenever you want
         fileNameButton = imageView;
         imgFilefieldTagName = imageFilefieldTagName;
@@ -538,7 +499,8 @@ public class LoanDetailFragment extends Fragment {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
-    private void imageOptionDialog(Button imageView, String file, String imageFilefieldTagName, TextView testView,ImageView setImg) {
+
+    private void imageOptionDialog(Button imageView, String file, String imageFilefieldTagName, TextView testView, ImageView setImg) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_get_image, null);
         final AlertDialog builder = new AlertDialog.Builder(getContext())
                 .setView(view)
@@ -548,20 +510,20 @@ public class LoanDetailFragment extends Fragment {
         LinearLayout galleryLL = (LinearLayout) view.findViewById(R.id.galleryLL);
         LinearLayout cameraLL = (LinearLayout) view.findViewById(R.id.cameraLL);
         cameraLL.setOnClickListener(v -> {
-            takePicture(imageView, file, imageFilefieldTagName, testView,setImg);
+            takePicture(imageView, file, imageFilefieldTagName, testView, setImg);
             builder.dismiss();
         });
         galleryLL.setOnClickListener(v -> {
-            loadImageFromGallery(imageView, file, imageFilefieldTagName, testView,setImg);
+            loadImageFromGallery(imageView, file, imageFilefieldTagName, testView, setImg);
             builder.dismiss();
         });
         builder.show();
     }
 
-    void confirmBackCross(){
-        Log.e("backpressed","bp");
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
-        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+    void confirmBackCross() {
+        Log.e("backpressed", "bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission, null);
+        TextView askPermission = (TextView) view.findViewById(R.id.askPermission);
         askPermission.setText("Are you Sure you want to Cancel??");
         final AlertDialog builder = new AlertDialog.Builder(getContext())
                 .setPositiveButton("Yes", null)
@@ -576,7 +538,7 @@ public class LoanDetailFragment extends Fragment {
 
             btnAccept.setOnClickListener(v -> {
 //                    startActivity(new Intent(getContext(), MainActivity.class));
-                    ((LoanDemandActivity)getActivity()).backPressed();
+                ((LoanDemandActivity) getActivity()).backPressed();
                 builder.dismiss();
 
             });
@@ -604,16 +566,16 @@ public class LoanDetailFragment extends Fragment {
         return Uri.parse(path);
     }
 
-    void showImage(int resource){
-        final Dialog nagDialog = new Dialog(getContext(),android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+    void showImage(int resource) {
+        final Dialog nagDialog = new Dialog(getContext(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
         nagDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         nagDialog.setCancelable(false);
         nagDialog.setContentView(R.layout.preview_image);
-        Button btnClose = (Button)nagDialog.findViewById(R.id.btnIvClose);
-        ImageView ivPreview = (ImageView)nagDialog.findViewById(R.id.iv_preview_image);
+        Button btnClose = (Button) nagDialog.findViewById(R.id.btnIvClose);
+        ImageView ivPreview = (ImageView) nagDialog.findViewById(R.id.iv_preview_image);
         ivPreview.setBackgroundResource(resource);
 
         btnClose.setOnClickListener(arg0 -> nagDialog.dismiss());
         nagDialog.show();
-}
+    }
 }

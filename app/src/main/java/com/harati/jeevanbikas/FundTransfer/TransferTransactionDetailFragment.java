@@ -344,6 +344,7 @@ public class TransferTransactionDetailFragment extends Fragment {
             public void onResponse(Call<TransferModel> call, Response<TransferModel> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")){
+                    getActivity().finish();
                     Intent intent = new Intent(getContext(),DialogActivity.class);
                     intent.putExtra("msg",response.body().getMessage());
                     startActivity(intent);

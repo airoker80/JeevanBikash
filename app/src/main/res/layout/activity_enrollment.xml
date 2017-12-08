@@ -313,7 +313,7 @@
                                     <ImageView
                                         android:clickable="true"
                                         android:id="@+id/req_doc"
-                                        android:layout_width="@dimen/_60sdp"
+                                        android:layout_width="@dimen/_90sdp"
                                         android:layout_height="@dimen/_90sdp"
                                         android:src="@drawable/ic_new_file" />
 

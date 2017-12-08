@@ -482,11 +482,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
+            <LinearLayout
+                android:id="@+id/ft_gone_ll_txt_img"
+                android:visibility="gone"
+                android:layout_below="@+id/befor_conf_ll"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <com.harati.jeevanbikas.Helper.CenturyGothicTextView
                 android:textColor="@color/white"
                 android:id="@+id/gone_ft_txt"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginRight="@dimen/_25sdp"
@@ -495,7 +501,16 @@
                 android:layout_below="@+id/befor_conf_ll"
                 android:text="Are you Sure to withdraw Rs 1000"
                 android:textSize="@dimen/_30sdp" />
+                <ImageButton
+                    android:id="@+id/ft_speak_imgbtn"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/_20sdp"
+                    android:src="@drawable/ic_volume"
+                    android:layout_below="@+id/gone_cw_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
     <LinearLayout

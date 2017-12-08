@@ -137,8 +137,12 @@ public class NewFundDetailsFragment extends Fragment implements View.OnClickList
                         intent.putExtra("msg", "Same Member Codes");
                         startActivity(intent);
                     } else {
-                        Log.e("Ok", "okkkkk" + benf_ft_etx.getText().toString());
-                        getMemberList(benf_ft_etx.getText().toString());
+                        if (benf_ft_etx.getText().toString().equals("")){
+                            benf_ft_etx.setError("This field is empty");
+                        }else {
+                            Log.e("Ok", "okkkkk" + benf_ft_etx.getText().toString());
+                            getMemberList(benf_ft_etx.getText().toString());
+                        }
                     }
 
                 } else {
