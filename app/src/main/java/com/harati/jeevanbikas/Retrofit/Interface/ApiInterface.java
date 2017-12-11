@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Observable;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -67,7 +68,7 @@ public interface ApiInterface {
 
     //    @GET("agent/logout")
     @GET("agent/logout")
-    Call<SuccesResponseModel> sendLogoutRequest(@Header("X-Authorization") String xAuth,
+    io.reactivex.Observable<SuccesResponseModel> sendLogoutRequest(@Header("X-Authorization") String xAuth,
                                                 @Header("Authorization") String Authorization,
                                                 @Header("Content-Type") String contentType,
                                                 @Query("serialno") String serialno);
@@ -143,11 +144,11 @@ public interface ApiInterface {
                                        @Query("serialno") String serialno);
 
     @GET
-    Call<List<LoanDetailsModel>> getLoanTypeList(@Url String url,
-                                                 @Header("X-Authorization") String xAuth,
-                                                 @Header("Authorization") String Authorization,
-                                                 @Header("Content-Type") String contentType,
-                                                 @Query("serialno") String serialno);
+    io.reactivex.Observable<List<LoanDetailsModel>> getLoanTypeList(@Url String url,
+                                                                    @Header("X-Authorization") String xAuth,
+                                                                    @Header("Authorization") String Authorization,
+                                                                    @Header("Content-Type") String contentType,
+                                                                    @Query("serialno") String serialno);
 
 
 

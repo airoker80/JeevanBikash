@@ -35,6 +35,10 @@ import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -100,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         centuryGothic=Typeface.createFromAsset(MainActivity.this.getAssets(), "cg.ttf");
         dashboardTitile.setTypeface(centuryGothic);
-        dashboardTitile.setText("JEEVAN BIKAS SAMAJ "+" (Version :"+String.valueOf(pInfo.versionName)+")");
+        dashboardTitile.setText("JEEVAN BIKAS SAMAJ "+"( Version :"+String.valueOf(pInfo.versionName)+")");
         dashboard_icon_list = (RecyclerView) findViewById(R.id.dashboard_icon_list);
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_balance_enquiry, "Balance \n Inquiry"));
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_cash_withdrawl, "Cash \n Withdrawal"));
@@ -134,13 +138,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void logout(){
-        sessionHandler.showProgressDialog("Logging Out..");
+
 //        sessionHandler.logoutUser();
 //        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-            retrofit2.Call<SuccesResponseModel> call = apiInterface.sendLogoutRequest(sessionHandler.getAgentToken(),
+        io.reactivex.Observable<SuccesResponseModel> call = apiInterface.sendLogoutRequest(sessionHandler.getAgentToken(),
                     "Basic dXNlcjpqQiQjYUJAMjA1NA==",
                     "application/json",apiSessionHandler.getAgentCode());
-            call.enqueue(new Callback<SuccesResponseModel>() {
+            /*call.enqueue(new Callback<SuccesResponseModel>() {
                 @Override
                 public void onResponse(Call<SuccesResponseModel> call, retrofit2.Response<SuccesResponseModel> response) {
                     sessionHandler.hideProgressDialog();
@@ -156,7 +160,32 @@ public class MainActivity extends AppCompatActivity {
                     sessionHandler.hideProgressDialog();
                     sessionHandler.logoutUser();
                 }
-            });
+            });*/
+            call.subscribeOn(Schedulers.io())
+                 .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe(new Observer<SuccesResponseModel>() {
+                      @Override
+                      public void onSubscribe(Disposable d) {
+                          sessionHandler.showProgressDialog("Logging Out..");
+                      }
+
+                      @Override
+                      public void onNext(SuccesResponseModel value) {
+                          Log.v("logout",value.getMessage()+value.getStatus());
+                      }
+
+                      @Override
+                      public void onError(Throwable e) {
+                          sessionHandler.hideProgressDialog();
+                          sessionHandler.logoutUser();
+                      }
+
+                      @Override
+                      public void onComplete() {
+                          sessionHandler.hideProgressDialog();
+                          sessionHandler.logoutUser();
+                      }
+                  });
         }
 
     @Override

@@ -2,6 +2,8 @@ package com.harati.jeevanbikas;
 
 import android.app.Application;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -33,6 +35,7 @@ public class MyApplication extends Application {
         httpClient.addInterceptor(logging);
         return new Retrofit.Builder()
                 .baseUrl(baseurl+"/api/v1/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
 //                .client(httpClient.build())

@@ -65,6 +65,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -246,12 +252,11 @@ public class LoanDetailFragment extends Fragment {
     }
 
     private void getLoanTypeList() {
-        sessionHandler.showProgressDialog("Sending Request ...");
-        retrofit2.Call<List<LoanDetailsModel>> call = apiInterface.getLoanTypeList(apiSessionHandler.getLOAN_TYPE_LIST(), sessionHandler.getAgentToken(),
+        Observable<List<LoanDetailsModel>> call = apiInterface.getLoanTypeList(apiSessionHandler.getLOAN_TYPE_LIST(), sessionHandler.getAgentToken(),
                 "Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json", apiSessionHandler.getAgentCode());
 
-        call.enqueue(new Callback<List<LoanDetailsModel>>() {
+        /*call.enqueue(new Callback<List<LoanDetailsModel>>() {
             @Override
             public void onResponse(Call<List<LoanDetailsModel>> call, Response<List<LoanDetailsModel>> response) {
                 sessionHandler.hideProgressDialog();
@@ -272,7 +277,43 @@ public class LoanDetailFragment extends Fragment {
             public void onFailure(Call<List<LoanDetailsModel>> call, Throwable t) {
                 sessionHandler.hideProgressDialog();
             }
-        });
+        });*/
+
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        new Observer<List<LoanDetailsModel>>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                                sessionHandler.showProgressDialog("Sending Request ...");
+                            }
+                            @Override
+                            public void onNext(List<LoanDetailsModel> value) {
+
+                                Log.v("size", String.valueOf(value.size()));
+                                try {
+                                    for (int i = 0; i < value.size(); i++) {
+                                        Log.d("ok lets test", "===" + value.get(i).getLoanType());
+                                        stringList.add(value.get(i).getLoanType());
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                sessionHandler.hideProgressDialog();
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                sessionHandler.hideProgressDialog();
+                                setupSpinner();
+
+                            }
+                        }
+                );
 
     }
 
