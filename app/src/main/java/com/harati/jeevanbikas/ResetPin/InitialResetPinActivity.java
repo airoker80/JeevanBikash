@@ -92,6 +92,11 @@ public class InitialResetPinActivity extends AppCompatActivity implements View.O
 
         startHandler();
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+
     @Override
     public void onClick(View v) {
         int getVid = v.getId();

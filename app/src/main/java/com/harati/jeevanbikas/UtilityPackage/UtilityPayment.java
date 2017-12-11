@@ -57,8 +57,10 @@ public class UtilityPayment extends AppCompatActivity implements View.OnClickLis
     }
     @Override
     public void onBackPressed() {
+    }
+
+    public void onbackpress(){
         super.onBackPressed();
-        finish();
     }
 
     @Override
@@ -66,7 +68,7 @@ public class UtilityPayment extends AppCompatActivity implements View.OnClickLis
         int getID = v.getId();
         switch (getID){
             case R.id.image:
-                startActivity(new Intent(UtilityPayment.this,MainActivity.class));
+                onbackpress();
                 break;
         }
     }

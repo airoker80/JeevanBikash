@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -41,6 +42,8 @@ import com.harati.jeevanbikas.Retrofit.RetrofitModel.WithDrawlResponse;
 
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,7 +73,9 @@ public class FundInfoFragment extends Fragment {
     CGEditText fiClienttPin;
     String BenificiaryaccNoTxt, confirmAccNoTxt, deposoitAmtTxt, agentPinTxt, fundMobileTxt;
     CenturyGothicTextView gone_ft_txt;
-    LinearLayout befor_conf_ll,ft_gone_ll_txt_img;
+    LinearLayout befor_conf_ll, ft_gone_ll_txt_img;
+
+    TextToSpeech t1;
 
     public FundInfoFragment() {
     }
@@ -111,6 +116,25 @@ public class FundInfoFragment extends Fragment {
 
         bundle = getArguments();
 
+        try {
+            t1 = new TextToSpeech(getContext(), status -> {
+                if (status == TextToSpeech.SUCCESS) {
+
+                    int result = t1.setLanguage(new Locale("hi"));
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language is not supported");
+                    } else {
+                        Log.e("ok", "ok");
+                    }
+
+                } else {
+                    Log.e("TTS", "Initilization Failed");
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         fundtransfername.setText(bundle.getString("name") + " (Sender)");
         fundMemberCode.setText(bundle.getString("code"));
@@ -194,7 +218,7 @@ public class FundInfoFragment extends Fragment {
             fundMobileTxt = fundMobile.getText().toString();
 
             if (BenificiaryaccNoTxt.equals("") | confirmAccNoTxt.equals("") | transferAmt.getText().toString().equals("") |
-                    agentPin.getText().toString().equals("")|fiClienttPin.getText().toString().equals("")) {
+                    agentPin.getText().toString().equals("") | fiClienttPin.getText().toString().equals("")) {
 //                getActivity().startActivity(new Intent(getContext(), ErrorDialogActivity.class));
                 if (transferAmt.getText().toString().equals("")) {
                     transferAmt.setError("This field is empty");
@@ -225,9 +249,7 @@ public class FundInfoFragment extends Fragment {
             }
         });
 
-        ft_speak_imgbtn.setOnClickListener(v -> {
-
-        });
+        ft_speak_imgbtn.setOnClickListener(v -> t1.speak("Ke tapai ru " + transferAmt.getText().toString() + "rupaya " + bundle.getString("nameBenificiary") + "ko khata ma pathauna chahanuhuncha ", TextToSpeech.QUEUE_FLUSH, null));
 
         crossIV.setOnClickListener(view1 -> confirmBack());
 
@@ -299,7 +321,7 @@ public class FundInfoFragment extends Fragment {
                             fiClienttPin.setError("Invalid Pincode");
                         } else if (jsonObject.getString("message").equals("Member Mobile No. is not registered...")) {
                             fundMobile.setError("Mobile not Registered");
-                        }else if (jsonObject.getString("message").equals("Sorry,  Transfer Amount must be greater than Rs. 1000.00")) {
+                        } else if (jsonObject.getString("message").equals("Sorry,  Transfer Amount must be greater than Rs. 1000.00")) {
                             transferAmt.setError("Transfer Amount must be greater than Rs. 1000.00");
                         }
                     } catch (Exception e) {
@@ -362,5 +384,12 @@ public class FundInfoFragment extends Fragment {
         agentPin.setText("");
         fiClienttPin.setText("");
         super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        t1.stop();
+        t1.shutdown();
+        super.onDestroy();
     }
 }

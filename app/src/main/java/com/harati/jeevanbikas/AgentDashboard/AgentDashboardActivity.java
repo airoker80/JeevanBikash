@@ -53,7 +53,7 @@ public class AgentDashboardActivity extends AppCompatActivity  implements View.O
         resetPassword=(Button)findViewById(R.id.resetPassword);
 
         ad_back=(ImageView) findViewById(R.id.ad_back);
-        ad_back.setOnClickListener(v -> onBackPressed());
+        ad_back.setOnClickListener(v -> backpress());
 
         sessionHandler = new SessionHandler(this);
 
@@ -64,6 +64,14 @@ public class AgentDashboardActivity extends AppCompatActivity  implements View.O
         r=() -> sessionHandler.logoutUser();
 
         startHandler();
+    }
+
+    @Override
+    public void onBackPressed() {
+    }
+
+    void backpress(){
+        super.onBackPressed();
     }
 
     @Override

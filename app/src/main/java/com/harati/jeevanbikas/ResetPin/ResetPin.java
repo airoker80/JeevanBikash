@@ -51,6 +51,10 @@ public class ResetPin extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+    }
+
+    @Override
     protected void onDestroy() {
         stopHandler();
         super.onDestroy();

@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         centuryGothic=Typeface.createFromAsset(MainActivity.this.getAssets(), "cg.ttf");
         dashboardTitile.setTypeface(centuryGothic);
-        dashboardTitile.setText("JEEVAN BIKAS SAMAJ "+"( Version :"+String.valueOf(pInfo.versionName)+")");
+        dashboardTitile.setText("JEEVAN BIKAS SAMAJ "+" (Version :"+String.valueOf(pInfo.versionName)+")");
         dashboard_icon_list = (RecyclerView) findViewById(R.id.dashboard_icon_list);
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_balance_enquiry, "Balance \n Inquiry"));
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_cash_withdrawl, "Cash \n Withdrawal"));

@@ -51,4 +51,8 @@ public class AgentLogActivity extends AppCompatActivity {
 //        transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

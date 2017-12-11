@@ -11,9 +11,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.harati.jeevanbikas.CashDeposit.DepositFragment;
+import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
-public class KycActivity extends AppCompatActivity {
+public class KycActivity extends MainActivity {
 
     Spinner spinner;
     ImageView image;
