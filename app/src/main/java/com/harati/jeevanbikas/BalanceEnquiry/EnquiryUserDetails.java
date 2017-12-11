@@ -37,6 +37,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Observable;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,14 +53,14 @@ import retrofit2.Retrofit;
  * A simple {@link Fragment} subclass.
  */
 public class EnquiryUserDetails extends Fragment implements View.OnClickListener {
-    ApiSessionHandler apiSessionHandler ;
+    ApiSessionHandler apiSessionHandler;
     SessionHandler sessionHandler;
     ApiInterface apiInterface;
     Retrofit retrofit;
     ImageView enquiry_submit, enquiry_cross, enquiryUserPhoto;
-    TextView memberIdnnumber, branchName, accNoDetails,enquiryUserName,memberId,branch ,accNo,be_mob_no;
+    TextView memberIdnnumber, branchName, accNoDetails, enquiryUserName, memberId, branch, accNo, be_mob_no;
     EditText client_pin_entry;
-    String code,name,office ,photo;
+    String code, name, office, photo;
 
     public EnquiryUserDetails() {
         // Required empty public constructor
@@ -121,9 +127,9 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
             Bitmap userPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             enquiryUserPhoto.setImageBitmap(userPhoto);
 
-            Log.e("photo","--->"+photo);
+            Log.e("photo", "--->" + photo);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -159,9 +165,9 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
                 transaction.replace(R.id.contentFrame, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();*/
-                if (client_pin_entry.getText().toString().equals("")){
+                if (client_pin_entry.getText().toString().equals("")) {
                     client_pin_entry.setError("Member Pin is empty");
-                }else {
+                } else {
                     sendBalanceEnquiryRequest();
                 }
 
@@ -172,25 +178,78 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
         }
     }
 
-    public  void  sendBalanceEnquiryRequest(){
-        sessionHandler.showProgressDialog("Sending Request ....");
+    public void sendBalanceEnquiryRequest() {
+
         final JSONObject jsonObject = new JSONObject();
 //      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
         JSONArray jsonArray = new JSONArray();
-        try{
-            Log.e("agentCode","ac"+sessionHandler.getAgentCode());
-            jsonObject.put("membercode",code);
-            jsonObject.put("finger",client_pin_entry.getText().toString());
+        try {
+            Log.e("agentCode", "ac" + sessionHandler.getAgentCode());
+            jsonObject.put("membercode", code);
+            jsonObject.put("finger", client_pin_entry.getText().toString());
 
             jsonArray.put(jsonObject);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendBalanceRequest(apiSessionHandler.getBALANCE_ENQUIRY(),body,
-                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json",apiSessionHandler.getAgentCode());
-        call.enqueue(new Callback<SuccesResponseModel>() {
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (jsonObject.toString()));
+        io.reactivex.Observable<Response<SuccesResponseModel>> call = apiInterface.sendBalanceRequest(apiSessionHandler.getBALANCE_ENQUIRY(), body,
+                sessionHandler.getAgentToken(), "Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json", apiSessionHandler.getAgentCode());
+
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<SuccesResponseModel>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        sessionHandler.showProgressDialog("Sending Request ....");
+                    }
+                    @Override
+                    public void onNext(Response<SuccesResponseModel> value) {
+                        if (String.valueOf(value.code()).equals("200")) {
+                            if (value.body().getStatus().equals("Success")) {
+                                Intent intent = new Intent(getContext(), DialogActivity.class);
+                                intent.putExtra("msg", value.body().getMessage());
+                                startActivity(intent);
+                                getActivity().finish();
+                            } else {
+                                if (value.body().getMessage().equals("Member Authentication failed...")) {
+                                    client_pin_entry.setError("Worng member Pin");
+                                }
+                                Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                                intent.putExtra("msg", value.body().getMessage());
+                                startActivity(intent);
+                            }
+                        } else {
+                            try {
+
+                                String jsonString = value.errorBody().string();
+
+                                Log.d("here ", "--=>" + jsonString);
+
+                                JSONObject jsonObject = new JSONObject(jsonString);
+                                Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                                intent.putExtra("msg", jsonObject.getString("message"));
+                                startActivity(intent);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        sessionHandler.hideProgressDialog();
+                        Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        sessionHandler.hideProgressDialog();
+                    }
+                });
+        /*call.enqueue(new Callback<SuccesResponseModel>() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onResponse(Call<SuccesResponseModel> call, Response<SuccesResponseModel> response) {
@@ -232,7 +291,8 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
                 sessionHandler.hideProgressDialog();
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
     }
 
 

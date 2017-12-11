@@ -238,7 +238,7 @@ public class FingerPrintFragment extends Fragment {
             e.printStackTrace();
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendBalanceRequest(apiSessionHandler.getBALANCE_ENQUIRY(),body,
+/*        retrofit2.Call<SuccesResponseModel> call = apiInterface.sendBalanceRequest(apiSessionHandler.getBALANCE_ENQUIRY(),body,
                 sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json",apiSessionHandler.getAgentCode());
         call.enqueue(new Callback<SuccesResponseModel>() {
@@ -277,6 +277,6 @@ public class FingerPrintFragment extends Fragment {
                 sessionHandler.hideProgressDialog();
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 }

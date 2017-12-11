@@ -21,6 +21,7 @@ import java.util.Observable;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -84,12 +85,12 @@ public interface ApiInterface {
 
 
     @POST
-    Call<SuccesResponseModel> sendBalanceRequest(@Url String url,
-                                                 @Body RequestBody body,
-                                                 @Header("X-Authorization") String xAuth,
-                                                 @Header("Authorization") String Authorization,
-                                                 @Header("Content-Type") String contentType,
-                                                 @Query("serialno") String serialno);
+    io.reactivex.Observable<Response<SuccesResponseModel>> sendBalanceRequest(@Url String url,
+                                                                              @Body RequestBody body,
+                                                                              @Header("X-Authorization") String xAuth,
+                                                                              @Header("Authorization") String Authorization,
+                                                                              @Header("Content-Type") String contentType,
+                                                                              @Query("serialno") String serialno);
 
     @POST
     Call<TransferModel> sendDepositRequest(@Url String url,
