@@ -173,7 +173,9 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
 
                 break;
             case R.id.enquiry_cross:
-                startActivity(new Intent(getContext(), MainActivity.class));
+                Intent intent =new Intent(getContext(), MainActivity.class);
+                intent.putExtra("msg","x");
+                startActivity(intent);
                 break;
         }
     }

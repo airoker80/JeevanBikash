@@ -65,7 +65,9 @@ public class RechargeTopup extends AppCompatActivity implements View.OnClickList
         int getID = v.getId();
         switch (getID){
             case R.id.topup_back:
-                startActivity(new Intent(RechargeTopup.this,MainActivity.class));
+                Intent intent =new Intent(this, MainActivity.class);
+                intent.putExtra("msg","x");
+                startActivity(intent);
                 break;
         }
     }

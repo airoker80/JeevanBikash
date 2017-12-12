@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -103,8 +104,13 @@ public class MainActivity extends AppCompatActivity {
         startHandler();
 
         centuryGothic=Typeface.createFromAsset(MainActivity.this.getAssets(), "cg.ttf");
+        if (getPackageName().equals("com.harati.BLB")){
+            dashboardTitile.setText("BLB "+"( Version :"+String.valueOf(pInfo.versionName)+")");
+        }else {
+            dashboardTitile.setText("JEEVAN BIKAS SAMAJ "+"( Version :"+String.valueOf(pInfo.versionName)+")");
+        }
         dashboardTitile.setTypeface(centuryGothic);
-        dashboardTitile.setText("JEEVAN BIKAS SAMAJ "+"( Version :"+String.valueOf(pInfo.versionName)+")");
+
         dashboard_icon_list = (RecyclerView) findViewById(R.id.dashboard_icon_list);
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_balance_enquiry, "Balance \n Inquiry"));
         dashBoardModels.add(new DashBoardModel(R.drawable.ic_cash_withdrawl, "Cash \n Withdrawal"));
@@ -122,19 +128,22 @@ public class MainActivity extends AppCompatActivity {
         DashboardRecyclerViewAdapter dashboardRecyclerViewAdapter = new DashboardRecyclerViewAdapter(MainActivity.this, dashBoardModels);
         dashboard_icon_list.setAdapter(dashboardRecyclerViewAdapter);
 
-        if (sessionHandler.changePasswordReqd()&sessionHandler.changePinReqd()){
-            Intent intent =  new Intent(this, AgentDashboardActivity.class);
-            intent.putExtra("snackmsg","fromMA");
-            startActivity(intent);
-        }else if (sessionHandler.changePinReqd()){
-            Intent intent =  new Intent(this, InitialResetPinActivity.class);
-            intent.putExtra("snackmsg","fromMA");
-            startActivity(intent);
-        }else if (sessionHandler.changePasswordReqd()){
-            Intent intent =  new Intent(this, ResetPassword.class);
-            intent.putExtra("snackmsg","fromMA");
-            startActivity(intent);
+        if (!getIntent().getStringExtra("msg").equals("x")){
+            if (sessionHandler.changePasswordReqd()&sessionHandler.changePinReqd()){
+                Intent intent =  new Intent(this, AgentDashboardActivity.class);
+                intent.putExtra("snackmsg","fromMA");
+                startActivity(intent);
+            }else if (sessionHandler.changePinReqd()){
+                Intent intent =  new Intent(this, InitialResetPinActivity.class);
+                intent.putExtra("snackmsg","fromMA");
+                startActivity(intent);
+            }else if (sessionHandler.changePasswordReqd()){
+                Intent intent =  new Intent(this, ResetPassword.class);
+                intent.putExtra("snackmsg","fromMA");
+                startActivity(intent);
+            }
         }
+
     }
 
     void logout(){

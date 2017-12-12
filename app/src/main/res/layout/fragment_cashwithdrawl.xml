@@ -302,6 +302,7 @@
                     android:visibility="gone" />
 
                 <com.harati.jeevanbikas.Helper.CGEditText
+                    android:maxLines="1"
                     android:id="@+id/withrwal_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

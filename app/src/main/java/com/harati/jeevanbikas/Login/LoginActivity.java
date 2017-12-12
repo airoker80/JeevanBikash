@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     CenturyGothicTextView setupUrl;
     Retrofit retrofit ;
+    ImageView image;
 
 
 
@@ -68,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         apiSessionHandler = new ApiSessionHandler(this);
         setupUrl=(CenturyGothicTextView)findViewById(R.id.setupUrl);
+
+        image = (ImageView) findViewById(R.id.image);
 
         loginBtn = (Button) findViewById(R.id.loginBtn);
         jb_username = (EditText) findViewById(R.id.jb_username);
@@ -85,6 +89,12 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }*/
         Log.d("getAGENT_LOGIN",apiSessionHandler.getAGENT_LOGIN());
+
+        if (getPackageName().equals("com.harati.BLB")){
+            image.setVisibility(View.INVISIBLE);
+            jb_username.setText("A0262276");
+            jb_password.setText("#3c!fqfF");
+        }
         retrofit = MyApplication.getRetrofitInstance(apiSessionHandler.getAGENT_LOGIN());
         apiInterface = retrofit.create(ApiInterface.class);
         sessionHandler = new SessionHandler(LoginActivity.this);
@@ -97,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         reset_pin.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ResetPin.class)));
 //        loginBtn.setOnClickListener(v -> startActivity(new Intent(this,MainActivity.class)));
         loginBtn.setOnClickListener(v -> loginWithRetrofit());
+
 //        setupUrl.setOnClickListener(v -> setUpUrl());
     }
 

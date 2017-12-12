@@ -15,10 +15,12 @@
             android:padding="@dimen/_8sdp"
             android:textSize="@dimen/_13sdp"
             android:text="Base Url"
+            android:maxLines="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <com.harati.jeevanbikas.Helper.CGEditText
             android:textSize="@dimen/_13sdp"
+            android:maxLines="1"
             android:text="http://103.1.94.77:8087/agentbank"
             android:id="@+id/baseUrl"
             android:layout_width="match_parent"
@@ -37,10 +39,12 @@
             android:textSize="@dimen/_13sdp"
             android:padding="@dimen/_8sdp"
             android:text="Serial no"
+            android:maxLines="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <com.harati.jeevanbikas.Helper.CGEditText
             android:textSize="@dimen/_13sdp"
+            android:maxLines="1"
             android:text="12346"
             android:id="@+id/serialNo"
             android:layout_width="match_parent"
@@ -63,6 +67,7 @@
             android:layout_height="wrap_content" />
         <com.harati.jeevanbikas.Helper.CGEditText
             android:textSize="@dimen/_13sdp"
+            android:maxLines="1"
             android:text="0004"
             android:id="@+id/api_username"
             android:layout_width="match_parent"
@@ -87,6 +92,7 @@
             android:textSize="@dimen/_13sdp"
             android:text="1234"
             android:id="@+id/api_password"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </com.harati.jeevanbikas.Helper.CGEditText>
@@ -109,6 +115,7 @@
             android:textSize="@dimen/_13sdp"
             android:text="1234"
             android:id="@+id/api_master_key"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </com.harati.jeevanbikas.Helper.CGEditText>

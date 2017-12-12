@@ -450,6 +450,7 @@
                     android:textColor="#95AFBE"
                     android:textSize="@dimen/_10sdp" />
                     <com.harati.jeevanbikas.Helper.CGEditText
+                        android:maxLines="1"
                         android:maxLength="4"
                         android:textSize="@dimen/_10sdp"
                         android:id="@+id/fiClienttPin"

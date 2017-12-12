@@ -123,7 +123,9 @@ public class BalanceFragment extends Fragment implements View.OnClickListener {
         int vid = v.getId();
         switch (vid){
             case R.id.enquiry_cross:
-                startActivity(new Intent(getContext(), MainActivity.class));
+                Intent intent =new Intent(getContext(), MainActivity.class);
+                intent.putExtra("msg","x");
+                startActivity(intent);
                 break;
             case R.id.imageView:
                 String mobileNo = input.getText().toString();

@@ -450,7 +450,9 @@ public class TransferTransactionDetailFragment extends Fragment {
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                startActivity(new Intent(getContext(),MainActivity.class));
+                Intent intent =new Intent(getContext(), MainActivity.class);
+                intent.putExtra("msg","x");
+                startActivity(intent);
                 Log.e("backpressed","bp");
                 builder.dismiss();
 

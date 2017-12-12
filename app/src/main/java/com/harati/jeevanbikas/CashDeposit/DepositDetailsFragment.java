@@ -96,7 +96,9 @@ public class DepositDetailsFragment extends Fragment implements View.OnClickList
                 transaction.commit();
                 break;
             case R.id.demand_cross:
-                startActivity(new Intent(getContext(), MainActivity.class));
+                Intent intent =new Intent(getContext(), MainActivity.class);
+                intent.putExtra("msg","x");
+                startActivity(intent);
                 break;
         }
     }

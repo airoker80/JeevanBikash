@@ -18,6 +18,7 @@
         <com.harati.jeevanbikas.Helper.CGEditText
             android:textSize="@dimen/_13sdp"
             android:text=""
+            android:maxLines="1"
             android:hint="Enter the Opt here"
             android:id="@+id/getOpt"
             android:layout_width="match_parent"

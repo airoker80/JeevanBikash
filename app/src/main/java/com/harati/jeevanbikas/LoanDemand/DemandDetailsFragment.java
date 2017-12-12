@@ -67,7 +67,9 @@ public class DemandDetailsFragment extends Fragment implements View.OnClickListe
                 transaction.commit();
                 break;
             case R.id.demand_cross:
-                startActivity(new Intent(getContext(), MainActivity.class));
+                Intent intent =new Intent(getContext(), MainActivity.class);
+                intent.putExtra("msg","x");
+                startActivity(intent);
                 break;
         }
     }

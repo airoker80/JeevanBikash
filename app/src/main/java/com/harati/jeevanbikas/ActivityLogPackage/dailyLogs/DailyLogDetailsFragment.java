@@ -34,9 +34,9 @@ public class DailyLogDetailsFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_daily_log_details, container, false);
         dailyLogList=(RecyclerView)view.findViewById(R.id.dailyLogList);
         dailyLogModelList.add(new DailyLogModel("10:00","Daily Log","1000.00"));
-        dailyLogModelList.add(new DailyLogModel("10:00","Daily ada","2000.00"));
-        dailyLogModelList.add(new DailyLogModel("10:00","Daily ad","3000.00"));
-        dailyLogModelList.add(new DailyLogModel("10:00","Daily ad","4000.00"));
+        dailyLogModelList.add(new DailyLogModel("10:00","Daily Log","2000.00"));
+        dailyLogModelList.add(new DailyLogModel("10:00","Daily Log","3000.00"));
+        dailyLogModelList.add(new DailyLogModel("10:00","Daily Log","4000.00"));
 
         dailyLogList.setLayoutManager(new LinearLayoutManager(getContext()));
         DailyLogAdapter dailyLogAdapter = new DailyLogAdapter(dailyLogModelList,getContext());
