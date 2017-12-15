@@ -41,6 +41,7 @@ public class SessionHandler {
     private static final String AGENT_PIN = "agent_pin";
     private static final String AGENT_URL = "agent_url";
     private static final String AGENT_SERIAL_NO = "agent_serial_no";
+    private static final String AGENT_Photo = "agent_photo";
 
 
     public static final String API_JSON = "api_json";
@@ -73,7 +74,7 @@ public class SessionHandler {
 
     public void saveLoginInformation(String agentCode, String username,
                                      String branchoffice, boolean passwordChangeReqd,
-                                     boolean pinChangeReqd, String token, String agentPin) {
+                                     boolean pinChangeReqd, String token, String agentPin,String photo) {
         editor.putBoolean(IS_USER_LOGIN, true);
         editor.putBoolean(PASSWORD_CHANGE_RQD, passwordChangeReqd);
         editor.putBoolean(PIN_CHANGE_RQD, pinChangeReqd);
@@ -82,6 +83,7 @@ public class SessionHandler {
         editor.putString(BRANCH_OFFICE, branchoffice);
         editor.putString(AGENT_TOKEN, token);
         editor.putString(AGENT_PIN, agentPin);
+        editor.putString(AGENT_Photo, photo);
         editor.commit();
     }
 
@@ -96,6 +98,12 @@ public class SessionHandler {
 
     public String getAgentCode() {
         return pref.getString(AGENT_CODE, "");
+    }
+    public String getAgentPhoto() {
+        return pref.getString(AGENT_Photo, "");
+    }
+    public String getUsername() {
+        return pref.getString(USERNAME, "");
     }
 
     public String getAgentUrl() {

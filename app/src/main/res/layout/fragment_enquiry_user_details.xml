@@ -161,6 +161,7 @@
             android:textSize="@dimen/_10sdp" />
 
         <EditText
+            android:maxLines="1"
             android:paddingLeft="@dimen/_10sdp"
             android:visibility="visible"
             android:backgroundTint="@color/white"

@@ -45,8 +45,7 @@
         <activity android:name=".CashWithDrawl.CashWithDrawlActivity" />
         <activity android:name=".FundTransfer.FundTransferActivity" />
         <activity android:name=".LoanDemand.LoanDemandActivity" />
-        <activity android:name=".Login.LoginActivity">
-        </activity>
+        <activity android:name=".Login.LoginActivity"></activity>
         <activity
             android:name=".Helper.DialogActivity"
             android:theme="@style/dailog" />
@@ -60,15 +59,25 @@
         <activity android:name=".ResetPassword.InitialResetPassword" />
         <activity android:name=".ResetPin.InitialResetPinActivity" />
         <activity android:name=".ActivityLogPackage.AgentLogActivity" />
-        <activity android:name=".Helper.imageLoader.ImageZoomActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".BaseActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".Helper.imageLoader.ImageZoomActivity" />
+        <activity android:name=".SplashActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

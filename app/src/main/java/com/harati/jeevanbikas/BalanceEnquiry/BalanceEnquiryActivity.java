@@ -17,13 +17,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.harati.jeevanbikas.BaseActivity;
 import com.harati.jeevanbikas.Enrollment.EnrollmentActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
 
-public class BalanceEnquiryActivity extends AppCompatActivity {
+public class BalanceEnquiryActivity extends BaseActivity {
     Spinner spinner;
     TextView title;
     ImageView image;
@@ -31,12 +32,10 @@ public class BalanceEnquiryActivity extends AppCompatActivity {
 
     SessionHandler sessionHandler;
 
-    Handler handler;
-    Runnable r;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        stopHandler();
         setContentView(R.layout.activity_balance_enquiry);
         spinner = (Spinner) findViewById(R.id.spinner);
 
@@ -53,11 +52,6 @@ public class BalanceEnquiryActivity extends AppCompatActivity {
         setPage("home");
 
         sessionHandler = new SessionHandler(this);
-
-        handler=new Handler();
-        r=() -> sessionHandler.logoutUser();
-
-        startHandler();
 
     }
     public void onbackPressed() {
@@ -113,27 +107,5 @@ public class BalanceEnquiryActivity extends AppCompatActivity {
         });
 
         builder.show();
-    }
-
-
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        stopHandler();
-        startHandler();
-    }
-
-    public void startHandler() {
-        handler.postDelayed(r, 2*60*1000); //for 5 minutes
-    }
-    public void stopHandler() {
-        Log.e("Handler","Stoped");
-        handler.removeCallbacks(r);
-    }
-
-    @Override
-    protected void onDestroy() {
-        stopHandler();
-        super.onDestroy();
     }
 }

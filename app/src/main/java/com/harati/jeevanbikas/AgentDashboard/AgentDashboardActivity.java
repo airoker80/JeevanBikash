@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.harati.jeevanbikas.BaseActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.ResetPassword.InitialResetPassword;
@@ -17,7 +18,7 @@ import com.harati.jeevanbikas.ResetPassword.ResetPassword;
 import com.harati.jeevanbikas.ResetPin.InitialResetPinActivity;
 import com.harati.jeevanbikas.ResetPin.ResetPin;
 
-public class AgentDashboardActivity extends AppCompatActivity  implements View.OnClickListener{
+public class AgentDashboardActivity extends BaseActivity implements View.OnClickListener{
     ImageView ad_back;
 
     Button resetPin,resetPassword;
@@ -59,11 +60,6 @@ public class AgentDashboardActivity extends AppCompatActivity  implements View.O
 
         resetPassword.setOnClickListener(this);
         resetPin.setOnClickListener(this);
-
-        handler=new Handler();
-        r=() -> sessionHandler.logoutUser();
-
-        startHandler();
     }
 
     @Override
@@ -88,24 +84,4 @@ public class AgentDashboardActivity extends AppCompatActivity  implements View.O
 
     }
 
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        stopHandler();
-        startHandler();
-    }
-
-    public void startHandler() {
-        handler.postDelayed(r, 2*60*1000); //for 5 minutes
-    }
-    public void stopHandler() {
-        Log.e("Handler","Stoped");
-        handler.removeCallbacks(r);
-    }
-
-    @Override
-    protected void onDestroy() {
-        stopHandler();
-        super.onDestroy();
-    }
 }

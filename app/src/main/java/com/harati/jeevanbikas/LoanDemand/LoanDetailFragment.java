@@ -223,7 +223,7 @@ public class LoanDetailFragment extends Fragment {
                 final AlertDialog builder = new AlertDialog.Builder(getContext())
                         .setPositiveButton("Yes", null)
                         .setNegativeButton("CANCEL", null)
-                        .setTitle("Are you Sure you want to make loan deand request?")
+                        .setTitle("Are you Sure you want to make loan demand request?")
                         .create();
 
                 builder.setOnShowListener(dialog -> {

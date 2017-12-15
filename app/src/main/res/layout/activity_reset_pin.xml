@@ -79,6 +79,7 @@
             android:orientation="vertical">
 
             <EditText
+                android:maxLines="1"
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
@@ -92,6 +93,7 @@
                 android:textSize="@dimen/_12sdp" />
 
             <EditText
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_20sdp"
@@ -104,6 +106,7 @@
                 android:textSize="@dimen/_12sdp" />
 
             <EditText
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_20sdp"
@@ -116,6 +119,7 @@
                 android:textSize="@dimen/_12sdp" />
 
             <EditText
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_20sdp"

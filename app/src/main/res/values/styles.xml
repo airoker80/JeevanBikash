@@ -13,23 +13,28 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
     <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="PagerTabStripText">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">#ffffff</item>
     </style>
+
     <style name="SpinnerStyle" parent="android:Widget.TextView.SpinnerItem">
         <item name="android:paddingLeft">4dp</item>
         <item name="android:paddingRight">4dp</item>
         <!--<item name="android:textSize">4dp</item>-->
         <item name="android:background">@drawable/abc_spinner_textfield_background_material</item>
     </style>
+
     <style name="Spinner" parent="android:Widget.TextView.SpinnerItem">
         <item name="android:background">@drawable/abc_spinner_textfield_background_material</item>
     </style>
-    <style name="dailog" parent="Theme.AppCompat.Light.Dialog" >
+
+    <style name="dailog" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -37,6 +42,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <!--<item name="android:textSize">@dimen/_11sdp</item>-->
         <!--<item name="android:textColor">?android:textColorSecondary</item>-->
@@ -44,6 +50,7 @@
         <item name="tabSelectedTextColor">@color/white</item>
         <item name="tabIndicatorColor">@color/white</item>
     </style>
+
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.AppCompat.Button">
         <item name="android:textSize">@dimen/_10sdp</item>
         <!--<item name="android:textColor">?android:textColorSecondary</item>-->
@@ -61,4 +68,8 @@
         <!-- Support library compatibility -->
         <item name="windowActionBarOverlay">true</item>
     </style>
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

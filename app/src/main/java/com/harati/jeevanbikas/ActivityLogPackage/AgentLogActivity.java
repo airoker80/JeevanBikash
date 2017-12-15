@@ -10,9 +10,10 @@ import android.widget.Spinner;
 
 import com.harati.jeevanbikas.BalanceEnquiry.BalanceFragment;
 import com.harati.jeevanbikas.BalanceEnquiry.FingerPrintFragment;
+import com.harati.jeevanbikas.BaseActivity;
 import com.harati.jeevanbikas.R;
 
-public class AgentLogActivity extends AppCompatActivity {
+public class AgentLogActivity extends BaseActivity {
     Spinner spinner;
     ImageView image;
 

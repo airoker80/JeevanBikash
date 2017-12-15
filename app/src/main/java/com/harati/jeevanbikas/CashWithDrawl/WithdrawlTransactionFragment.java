@@ -58,6 +58,8 @@ import static java.lang.Thread.sleep;
  * A simple {@link Fragment} subclass.
  */
 public class WithdrawlTransactionFragment extends Fragment {
+    int otpCount=0;
+    int badCount=0;
     CenturyGothicTextView title;
     ImageView image;
     ImageButton resend_otp;
@@ -258,13 +260,23 @@ public class WithdrawlTransactionFragment extends Fragment {
                     getActivity().finish();
                 }else {
                     try {
-                        String jsonString = response.errorBody().string();
-                        Log.d("here ","--=>"+jsonString);
-                        JSONObject jsonObject = new JSONObject(jsonString);
-                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",jsonObject.getString("message"));
-                        startActivity(intent);
-                        act_otp_tf.setText("");
+                        if (badCount<3){
+                            Log.v("badCount","b--->"+String.valueOf(badCount));
+                            badCount++;
+                            String jsonString = response.errorBody().string();
+                            Log.d("here ","--=>"+jsonString);
+                            JSONObject jsonObject = new JSONObject(jsonString);
+                            Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                            intent.putExtra("msg",jsonObject.getString("message"));
+                            startActivity(intent);
+                            act_otp_tf.setText("");
+                        }else {
+                            Intent intent =new Intent(getContext(), MainActivity.class);
+                            intent.putExtra("msg","x");
+                            startActivity(intent);
+                            Toast.makeText(getContext(), "Too many entries of wrong otp", Toast.LENGTH_SHORT).show();
+                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -306,15 +318,25 @@ public class WithdrawlTransactionFragment extends Fragment {
 //                    getOtpValue();
                 }else {
                     try {
-                        String jsonString = response.errorBody().string();
 
-                        Log.d("here ","--=>"+jsonString);
+                        if (otpCount<3){
+                            otpCount++;
+                            String jsonString = response.errorBody().string();
+                            Log.d("here ","--=>"+jsonString);
+                            Log.v("otpC","==>"+String.valueOf(otpCount));
+                            JSONObject jsonObject = new JSONObject(jsonString);
+                            Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                            intent.putExtra("msg",jsonObject.getString("message"));
+                            startActivity(intent);
+                            act_otp_tf.setText("");
+                        }else {
+                            Intent intent =new Intent(getContext(), MainActivity.class);
+                            intent.putExtra("msg","x");
+                            startActivity(intent);
+                            Toast.makeText(getContext(), "Too many entries of wrong otp", Toast.LENGTH_SHORT).show();
+                        }
 
-                        JSONObject jsonObject = new JSONObject(jsonString);
-                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",jsonObject.getString("message"));
-                        startActivity(intent);
-                        act_otp_tf.setText("");
+
                     } catch (Exception e) {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
                         intent.putExtra("msg",("data mistake"));
@@ -423,4 +445,5 @@ public class WithdrawlTransactionFragment extends Fragment {
             }
         };
     }
+
 }

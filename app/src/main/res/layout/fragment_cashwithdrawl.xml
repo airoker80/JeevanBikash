@@ -215,6 +215,7 @@
                     android:textSize="@dimen/_12sdp" />
 
                 <EditText
+                    android:maxLines="1"
                     android:id="@+id/withdrawlAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -260,6 +261,7 @@
 
 
                 <EditText
+                    android:maxLines="1"
                     android:id="@+id/agentPin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -280,6 +282,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLines="1"
                     android:id="@+id/clientPin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

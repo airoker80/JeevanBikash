@@ -106,7 +106,22 @@ public class LoginActivity extends AppCompatActivity {
 
         reset_pin.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ResetPin.class)));
 //        loginBtn.setOnClickListener(v -> startActivity(new Intent(this,MainActivity.class)));
-        loginBtn.setOnClickListener(v -> loginWithRetrofit());
+        loginBtn.setOnClickListener(v -> {
+            if (jb_username.getText().toString().equals("")|jb_password.getText().toString().equals("")){
+                if (jb_username.getText().toString().equals("")&jb_password.getText().toString().equals("")){
+                    jb_username.setError("Please enter the username ");
+                    jb_password.setError("Please enter the password");
+                }
+                if (jb_username.getText().toString().equals("")){
+                    jb_username.setError("Please enter the username ");
+                }
+                if (jb_password.getText().toString().equals("")){
+                    jb_password.setError("Please enter the password");
+                }
+            }else{
+                loginWithRetrofit();
+            }
+        });
 
 //        setupUrl.setOnClickListener(v -> setUpUrl());
     }
@@ -139,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                             String code = loginModel.getCode();
                             String name = loginModel.getName();
                             String branch = loginModel.getBranch();
+                            String photo = loginModel.getPhoto();
 //                        String balance = loginModel.getBalance().toString();
                             String passwordChangeReqd = loginModel.getPasswordChangeReqd().toString();
                             String pinChangeReqd = loginModel.getPasswordChangeReqd().toString();
@@ -149,8 +165,12 @@ public class LoginActivity extends AppCompatActivity {
 
                             pinBol = pinChangeReqd.equals("true");
 
-                            sessionHandler.saveLoginInformation(code, name, branch, passBol, pinBol,token,agentPin);
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            sessionHandler.saveLoginInformation(code, name, branch, passBol, pinBol,token,agentPin,photo);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra("msg","y");
+//                            intent.putExtra("userphoto",photo);
+                            startActivity(intent);
+                            finish();
                         }catch (Exception e){
                             e.printStackTrace();
                         }

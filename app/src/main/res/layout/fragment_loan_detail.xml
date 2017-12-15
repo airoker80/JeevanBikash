@@ -347,6 +347,7 @@
                 android:textSize="@dimen/_10sdp" />
 
             <EditText
+                android:maxLines="1"
                 android:maxLength="6"
                 android:textSize="@dimen/_10sdp"
                 android:id="@+id/loanAmt"
@@ -364,6 +365,7 @@
                 android:textColor="#95AFBE"
                 android:textSize="@dimen/_10sdp" />
             <EditText
+                android:maxLines="1"
                 android:id="@+id/ld_clients_pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

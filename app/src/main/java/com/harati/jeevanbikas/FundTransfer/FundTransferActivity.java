@@ -12,18 +12,17 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.harati.jeevanbikas.BaseActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.R;
 
 
-public class FundTransferActivity extends AppCompatActivity {
+public class FundTransferActivity extends BaseActivity {
     Spinner spinner;
     ImageView image;
     TextView title;
 
     SessionHandler sessionHandler;
-    Handler handler;
-    Runnable r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +41,6 @@ public class FundTransferActivity extends AppCompatActivity {
 
         sessionHandler = new SessionHandler(this);
 
-        handler=new Handler();
-        r=() -> sessionHandler.logoutUser();
-
-        startHandler();
     }
 
     @Override
@@ -65,26 +60,5 @@ public class FundTransferActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.contentFrame, fragment);
         transaction.commit();
-    }
-
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        stopHandler();
-        startHandler();
-    }
-
-    public void startHandler() {
-        handler.postDelayed(r, 2*60*1000); //for 5 minutes
-    }
-    public void stopHandler() {
-        Log.e("Handler","Stoped");
-        handler.removeCallbacks(r);
-    }
-
-    @Override
-    protected void onDestroy() {
-        stopHandler();
-        super.onDestroy();
     }
 }

@@ -214,6 +214,7 @@
                 android:textSize="@dimen/_10sdp" />
 
             <EditText
+                android:maxLines="1"
                 android:maxLength="10"
                 android:id="@+id/benf_ft_etx"
                 android:layout_width="match_parent"

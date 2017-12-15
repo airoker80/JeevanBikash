@@ -38,6 +38,7 @@
 
 
         <EditText
+            android:maxLines="1"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:layout_width="match_parent"

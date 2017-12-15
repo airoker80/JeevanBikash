@@ -7,15 +7,14 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.harati.jeevanbikas.BaseActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.R;
 
-public class ResetPin extends AppCompatActivity {
+public class ResetPin extends BaseActivity {
     Spinner spinner;
 
     SessionHandler sessionHandler;
-    Handler handler;
-    Runnable r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,34 +28,5 @@ public class ResetPin extends AppCompatActivity {
 
         sessionHandler = new SessionHandler(this);
 
-        handler=new Handler();
-        r=() -> sessionHandler.logoutUser();
-
-        startHandler();
-    }
-
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        stopHandler();
-        startHandler();
-    }
-
-    public void startHandler() {
-        handler.postDelayed(r, 2*60*1000); //for 5 minutes
-    }
-    public void stopHandler() {
-        Log.e("Handler","Stoped");
-        handler.removeCallbacks(r);
-    }
-
-    @Override
-    public void onBackPressed() {
-    }
-
-    @Override
-    protected void onDestroy() {
-        stopHandler();
-        super.onDestroy();
     }
 }

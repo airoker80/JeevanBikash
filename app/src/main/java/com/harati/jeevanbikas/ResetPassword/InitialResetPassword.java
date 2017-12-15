@@ -19,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.harati.jeevanbikas.BaseActivity;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
@@ -41,7 +42,7 @@ import java.util.Map;
 import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 
-public class InitialResetPassword extends AppCompatActivity implements View.OnClickListener {
+public class InitialResetPassword extends BaseActivity implements View.OnClickListener {
     ApiSessionHandler apiSessionHandler;
     Retrofit retrofit;
     ApiInterface apiInterface;
@@ -50,8 +51,7 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
     EditText agent_mobile_id;
 
     SessionHandler sessionHandler;
-    Handler handler;
-    Runnable r;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +71,6 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-
-        handler=new Handler();
-        r=() -> sessionHandler.logoutUser();
-
-        startHandler();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -283,27 +278,5 @@ public class InitialResetPassword extends AppCompatActivity implements View.OnCl
 
 
   }
-
-
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        stopHandler();
-        startHandler();
-    }
-
-    public void startHandler() {
-        handler.postDelayed(r, 2*60*1000); //for 5 minutes
-    }
-    public void stopHandler() {
-        Log.e("Handler","Stoped");
-        handler.removeCallbacks(r);
-    }
-
-    @Override
-    protected void onDestroy() {
-        stopHandler();
-        super.onDestroy();
-    }
 
 }

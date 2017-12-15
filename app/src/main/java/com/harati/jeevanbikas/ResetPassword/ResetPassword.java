@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.harati.jeevanbikas.BaseActivity;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
@@ -30,7 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class ResetPassword extends AppCompatActivity {
+public class ResetPassword extends BaseActivity {
     ApiSessionHandler apiSessionHandler;
     EditText reset_otp,reset_old_password,reset_new_password,re_reset_new_password;
     Button resetPass;
@@ -93,12 +94,6 @@ public class ResetPassword extends AppCompatActivity {
                 }
 
         );
-
-        handler=new Handler();
-        r=() -> sessionHandler.logoutUser();
-
-        startHandler();
-
     }
 
     void sendReestReq(){
@@ -137,25 +132,5 @@ public class ResetPassword extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        stopHandler();
-        startHandler();
-    }
-
-    public void startHandler() {
-        handler.postDelayed(r, 2*60*1000); //for 5 minutes
-    }
-    public void stopHandler() {
-        Log.e("Handler","Stoped");
-        handler.removeCallbacks(r);
-    }
-
-    @Override
-    protected void onDestroy() {
-        stopHandler();
-        super.onDestroy();
-    }
 
 }

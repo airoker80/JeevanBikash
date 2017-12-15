@@ -183,24 +183,28 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <EditText
+                    android:maxLines="1"
                     android:backgroundTint="@color/white"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <EditText
+                    android:maxLines="1"
                     android:backgroundTint="@color/white"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <EditText
+                    android:maxLines="1"
                     android:backgroundTint="@color/white"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <EditText
+                    android:maxLines="1"
                     android:backgroundTint="@color/white"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
@@ -236,6 +240,7 @@
                 android:textColor="@color/white"/>
 
             <EditText
+                android:maxLines="1"
                 android:visibility="gone"
                 android:maxLength="10"
                 android:inputType="number"

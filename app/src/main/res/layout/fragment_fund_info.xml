@@ -349,6 +349,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLines="1"
                     android:visibility="gone"
                     android:maxLength="10"
                     android:textSize="@dimen/_10sdp"
@@ -370,6 +371,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLines="1"
                     android:visibility="gone"
                     android:maxLength="10"
                     android:text="M0672475"
@@ -390,6 +392,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLines="1"
                     android:maxLength="6"
                     android:textSize="@dimen/_10sdp"
                     android:id="@+id/transferAmt"
@@ -433,6 +436,7 @@
 
 
                     <EditText
+                        android:maxLines="1"
                         android:maxLength="4"
                         android:textSize="@dimen/_10sdp"
                         android:id="@+id/agentPin"
@@ -471,6 +475,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
+                    android:maxLines="1"
                     android:visibility="gone"
                     android:maxLength="10"
                     android:textSize="@dimen/_10sdp"

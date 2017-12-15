@@ -1,15 +1,20 @@
 package com.harati.jeevanbikas.MainPackage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -19,6 +24,7 @@ import android.widget.TextView;
 
 import com.harati.jeevanbikas.Adapter.DashboardRecyclerViewAdapter;
 import com.harati.jeevanbikas.AgentDashboard.AgentDashboardActivity;
+import com.harati.jeevanbikas.BaseActivity;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.CenturyGothicTextView;
 import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
@@ -36,6 +42,7 @@ import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -44,7 +51,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     PackageInfo pInfo = null;
     ApiSessionHandler apiSessionHandler;
     Retrofit retrofit;
@@ -58,9 +65,6 @@ public class MainActivity extends AppCompatActivity {
     CenturyGothicTextView logoutTxt;
     SessionHandler sessionHandler;
 
-    Handler handler;
-    Runnable r;
-
 
 //    public Typeface centuryGothic=Typeface.createFromAsset(getAssets(), "fonts/epimodem.ttf");
 
@@ -71,7 +75,27 @@ public class MainActivity extends AppCompatActivity {
          apiSessionHandler = new ApiSessionHandler(MainActivity.this);
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+
+/*        Observable.just(photo)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                }).subscribe();*/
+
+
+
+        LayoutInflater inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.activity_main, null, false);
+        drawer.addView(contentView, 0);
+
+//        String photo = getIntent().getStringExtra("userphoto");
+//
+
+        Log.v("photo",sessionHandler.getAgentPhoto());
+//        super.setImage(sessionHandler.getAgentPhoto());
+//        nav_username.setText(sessionHandler.getUsername());
+
         main_gone_rl = (RelativeLayout) findViewById(R.id.main_gone_rl);
         spinner = (Spinner) findViewById(R.id.spinner);
         TextView dashboardTitile = (TextView) findViewById(R.id.dashboardTitile);
@@ -97,11 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         logoutTxt.setOnClickListener(v -> logout());
 
-//        sessionHandler.getInfo();
-        handler=new Handler();
-        r=() -> logout();
-
-        startHandler();
+        sessionHandler.getInfo();
 
         centuryGothic=Typeface.createFromAsset(MainActivity.this.getAssets(), "cg.ttf");
         if (getPackageName().equals("com.harati.BLB")){
@@ -128,22 +148,25 @@ public class MainActivity extends AppCompatActivity {
         DashboardRecyclerViewAdapter dashboardRecyclerViewAdapter = new DashboardRecyclerViewAdapter(MainActivity.this, dashBoardModels);
         dashboard_icon_list.setAdapter(dashboardRecyclerViewAdapter);
 
-        if (!getIntent().getStringExtra("msg").equals("x")){
-            if (sessionHandler.changePasswordReqd()&sessionHandler.changePinReqd()){
-                Intent intent =  new Intent(this, AgentDashboardActivity.class);
-                intent.putExtra("snackmsg","fromMA");
-                startActivity(intent);
-            }else if (sessionHandler.changePinReqd()){
-                Intent intent =  new Intent(this, InitialResetPinActivity.class);
-                intent.putExtra("snackmsg","fromMA");
-                startActivity(intent);
-            }else if (sessionHandler.changePasswordReqd()){
-                Intent intent =  new Intent(this, ResetPassword.class);
-                intent.putExtra("snackmsg","fromMA");
-                startActivity(intent);
+        try {
+            if (!getIntent().getStringExtra("msg").equals("x")){
+                if (sessionHandler.changePasswordReqd()&sessionHandler.changePinReqd()){
+                    Intent intent =  new Intent(this, AgentDashboardActivity.class);
+                    intent.putExtra("snackmsg","fromMA");
+                    startActivity(intent);
+                }else if (sessionHandler.changePinReqd()){
+                    Intent intent =  new Intent(this, InitialResetPinActivity.class);
+                    intent.putExtra("snackmsg","fromMA");
+                    startActivity(intent);
+                }else if (sessionHandler.changePasswordReqd()){
+                    Intent intent =  new Intent(this, ResetPassword.class);
+                    intent.putExtra("snackmsg","fromMA");
+                    startActivity(intent);
+                }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
     }
 
     void logout(){
@@ -193,38 +216,22 @@ public class MainActivity extends AppCompatActivity {
                       public void onComplete() {
                           sessionHandler.hideProgressDialog();
                           sessionHandler.logoutUser();
+                          finish();
                       }
                   });
         }
 
     @Override
     public void onBackPressed() {
-    }
-
-
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        stopHandler();
-        startHandler();
-    }
-
-    public void startHandler() {
-        handler.postDelayed(r, 5*60*1000); //for 5 minutes
-    }
-    public void stopHandler() {
-        Log.e("Handler","Stoped");
-        handler.removeCallbacks(r);
+        super.onBackPressed();
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
+        Log.v("stoped","for a while");
         stopHandler();
-        super.onDestroy();
+        super.onStop();
     }
-    Runnable runnable = () -> {
-            sessionHandler.logoutUser();
-    };
 }
 
 

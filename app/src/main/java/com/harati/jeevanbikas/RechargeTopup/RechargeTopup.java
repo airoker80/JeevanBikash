@@ -13,11 +13,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.harati.jeevanbikas.BaseActivity;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.R;
 
-public class RechargeTopup extends AppCompatActivity implements View.OnClickListener{
+public class RechargeTopup extends BaseActivity implements View.OnClickListener{
 
     Spinner spinner;
     ImageView topup_back;
@@ -48,11 +49,6 @@ public class RechargeTopup extends AppCompatActivity implements View.OnClickList
         fragmentTransaction.commit();
 
         sessionHandler = new SessionHandler(this);
-
-        handler=new Handler();
-        r=() -> sessionHandler.logoutUser();
-
-        startHandler();
     }
     @Override
     public void onBackPressed() {
@@ -70,26 +66,5 @@ public class RechargeTopup extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 break;
         }
-    }
-
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        stopHandler();
-        startHandler();
-    }
-
-    public void startHandler() {
-        handler.postDelayed(r, 2*60*1000); //for 5 minutes
-    }
-    public void stopHandler() {
-        Log.e("Handler","Stoped");
-        handler.removeCallbacks(r);
-    }
-
-    @Override
-    protected void onDestroy() {
-        stopHandler();
-        super.onDestroy();
     }
 }
