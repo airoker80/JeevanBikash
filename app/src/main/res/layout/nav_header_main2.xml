@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
+    android:layout_height="wrap_content"
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -12,37 +12,57 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:padding="@dimen/_5sdp"
-        android:id="@+id/user_logo"
-        android:layout_width="@dimen/_70sdp"
-        android:layout_height="@dimen/_70sdp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@color/white" />
-<!--
+    <!--    <ImageView
+            android:padding="@dimen/_5sdp"
+            android:id="@+id/user_logo"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:src="@color/white" />-->
     <de.hdodenhof.circleimageview.CircleImageView
-        app:civ_border_width="2dp"
-        app:civ_border_color="#ffffff"
-        android:padding="@dimen/_5sdp"
         android:id="@+id/user_logo"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_70sdp"
+        android:padding="@dimen/_5sdp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@color/white" />
--->
+        android:src="@color/white"
+        app:civ_border_color="#ffffff"
+        app:civ_border_width="2dp" />
 
-    <TextView
+    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
         android:id="@+id/nav_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Android Studio"
+        android:text="Ranjana Mandal"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <TextView
-        android:id="@+id/textView"
+    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+        android:paddingTop="@dimen/_1sdp"
+        android:id="@+id/branch_office"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com" />
+        android:text="Branch Office Katahari" />
+
+    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+        android:paddingTop="@dimen/_1sdp"
+        android:id="@+id/agent_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Code : A0262276" />
+
+
+    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+        android:paddingTop="@dimen/_1sdp"
+        android:id="@+id/agent_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Balance : 54609" />
+
+    <com.harati.jeevanbikas.Helper.CenturyGothicTextView
+        android:paddingTop="@dimen/_1sdp"
+        android:id="@+id/trasaction_odlimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="odlimit : 5000.00" />
 
 </LinearLayout>

@@ -155,7 +155,8 @@ public class LoginActivity extends AppCompatActivity {
                             String name = loginModel.getName();
                             String branch = loginModel.getBranch();
                             String photo = loginModel.getPhoto();
-//                        String balance = loginModel.getBalance().toString();
+                            String balance = loginModel.getBalance().toString();
+                            String odlimit = loginModel.getOdLimit().toString();
                             String passwordChangeReqd = loginModel.getPasswordChangeReqd().toString();
                             String pinChangeReqd = loginModel.getPasswordChangeReqd().toString();
                             String agentPin = "12348";
@@ -165,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             pinBol = pinChangeReqd.equals("true");
 
-                            sessionHandler.saveLoginInformation(code, name, branch, passBol, pinBol,token,agentPin,photo);
+                            sessionHandler.saveLoginInformation(code, name, branch, passBol, pinBol,token,agentPin,photo,balance,odlimit);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.putExtra("msg","y");
 //                            intent.putExtra("userphoto",photo);

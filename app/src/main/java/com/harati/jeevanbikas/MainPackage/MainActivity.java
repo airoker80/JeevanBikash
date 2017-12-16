@@ -89,12 +89,12 @@ public class MainActivity extends BaseActivity {
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
         drawer.addView(contentView, 0);
 
-//        String photo = getIntent().getStringExtra("userphoto");
+        String photo = getIntent().getStringExtra("userphoto");
 //
 
         Log.v("photo",sessionHandler.getAgentPhoto());
-//        super.setImage(sessionHandler.getAgentPhoto());
-//        nav_username.setText(sessionHandler.getUsername());
+        super.setNav(sessionHandler.getAgentPhoto(),sessionHandler.getAgentCode(),sessionHandler.getUsername(),sessionHandler.getBranchOffice(),sessionHandler.getAgentBalance(),sessionHandler.getAGENT_Odlimit());
+        nav_username.setText(sessionHandler.getUsername());
 
         main_gone_rl = (RelativeLayout) findViewById(R.id.main_gone_rl);
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -226,12 +226,7 @@ public class MainActivity extends BaseActivity {
         super.onBackPressed();
     }
 
-    @Override
-    protected void onStop() {
-        Log.v("stoped","for a while");
-        stopHandler();
-        super.onStop();
-    }
+
 }
 
 

@@ -42,6 +42,8 @@ public class SessionHandler {
     private static final String AGENT_URL = "agent_url";
     private static final String AGENT_SERIAL_NO = "agent_serial_no";
     private static final String AGENT_Photo = "agent_photo";
+    private static final String AGENT_Balance = "AGENT_Balance";
+    private static final String AGENT_Odlimit = "AGENT_Odlimit";
 
 
     public static final String API_JSON = "api_json";
@@ -69,12 +71,17 @@ public class SessionHandler {
         editor = pref.edit();
     }
 
-    public boolean changePasswordReqd(){return pref.getBoolean(PASSWORD_CHANGE_RQD,false);}
-    public boolean changePinReqd(){return pref.getBoolean(PIN_CHANGE_RQD,false);}
+    public boolean changePasswordReqd() {
+        return pref.getBoolean(PASSWORD_CHANGE_RQD, false);
+    }
+
+    public boolean changePinReqd() {
+        return pref.getBoolean(PIN_CHANGE_RQD, false);
+    }
 
     public void saveLoginInformation(String agentCode, String username,
                                      String branchoffice, boolean passwordChangeReqd,
-                                     boolean pinChangeReqd, String token, String agentPin,String photo) {
+                                     boolean pinChangeReqd, String token, String agentPin, String photo, String balance,String odlimit) {
         editor.putBoolean(IS_USER_LOGIN, true);
         editor.putBoolean(PASSWORD_CHANGE_RQD, passwordChangeReqd);
         editor.putBoolean(PIN_CHANGE_RQD, pinChangeReqd);
@@ -84,6 +91,8 @@ public class SessionHandler {
         editor.putString(AGENT_TOKEN, token);
         editor.putString(AGENT_PIN, agentPin);
         editor.putString(AGENT_Photo, photo);
+        editor.putString(AGENT_Balance, balance);
+        editor.putString(AGENT_Odlimit, odlimit);
         editor.commit();
     }
 
@@ -99,9 +108,11 @@ public class SessionHandler {
     public String getAgentCode() {
         return pref.getString(AGENT_CODE, "");
     }
+
     public String getAgentPhoto() {
         return pref.getString(AGENT_Photo, "");
     }
+
     public String getUsername() {
         return pref.getString(USERNAME, "");
     }
@@ -113,10 +124,17 @@ public class SessionHandler {
     public String getAgentSerialNo() {
         return pref.getString(AGENT_SERIAL_NO, "");
     }
+    public String getAGENT_Odlimit() {
+        return pref.getString(AGENT_Odlimit, "");
+    }
 
 
     public String getAgentToken() {
         return pref.getString(AGENT_TOKEN, "");
+    }
+
+    public String getAgentBalance() {
+        return pref.getString(AGENT_Balance, "");
     }
 
     public String getBranchOffice() {
@@ -172,27 +190,28 @@ public class SessionHandler {
                 returningCash = cash;
                 break;
             case 3:
-                stringBuilder.insert(1,",");
+                stringBuilder.insert(1, ",");
                 returningCash = stringBuilder.toString();
                 break;
             case 4:
-                stringBuilder.insert(1,",");
+                stringBuilder.insert(1, ",");
                 returningCash = stringBuilder.toString();
                 break;
             case 5:
-                stringBuilder.insert(2,",");
+                stringBuilder.insert(2, ",");
                 returningCash = stringBuilder.toString();
                 break;
             case 6:
-                stringBuilder.insert(1,",");
-                stringBuilder.insert(4,",");
+                stringBuilder.insert(1, ",");
+                stringBuilder.insert(4, ",");
                 returningCash = stringBuilder.toString();
                 break;
 
         }
         return returningCash;
     }
-    public int getCameraPhotoOrientation(Context context, Uri imageUri, String imagePath){
+
+    public int getCameraPhotoOrientation(Context context, Uri imageUri, String imagePath) {
         int rotate = 0;
         try {
             context.getContentResolver().notifyChange(imageUri, null);
