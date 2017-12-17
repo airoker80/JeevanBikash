@@ -40,7 +40,7 @@ import retrofit2.Retrofit;
  * Created by Sameer on 12/15/2017.
  */
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Handler handler;
     Runnable r;
     Retrofit retrofit;
@@ -50,7 +50,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public DrawerLayout drawer;
     public ImageView drawer_icon;
     public CircleImageView user_logo;
-    public TextView nav_username,agent_code,branch_office ,agent_balance,trasaction_odlimit;
+    public TextView nav_username, agent_code, branch_office, agent_balance, trasaction_odlimit;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -61,9 +62,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
         handler = new Handler();
-        r=() -> logout();
+        r = () -> logout();
         startHandler();
-
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -83,11 +83,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header=navigationView.getHeaderView(0);
+        View header = navigationView.getHeaderView(0);
         drawer_icon.setOnClickListener(v -> {
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START);
-            }else {
+            } else {
                 drawer.openDrawer(GravityCompat.START);
             }
         });
@@ -100,15 +100,17 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         trasaction_odlimit = (TextView) header.findViewById(R.id.trasaction_odlimit);
 
     }
+
     @Override
     public void onUserInteraction() {
         stopHandler();
         startHandler();
     }
-    void logout(){
+
+    void logout() {
         io.reactivex.Observable<SuccesResponseModel> call = apiInterface.sendLogoutRequest(sessionHandler.getAgentToken(),
                 "Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json",apiSessionHandler.getAgentCode());
+                "application/json", apiSessionHandler.getAgentCode());
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SuccesResponseModel>() {
@@ -119,7 +121,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
                     @Override
                     public void onNext(SuccesResponseModel value) {
-                        Log.v("logout",value.getMessage()+value.getStatus());
+                        Log.v("logout", value.getMessage() + value.getStatus());
                     }
 
                     @Override
@@ -135,25 +137,28 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
     }
+
     public void startHandler() {
-        Log.v("start","handler");
-        handler.postDelayed(r, (long) (10*1000));
+        Log.v("start", "handler");
+        handler.postDelayed(r, (long) (10 * 1000));
 //        handler.postDelayed(r, (long) (2*60*1000));
     }
+
     public void stopHandler() {
-        Log.e("MainHandler","Stoped");
+        Log.e("MainHandler", "Stoped");
         handler.removeCallbacks(r);
     }
+
     @Override
     protected void onDestroy() {
-        Log.v("dadad","destroyed");
+        Log.v("dadad", "destroyed");
         stopHandler();
         super.onDestroy();
     }
 
     @Override
     protected void onStop() {
-        Log.v("stoped","for a while");
+        Log.v("stoped", "for a while");
         stopHandler();
         super.onStop();
     }
@@ -183,17 +188,18 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void setNav(String image_code,String code,String name,String branch,String balance,String odlimit){
-
+    public void setNav(String image_code, String code, String name, String branch, String balance, String odlimit) {
+        Log.d("first thread", String.valueOf(Thread.currentThread().getName()));
         nav_username.setText(name);
-        agent_code.setText("Code : "+code);
+        agent_code.setText("Code : " + code);
         branch_office.setText(branch);
-        agent_balance.setText("Balance : रु "+balance);
-        trasaction_odlimit.setText("Odlimit : रु "+odlimit);
+        agent_balance.setText("Balance : रु " + balance);
+        trasaction_odlimit.setText("Odlimit : रु " + odlimit);
 
         Observable.just(image_code)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
+                    Log.d("next thread", String.valueOf(Thread.currentThread().getName()));
                     try {
                         String[] splitString = image_code.split(",");
                         String base64Photo = splitString[1];
@@ -207,7 +213,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                         e.printStackTrace();
                     }
                 }).subscribe();
-
 
 
     }
