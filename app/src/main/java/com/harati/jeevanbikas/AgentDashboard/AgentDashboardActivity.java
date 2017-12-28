@@ -37,11 +37,8 @@ public class AgentDashboardActivity extends BaseActivity implements View.OnClick
         try {
             if (mainmsg.equals("fromMA")){
                 Snackbar.make(parentLayout, "Please change your password and pin before proceeding", Snackbar.LENGTH_LONG)
-                        .setAction("CLOSE", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                        .setAction("CLOSE", view -> {
 
-                            }
                         })
                         .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
                         .show();

@@ -67,6 +67,23 @@
             android:text="OK"
             android:textSize="@dimen/_13sdp"
             android:textColor="@color/white" />
+        <ImageButton
+            android:background="#005d5e5c"
+            android:padding="@dimen/_9sdp"
+            android:id="@+id/print"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:src="@drawable/ic_printer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ok"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="@dimen/_76sdp"
+            android:layout_marginRight="@dimen/_76sdp"
+            android:layout_marginTop="32dp"
+            android:text="OK"
+            android:textSize="@dimen/_13sdp"
+            android:textColor="@color/white" />
 
 
     </RelativeLayout>

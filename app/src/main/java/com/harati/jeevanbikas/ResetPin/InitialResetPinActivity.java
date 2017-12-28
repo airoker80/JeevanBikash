@@ -63,11 +63,8 @@ public class InitialResetPinActivity extends BaseActivity implements View.OnClic
         try {
             if (mainmsg.equals("fromMA")){
                 Snackbar.make(parentLayout, "Please change your  pin before proceeding", Snackbar.LENGTH_LONG)
-                        .setAction("CLOSE", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                        .setAction("CLOSE", view -> {
 
-                            }
                         })
                         .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
                         .show();

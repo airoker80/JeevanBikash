@@ -64,6 +64,7 @@ import static java.lang.Thread.sleep;
  */
 public class AgentClientTransferFragment extends Fragment {
 
+    int otpCount=0;
     public String otpValue="";
     ApiSessionHandler apiSessionHandler;
     Retrofit retrofit;
@@ -254,20 +255,30 @@ public class AgentClientTransferFragment extends Fragment {
                 if (String.valueOf(response.code()).equals("200")){
                     Intent intent = new Intent( getContext(),DialogActivity.class);
                     intent.putExtra("msg",response.body().getMessage());
+                    intent.putExtra("print","print");
                     startActivity(intent);
                     getActivity().finish();
                 }else {
+
+
                     try {
-                        String jsonString = response.errorBody().string();
-
-                        Log.d("here ","--=>"+jsonString);
-
-                        JSONObject jsonObject = new JSONObject(jsonString);
-                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",jsonObject.getString("message"));
+                        if (otpCount<3){
+                            otpCount++;
+                            String jsonString = response.errorBody().string();
+                            Log.d("here ","--=>"+jsonString);
+                            JSONObject jsonObject = new JSONObject(jsonString);
+                            Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                            intent.putExtra("msg",jsonObject.getString("message"));
 //                        ((CashDepositActivity)getActivity()).backpressed();
-                        startActivity(intent);
-                        act_otp_tf.setText("");
+                            startActivity(intent);
+                            act_otp_tf.setText("");
+                        }else {
+                            Intent intent =new Intent(getContext(), MainActivity.class);
+                            intent.putExtra("msg","x");
+                            startActivity(intent);
+                            Toast.makeText(getContext(), "Too many entries of wrong otp", Toast.LENGTH_SHORT).show();
+                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

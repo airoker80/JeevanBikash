@@ -61,17 +61,18 @@ import static java.lang.Thread.sleep;
  */
 public class TransferTransactionDetailFragment extends Fragment {
 
+    int otpCount = 0;
     ImageButton resend_otp;
-    public String otpValue="";
+    public String otpValue = "";
     ApiSessionHandler apiSessionHandler;
     Retrofit retrofit;
     ApiInterface apiInterface;
-    SessionHandler sessionHandler ;
+    SessionHandler sessionHandler;
     LinearLayout topPanel2;
-    CenturyGothicTextView name,memberIdnnumber,branchName,shownDepositAmt,amountType,sendOtpAgain;
-    CenturyGothicTextView nameBeneficiary,memberIdnnumberBeneficiary,branchNameBeneficiary,title;
+    CenturyGothicTextView name, memberIdnnumber, branchName, shownDepositAmt, amountType, sendOtpAgain;
+    CenturyGothicTextView nameBeneficiary, memberIdnnumberBeneficiary, branchNameBeneficiary, title;
     PinEntryEditText act_otp_tf;
-    ImageView agent_client_tick,demand_cross,image,benif_image,act_mem_photo;
+    ImageView agent_client_tick, demand_cross, image, benif_image, act_mem_photo;
     Bundle bundle;
 
     public TransferTransactionDetailFragment() {
@@ -82,39 +83,39 @@ public class TransferTransactionDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        bundle =getArguments();
+        bundle = getArguments();
 
-        Log.d("bundle","==00--+>"+bundle.toString());
+        Log.d("bundle", "==00--+>" + bundle.toString());
         apiSessionHandler = new ApiSessionHandler(getContext());
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
         sessionHandler = new SessionHandler(getContext());
-        View view= inflater.inflate(R.layout.fragment_agent_client_transfer, container, false);
+        View view = inflater.inflate(R.layout.fragment_agent_client_transfer, container, false);
 
 
-        topPanel2=(LinearLayout) view.findViewById(R.id.topPanel2);
+        topPanel2 = (LinearLayout) view.findViewById(R.id.topPanel2);
         topPanel2.setVisibility(View.VISIBLE);
 
-        name=(CenturyGothicTextView)view.findViewById(R.id.name);
-        memberIdnnumber=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumber);
-        branchName=(CenturyGothicTextView)view.findViewById(R.id.branchName);
+        name = (CenturyGothicTextView) view.findViewById(R.id.name);
+        memberIdnnumber = (CenturyGothicTextView) view.findViewById(R.id.memberIdnnumber);
+        branchName = (CenturyGothicTextView) view.findViewById(R.id.branchName);
 
-        nameBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.nameBeneficiary);
-        memberIdnnumberBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.memberIdnnumberBeneficiary);
-        branchNameBeneficiary=(CenturyGothicTextView)view.findViewById(R.id.branchNameBeneficiary);
-        title=(CenturyGothicTextView)view.findViewById(R.id.title);
+        nameBeneficiary = (CenturyGothicTextView) view.findViewById(R.id.nameBeneficiary);
+        memberIdnnumberBeneficiary = (CenturyGothicTextView) view.findViewById(R.id.memberIdnnumberBeneficiary);
+        branchNameBeneficiary = (CenturyGothicTextView) view.findViewById(R.id.branchNameBeneficiary);
+        title = (CenturyGothicTextView) view.findViewById(R.id.title);
 
-        act_otp_tf=(PinEntryEditText) view.findViewById(R.id.act_otp_tf);
+        act_otp_tf = (PinEntryEditText) view.findViewById(R.id.act_otp_tf);
 
-        shownDepositAmt=(CenturyGothicTextView)view.findViewById(R.id.shownDepositAmt);
+        shownDepositAmt = (CenturyGothicTextView) view.findViewById(R.id.shownDepositAmt);
         title.setText("Fund Transfer");
-        amountType=(CenturyGothicTextView)view.findViewById(R.id.amountType);
-        sendOtpAgain=(CenturyGothicTextView)view.findViewById(R.id.sendOtpAgain);
+        amountType = (CenturyGothicTextView) view.findViewById(R.id.amountType);
+        sendOtpAgain = (CenturyGothicTextView) view.findViewById(R.id.sendOtpAgain);
 
         amountType.setText("Transfer amount");
-        shownDepositAmt.setText(getResources().getString(R.string.currency_np)+" "+bundle.getString("transfer_amount"));
+        shownDepositAmt.setText(getResources().getString(R.string.currency_np) + " " + bundle.getString("transfer_amount"));
 
-        name.setText(bundle.getString("name")+"(Sender)");
+        name.setText(bundle.getString("name") + "(Sender)");
         memberIdnnumber.setText(bundle.getString("code"));
         branchName.setText(bundle.getString("office"));
 
@@ -123,13 +124,13 @@ public class TransferTransactionDetailFragment extends Fragment {
         branchNameBeneficiary.setText(bundle.getString("officeBenificiary"));
 
 //        sendOtpForFundTransfer();
-        resend_otp=(ImageButton) view.findViewById(R.id.resend_otp);
-        image=(ImageView) view.findViewById(R.id.image);
-        benif_image=(ImageView) view.findViewById(R.id.benif_image);
-        act_mem_photo=(ImageView) view.findViewById(R.id.act_mem_photo);
+        resend_otp = (ImageButton) view.findViewById(R.id.resend_otp);
+        image = (ImageView) view.findViewById(R.id.image);
+        benif_image = (ImageView) view.findViewById(R.id.benif_image);
+        act_mem_photo = (ImageView) view.findViewById(R.id.act_mem_photo);
 
-        agent_client_tick=(ImageView)view.findViewById(R.id.agent_client_tick);
-        demand_cross=(ImageView)view.findViewById(R.id.demand_cross);
+        agent_client_tick = (ImageView) view.findViewById(R.id.agent_client_tick);
+        demand_cross = (ImageView) view.findViewById(R.id.demand_cross);
 
         try {
             String[] splitString = bundle.getString("photo").split(",");
@@ -184,9 +185,9 @@ public class TransferTransactionDetailFragment extends Fragment {
         });
         agent_client_tick.setOnClickListener(v -> {
 
-            if (!act_otp_tf.getText().toString().equals("")){
+            if (!act_otp_tf.getText().toString().equals("")) {
                 sendTransferPostRequest();
-            }else {
+            } else {
                 act_otp_tf.setError("Enter OTP first");
             }
 //                startActivity(new Intent(getContext(), DialogActivity.class));
@@ -220,7 +221,7 @@ public class TransferTransactionDetailFragment extends Fragment {
 
                 btnAccept.setOnClickListener(v1 -> {
 //                    sendOtpForFundTransfer();
-                        sendOtpForFundTransfer();
+                    sendOtpForFundTransfer();
                     builder.dismiss();
 
                 });
@@ -238,47 +239,47 @@ public class TransferTransactionDetailFragment extends Fragment {
     }
 
 
-    private void  sendOtpForFundTransfer(){
+    private void sendOtpForFundTransfer() {
         sessionHandler.showProgressDialog("Sending Request .... ");
         final JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("membercode",bundle.get("code"));
-            jsonObject.put("finger",bundle.get("fiClienttPin"));
-            jsonObject.put("amount",bundle.getString("transfer_amount"));
-            jsonObject.put("agentpin",bundle.getString("transfer_pin"));
-            jsonObject.put("mobile",bundle.get("transfer_mobile"));
-            jsonObject.put("beneficiary",bundle.getString("transfer_beneficiary_no"));
-        }catch (Exception e){
+        try {
+            jsonObject.put("membercode", bundle.get("code"));
+            jsonObject.put("finger", bundle.get("fiClienttPin"));
+            jsonObject.put("amount", bundle.getString("transfer_amount"));
+            jsonObject.put("agentpin", bundle.getString("transfer_pin"));
+            jsonObject.put("mobile", bundle.get("transfer_mobile"));
+            jsonObject.put("beneficiary", bundle.getString("transfer_beneficiary_no"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (jsonObject.toString()));
 
-        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getFUND_TRANSFER_OTP(),body,
-                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json",apiSessionHandler.getAgentCode());
+        retrofit2.Call<WithDrawlResponse> call = apiInterface.sendWithdrawRequest(apiSessionHandler.getFUND_TRANSFER_OTP(), body,
+                sessionHandler.getAgentToken(), "Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json", apiSessionHandler.getAgentCode());
 
         call.enqueue(new Callback<WithDrawlResponse>() {
             @Override
             public void onResponse(Call<WithDrawlResponse> call, Response<WithDrawlResponse> response) {
                 sessionHandler.hideProgressDialog();
-                if (String.valueOf(response.code()).equals("200")){
+                if (String.valueOf(response.code()).equals("200")) {
                     String message = response.body().getMessage();
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 //                    getOtpValue();
-                }else {
+                } else {
                     try {
 
                         String jsonString = response.errorBody().string();
 
-                        Log.d("here ","--=>"+jsonString);
+                        Log.d("here ", "--=>" + jsonString);
 
                         JSONObject jsonObject = new JSONObject(jsonString);
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",jsonObject.getString("message"));
+                        intent.putExtra("msg", jsonObject.getString("message"));
                         startActivity(intent);
                     } catch (Exception e) {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",("data mistake"));
+                        intent.putExtra("msg", ("data mistake"));
                         e.printStackTrace();
                     }
                 }
@@ -292,7 +293,7 @@ public class TransferTransactionDetailFragment extends Fragment {
     }
 
 
-    private void getOtpValue(){
+    private void getOtpValue() {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_get_otp, null);
         final AlertDialog builder = new AlertDialog.Builder(getContext())
                 .setPositiveButton("OK", null)
@@ -321,45 +322,53 @@ public class TransferTransactionDetailFragment extends Fragment {
         });
         builder.show();
     }
-    void sendTransferPostRequest(){
+
+    void sendTransferPostRequest() {
         sessionHandler.showProgressDialog("sending Request ... ");
         JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("membercode",bundle.getString("code"));
-            jsonObject.put("finger","1234");
-            jsonObject.put("amount",bundle.getString("transfer_amount"));
-            jsonObject.put("agentpin",bundle.getString("transfer_pin"));
-            jsonObject.put("beneficiary",bundle.getString("transfer_beneficiary_no"));
-            jsonObject.put("otp",act_otp_tf.getText().toString());
-        }catch (Exception e){
+        try {
+            jsonObject.put("membercode", bundle.getString("code"));
+            jsonObject.put("finger", "1234");
+            jsonObject.put("amount", bundle.getString("transfer_amount"));
+            jsonObject.put("agentpin", bundle.getString("transfer_pin"));
+            jsonObject.put("beneficiary", bundle.getString("transfer_beneficiary_no"));
+            jsonObject.put("otp", act_otp_tf.getText().toString());
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
-        retrofit2.Call<TransferModel> call = apiInterface.sendFundTransferRequest(apiSessionHandler.getFUND_TRANSFER(),body,
-                sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                "application/json",apiSessionHandler.getAgentCode());
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (jsonObject.toString()));
+        retrofit2.Call<TransferModel> call = apiInterface.sendFundTransferRequest(apiSessionHandler.getFUND_TRANSFER(), body,
+                sessionHandler.getAgentToken(), "Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json", apiSessionHandler.getAgentCode());
 
         call.enqueue(new Callback<TransferModel>() {
             @Override
             public void onResponse(Call<TransferModel> call, Response<TransferModel> response) {
                 sessionHandler.hideProgressDialog();
-                if (String.valueOf(response.code()).equals("200")){
+                if (String.valueOf(response.code()).equals("200")) {
                     getActivity().finish();
-                    Intent intent = new Intent(getContext(),DialogActivity.class);
-                    intent.putExtra("msg",response.body().getMessage());
+                    Intent intent = new Intent(getContext(), DialogActivity.class);
+                    intent.putExtra("msg", response.body().getMessage());
+                    intent.putExtra("print","print");
                     startActivity(intent);
-                }else {
+                } else {
                     try {
+                        if (otpCount < 3) {
+                            otpCount++;
+                            String jsonString = response.errorBody().string();
+                            Log.d("here ", "--=>" + jsonString);
+                            JSONObject jsonObject = new JSONObject(jsonString);
+                            Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
+                            intent.putExtra("msg", jsonObject.getString("message"));
+                            startActivity(intent);
+                            act_otp_tf.setText("");
+                        } else {
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            intent.putExtra("msg", "x");
+                            startActivity(intent);
+                            Toast.makeText(getContext(), "Too many entries of wrong otp", Toast.LENGTH_SHORT).show();
+                        }
 
-                        String jsonString = response.errorBody().string();
-
-                        Log.d("here ","--=>"+jsonString);
-
-                        JSONObject jsonObject = new JSONObject(jsonString);
-                        Intent intent = new Intent(getContext(), ErrorDialogActivity.class);
-                        intent.putExtra("msg",jsonObject.getString("message"));
-                        startActivity(intent);
-                        act_otp_tf.setText("");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -370,8 +379,8 @@ public class TransferTransactionDetailFragment extends Fragment {
             @Override
             public void onFailure(Call<TransferModel> call, Throwable t) {
                 sessionHandler.hideProgressDialog();
-                Intent intent = new Intent(getContext(),DialogActivity.class);
-                intent.putExtra("msg","Connection Error");
+                Intent intent = new Intent(getContext(), DialogActivity.class);
+                intent.putExtra("msg", "Connection Error");
                 startActivity(intent);
             }
         });
@@ -402,10 +411,11 @@ public class TransferTransactionDetailFragment extends Fragment {
         interrupted();
         super.onDestroyView();
     }
-    void confirmBack(){
-        Log.e("backpressed","bp");
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
-        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+
+    void confirmBack() {
+        Log.e("backpressed", "bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission, null);
+        TextView askPermission = (TextView) view.findViewById(R.id.askPermission);
         askPermission.setText("Are you Sure you want to go back??");
         final AlertDialog builder = new AlertDialog.Builder(getContext())
                 .setPositiveButton("Yes", null)
@@ -417,11 +427,9 @@ public class TransferTransactionDetailFragment extends Fragment {
 
             final Button btnAccept = builder.getButton(
                     AlertDialog.BUTTON_POSITIVE);
-
             btnAccept.setOnClickListener(v -> {
-                    ((FundTransferActivity)getActivity()).backpress();
-
-                Log.e("backpressed","bp");
+                ((FundTransferActivity) getActivity()).backpress();
+                Log.e("backpressed", "bp");
                 builder.dismiss();
 
             });
@@ -433,10 +441,11 @@ public class TransferTransactionDetailFragment extends Fragment {
 
         builder.show();
     }
-    void confirmBackCross(){
-        Log.e("backpressed","bp");
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
-        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+
+    void confirmBackCross() {
+        Log.e("backpressed", "bp");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_ask_permission, null);
+        TextView askPermission = (TextView) view.findViewById(R.id.askPermission);
         askPermission.setText("Are you Sure you want to go back??");
         final AlertDialog builder = new AlertDialog.Builder(getContext())
                 .setPositiveButton("Yes", null)
@@ -450,10 +459,10 @@ public class TransferTransactionDetailFragment extends Fragment {
                     AlertDialog.BUTTON_POSITIVE);
 
             btnAccept.setOnClickListener(v -> {
-                Intent intent =new Intent(getContext(), MainActivity.class);
-                intent.putExtra("msg","x");
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.putExtra("msg", "x");
                 startActivity(intent);
-                Log.e("backpressed","bp");
+                Log.e("backpressed", "bp");
                 builder.dismiss();
 
             });
@@ -466,8 +475,8 @@ public class TransferTransactionDetailFragment extends Fragment {
         builder.show();
     }
 
-    Callable callable =() -> {
+    Callable callable = () -> {
         SystemClock.sleep(60000);
-        return  null;
+        return null;
     };
 }

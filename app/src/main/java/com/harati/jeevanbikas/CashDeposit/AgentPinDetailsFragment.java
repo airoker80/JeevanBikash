@@ -171,9 +171,7 @@ public class AgentPinDetailsFragment extends Fragment implements View.OnClickLis
             e.printStackTrace();
         }
 
-        cd_speak_imgbtn.setOnClickListener(v -> {
-            t1.speak("Ke tapai ru " + deposoitAmt.getText().toString() + "aafno khata ma jamma garna chahanu huncha", TextToSpeech.QUEUE_FLUSH, null);
-        });
+        cd_speak_imgbtn.setOnClickListener(v -> t1.speak("Ke tapai ru " + deposoitAmt.getText().toString() + "aafno khata ma jamma garna chahanu huncha", TextToSpeech.QUEUE_FLUSH, null));
 
         cd_search_photo.setOnClickListener(v -> {
             try {

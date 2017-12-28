@@ -62,7 +62,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
         handler = new Handler();
-        r = () -> logout();
+        r = this::logout;
         startHandler();
 
 
@@ -140,8 +140,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     public void startHandler() {
         Log.v("start", "handler");
-        handler.postDelayed(r, (long) (10 * 1000));
-//        handler.postDelayed(r, (long) (2*60*1000));
+//        handler.postDelayed(r, (long) (10 * 1000));
+        handler.postDelayed(r, (long) (2*60*1000));
     }
 
     public void stopHandler() {
@@ -213,8 +213,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                         e.printStackTrace();
                     }
                 }).subscribe();
-
-
     }
 
 

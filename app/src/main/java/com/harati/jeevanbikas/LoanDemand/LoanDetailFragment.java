@@ -347,6 +347,7 @@ public class LoanDetailFragment extends Fragment {
                         getActivity().finish();
                         Intent intent = new Intent(getContext(), DialogActivity.class);
                         intent.putExtra("msg", response.body().getMessage());
+                        intent.putExtra("print","print");
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(getContext(), ErrorDialogActivity.class);

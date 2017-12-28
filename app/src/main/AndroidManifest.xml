@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.harati.jeevanbikas">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -60,22 +62,30 @@
         <activity android:name=".ResetPin.InitialResetPinActivity" />
         <activity android:name=".ActivityLogPackage.AgentLogActivity" />
         <activity android:name=".BaseActivity">
-<!--            <intent-filter>
+
+            <!--
+                <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity android:name=".Helper.imageLoader.ImageZoomActivity" />
         <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".Printer.MainPrinterActivity"></activity>
+        <activity android:name=".Printer.PrintActivity"></activity>
+        <activity android:name=".Printer.PrintTextActivity"></activity>
+        <activity android:name=".Printer.PrintSettingActivity"></activity>
+        <activity android:name=".Printer.DeviceListActivity"></activity>
+        <activity android:name=".Printer.PrintCmdActivity"></activity>
+        <activity android:name=".Printer.PrintImageActivity"></activity>
     </application>
 
 </manifest>
