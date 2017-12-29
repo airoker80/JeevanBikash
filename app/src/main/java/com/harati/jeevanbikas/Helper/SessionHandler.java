@@ -108,6 +108,11 @@ public class SessionHandler {
     public String getAgentCode() {
         return pref.getString(AGENT_CODE, "");
     }
+    public void setPasswordStatus(Boolean passwordChangeReqd) {
+        editor.putBoolean(PASSWORD_CHANGE_RQD, passwordChangeReqd);
+    }    public void setPinStatus(Boolean passwordChangeReqd) {
+        editor.putBoolean(PIN_CHANGE_RQD, passwordChangeReqd);
+    }
 
     public String getAgentPhoto() {
         return pref.getString(AGENT_Photo, "");

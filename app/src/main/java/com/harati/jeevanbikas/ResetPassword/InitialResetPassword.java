@@ -57,7 +57,7 @@ public class InitialResetPassword extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_reset_password);
-        initial_password_reset=(Button)findViewById(R.id.initial_password_reset);
+        initial_password_reset = (Button) findViewById(R.id.initial_password_reset);
         apiSessionHandler = new ApiSessionHandler(this);
         initial_password_reset.setOnClickListener(this);
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
@@ -77,7 +77,7 @@ public class InitialResetPassword extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         int getVid = v.getId();
-        switch (getVid){
+        switch (getVid) {
             case R.id.initial_password_reset:
 //                startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
 //                sendOtpRequest();
@@ -94,19 +94,19 @@ public class InitialResetPassword extends BaseActivity implements View.OnClickLi
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void sendOtpRequest(){
+    public void sendOtpRequest() {
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-        try{
-            Log.e("agentCode","ac"+sessionHandler.getAgentCode());
-            jsonObject.put("agentCode",sessionHandler.getAgentCode());
-            jsonObject.put("mobile","9813297782");
+        try {
+            Log.e("agentCode", "ac" + sessionHandler.getAgentCode());
+            jsonObject.put("agentCode", sessionHandler.getAgentCode());
+            jsonObject.put("mobile", "9813297782");
 
             jsonArray.put(jsonObject);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        VolleyRequestHandler handler= new VolleyRequestHandler(getApplicationContext());
+        VolleyRequestHandler handler = new VolleyRequestHandler(getApplicationContext());
        /* handler.makePostRequest("requestotp?serialno=12348", jsonObject, new RequestListener() {
             @Override
             public void onSuccess(String response) {
@@ -190,93 +190,101 @@ public class InitialResetPassword extends BaseActivity implements View.OnClickLi
     }*/
 
 
-  void sendSakarRequest(){
-      final RequestQueue requestQueue = Volley.newRequestQueue(InitialResetPassword.this);
-      final JSONObject jsonObject = new JSONObject();
-      JSONArray jsonArray = new JSONArray();
-      try{
-          Log.e("agentCode","ac"+sessionHandler.getAgentCode());
-          jsonObject.put("agentCode",sessionHandler.getAgentCode());
-          jsonObject.put("mobile","9813297782");
+    void sendSakarRequest() {
+        final RequestQueue requestQueue = Volley.newRequestQueue(InitialResetPassword.this);
+        final JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        try {
+            Log.e("agentCode", "ac" + sessionHandler.getAgentCode());
+            jsonObject.put("agentCode", sessionHandler.getAgentCode());
+            jsonObject.put("mobile", "9813297782");
 
-          jsonArray.put(jsonObject);
-      }catch (Exception e){
-          e.printStackTrace();
-      }
-      String REQUESTURL = JeevanBikashConfig.REQUEST_URL + "requestotp?serialno=12348";
-      StringRequest req = new StringRequest(Request.Method.POST, REQUESTURL,
-              responseObject -> {
+            jsonArray.put(jsonObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String REQUESTURL = JeevanBikashConfig.REQUEST_URL + "requestotp?serialno=12348";
+        StringRequest req = new StringRequest(Request.Method.POST, REQUESTURL,
+                responseObject -> {
 
 
-              }, error -> {
+                }, error -> {
 
-              }) {
-          @Override
-          public byte[] getBody() throws AuthFailureError {
-              return jsonObject.toString().getBytes();
-          }
+        }) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return jsonObject.toString().getBytes();
+            }
 
-          @Override
-          public Map<String, String> getHeaders() throws AuthFailureError {
-                 HashMap<String, String> headers = new HashMap<>();
-              headers.put("X-Authorization", sessionHandler.getAgentToken());
-              headers.put("Content-Type", "application/json");
-              headers.put("Authorization", "Basic dXNlcjpqQiQjYUJAMjA1NA==");
-              return headers;
-          }
-      };
-      requestQueue.add(req);
-  }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("X-Authorization", sessionHandler.getAgentToken());
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Basic dXNlcjpqQiQjYUJAMjA1NA==");
+                return headers;
+            }
+        };
+        requestQueue.add(req);
+    }
 
-  void sendRetrofitReq(){
-      sessionHandler.showProgressDialog("Sending Request ....");
-      final JSONObject jsonObject = new JSONObject();
+    void sendRetrofitReq() {
+        sessionHandler.showProgressDialog("Sending Request ....");
+        final JSONObject jsonObject = new JSONObject();
 //      startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
-      JSONArray jsonArray = new JSONArray();
-      try{
-          Log.e("agentCode","ac"+sessionHandler.getAgentCode());
-          jsonObject.put("agentCode",sessionHandler.getAgentCode());
-          jsonObject.put("mobile",agent_mobile_id.getText().toString());
+        JSONArray jsonArray = new JSONArray();
+        try {
+            Log.e("agentCode", "ac" + sessionHandler.getAgentCode());
+            jsonObject.put("agentCode", sessionHandler.getAgentCode());
+            jsonObject.put("mobile", agent_mobile_id.getText().toString());
 
-          jsonArray.put(jsonObject);
-      }catch (Exception e){
-          e.printStackTrace();
-      }
-      RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
+            jsonArray.put(jsonObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (jsonObject.toString()));
 //      retrofit2.Call<String> call = apiInterface.sendRetrofitOtprequest(body,"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBMDA1MDAwMSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTUwODIyMjcyODMzOSwiZXhwIjoxNTA4ODI3NTI4fQ.lAqF1g6Oil2fC8FRfK_ktR2J4oiNZDVsqmLStY855ZQxvH6whWkRI7nkxmeOzXJM912yMXaWgv_Sk4kzJgoRFA");
-      retrofit2.Call<OTPmodel> call = apiInterface.sendRetrofitOtprequest(apiSessionHandler.getAGENT_PASSWORD_RESET(),body,
-              sessionHandler.getAgentToken(),"Basic dXNlcjpqQiQjYUJAMjA1NA==",
-              "application/json",apiSessionHandler.getAgentCode());
-      call.enqueue(new retrofit2.Callback<OTPmodel>() {
-          @Override
-          public void onResponse(retrofit2.Call<OTPmodel> call, retrofit2.Response<OTPmodel> response) {
-              sessionHandler.hideProgressDialog();
-              if (String.valueOf(response.code()).equals("200")){
-                  startActivity(new Intent(InitialResetPassword.this,ResetPassword.class));
-                  Toast.makeText(InitialResetPassword.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-              }else {
-                  try {
-                      String jsonString = response.errorBody().string();
+        retrofit2.Call<OTPmodel> call = apiInterface.sendRetrofitOtprequest(apiSessionHandler.getAGENT_OTP(), body,
+                sessionHandler.getAgentToken(), "Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json", apiSessionHandler.getAgentCode());
+        call.enqueue(new retrofit2.Callback<OTPmodel>() {
+            @Override
+            public void onResponse(retrofit2.Call<OTPmodel> call, retrofit2.Response<OTPmodel> response) {
+                sessionHandler.hideProgressDialog();
+                if (String.valueOf(response.code()).equals("200")) {
+                    Intent intent = new Intent(InitialResetPassword.this, ResetPassword.class);
+                    intent.putExtra("mobile",agent_mobile_id.getText().toString());
+                    startActivity(intent);
+                    Toast.makeText(InitialResetPassword.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        String jsonString = response.errorBody().string();
 
-                      Log.d("here ","--=>"+jsonString);
+                        Log.d("here ", "--=>" + jsonString);
 
-                      JSONObject jsonObject = new JSONObject(jsonString);
-                      Intent intent = new Intent(InitialResetPassword.this, ErrorDialogActivity.class);
-                      intent.putExtra("msg",jsonObject.getString("message"));
-                      startActivity(intent);
-                  }catch (Exception e){
-                      e.printStackTrace();
-                  }
-              }
-          }
+/*                        JSONObject jsonObject = new JSONObject(jsonString);
+                        Intent intent = new Intent(InitialResetPassword.this, ErrorDialogActivity.class);
+                        intent.putExtra("msg", jsonObject.getString("message"));
+                        startActivity(intent);*/
 
-          @Override
-          public void onFailure(retrofit2.Call<OTPmodel> call, Throwable t) {
-            sessionHandler.hideProgressDialog();
-          }
-      });
+                        Intent intent = new Intent(InitialResetPassword.this, ResetPassword.class);
+                        intent.putExtra("mobile",agent_mobile_id.getText().toString());
+                        startActivity(intent);
+
+                        Toast.makeText(InitialResetPassword.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<OTPmodel> call, Throwable t) {
+                sessionHandler.hideProgressDialog();
+            }
+        });
 
 
-  }
+    }
 
 }

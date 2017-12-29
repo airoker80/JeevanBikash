@@ -76,7 +76,7 @@ public interface ApiInterface {
 //    Call<String> sendRetrofitOtprequest(@Body RequestBody body, @Header("X-Authorization") String xAuth);
 
     @POST
-    Call<String> sendResetRequest(@Url String url,
+    Call<ResponseBody> sendResetRequest(@Url String url,
                                   @Body RequestBody body,
                                   @Header("X-Authorization") String xAuth,
                                   @Header("Authorization") String Authorization,

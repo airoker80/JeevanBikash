@@ -45,7 +45,7 @@
         <com.harati.jeevanbikas.Helper.CGEditText
             android:textSize="@dimen/_13sdp"
             android:maxLines="1"
-            android:text="1587"
+            android:text="101010"
             android:id="@+id/serialNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

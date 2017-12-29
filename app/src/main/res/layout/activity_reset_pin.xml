@@ -80,7 +80,7 @@
 
             <EditText
                 android:maxLines="1"
-                android:id="@+id/editText"
+                android:id="@+id/old_pin"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_30sdp"
@@ -94,6 +94,7 @@
 
             <EditText
                 android:maxLines="1"
+                android:id="@+id/new_pin"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_20sdp"
@@ -106,6 +107,7 @@
                 android:textSize="@dimen/_12sdp" />
 
             <EditText
+                android:id="@+id/re_new_pin"
                 android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
@@ -119,6 +121,7 @@
                 android:textSize="@dimen/_12sdp" />
 
             <EditText
+                android:id="@+id/otp_pin"
                 android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
@@ -133,12 +136,13 @@
 
 
             <Button
+                android:id="@+id/change_pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_60sdp"
                 android:background="@drawable/shape_pin_btn"
                 android:padding="@dimen/_12sdp"
-                android:text="Send Link to Email"
+                android:text="Change PIN"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp" />
 

@@ -94,7 +94,8 @@ public class InitialResetPinActivity extends BaseActivity implements View.OnClic
         int getVid = v.getId();
         switch (getVid){
             case R.id.initial_pin_reset:
-                startActivity(new Intent(InitialResetPinActivity.this,ResetPin.class));
+                sendRetrofitReq();
+//                startActivity(new Intent(InitialResetPinActivity.this,ResetPin.class));
                 break;
         }
     }
@@ -117,7 +118,7 @@ public class InitialResetPinActivity extends BaseActivity implements View.OnClic
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (jsonObject.toString()));
 //      retrofit2.Call<String> call = apiInterface.sendRetrofitOtprequest(body,"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBMDA1MDAwMSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTUwODIyMjcyODMzOSwiZXhwIjoxNTA4ODI3NTI4fQ.lAqF1g6Oil2fC8FRfK_ktR2J4oiNZDVsqmLStY855ZQxvH6whWkRI7nkxmeOzXJM912yMXaWgv_Sk4kzJgoRFA");
-        retrofit2.Call<OTPmodel> call = apiInterface.sendRetrofitOtprequest(apiSessionHandler.getAGENT_PIN_RESET(), body,
+        retrofit2.Call<OTPmodel> call = apiInterface.sendRetrofitOtprequest(apiSessionHandler.getAGENT_OTP(), body,
                 sessionHandler.getAgentToken(), "Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json", apiSessionHandler.getAgentCode());
         call.enqueue(new retrofit2.Callback<OTPmodel>() {
@@ -125,18 +126,23 @@ public class InitialResetPinActivity extends BaseActivity implements View.OnClic
             public void onResponse(retrofit2.Call<OTPmodel> call, retrofit2.Response<OTPmodel> response) {
                 sessionHandler.hideProgressDialog();
                 if (String.valueOf(response.code()).equals("200")) {
-                    startActivity(new Intent(InitialResetPinActivity.this, ResetPassword.class));
+                    Intent intent=new Intent(InitialResetPinActivity.this, ResetPin.class);
+                    intent.putExtra("mobile",pin_enrty_etxt.getText().toString());
+                    startActivity(intent);
                     Toast.makeText(InitialResetPinActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
                     try {
+                        Intent intent=new Intent(InitialResetPinActivity.this, ResetPin.class);
+                        intent.putExtra("mobile",pin_enrty_etxt.getText().toString());
+                        startActivity(intent);
                         String jsonString = response.errorBody().string();
 
                         Log.d("here ", "--=>" + jsonString);
 
                         JSONObject jsonObject = new JSONObject(jsonString);
-                        Intent intent = new Intent(InitialResetPinActivity.this, ErrorDialogActivity.class);
+              /*          Intent intent = new Intent(InitialResetPinActivity.this, ErrorDialogActivity.class);
                         intent.putExtra("msg", jsonObject.getString("message"));
-                        startActivity(intent);
+                        startActivity(intent);*/
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.harati.jeevanbikas.R;
 import com.smartdevice.sdk.printer.Device;
@@ -70,18 +71,25 @@ public class PrintSettingActivity extends ListActivity {
 
 			@Override
 			public void onClick(View v) {
-				if(deviceList!=null)
-				{
-					deviceList.clear();
+				try {
+					if(deviceList!=null)
+					{
+						deviceList.clear();
+					}
+					if (!PrintService.pl().IsOpen()) {
+						PrintService.pl().open(_context);
+					}
+					layoutscan.setVisibility(View.VISIBLE);
+					mNewDevicesArrayAdapter.clear();
+					PrintService.pl().scan();
+					deviceList = PrintService.pl().getDeviceList();
+					InitListView();
+				}catch (Exception e){
+					e.printStackTrace();
+					Toast.makeText(_context, "Printer Connection Problem", Toast.LENGTH_SHORT).show();
 				}
-				if (!PrintService.pl().IsOpen()) {
-					PrintService.pl().open(_context);
-				}
-				layoutscan.setVisibility(View.VISIBLE);
-				mNewDevicesArrayAdapter.clear();
-				PrintService.pl().scan();
-				deviceList = PrintService.pl().getDeviceList();
-				InitListView();
+
+
 			}
 		});
 
