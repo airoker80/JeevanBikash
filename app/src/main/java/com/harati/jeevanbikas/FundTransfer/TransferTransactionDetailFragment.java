@@ -350,6 +350,7 @@ public class TransferTransactionDetailFragment extends Fragment {
                     Intent intent = new Intent(getContext(), DialogActivity.class);
                     intent.putExtra("msg", response.body().getMessage());
                     intent.putExtra("print","print");
+                    intent.putExtra("printText",response.body().getPrint());
                     startActivity(intent);
                 } else {
                     try {

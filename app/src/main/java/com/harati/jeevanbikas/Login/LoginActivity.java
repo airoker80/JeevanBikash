@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         if (getPackageName().equals("com.harati.BLB")){
             image.setVisibility(View.INVISIBLE);
             jb_username.setText("A0262266");
-            jb_password.setText("yi%E1M74");
+            jb_password.setText("Nepal@123");
         }
         retrofit = MyApplication.getRetrofitInstance(apiSessionHandler.getAGENT_LOGIN());
         apiInterface = retrofit.create(ApiInterface.class);

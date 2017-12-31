@@ -257,6 +257,7 @@ public class WithdrawlTransactionFragment extends Fragment {
                     Intent intent = new Intent(getContext(),DialogActivity.class);
                     intent.putExtra("msg",message);
                     intent.putExtra("print","print");
+                    intent.putExtra("printText",response.body().getPrint());
                     startActivity(intent);
                     getActivity().finish();
                 }else {

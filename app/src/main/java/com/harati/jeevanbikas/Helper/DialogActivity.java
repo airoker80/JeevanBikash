@@ -20,6 +20,8 @@ public class DialogActivity extends AppCompatActivity {
      Button ok;
      ImageButton print;
      String extraMesage;
+     String printMsg="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         extraMesage = getIntent().getStringExtra("msg");
@@ -29,6 +31,7 @@ public class DialogActivity extends AppCompatActivity {
         msgDetail=(TextView)findViewById(R.id.msgDetail);
         if (getIntent().getStringExtra("print").equals("print")){
             print.setVisibility(View.VISIBLE);
+            printMsg = getIntent().getStringExtra("printText");
         }
         try {
             msgDetail.setText(extraMesage);
@@ -46,7 +49,7 @@ public class DialogActivity extends AppCompatActivity {
             }else {
                 Intent intent = new Intent(this,MainPrinterActivity.class);
 //                intent.putExtra("printMsg","Printing testing");
-                intent.putExtra("printMsg",extraMesage);
+                intent.putExtra("printMsg",printMsg);
 //                startActivity(new Intent(this, MainPrinterActivity.class));
             startActivity(intent);
             }

@@ -14,6 +14,11 @@ public class WithDrawlResponse {
     @SerializedName("message")
     @Expose
     private String message;
+
+    @SerializedName("print")
+    @Expose
+    private String print;
+
     @SerializedName("balance")
     @Expose
     private Double balance;
@@ -32,6 +37,14 @@ public class WithDrawlResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getPrint() {
+        return print;
+    }
+
+    public void setPrint(String print) {
+        this.print = print;
     }
 
     public Double getBalance() {
