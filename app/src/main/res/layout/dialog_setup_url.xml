@@ -45,7 +45,7 @@
         <com.harati.jeevanbikas.Helper.CGEditText
             android:textSize="@dimen/_13sdp"
             android:maxLines="1"
-            android:text="101010"
+            android:text=""
             android:id="@+id/serialNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -65,10 +65,11 @@
             android:text="Username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <!--0004-->
         <com.harati.jeevanbikas.Helper.CGEditText
             android:textSize="@dimen/_13sdp"
             android:maxLines="1"
-            android:text="0004"
+            android:text=""
             android:id="@+id/api_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -88,9 +89,10 @@
             android:text="Password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <!--1234-->
         <com.harati.jeevanbikas.Helper.CGEditText
             android:textSize="@dimen/_13sdp"
-            android:text="1234"
+            android:text=""
             android:id="@+id/api_password"
             android:maxLines="1"
             android:layout_width="match_parent"
@@ -111,9 +113,10 @@
             android:text="Master Key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <!--1234-->
         <com.harati.jeevanbikas.Helper.CGEditText
             android:textSize="@dimen/_13sdp"
-            android:text="1234"
+            android:text=""
             android:id="@+id/api_master_key"
             android:maxLines="1"
             android:layout_width="match_parent"

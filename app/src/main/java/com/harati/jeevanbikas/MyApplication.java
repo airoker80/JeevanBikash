@@ -32,7 +32,7 @@ public class MyApplication extends Application {
                 .build();
 // add your other interceptors …
 // add logging as last interceptor
-        httpClient.addInterceptor(logging);
+//        httpClient.addInterceptor(logging);
         return new Retrofit.Builder()
                 .baseUrl(baseurl+"/api/v1/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

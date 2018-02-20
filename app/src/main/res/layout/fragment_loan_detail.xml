@@ -45,7 +45,7 @@
     </RelativeLayout>
     <ScrollView
         android:layout_below="@+id/top_ld_ll"
-        android:layout_above="@+id/submit"
+        android:layout_above="@+id/submit_hll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -430,6 +430,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/submit_hll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -440,7 +441,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:clickable="true"
-            android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:background="#F9B847"
             app:srcCompat="@drawable/ic_check" />
@@ -449,7 +449,6 @@
             android:id="@+id/crossIV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="#c93e3b"

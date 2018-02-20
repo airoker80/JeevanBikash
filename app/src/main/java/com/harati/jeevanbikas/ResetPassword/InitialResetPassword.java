@@ -1,9 +1,11 @@
 package com.harati.jeevanbikas.ResetPassword;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +13,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -49,6 +53,7 @@ public class InitialResetPassword extends BaseActivity implements View.OnClickLi
     Spinner spinner;
     Button initial_password_reset;
     EditText agent_mobile_id;
+    ImageView image;
 
     SessionHandler sessionHandler;
 
@@ -64,12 +69,14 @@ public class InitialResetPassword extends BaseActivity implements View.OnClickLi
         apiInterface = retrofit.create(ApiInterface.class);
 
         sessionHandler = new SessionHandler(InitialResetPassword.this);
+        image = (ImageView) findViewById(R.id.image);
         spinner = (Spinner) findViewById(R.id.spinner);
         agent_mobile_id = (EditText) findViewById(R.id.agent_mobile_id);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
                 R.array.language, R.layout.text_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        image.setOnClickListener(this);
 
     }
 
@@ -89,6 +96,9 @@ public class InitialResetPassword extends BaseActivity implements View.OnClickLi
                 } catch (IOException e) {
                     e.printStackTrace();
                 }*/
+                break;
+            case R.id.image:
+                confirmBack();
                 break;
         }
     }
@@ -286,5 +296,34 @@ public class InitialResetPassword extends BaseActivity implements View.OnClickLi
 
 
     }
+    void confirmBack(){
+        Log.e("backpressed","bp");
+        View view = getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back??");
+        final AlertDialog builder = new AlertDialog.Builder(this)
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want to go back?")
+                .create();
 
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                super.onBackPressed();
+                Log.e("backpressed","bp");
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
 }

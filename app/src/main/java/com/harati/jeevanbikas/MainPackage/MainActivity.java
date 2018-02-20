@@ -31,6 +31,7 @@ import com.harati.jeevanbikas.Helper.JeevanBikashConfig.JeevanBikashConfig;
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
 import com.harati.jeevanbikas.MyApplication;
+import com.harati.jeevanbikas.PabyByOnlineService.config.PayByOnlineConfig;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.ResetPassword.InitialResetPassword;
 import com.harati.jeevanbikas.ResetPassword.ResetPassword;
@@ -39,16 +40,23 @@ import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
 import com.harati.jeevanbikas.Retrofit.RetrofiltClient.RetrofitClient;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MainActivity extends BaseActivity {
@@ -71,8 +79,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         sessionHandler = new SessionHandler(MainActivity.this);
-         apiSessionHandler = new ApiSessionHandler(MainActivity.this);
+        sessionHandler = new SessionHandler(MainActivity.this);
+        apiSessionHandler = new ApiSessionHandler(MainActivity.this);
         retrofit = MyApplication.getRetrofitInstance(JeevanBikashConfig.BASE_URL);
         apiInterface = retrofit.create(ApiInterface.class);
 //        setContentView(R.layout.activity_main);
@@ -83,7 +91,6 @@ public class MainActivity extends BaseActivity {
                 }).subscribe();*/
 
 
-
         LayoutInflater inflater = (LayoutInflater) this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
@@ -92,20 +99,20 @@ public class MainActivity extends BaseActivity {
         String photo = getIntent().getStringExtra("userphoto");
 //
 
-        Log.v("photo",sessionHandler.getAgentPhoto());
-        super.setNav(sessionHandler.getAgentPhoto(),sessionHandler.getAgentCode(),sessionHandler.getUsername(),sessionHandler.getBranchOffice(),sessionHandler.getAgentBalance(),sessionHandler.getAGENT_Odlimit());
+        Log.v("photo", sessionHandler.getAgentPhoto());
+        super.setNav(sessionHandler.getAgentPhoto(), sessionHandler.getAgentCode(), sessionHandler.getUsername(), sessionHandler.getBranchOffice(), sessionHandler.getAgentBalance(), sessionHandler.getAGENT_Odlimit());
         nav_username.setText(sessionHandler.getUsername());
 
         main_gone_rl = (RelativeLayout) findViewById(R.id.main_gone_rl);
         spinner = (Spinner) findViewById(R.id.spinner);
         TextView dashboardTitile = (TextView) findViewById(R.id.dashboardTitile);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
-        R.array.language, R.layout.text_layout);
+                R.array.language, R.layout.text_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        app_icon=(ImageView)findViewById(R.id.app_icon);
-        logoutTxt=(CenturyGothicTextView)findViewById(R.id.logoutTxt);
+        app_icon = (ImageView) findViewById(R.id.app_icon);
+        logoutTxt = (CenturyGothicTextView) findViewById(R.id.logoutTxt);
 
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -123,11 +130,12 @@ public class MainActivity extends BaseActivity {
 
         sessionHandler.getInfo();
 
-        centuryGothic=Typeface.createFromAsset(MainActivity.this.getAssets(), "cg.ttf");
-        if (getPackageName().equals("com.harati.BLB")){
-            dashboardTitile.setText("BLB "+"( Version :"+String.valueOf(pInfo.versionName)+")");
-        }else {
-            dashboardTitile.setText("JEEVAN BIKAS SAMAJ "+"( Version :"+String.valueOf(pInfo.versionName)+")");
+        userLogin();
+        centuryGothic = Typeface.createFromAsset(MainActivity.this.getAssets(), "cg.ttf");
+        if (getPackageName().equals("com.harati.BLB")) {
+            dashboardTitile.setText("BLB " + "( Version :" + String.valueOf(pInfo.versionName) + ")");
+        } else {
+            dashboardTitile.setText("JEEVAN BIKAS SAMAJ " + "( Version :" + String.valueOf(pInfo.versionName) + ")");
         }
         dashboardTitile.setTypeface(centuryGothic);
 
@@ -149,33 +157,33 @@ public class MainActivity extends BaseActivity {
         dashboard_icon_list.setAdapter(dashboardRecyclerViewAdapter);
 
         try {
-            if (!getIntent().getStringExtra("msg").equals("x")){
-                if (sessionHandler.changePasswordReqd()&sessionHandler.changePinReqd()){
-                    Intent intent =  new Intent(this, AgentDashboardActivity.class);
-                    intent.putExtra("snackmsg","fromMA");
+            if (!getIntent().getStringExtra("msg").equals("x")) {
+                if (sessionHandler.changePasswordReqd() & sessionHandler.changePinReqd()) {
+                    Intent intent = new Intent(this, AgentDashboardActivity.class);
+                    intent.putExtra("snackmsg", "fromMA");
                     startActivity(intent);
-                }else if (sessionHandler.changePinReqd()){
-                    Intent intent =  new Intent(this, InitialResetPinActivity.class);
-                    intent.putExtra("snackmsg","fromMA");
+                } else if (sessionHandler.changePinReqd()) {
+                    Intent intent = new Intent(this, InitialResetPinActivity.class);
+                    intent.putExtra("snackmsg", "fromMA");
                     startActivity(intent);
-                }else if (sessionHandler.changePasswordReqd()){
-                    Intent intent =  new Intent(this, ResetPassword.class);
-                    intent.putExtra("snackmsg","fromMA");
+                } else if (sessionHandler.changePasswordReqd()) {
+                    Intent intent = new Intent(this, ResetPassword.class);
+                    intent.putExtra("snackmsg", "fromMA");
                     startActivity(intent);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void logout(){
+    void logout() {
 
 //        sessionHandler.logoutUser();
 //        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(jsonObject.toString()));
         io.reactivex.Observable<SuccesResponseModel> call = apiInterface.sendLogoutRequest(sessionHandler.getAgentToken(),
-                    "Basic dXNlcjpqQiQjYUJAMjA1NA==",
-                    "application/json",apiSessionHandler.getAgentCode());
+                "Basic dXNlcjpqQiQjYUJAMjA1NA==",
+                "application/json", apiSessionHandler.getAgentCode());
             /*call.enqueue(new Callback<SuccesResponseModel>() {
                 @Override
                 public void onResponse(Call<SuccesResponseModel> call, retrofit2.Response<SuccesResponseModel> response) {
@@ -193,39 +201,68 @@ public class MainActivity extends BaseActivity {
                     sessionHandler.logoutUser();
                 }
             });*/
-            call.subscribeOn(Schedulers.io())
-                 .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(new Observer<SuccesResponseModel>() {
-                      @Override
-                      public void onSubscribe(Disposable d) {
-                          sessionHandler.showProgressDialog("Logging Out..");
-                      }
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SuccesResponseModel>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        sessionHandler.showProgressDialog("Logging Out..");
+                    }
 
-                      @Override
-                      public void onNext(SuccesResponseModel value) {
-                          Log.v("logout",value.getMessage()+value.getStatus());
-                      }
+                    @Override
+                    public void onNext(SuccesResponseModel value) {
+                        Log.v("logout", value.getMessage() + value.getStatus());
+                    }
 
-                      @Override
-                      public void onError(Throwable e) {
-                          sessionHandler.hideProgressDialog();
-                          sessionHandler.logoutUser();
-                      }
+                    @Override
+                    public void onError(Throwable e) {
+                        sessionHandler.hideProgressDialog();
+                        sessionHandler.logoutUser();
+                    }
 
-                      @Override
-                      public void onComplete() {
-                          sessionHandler.hideProgressDialog();
-                          sessionHandler.logoutUser();
-                          finish();
-                      }
-                  });
-        }
+                    @Override
+                    public void onComplete() {
+                        sessionHandler.hideProgressDialog();
+                        sessionHandler.logoutUser();
+                        finish();
+                    }
+                });
+    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
+    private void userLogin() {
+        Map<String, String> params = new HashMap<>();
+        params.put("username", "usersarojt@harati.com.np");
+        params.put("password", "s");
+        Call<ResponseBody> call = apiInterface.loginPbo(PayByOnlineConfig.SERVER_URL + "userLogin",
+                params);
+        sessionHandler.showProgressDialog("logging in .. ");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                sessionHandler.hideProgressDialog();
+                try {
+                    String jsonString = response.body().string();
+                    JSONObject jsonObject = new JSONObject(jsonString);
+                    String authenticationCode = jsonObject.getString("authenticationCode");
+                    String userCode = jsonObject.getString("userCode");
+                    sessionHandler.savePbo(authenticationCode, userCode);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sessionHandler.hideProgressDialog();
+                t.printStackTrace();
+            }
+        });
+    }
 
 }
 

@@ -30,6 +30,7 @@ import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.MyApplication;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.Retrofit.Interface.ApiInterface;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.EnquiryResponseModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.SuccesResponseModel;
 import com.squareup.picasso.Picasso;
 
@@ -195,23 +196,25 @@ public class EnquiryUserDetails extends Fragment implements View.OnClickListener
             e.printStackTrace();
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (jsonObject.toString()));
-        io.reactivex.Observable<Response<SuccesResponseModel>> call = apiInterface.sendBalanceRequest(apiSessionHandler.getBALANCE_ENQUIRY(), body,
+        io.reactivex.Observable<Response<EnquiryResponseModel>> call = apiInterface.sendBalanceRequest(apiSessionHandler.getBALANCE_ENQUIRY(), body,
                 sessionHandler.getAgentToken(), "Basic dXNlcjpqQiQjYUJAMjA1NA==",
                 "application/json", apiSessionHandler.getAgentCode());
 
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<SuccesResponseModel>>() {
+                .subscribe(new Observer<Response<EnquiryResponseModel>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         sessionHandler.showProgressDialog("Sending Request ....");
                     }
                     @Override
-                    public void onNext(Response<SuccesResponseModel> value) {
+                    public void onNext(Response<EnquiryResponseModel> value) {
                         if (String.valueOf(value.code()).equals("200")) {
                             if (value.body().getStatus().equals("Success")) {
                                 Intent intent = new Intent(getContext(), DialogActivity.class);
                                 intent.putExtra("msg", value.body().getMessage());
+                                intent.putExtra("print", "print");
+                                intent.putExtra("printMsg", value.body().getPrint());
                                 startActivity(intent);
                                 getActivity().finish();
                             } else {

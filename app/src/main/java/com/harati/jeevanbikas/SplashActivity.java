@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -53,15 +54,21 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Log.d("resume", "===>" + String.valueOf(apiSessionHandler.getFirstRunStatus()));
-        super.onResume();
-        if (!apiSessionHandler.getFirstRunStatus()) {
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-        } else {
+        if(getPackageName().toString().trim().equals("com.harati.haratiBlB")){
+//            startActivity(new Intent(this,LoginActivity.class));
+//            finish();
+        }else {
+            Log.d("resume", "===>" + String.valueOf(apiSessionHandler.getFirstRunStatus()));
+            super.onResume();
+            if (!apiSessionHandler.getFirstRunStatus()) {
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+            } else {
 //            apiSessionHandler.saveAppFirstState(false);
-            setUpUrl();
+                setUpUrl();
+            }
         }
+
     }
 
 
@@ -81,6 +88,13 @@ public class SplashActivity extends AppCompatActivity {
         CGEditText api_username = (CGEditText) view.findViewById(R.id.api_username);
         CGEditText api_password = (CGEditText) view.findViewById(R.id.api_password);
         CGEditText api_master_key = (CGEditText) view.findViewById(R.id.api_master_key);
+
+        if (Build.SERIAL.equals("unknown")){
+            serialNo.setError("cannot retrive serial no");
+        }else {
+            serialNo.setText(Build.SERIAL);
+
+        }
 
         builder.setOnShowListener(dialog -> {
 
@@ -231,4 +245,6 @@ public class SplashActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
+
 }

@@ -45,6 +45,9 @@ public class SessionHandler {
     private static final String AGENT_Balance = "AGENT_Balance";
     private static final String AGENT_Odlimit = "AGENT_Odlimit";
 
+    private static final String USERAUTH = "user_auth";
+    private static final String USERCODE = "user_code";
+
 
     public static final String API_JSON = "api_json";
 
@@ -61,6 +64,13 @@ public class SessionHandler {
     public void saveAgentUrlInfo(String agentSerialNo) {
 //        editor.putString(AGENT_URL,agentUrl);
         editor.putString(AGENT_SERIAL_NO, agentSerialNo);
+        editor.commit();
+        Log.d("save", "saved");
+    }
+    public void savePbo(String auth,String usercode) {
+//        editor.putString(AGENT_URL,agentUrl);
+        editor.putString(USERAUTH, auth);
+        editor.putString(USERCODE, usercode);
         editor.commit();
         Log.d("save", "saved");
     }
@@ -117,6 +127,13 @@ public class SessionHandler {
     public String getAgentPhoto() {
         return pref.getString(AGENT_Photo, "");
     }
+    public String getAuthCode() {
+        return pref.getString(USERAUTH, "");
+    }
+    public String getUserCode() {
+        return pref.getString(USERCODE, "");
+    }
+
 
     public String getUsername() {
         return pref.getString(USERNAME, "");

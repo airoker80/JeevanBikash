@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.harati.jeevanbikas.ActivityLogPackage.AgentLogActivity;
 import com.harati.jeevanbikas.AgentDashboard.AgentDashboardActivity;
 import com.harati.jeevanbikas.BalanceEnquiry.BalanceEnquiryActivity;
+import com.harati.jeevanbikas.BuildConfig;
 import com.harati.jeevanbikas.CashDeposit.CashDepositActivity;
 import com.harati.jeevanbikas.CashWithDrawl.CashWithDrawlActivity;
 import com.harati.jeevanbikas.Enrollment.EnrollmentActivity;
@@ -23,6 +24,7 @@ import com.harati.jeevanbikas.KycPackage.KycActivity;
 import com.harati.jeevanbikas.LoanDemand.LoanDemandActivity;
 import com.harati.jeevanbikas.MainPackage.MainActivity;
 import com.harati.jeevanbikas.ModelPackage.DashBoardModel;
+import com.harati.jeevanbikas.PabyByOnlineService.PBOActivity;
 import com.harati.jeevanbikas.R;
 import com.harati.jeevanbikas.RechargeTopup.RechargeTopup;
 import com.harati.jeevanbikas.UtilityPackage.UtilityPayment;
@@ -45,7 +47,7 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.dashboard_model,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.dashboard_model, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -57,50 +59,54 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
         holder.dashboard_text_id.setText(dashBoardModel.getDashboard_icon_name());
         holder.dashboard_text_id.setTypeface(MainActivity.centuryGothic);
         holder.dashboard_icon_id.setImageResource(dashBoardModel.getDashboard_icon_id());
-        final AppCompatActivity activity=(AppCompatActivity) context;
+        final AppCompatActivity activity = (AppCompatActivity) context;
         holder.itemView.setOnClickListener(v -> {
-            if (dashBoardModel.getDashboard_icon_name().equals("Balance \n Inquiry")){
-                context.startActivity(new Intent(context,BalanceEnquiryActivity.class));
+            if (dashBoardModel.getDashboard_icon_name().equals("Balance \n Inquiry")) {
+                context.startActivity(new Intent(context, BalanceEnquiryActivity.class));
                 ((AppCompatActivity) context).isDestroyed();
             }
-            if (dashBoardModel.getDashboard_icon_name().equals("Cash \n Withdrawal")){
-                    context.startActivity(new Intent(context,CashWithDrawlActivity.class));
-                    ((AppCompatActivity) context).isDestroyed();
+            if (dashBoardModel.getDashboard_icon_name().equals("Cash \n Withdrawal")) {
+                context.startActivity(new Intent(context, CashWithDrawlActivity.class));
+                ((AppCompatActivity) context).isDestroyed();
             }
-            if (dashBoardModel.getDashboard_icon_name().equals("Cash \n Deposit")){
-                    context.startActivity(new Intent(context,CashDepositActivity.class));
-                    ((AppCompatActivity) context).isDestroyed();
+            if (dashBoardModel.getDashboard_icon_name().equals("Cash \n Deposit")) {
+                context.startActivity(new Intent(context, CashDepositActivity.class));
+                ((AppCompatActivity) context).isDestroyed();
             }
-            if (dashBoardModel.getDashboard_icon_name().equals("Funds \n Transfer")){
-                    context.startActivity(new Intent(context,FundTransferActivity.class));
-                    ((AppCompatActivity) context).isDestroyed();
+            if (dashBoardModel.getDashboard_icon_name().equals("Funds \n Transfer")) {
+                context.startActivity(new Intent(context, FundTransferActivity.class));
+                ((AppCompatActivity) context).isDestroyed();
             }
-            if (dashBoardModel.getDashboard_icon_name().equals("New Member \n Enrollment")){
-                    context.startActivity(new Intent(context,EnrollmentActivity.class));
-                    ((AppCompatActivity) context).isDestroyed();
+            if (dashBoardModel.getDashboard_icon_name().equals("New Member \n Enrollment")) {
+                context.startActivity(new Intent(context, EnrollmentActivity.class));
+                ((AppCompatActivity) context).isDestroyed();
             }
-            if (dashBoardModel.getDashboard_icon_name().equals("Loan \n Demand")){
-                    context.startActivity(new Intent(context,LoanDemandActivity.class));
-                    ((AppCompatActivity) context).isDestroyed();
+            if (dashBoardModel.getDashboard_icon_name().equals("Loan \n Demand")) {
+                context.startActivity(new Intent(context, LoanDemandActivity.class));
+                ((AppCompatActivity) context).isDestroyed();
             }
-            if (dashBoardModel.getDashboard_icon_name().equals("Mobile Recharge \n & Topup")){
-                    context.startActivity(new Intent(context,RechargeTopup.class));
-                    ((AppCompatActivity) context).isDestroyed();
+            if (dashBoardModel.getDashboard_icon_name().equals("Mobile Recharge \n & Topup")) {
+                context.startActivity(new Intent(context, RechargeTopup.class));
+                ((AppCompatActivity) context).isDestroyed();
             }
-            if (dashBoardModel.getDashboard_icon_name().equals("Utility \n Payment")){
-                    context.startActivity(new Intent(context,UtilityPayment.class));
-                    ((AppCompatActivity) context).isDestroyed();
+            if (dashBoardModel.getDashboard_icon_name().equals("Bill \n Payment")) {
+                context.startActivity(new Intent(context, PBOActivity.class));
+                ((AppCompatActivity) context).isDestroyed();
             }
-            if (dashBoardModel.getDashboard_icon_name().equals("Customization \n & Setting")){
-                    context.startActivity(new Intent(context,KycActivity.class));
+            if (dashBoardModel.getDashboard_icon_name().equals("Utility \n Payment")) {
+                context.startActivity(new Intent(context, UtilityPayment.class));
+                ((AppCompatActivity) context).isDestroyed();
             }
-            if (dashBoardModel.getDashboard_icon_name().equals("Agent \n Dashboard")){
-                    context.startActivity(new Intent(context,AgentDashboardActivity.class));
-                    ((AppCompatActivity) context).isDestroyed();
+            if (dashBoardModel.getDashboard_icon_name().equals("Customization \n & Setting")) {
+                context.startActivity(new Intent(context, KycActivity.class));
             }
-            if (dashBoardModel.getDashboard_icon_name().equals("Activity \n Log")){
-                    context.startActivity(new Intent(context,AgentLogActivity.class));
-                    ((AppCompatActivity) context).isDestroyed();
+            if (dashBoardModel.getDashboard_icon_name().equals("Agent \n Dashboard")) {
+                context.startActivity(new Intent(context, AgentDashboardActivity.class));
+                ((AppCompatActivity) context).isDestroyed();
+            }
+            if (dashBoardModel.getDashboard_icon_name().equals("Activity \n Log")) {
+                context.startActivity(new Intent(context, AgentLogActivity.class));
+                ((AppCompatActivity) context).isDestroyed();
             }
         });
     }
@@ -113,9 +119,10 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView dashboard_icon_id;
         TextView dashboard_text_id;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            dashboard_icon_id = (ImageView)itemView.findViewById(R.id.dashboard_icon_id);
+            dashboard_icon_id = (ImageView) itemView.findViewById(R.id.dashboard_icon_id);
             dashboard_text_id = (TextView) itemView.findViewById(R.id.dashboard_text_id);
         }
     }

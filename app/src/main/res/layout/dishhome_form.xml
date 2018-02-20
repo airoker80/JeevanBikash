@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="#F4E8E3"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"
+            android:text="DishHome TopUp"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:visibility="gone"
+            android:text="Select the payment Type"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RadioGroup
+            android:id="@+id/dh_rg"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/dh_cas_rb"
+                android:text="CAS-ID"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/dh_chip_rb"
+                android:text="CHIP-ID"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+
+
+
+        <LinearLayout
+            android:id="@+id/dh_gone_ll"
+            android:visibility="visible"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/gone_dh_ll"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/dishomeServiceName"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"
+                    android:text="CAS -ID"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/dh_cas_id"
+                    android:padding="@dimen/_4sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp" />
+
+                <TextView
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"
+                    android:text="Amount"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/dh_amount"
+                    android:inputType="number"
+                    android:padding="@dimen/_4sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp" />
+                <Spinner
+                    android:padding="@dimen/_4sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:id="@+id/amtSpin"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:hint="Enter Amount"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/promoCodeLayout">
+
+                    <TextView
+                        android:id="@+id/PromoCode"
+                        android:text="Promo Code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_left"
+                        android:paddingTop="@dimen/padding_top"
+                        android:textSize="@dimen/text_size"/>
+                    <EditText
+                        android:layout_below="@+id/PromoCode"
+                        android:id="@+id/dhDealCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:layout_marginLeft="@dimen/space_left"
+                        android:layout_marginRight="@dimen/space_right"
+                        style="@style/CustomHintColor"
+                        android:paddingTop="@dimen/space_top"
+                        android:textSize="@dimen/font_size"
+
+                        />
+                    <Button
+                        android:text="Check"
+                        android:id="@+id/dhCheckDealBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_alignParentRight="true" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/dhBtnPaynow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PAY NOW"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="15dp"
+                    style="@style/CustomButton"
+                    android:padding="10dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</ScrollView>

@@ -79,13 +79,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Printer.MainPrinterActivity"></activity>
-        <activity android:name=".Printer.PrintActivity"></activity>
-        <activity android:name=".Printer.PrintTextActivity"></activity>
-        <activity android:name=".Printer.PrintSettingActivity"></activity>
-        <activity android:name=".Printer.DeviceListActivity"></activity>
-        <activity android:name=".Printer.PrintCmdActivity"></activity>
-        <activity android:name=".Printer.PrintImageActivity"></activity>
+        <activity android:name=".Printer.MainPrinterActivity" />
+        <activity android:name=".Printer.PrintActivity" />
+        <activity android:name=".Printer.PrintTextActivity" />
+        <activity android:name=".Printer.PrintSettingActivity" />
+        <activity android:name=".Printer.DeviceListActivity" />
+        <activity android:name=".Printer.PrintCmdActivity" />
+        <activity android:name=".Printer.PrintImageActivity" />
+        <activity android:name=".PabyByOnlineService.PBOActivity"></activity>
     </application>
 
 </manifest>

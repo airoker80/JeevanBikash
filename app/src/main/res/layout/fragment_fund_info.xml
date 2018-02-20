@@ -226,7 +226,7 @@
                         android:orientation="horizontal">
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/memberId"
+                            android:id="@+id/memberId1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -254,7 +254,7 @@
                         android:orientation="horizontal">
 
                         <com.harati.jeevanbikas.Helper.CenturyGothicTextView
-                            android:id="@+id/branch"
+                            android:id="@+id/branch1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

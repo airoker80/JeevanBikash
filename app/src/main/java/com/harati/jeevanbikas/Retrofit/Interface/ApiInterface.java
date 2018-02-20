@@ -3,6 +3,7 @@ package com.harati.jeevanbikas.Retrofit.Interface;
 
 import com.harati.jeevanbikas.Helper.SessionHandler;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.CastModel;
+import com.harati.jeevanbikas.Retrofit.RetrofitModel.EnquiryResponseModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoanDetailsModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.LoginModel;
 import com.harati.jeevanbikas.Retrofit.RetrofitModel.OTPmodel;
@@ -16,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 
 import okhttp3.RequestBody;
@@ -30,6 +32,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
 
@@ -85,12 +88,12 @@ public interface ApiInterface {
 
 
     @POST
-    io.reactivex.Observable<Response<SuccesResponseModel>> sendBalanceRequest(@Url String url,
-                                                                              @Body RequestBody body,
-                                                                              @Header("X-Authorization") String xAuth,
-                                                                              @Header("Authorization") String Authorization,
-                                                                              @Header("Content-Type") String contentType,
-                                                                              @Query("serialno") String serialno);
+    io.reactivex.Observable<Response<EnquiryResponseModel>> sendBalanceRequest(@Url String url,
+                                                                               @Body RequestBody body,
+                                                                               @Header("X-Authorization") String xAuth,
+                                                                               @Header("Authorization") String Authorization,
+                                                                               @Header("Content-Type") String contentType,
+                                                                               @Query("serialno") String serialno);
 
     @POST
     Call<TransferModel> sendDepositRequest(@Url String url,
@@ -175,5 +178,13 @@ public interface ApiInterface {
                                                    @Header("Authorization") String Authorization,
                                                    @Header("Content-Type") String contentType,
                                                    @Query("serialno") String serialno);
+
+
+    @GET
+    Call<ResponseBody> getRechargeServiceDetails(@Url String url,
+                                                    @QueryMap Map<String, String> bodyMap);
+
+    @GET
+    Call<ResponseBody> loginPbo(@Url String url,@QueryMap Map<String, String> bodyMap);
 
 }

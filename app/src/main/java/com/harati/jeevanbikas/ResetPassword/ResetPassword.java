@@ -1,8 +1,10 @@
 package com.harati.jeevanbikas.ResetPassword;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +12,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.harati.jeevanbikas.BalanceEnquiry.BalanceEnquiryActivity;
 import com.harati.jeevanbikas.BaseActivity;
 import com.harati.jeevanbikas.Helper.ApiSessionHandler;
 import com.harati.jeevanbikas.Helper.ErrorDialogActivity;
@@ -42,6 +47,7 @@ public class ResetPassword extends BaseActivity {
     SessionHandler sessionHandler;
     ApiInterface apiInterface;
     Retrofit retrofit;
+    ImageView image;
 
     Handler handler;
     Runnable r;
@@ -57,6 +63,8 @@ public class ResetPassword extends BaseActivity {
         resetPass = (Button)findViewById(R.id.resetPass);
         reset_otp = (EditText) findViewById(R.id.reset_otp);
 
+        image = (ImageView) findViewById(R.id.image);
+
         reset_old_password = (EditText) findViewById(R.id.reset_old_password);
         reset_new_password = (EditText) findViewById(R.id.reset_new_password);
         re_reset_new_password = (EditText) findViewById(R.id.re_reset_new_password);
@@ -64,6 +72,7 @@ public class ResetPassword extends BaseActivity {
         View parentLayout = findViewById(android.R.id.content);
         String mainmsg = getIntent().getStringExtra("snackmsg");
 
+        image.setOnClickListener(v -> confirmBack());
         try {
             if (mainmsg.equals("fromMA")){
                 Snackbar.make(parentLayout, "Please change your  pin before proceeding", Snackbar.LENGTH_LONG)
@@ -150,5 +159,34 @@ public class ResetPassword extends BaseActivity {
         });
     }
 
+    void confirmBack(){
+        Log.e("backpressed","bp");
+        View view = getLayoutInflater().inflate(R.layout.dialog_ask_permission,null);
+        TextView askPermission = (TextView)view.findViewById(R.id.askPermission);
+        askPermission.setText("Are you Sure you want to go back??");
+        final AlertDialog builder = new AlertDialog.Builder(ResetPassword.this)
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("CANCEL", null)
+                .setTitle("Are you Sure you want to go back?")
+                .create();
 
+        builder.setOnShowListener(dialog -> {
+
+            final Button btnAccept = builder.getButton(
+                    AlertDialog.BUTTON_POSITIVE);
+
+            btnAccept.setOnClickListener(v -> {
+                super.onBackPressed();
+                Log.e("backpressed","bp");
+                builder.dismiss();
+
+            });
+
+            final Button btnDecline = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            btnDecline.setOnClickListener(v -> builder.dismiss());
+        });
+
+        builder.show();
+    }
 }
